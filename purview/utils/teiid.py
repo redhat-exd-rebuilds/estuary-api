@@ -1,4 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0+
 # Inspired from the MARS project
+
 import psycopg2
 import logging
 

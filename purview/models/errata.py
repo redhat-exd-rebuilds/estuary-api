@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0+
+
 from neomodel import (
     StructuredNode, UniqueIdProperty, RelationshipTo, IntegerProperty,
     StringProperty, BooleanProperty, ArrayProperty)
