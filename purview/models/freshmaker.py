@@ -1,11 +1,11 @@
 from neomodel import (
-    StructuredNode, UniqueIdProperty, RelationshipFrom, RelationshipTo,
+    StructuredNode, UniqueIdProperty, RelationshipTo,
     IntegerProperty, StringProperty, DateTimeProperty)
 
 
 class FreshmakerEvent(StructuredNode):
     id_ = UniqueIdProperty(db_property='id')
-    triggered_by_advisory = RelationshipFrom(
+    triggered_by_advisory = RelationshipTo(
         '.errata.Advisory', 'TRIGGERED_BY')
     triggers_container_builds = RelationshipTo('ContainerBuilds', 'TRIGGERS')
     event_type_id = IntegerProperty(requried=True)
@@ -19,9 +19,9 @@ class FreshmakerEvent(StructuredNode):
 
 class ContainerBuilds(StructuredNode):
     id_ = UniqueIdProperty(db_property='id')
-    triggered_by_advisory = RelationshipFrom(
+    triggered_by_advisory = RelationshipTo(
         '.errata.Advisory', 'TRIGGERED_BY')
-    triggered_by_freshmaker_event = RelationshipFrom(
+    triggered_by_freshmaker_event = RelationshipTo(
         'FreshmakerEvent', 'TRIGGERED_BY')
     build_id = IntegerProperty(unique=True, required=True)
     dep_on = StringProperty()
