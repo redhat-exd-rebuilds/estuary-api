@@ -8,7 +8,7 @@ from neomodel import (
 class KojiBuild(StructuredNode):
     id_ = UniqueIdProperty(db_property='id')
     tasks = RelationshipTo('KojiTask', 'TRIGGERS')
-    owner = RelationshipTo('.user.User', "OWNED_BY")
+    owner = RelationshipTo('.user.User', 'OWNED_BY')
     epoch = StringProperty()
     state = IntegerProperty(required=True)
     creation_time = DateTimeProperty(required=True)
@@ -26,7 +26,7 @@ class KojiTask(StructuredNode):
     builds = RelationshipTo('KojiBuild', 'TRIGGERED_BY')
     children = RelationshipTo('KojiTask', 'CHILD')
     parents = RelationshipTo('KojiTask', 'PARENT')
-    owner = RelationshipTo('.user.User', "OWNED_BY")
+    owner = RelationshipTo('.user.User', 'OWNED_BY')
     weight = FloatProperty()
     create_time = DateTimeProperty(required=True)
     start_time = DateTimeProperty()

@@ -26,7 +26,8 @@ class Teiid(object):
         if db_name in self._connections:
             return self._connections[db_name]
 
-        log.debug("Connecting to Teiid host {0}:{1}".format(self.host, self.port))
+        log.debug('Connecting to Teiid host {0}:{1}'.format(
+            self.host, self.port))
         conn = psycopg2.connect(
             database=db_name,
             host=self.host,
@@ -55,21 +56,21 @@ class Teiid(object):
         con = self.get_connection(db)
         cursor = con.cursor()
 
-        log.debug("Querying Teiid DB '{0}' with SQL:\n{1}".format(db, sql))
+        log.debug('Querying Teiid DB "{0}" with SQL:\n{1}'.format(db, sql))
 
         for _ in range(retry):
             try:
                 cursor.execute(sql)
                 break
             except psycopg2.extensions.QueryCanceledError as err:
-                log.warning("Teiid query failed")
+                log.warning('Teiid query failed')
         else:
-            raise err
+            raise err  # noqa: F821
 
         data = cursor.fetchall()
         # column header names
         cols = [t[0] for t in cursor.description or []]
-        log.debug("Found the following columns: {}".format(cols))
-        log.debug("Received {} rows from Teiid".format(len(data)))
+        log.debug('Found the following columns: {}'.format(cols))
+        log.debug('Received {} rows from Teiid'.format(len(data)))
         # build a return array with all columns
         return [dict(zip(cols, row)) for row in data]
