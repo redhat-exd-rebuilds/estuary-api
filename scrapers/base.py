@@ -5,6 +5,9 @@ class BaseScraper(object):
     """
     Base scraper class to standardize the main scraper functionality
     """
+    teiid_host = 'virtualdb.engineering.redhat.com'
+    teiid_port = 5432
+
     def run(self, since=None):
         """
         Run the scraper
