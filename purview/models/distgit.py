@@ -11,6 +11,10 @@ class DistgitCommit(StructuredNode):
     authors = RelationshipTo('.user.User', 'AUTHORED_BY')  # author_id
     committers = RelationshipTo('.user.User', 'OWNED_BY')
     pushes = RelationshipTo('DistgitPush', 'PUSHED_IN')
+    # The three possible relationships to Bugzilla bugs in GitBZ
+    resolved_bugs = RelationshipTo('.bugzilla.Bugzilla', 'RESOLVES')
+    reverted_bugs = RelationshipTo('.bugzilla.Bugzilla', 'REVERTS')
+    related_bugs = RelationshipTo('.bugzilla.Bugzilla', 'RELATES_TO')
     author_date = DateTimeProperty(required=True)
     commit_date = DateTimeProperty(required=True)
     sha = StringProperty(required=True)
