@@ -2,7 +2,7 @@
 
 from neomodel import (
     StructuredNode, StringProperty, IntegerProperty, UniqueIdProperty,
-    BooleanProperty, DateTimeProperty, FloatProperty, RelationshipTo)
+    DateTimeProperty, FloatProperty, RelationshipTo)
 
 
 class KojiBuild(StructuredNode):
@@ -18,7 +18,6 @@ class KojiBuild(StructuredNode):
     name = StringProperty(required=True)
     version = StringProperty(required=True)
     release = StringProperty(required=True)
-    nvr = StringProperty(required=True)
 
 
 class KojiTask(StructuredNode):
@@ -35,4 +34,3 @@ class KojiTask(StructuredNode):
     priority = IntegerProperty()
     arch = StringProperty(required=True)
     method = StringProperty(required=True)
-    scratch = BooleanProperty()
