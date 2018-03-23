@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from purview.utils.teiid import Teiid
+from datetime import datetime
 
 
 class BaseScraper(object):
@@ -23,6 +24,8 @@ class BaseScraper(object):
             teiid_user = None
             teiid_password = None
             self.teiid_port = 5433
+            # Default start date to fetch data from
+            self.default_since = datetime(2016, 3, 1)
         self.teiid = Teiid(self.teiid_host, self.teiid_port, teiid_user, teiid_password)
 
     def run(self, since=None):
