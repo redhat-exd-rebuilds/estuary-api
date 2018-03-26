@@ -9,6 +9,7 @@ class KojiBuild(StructuredNode):
     id_ = UniqueIdProperty(db_property='id')
     tasks = RelationshipTo('KojiTask', 'TRIGGERS')
     owner = RelationshipTo('.user.User', 'OWNED_BY')
+    tags = RelationshipTo('KojiTag', 'CONTAINED_BY')
     epoch = StringProperty()
     state = IntegerProperty(required=True)
     creation_time = DateTimeProperty(required=True)
@@ -34,3 +35,9 @@ class KojiTask(StructuredNode):
     priority = IntegerProperty()
     arch = StringProperty(required=True)
     method = StringProperty(required=True)
+
+
+class KojiTag(StructuredNode):
+    id_ = UniqueIdProperty(db_property='id')
+    builds = RelationshipTo('KojiBuild', 'CONTAINS')
+    name = StringProperty(required=True)
