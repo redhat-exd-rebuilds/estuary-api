@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0+
 from scrapers.base import BaseScraper
-from purview.models.koji import KojiBuild, KojiTask
+from purview.models.koji import KojiBuild, KojiTask, KojiTag
 from purview.models.user import User
 import purview.utils.general as utils
 
@@ -62,6 +62,17 @@ class KojiScraper(BaseScraper):
         self.task = self.teiid.query(sql=sql_query, retry=3)
         return self.task
 
+    def get_build_tag(self, build_id):
+        # SQL query to fetch tag name related to a certain build
+        sql_query = """
+            SELECT tag_listing.tag_id AS tag_id, tags.name AS tag_name
+            FROM brew.tag_listing AS tag_listing
+            LEFT JOIN brew.tag AS tags ON tag_listing.tag_id = tags.id
+            WHERE tag_listing.active = True AND tag_listing.build_id = {}
+            """.format(build_id)
+
+        return self.teiid.query(sql=sql_query, retry=3)
+
     def update_neo4j(self, builds):
         # Uploads builds data to their respective nodes
         log.info('Beginning to upload data to Neo4j')
@@ -87,6 +98,21 @@ class KojiScraper(BaseScraper):
 
             build.owner.connect(user)
             user.koji_builds.connect(build)
+
+            try:
+                # Getting tag related to the current build
+                tag_dict = self.get_build_tag(build_dict['id'])[0]
+            except IndexError:
+                # Continue if no active tag is found for the current build
+                continue
+
+            tag = KojiTag.get_or_create(dict(
+                id_=tag_dict['tag_id'],
+                name=tag_dict['tag_name']
+            ))[0]
+
+            tag.builds.connect(build)
+            build.tags.connect(tag)
 
             count += 1
             log.info('Uploaded {0} builds out of {1}'.format(count, len(builds)))
