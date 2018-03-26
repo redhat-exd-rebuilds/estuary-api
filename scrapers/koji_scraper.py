@@ -35,7 +35,6 @@ class KojiScraper(BaseScraper):
             WHERE events.time IS NOT NULL AND events.time >= '{}'
             """.format(start_date)
 
-        log.debug("Query:", sql_query.strip())
         builds = self.teiid.query(sql=sql_query, retry=3)
         log.info('Successfully fetched {0} builds from teiid'.format(len(builds)))
         return builds
