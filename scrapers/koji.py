@@ -20,8 +20,9 @@ class KojiScraper(BaseScraper):
         else:
             since = utils.timestamp_to_datetime(since)
 
-        self.builds = self.get_koji_builds(since)
-        self.update_neo4j(self.builds)
+        builds = self.get_koji_builds(since)
+        log.info('Successfully fetched {0} builds from teiid'.format(len(builds)))
+        self.update_neo4j(builds)
         log.info('Initial load of Koji builds complete!')
 
     def get_koji_builds(self, start_date):
@@ -35,9 +36,7 @@ class KojiScraper(BaseScraper):
             WHERE events.time IS NOT NULL AND events.time >= '{}'
             """.format(start_date)
 
-        builds = self.teiid.query(sql=sql_query, retry=3)
-        log.info('Successfully fetched {0} builds from teiid'.format(len(builds)))
-        return builds
+        return self.teiid.query(sql=sql_query, retry=3)
 
     def get_task(self, task_id):
         # SQL query to fetch task related to a certain build
@@ -47,8 +46,7 @@ class KojiScraper(BaseScraper):
             WHERE id = {}
             """.format(task_id)
 
-        self.task = self.teiid.query(sql=sql_query, retry=3)
-        return self.task
+        return self.teiid.query(sql=sql_query, retry=3)
 
     def get_task_children(self, parent):
         # SQL query to fetch all child tasks related to a
@@ -59,8 +57,7 @@ class KojiScraper(BaseScraper):
             WHERE parent = {}
             """.format(parent)
 
-        self.task = self.teiid.query(sql=sql_query, retry=3)
-        return self.task
+        return self.teiid.query(sql=sql_query, retry=3)
 
     def get_build_tag(self, build_id):
         # SQL query to fetch tag name related to a certain build
