@@ -2,9 +2,8 @@
 # Inspired from the MARS project
 
 import psycopg2
-import logging
 
-log = logging.getLogger(__name__)
+from purview import log
 
 
 class Teiid(object):

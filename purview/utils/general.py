@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 import re
-import logging
 from datetime import datetime
 
-log = logging.getLogger(__name__)
+from purview import log
 
 
 def timestamp_to_datetime(timestamp):
