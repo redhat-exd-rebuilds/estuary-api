@@ -3,10 +3,7 @@ from scrapers.base import BaseScraper
 from purview.models.koji import KojiBuild, KojiTask, KojiTag
 from purview.models.user import User
 import purview.utils.general as utils
-
-import logging
-
-log = logging.getLogger(__name__)
+from purview import log
 
 
 class KojiScraper(BaseScraper):

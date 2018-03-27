@@ -10,8 +10,9 @@ sys.path.insert(1, os.path.abspath(os.path.join(sys.path[0], '..')))
 
 import scrapers  # noqa: E402
 
-log = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(format='[%(filename)s:%(lineno)s:%(funcName)s] %(message)s')
+log = logging.getLogger('purview')
+log.setLevel(logging.DEBUG)
 
 parser = argparse.ArgumentParser(description='Run a scraper')
 parser.add_argument('scraper', type=str, help='The scraper to run')
