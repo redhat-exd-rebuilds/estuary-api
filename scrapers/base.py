@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0+
 
-from purview.utils.teiid import Teiid
 from datetime import datetime
+
+from purview.utils.teiid import Teiid
 
 
 class BaseScraper(object):
