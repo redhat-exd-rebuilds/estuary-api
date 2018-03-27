@@ -140,12 +140,7 @@ class KojiScraper(BaseScraper):
             task.builds.connect(build)
             task.owner.connect(user)
 
-            if task_dict['parent']:
-                # Getting child tasks of a parent task
-                child_tasks = self.get_task_children(task_dict['parent'])
-            else:
-                # Continue if the parent is None
-                continue
+            child_tasks = self.get_task_children(task_dict['id'])
 
             if not child_tasks:
                 # Continue if no corresponding child task found
@@ -153,16 +148,16 @@ class KojiScraper(BaseScraper):
 
             for child_task_dict in child_tasks:
                 child_task = KojiTask.create_or_update(dict(
-                    id_=task_dict['id'],
-                    weight=task_dict['weight'],
-                    create_time=task_dict['create_time'],
-                    start_time=task_dict['start_time'],
-                    completion_time=task_dict['completion_time'],
-                    state=task_dict['state'],
-                    priority=task_dict['priority'],
-                    arch=task_dict['arch'],
-                    method=task_dict['method']
+                    id_=child_task_dict['id'],
+                    weight=child_task_dict['weight'],
+                    create_time=child_task_dict['create_time'],
+                    start_time=child_task_dict['start_time'],
+                    completion_time=child_task_dict['completion_time'],
+                    state=child_task_dict['state'],
+                    priority=child_task_dict['priority'],
+                    arch=child_task_dict['arch'],
+                    method=child_task_dict['method']
                 ))[0]
 
-            child_task.parents.connect(task)
-            task.children.connect(child_task)
+                child_task.parents.connect(task)
+                task.children.connect(child_task)
