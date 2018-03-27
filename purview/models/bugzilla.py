@@ -11,16 +11,16 @@ class BugzillaBug(StructuredNode):
     assignees = RelationshipTo('.user.User', 'ASSIGNED_TO')
     reporters = RelationshipTo('.user.User', 'REPORTED_BY')
     qa_contacts = RelationshipTo('.user.User', 'QA_BY')
-    severity = StringProperty(required=True)
-    status = StringProperty(required=True)
-    creation_time = DateTimeProperty(required=True)
-    modified_time = DateTimeProperty(required=True)  # delta_ts
-    priority = StringProperty(required=True)
+    severity = StringProperty()
+    status = StringProperty()
+    creation_time = DateTimeProperty()
+    modified_time = DateTimeProperty()  # delta_ts
+    priority = StringProperty()
     # Called product_name in case we want to use product as a relationship later on
-    product_name = StringProperty(required=True)
-    product_version = StringProperty(required=True)
+    product_name = StringProperty()
+    product_version = StringProperty()
     # This will always be "Red Hat" initially
-    classification = StringProperty(required=True)
+    classification = StringProperty()
     resolution = StringProperty()
     target_milestone = StringProperty()
     votes = IntegerProperty()
