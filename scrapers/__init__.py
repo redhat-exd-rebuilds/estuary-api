@@ -3,3 +3,4 @@
 from scrapers.koji import KojiScraper  # noqa: F401
 from scrapers.distgit import DistGitScraper  # noqa: F401
 from scrapers.bugzilla import BugzillaScraper  # noqa: F401
+from scrapers.errata import ErrataScraper  # noqa: F401

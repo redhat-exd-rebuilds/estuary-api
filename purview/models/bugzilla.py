@@ -14,6 +14,7 @@ class BugzillaBug(StructuredNode):
     related_by_commits = RelationshipTo('.distgit.DistGitCommit', 'RELATED_TO')
     resolved_by_commits = RelationshipTo('.distgit.DistGitCommit', 'RESOLVED_BY')
     reverted_by_commits = RelationshipTo('.distgit.DistGitCommit', 'REVERTED_BY')
+    attached_advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
     severity = StringProperty()
     status = StringProperty()
     creation_time = DateTimeProperty()

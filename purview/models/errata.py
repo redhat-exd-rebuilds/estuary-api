@@ -1,29 +1,45 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from neomodel import (
-    StructuredNode, UniqueIdProperty, RelationshipTo, IntegerProperty,
-    StringProperty, BooleanProperty, ArrayProperty)
+    StructuredNode, UniqueIdProperty, RelationshipTo, StringProperty,
+    ArrayProperty, DateTimeProperty)
 
 
 class Advisory(StructuredNode):
-    id_ = UniqueIdProperty(db_property='id')
-    triggers_freshmaker_event = RelationshipTo(
-        '.freshmaker.FreshmakerEvent', 'TRIGGERS')
-    triggers_container_builds = RelationshipTo(
-        '.freshmaker.ContainerBuilds', 'TRIGGERS')
+    actual_ship_date = DateTimeProperty()
     advisory_name = StringProperty(unique=True, required=True)
-    status = StringProperty(required=True)
-    # product = Property() # a dict that should be broken out
-    text_only = BooleanProperty()
-    # people = Property() # a dict that should be broken out
     content_types = ArrayProperty()
-    pushcount = IntegerProperty()
-    synopsis = StringProperty(required=True)
-    respin_count = IntegerProperty()
-    security_impact = StringProperty(required=True)
-    # flags = Property() # a dict that should be broken out
-    # release = Property() # a dict that should be broken out
-    # timestamps = Property() # a dict that should be broken out
-    # content = Property() # a dict that should be broken out
+    created_at = DateTimeProperty()
+    id_ = UniqueIdProperty(db_property='id')
+    issue_date = DateTimeProperty()
+    product_name = StringProperty()
+    product_short_name = StringProperty()
+    release_date = DateTimeProperty()
+    security_impact = StringProperty()
+    security_sla = DateTimeProperty()
+    state = StringProperty()
+    status_time = DateTimeProperty()
+    synopsis = StringProperty()
     type_ = StringProperty(required=True, db_property='type')
-    revision = IntegerProperty(require=True)
+    update_date = DateTimeProperty()
+    updated_at = DateTimeProperty()
+    assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO')
+    attached_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED_TO')
+    attached_builds = RelationshipTo('.koji.KojiBuild', 'RELATED_TO')
+    # A normalized relationship name (same as reporters)
+    owners = RelationshipTo('.user.User', 'OWNED_BY')
+    package_owners = RelationshipTo('.user.User', 'PACKAGE_OWNED_BY')
+    reporters = RelationshipTo('.user.User', 'REPORTED_BY')
+    states = RelationshipTo('AdvisoryState', 'RELATED_TO')
+    triggers_freshmaker_event = RelationshipTo('.freshmaker.FreshmakerEvent', 'TRIGGERS')
+    triggers_container_builds = RelationshipTo('.freshmaker.ContainerBuilds', 'TRIGGERS')
+
+
+class AdvisoryState(StructuredNode):
+    id_ = UniqueIdProperty()
+    created_at = DateTimeProperty()
+    updated_at = DateTimeProperty()
+    name = StringProperty(required=True)
+    # Should only be one advisory but using plural since this is a list
+    advisories = RelationshipTo('Advisory', 'RELATED_TO')
+    owner = RelationshipTo('.user.User', 'OWNED_BY')
