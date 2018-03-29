@@ -10,6 +10,7 @@ class KojiBuild(StructuredNode):
     tasks = RelationshipTo('KojiTask', 'TRIGGERS')
     owner = RelationshipTo('.user.User', 'OWNED_BY')
     tags = RelationshipTo('KojiTag', 'CONTAINED_BY')
+    advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
     epoch = StringProperty()
     state = IntegerProperty()
     creation_time = DateTimeProperty()
