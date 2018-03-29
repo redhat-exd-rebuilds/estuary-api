@@ -23,7 +23,6 @@ def timestamp_to_datetime(timestamp):
          '%Y-%m-%dT%H:%M:%S'))
 
     for combination in combinations:
-        log.debug('Trying to parse the timestamp with the regex "{0}"'.format(combination[0]))
         regex_match = re.match(combination[0], timestamp)
         if regex_match:
             try:
