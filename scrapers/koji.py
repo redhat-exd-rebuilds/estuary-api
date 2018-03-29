@@ -1,4 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0+
+
+from __future__ import unicode_literals
+
 from scrapers.base import BaseScraper
 from purview.models.koji import KojiBuild, KojiTask, KojiTag
 from purview.models.user import User
