@@ -7,7 +7,7 @@ from neomodel import (
 
 class Advisory(StructuredNode):
     actual_ship_date = DateTimeProperty()
-    advisory_name = StringProperty(unique=True, required=True)
+    advisory_name = StringProperty(unique=True)
     content_types = ArrayProperty()
     created_at = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
@@ -20,7 +20,7 @@ class Advisory(StructuredNode):
     state = StringProperty()
     status_time = DateTimeProperty()
     synopsis = StringProperty()
-    type_ = StringProperty(required=True, db_property='type')
+    type_ = StringProperty(db_property='type')
     update_date = DateTimeProperty()
     updated_at = DateTimeProperty()
     assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO')
@@ -32,7 +32,6 @@ class Advisory(StructuredNode):
     reporters = RelationshipTo('.user.User', 'REPORTED_BY')
     states = RelationshipTo('AdvisoryState', 'RELATED_TO')
     triggers_freshmaker_event = RelationshipTo('.freshmaker.FreshmakerEvent', 'TRIGGERS')
-    triggers_container_builds = RelationshipTo('.freshmaker.ContainerBuilds', 'TRIGGERS')
 
 
 class AdvisoryState(StructuredNode):
