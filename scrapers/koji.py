@@ -33,7 +33,7 @@ class KojiScraper(BaseScraper):
             WHERE events.time IS NOT NULL AND events.time >= '{}'
             """.format(start_date)
 
-        return self.teiid.query(sql=sql_query, retry=3)
+        return self.teiid.query(sql=sql_query)
 
     def get_task(self, task_id):
         # SQL query to fetch task related to a certain build
@@ -43,7 +43,7 @@ class KojiScraper(BaseScraper):
             WHERE id = {}
             """.format(task_id)
 
-        return self.teiid.query(sql=sql_query, retry=3)
+        return self.teiid.query(sql=sql_query)
 
     def get_task_children(self, parent):
         # SQL query to fetch all child tasks related to a
@@ -54,7 +54,7 @@ class KojiScraper(BaseScraper):
             WHERE parent = {}
             """.format(parent)
 
-        return self.teiid.query(sql=sql_query, retry=3)
+        return self.teiid.query(sql=sql_query)
 
     def get_build_tag(self, build_id):
         # SQL query to fetch tag name related to a certain build
@@ -65,7 +65,7 @@ class KojiScraper(BaseScraper):
             WHERE tag_listing.active = True AND tag_listing.build_id = {}
             """.format(build_id)
 
-        return self.teiid.query(sql=sql_query, retry=3)
+        return self.teiid.query(sql=sql_query)
 
     def update_neo4j(self, builds):
         # Uploads builds data to their respective nodes
