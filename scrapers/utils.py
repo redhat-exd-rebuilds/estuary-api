@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
+from __future__ import unicode_literals
+
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry

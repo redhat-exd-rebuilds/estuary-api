@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
+from __future__ import unicode_literals
+
 from neomodel import (
     StructuredNode, StringProperty, IntegerProperty, UniqueIdProperty,
     DateTimeProperty, FloatProperty, RelationshipTo)

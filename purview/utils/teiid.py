@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0+
 # Inspired from the MARS project
 
+from __future__ import unicode_literals
+
 import psycopg2
 
 from purview import log
@@ -43,7 +45,7 @@ class Teiid(object):
         self._connections[db_name] = conn
         return conn
 
-    def query(self, sql, db='public', retry=1):
+    def query(self, sql, db='public', retry=3):
         """
         Send the SQL query to Teiid and return the rows as a list
         :param sql: a string of the SQL query to send to the database

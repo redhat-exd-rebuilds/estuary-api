@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0+
 from __future__ import unicode_literals
-
 from builtins import bytes
 
 from scrapers.base import BaseScraper
@@ -50,7 +49,7 @@ class BugzillaScraper(BaseScraper):
             WHERE classifications.name = 'Red Hat' AND bugs.creation_ts > '{}'
             """.format(start_date)
 
-        return self.teiid.query(sql=sql_query, retry=3)
+        return self.teiid.query(sql=sql_query)
 
     def create_user_node(self, email):
         """

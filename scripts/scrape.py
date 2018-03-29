@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # SPDX-License-Identifier: GPL-3.0+
 
+from __future__ import unicode_literals
 import argparse
 import logging
 import sys
