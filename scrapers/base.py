@@ -14,6 +14,8 @@ class BaseScraper(object):
     """
     teiid_host = 'virtualdb.engineering.redhat.com'
     teiid_port = 5432
+    # Default start date to fetch data from
+    default_since = datetime(2016, 3, 1)
 
     def __init__(self, teiid_user=None, teiid_password=None, kerberos=False, neo4j_user='neo4j',
                  neo4j_password='neo4j', neo4j_server='localhost'):
@@ -32,8 +34,6 @@ class BaseScraper(object):
             teiid_user = None
             teiid_password = None
             self.teiid_port = 5433
-            # Default start date to fetch data from
-            self.default_since = datetime(2016, 3, 1)
         self.teiid = Teiid(self.teiid_host, self.teiid_port, teiid_user, teiid_password)
         neomodel_config.DATABASE_URL = 'bolt://{user}:{password}@{server}:7687'.format(
             user=neo4j_user, password=neo4j_password, server=neo4j_server)
