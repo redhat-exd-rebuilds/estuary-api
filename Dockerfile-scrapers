@@ -3,7 +3,8 @@ ENV SCRAPER=all \
     TEIID_USER=username \
     TEIID_PASSWORD=password \
     NEO4J_USER=neo4j \
-    NEO4J_PASSWORD=neo4j
+    NEO4J_PASSWORD=neo4j \
+    NEO4J_SERVER=neo4j
 
 RUN dnf -y install \
     --setopt=deltarpm=0 \
@@ -17,4 +18,4 @@ RUN dnf -y install \
     python3-requests \
     && dnf clean all
 COPY . .
-CMD python3 scripts/scrape.py $SCRAPER --teiid-user $TEIID_USER --teiid-password $TEIID_PASSWORD --neo4j-user $NEO4J_USER --neo4j-password $NEO4J_PASSWORD
+CMD python3 scripts/scrape.py $SCRAPER --teiid-user $TEIID_USER --teiid-password $TEIID_PASSWORD --neo4j-user $NEO4J_USER --neo4j-password $NEO4J_PASSWORD --neo4j-server $NEO4J_SERVER
