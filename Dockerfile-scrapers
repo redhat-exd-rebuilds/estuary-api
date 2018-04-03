@@ -3,18 +3,19 @@ ENV SCRAPER=all \
     TEIID_USER=username \
     TEIID_PASSWORD=password \
     NEO4J_USER=neo4j \
-    NEO4J_PASSWORD=neo4j
+    NEO4J_PASSWORD=neo4j \
+    NEO4J_SERVER=neo4j
 
 RUN dnf -y install \
     --setopt=deltarpm=0 \
     --setopt=install_weak_deps=false \
     --setopt=tsflags=nodocs \
     https://kojipkgs.fedoraproject.org//packages/python-neo4j-driver/1.5.3/2.fc27/x86_64/python3-neo4j-driver-1.5.3-2.fc27.x86_64.rpm \
-    https://kojipkgs.fedoraproject.org//work/tasks/3335/26123335/python3-neomodel-3.2.5-1.fc27.noarch.rpm \
+    https://kojipkgs.fedoraproject.org//packages/python-neomodel/3.2.5/1.fc27/noarch/python3-neomodel-3.2.5-1.fc27.noarch.rpm \
     python3-beautifulsoup4 \
     python3-psycopg2 \
     python3-PyYAML \
     python3-requests \
     && dnf clean all
 COPY . .
-CMD python3 scripts/scrape.py $SCRAPER --teiid-user $TEIID_USER --teiid-password $TEIID_PASSWORD --neo4j-user $NEO4J_USER --neo4j-password $NEO4J_PASSWORD
+CMD python3 scripts/scrape.py $SCRAPER --teiid-user $TEIID_USER --teiid-password $TEIID_PASSWORD --neo4j-user $NEO4J_USER --neo4j-password $NEO4J_PASSWORD --neo4j-server $NEO4J_SERVER
