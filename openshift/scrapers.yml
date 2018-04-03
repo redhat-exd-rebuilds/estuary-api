@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: purview-scrapers-build-config-template
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: purview-scrapers
+    name: purview-scrapers
+  spec:
+    lookupPolicy:
+      local: True
+    tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: purview-scrapers:latest
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      app: purview-scrapers
+    name: purview-scrapers
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: purview-scrapers:latest
+    postCommit: {}
+    resources: {}
+    runPolicy: Serial
+    source:
+      git:
+        ref: master
+        uri: https://github.com/release-engineering/purview-api.git
+      type: Git
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile-scrapers
+      type: Docker
+  triggers:
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: purview-scrapers
+  spec:
+    parallelism: 1    
+    completions: 1    
+    template:         
+      metadata:
+        name: purview-scrapers
+      spec:
+        containers:
+        - name: purview-scrapers
+          image: purview-scrapers
+        restartPolicy: OnFailure
