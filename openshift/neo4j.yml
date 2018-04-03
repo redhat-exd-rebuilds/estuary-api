@@ -36,17 +36,17 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
-      app: neo4j
+      app: purview
     name: neo4j
   spec:
     replicas: 1
     selector:
-      app: neo4j
+      app: purview
       deploymentconfig: neo4j
     template:
       metadata:
         labels:
-          app: neo4j
+          app: purview
           deploymentconfig: neo4j
       spec:
         containers:
@@ -81,7 +81,7 @@ objects:
   kind: Service
   metadata:
     labels:
-      app: neo4j
+      app: purview
     name: neo4j
   spec:
     ports:
@@ -98,5 +98,5 @@ objects:
       protocol: TCP
       targetPort: 7687
     selector:
-      app: neo4j
+      app: purview
       deploymentconfig: neo4j

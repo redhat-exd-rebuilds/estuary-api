@@ -33,7 +33,7 @@ objects:
   kind: ImageStream
   metadata:
     labels:
-      app: purview-scrapers
+      app: purview
     name: purview-scrapers
   spec:
     lookupPolicy:
@@ -47,7 +47,7 @@ objects:
   kind: BuildConfig
   metadata:
     labels:
-      app: purview-scrapers
+      app: purview
     name: purview-scrapers
   spec:
     output:
