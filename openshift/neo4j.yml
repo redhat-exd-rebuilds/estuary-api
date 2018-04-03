@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Template
+metadata:
+  annotations:
+    openshift.io/display-name: Neo4j
+    description: >-
+      Based on the official Neo4j with changes to run as a non-root user
+    iconClass: fa-database
+    tags: database
+  name: neo4j-template
+parameters:
+- name: PVC
+  displayName: Persistent Volume Claim
+  description: Name of the Persistent Volume Claim to store the Neo4j database
+  required: true
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: neo4j
+    annotations:
+      openshift.io/display-name: Neo4j
+  spec:
+    tags:
+    - name: latest
+      annotations:
+          openshift.io/display-name: Neo4j
+          description: >-
+            Based on the official Neo4j with changes to run as a non-root user
+          iconClass: fa-database
+          tags: 'neo4j,database,graph'
+      from:
+        kind: DockerImage
+        name: mprahl/neo4j-docker:latest
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: neo4j
+    name: neo4j
+  spec:
+    replicas: 1
+    selector:
+      app: neo4j
+      deploymentconfig: neo4j
+    template:
+      metadata:
+        labels:
+          app: neo4j
+          deploymentconfig: neo4j
+      spec:
+        containers:
+        - image: neo4j
+          imagePullPolicy: Always
+          name: neo4j
+          ports:
+          - containerPort: 7473
+            protocol: TCP
+          - containerPort: 7474
+            protocol: TCP
+          - containerPort: 7687
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /data
+            name: neo4j-data
+        volumes:
+        - name: neo4j-data
+          persistentVolumeClaim:
+            claimName: ${PVC}
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - neo4j
+        from:
+          kind: ImageStreamTag
+          name: neo4j:latest
+      type: ImageChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: neo4j
+    name: neo4j
+  spec:
+    ports:
+    - name: 7473-tcp
+      port: 7473
+      protocol: TCP
+      targetPort: 7473
+    - name: 7474-tcp
+      port: 7474
+      protocol: TCP
+      targetPort: 7474
+    - name: 7687-tcp
+      port: 7687
+      protocol: TCP
+      targetPort: 7687
+    selector:
+      app: neo4j
+      deploymentconfig: neo4j
