@@ -203,12 +203,19 @@ class DistGitScraper(BaseScraper):
             for th_tag in th_tags:
                 if th_tag.string == 'author':
                     td_text = th_tag.next_sibling.string
+            error_msg = 'Couldn\'t find the {0} for the commit "{1}" on repo "{2}/{3}"'.format(
+                person, commit, namespace, repo)
             if td_text is None:
-                log.error('Couldn\'t find the author for the commit "{0}" on repo "{1}/{2}"'
-                          .format(commit, namespace, repo))
-                return rv
-            match_dict = re.match(
-                r'.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>', td_text).groupdict()
+                log.error(error_msg)
+                continue
+
+            match = re.match(
+                r'^.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>$', td_text)
+            if not match:
+                log.error(error_msg)
+                continue
+
+            match_dict = match.groupdict()
             if match_dict['domain'] == 'redhat.com':
                 rv['{0}_username'.format(person)] = match_dict['username']
             else:
