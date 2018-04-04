@@ -196,7 +196,17 @@ class DistGitScraper(BaseScraper):
         soup = BeautifulSoup(cgit_result.text, 'html.parser')
         rv = {'namespace': namespace}
         for person in ('author', 'committer'):
-            td_text = soup.find('th', string=person).next_sibling.text
+            # Workaround for BS4 in EL7 since `soup.find('th', string=person)` doesn't work in
+            # that environment
+            th_tags = soup.find_all('th')
+            td_text = None
+            for th_tag in th_tags:
+                if th_tag.string == 'author':
+                    td_text = th_tag.next_sibling.string
+            if td_text is None:
+                log.error('Couldn\'t find the author for the commit "{0}" on repo "{1}/{2}"'
+                          .format(commit, namespace, repo))
+                return rv
             match_dict = re.match(
                 r'.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>', td_text).groupdict()
             if match_dict['domain'] == 'redhat.com':
