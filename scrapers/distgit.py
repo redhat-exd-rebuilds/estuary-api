@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 import re
+from multiprocessing.dummy import Pool as ThreadPool
 
 from builtins import bytes
 from bs4 import BeautifulSoup
@@ -44,13 +45,26 @@ class DistGitScraper(BaseScraper):
         :param results: a list of dictionaries
         :return: None
         """
+        pool = ThreadPool(8)
         counter = 0
         for result in results:
+            if counter % 200 == 0:
+                until = counter + 200
+                if until > len(results):
+                    until = len(results)
+                # Because of the joins in the SQL query, we end up with several rows with the same
+                # commit hash and we only want to query cgit once per commit
+                unique_commits = set([(c['module'], c['sha']) for c in results[counter:until]])
+                log.debug('Getting the author and committer email addresses from cgit in parallel '
+                          'for results {0} to {1}'.format(counter, until))
+                repos_info = {r['commit']: r for r in pool.map(self._get_repo_info, unique_commits)}
+                # This is no longer needed so it can be cleared to save RAM
+                del unique_commits
             counter += 1
             log.info('Processing commit and push entry {0}/{1}'.format(
                 str(counter), str(len(results))))
-            repo_info = self.get_repo_info(result['module'], result['sha'])
-            if not repo_info:
+            repo_info = repos_info[result['sha']]
+            if not repo_info.get('namespace'):
                 log.info('Skipping nodes creation with commit ID {0} and push ID {1}'.format(
                     result['commit_id'], result['push_id']))
                 continue
@@ -160,18 +174,19 @@ class DistGitScraper(BaseScraper):
         log.info('Getting dist-git commits since {0}'.format(since))
         return self.teiid.query(sql)
 
-    def get_repo_info(self, repo, commit):
+    def _get_repo_info(self, repo_and_commit):
         """
         Query cgit to find the namespace and the username and email address of the author and
         committer
-        :param repo: a string of the dist-git repository name
-        :param commit: a string of the commit hash to search for
+        :param repo_and_commit: a tuple containing the repo and commit to query for
         :return: a dictionary with the keys namespace, author_username, author_email,
-        committer_username, and committer_email
+        committer_username, committer_email, and the commit
         """
+        repo, commit = repo_and_commit
         log.debug('Attempting to find the cgit URL for the commit "{0}" in repo "{1}"'
                   .format(commit, repo))
         session = retry_session()
+        rv = {'commit': commit}
         cgit_result = None
         for namespace in self.namespaces:
             url = '{0}{1}/{2}/commit/?id={3}'.format(self.cgit_url, namespace, repo, commit)
@@ -189,13 +204,16 @@ class DistGitScraper(BaseScraper):
         if not cgit_result or cgit_result.status_code != 200:
             log.error('Couldn\'t find the commit "{0}" for the repo "{1}" in the namespaces: {2}'
                       .format(commit, repo, ', '.join(self.namespaces)))
-            return {}
+            return rv
 
         log.debug('Found the cgit URL "{0}" for the commit "{1}" in repo "{2}"'.format(
             url, commit, repo))
         soup = BeautifulSoup(cgit_result.text, 'html.parser')
-        rv = {'namespace': namespace}
+        rv['namespace'] = namespace
         for person in ('author', 'committer'):
+            # Set some defaults in the event the cgit entry is malformed
+            rv['{0}_username'.format(person)] = None
+            rv['{0}_email'.format(person)] = None
             # Workaround for BS4 in EL7 since `soup.find('th', string=person)` doesn't work in
             # that environment
             th_tags = soup.find_all('th')
@@ -203,12 +221,19 @@ class DistGitScraper(BaseScraper):
             for th_tag in th_tags:
                 if th_tag.string == 'author':
                     td_text = th_tag.next_sibling.string
+            error_msg = 'Couldn\'t find the {0} for the commit "{1}" on repo "{2}/{3}"'.format(
+                person, commit, namespace, repo)
             if td_text is None:
-                log.error('Couldn\'t find the author for the commit "{0}" on repo "{1}/{2}"'
-                          .format(commit, namespace, repo))
-                return rv
-            match_dict = re.match(
-                r'.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>', td_text).groupdict()
+                log.error(error_msg)
+                continue
+
+            match = re.match(
+                r'^.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>$', td_text)
+            if not match:
+                log.error(error_msg)
+                continue
+
+            match_dict = match.groupdict()
             if match_dict['domain'] == 'redhat.com':
                 rv['{0}_username'.format(person)] = match_dict['username']
             else:
