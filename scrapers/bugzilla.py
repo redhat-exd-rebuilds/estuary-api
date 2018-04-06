@@ -108,6 +108,8 @@ class BugzillaScraper(BaseScraper):
             if bug_dict['reporter']:
                 reporter = self.create_user_node(bug_dict['reported_by_email'])
                 bug.reporters.connect(reporter)
+                # Normalized relationship
+                bug.owners.connect(reporter)
                 reporter.bugs_reported_by.connect(bug)
                 reporter.bugzilla_bugs.connect(bug)
 
