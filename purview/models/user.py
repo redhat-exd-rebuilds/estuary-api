@@ -2,12 +2,13 @@
 
 from __future__ import unicode_literals
 
-from neomodel import (
-    StructuredNode, StringProperty, UniqueIdProperty,
-    RelationshipTo)
+from neomodel import StringProperty, UniqueIdProperty, RelationshipTo
+
+from purview.models.base import PurviewStructuredNode
 
 
-class User(StructuredNode):
+class User(PurviewStructuredNode):
+    _default_property = 'username'
     # A normalized relationship (same as advisories_reported_by)
     advisories = RelationshipTo('.errata.Advisory', 'OWNS')
     advisories_assigned = RelationshipTo('.errata.Advisory', 'ASSIGNED')

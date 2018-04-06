@@ -3,11 +3,12 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    StructuredNode, UniqueIdProperty, RelationshipTo,
-    IntegerProperty, StringProperty, DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, IntegerProperty, StringProperty, DateTimeProperty)
+
+from purview.models.base import PurviewStructuredNode
 
 
-class FreshmakerEvent(StructuredNode):
+class FreshmakerEvent(PurviewStructuredNode):
     event_type_id = IntegerProperty(requried=True)
     id_ = UniqueIdProperty(db_property='id')
     message_id = StringProperty(unique=True, required=True)
@@ -20,7 +21,7 @@ class FreshmakerEvent(StructuredNode):
     url = StringProperty(unique=True, required=True)
 
 
-class ContainerBuilds(StructuredNode):
+class ContainerBuilds(PurviewStructuredNode):
     build_id = IntegerProperty(unique=True, required=True)
     dep_on = StringProperty()
     event_id = IntegerProperty(required=True)

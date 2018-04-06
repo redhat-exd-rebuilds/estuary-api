@@ -3,11 +3,13 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    StructuredNode, StringProperty, IntegerProperty, UniqueIdProperty,
-    DateTimeProperty, FloatProperty, RelationshipTo)
+    StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty, FloatProperty,
+    RelationshipTo)
+
+from purview.models.base import PurviewStructuredNode
 
 
-class KojiBuild(StructuredNode):
+class KojiBuild(PurviewStructuredNode):
     advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
     completion_time = DateTimeProperty()
     creation_time = DateTimeProperty()
@@ -24,7 +26,7 @@ class KojiBuild(StructuredNode):
     version = StringProperty(required=True)
 
 
-class KojiTask(StructuredNode):
+class KojiTask(PurviewStructuredNode):
     arch = StringProperty(required=True)
     builds = RelationshipTo('KojiBuild', 'TRIGGERED_BY')
     children = RelationshipTo('KojiTask', 'CHILD')
@@ -40,7 +42,7 @@ class KojiTask(StructuredNode):
     weight = FloatProperty()
 
 
-class KojiTag(StructuredNode):
+class KojiTag(PurviewStructuredNode):
     builds = RelationshipTo('KojiBuild', 'CONTAINS')
     id_ = UniqueIdProperty(db_property='id')
     name = StringProperty(required=True)
