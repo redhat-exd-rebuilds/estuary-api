@@ -3,11 +3,12 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    StructuredNode, UniqueIdProperty, RelationshipTo, IntegerProperty, StringProperty,
-    DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, IntegerProperty, StringProperty, DateTimeProperty)
+
+from purview.models.base import PurviewStructuredNode
 
 
-class BugzillaBug(StructuredNode):
+class BugzillaBug(PurviewStructuredNode):
     assignees = RelationshipTo('.user.User', 'ASSIGNED_TO')
     attached_advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
     # This will always be "Red Hat" initially

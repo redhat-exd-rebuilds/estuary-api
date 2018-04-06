@@ -3,11 +3,12 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    StructuredNode, UniqueIdProperty, RelationshipTo, StringProperty,
-    ArrayProperty, DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, StringProperty, ArrayProperty, DateTimeProperty)
+
+from purview.models.base import PurviewStructuredNode
 
 
-class Advisory(StructuredNode):
+class Advisory(PurviewStructuredNode):
     actual_ship_date = DateTimeProperty()
     advisory_name = StringProperty(unique=True)
     content_types = ArrayProperty()
@@ -36,7 +37,7 @@ class Advisory(StructuredNode):
     triggers_freshmaker_event = RelationshipTo('.freshmaker.FreshmakerEvent', 'TRIGGERS')
 
 
-class AdvisoryState(StructuredNode):
+class AdvisoryState(PurviewStructuredNode):
     id_ = UniqueIdProperty()
     created_at = DateTimeProperty()
     updated_at = DateTimeProperty()

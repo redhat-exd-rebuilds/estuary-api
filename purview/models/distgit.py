@@ -3,11 +3,12 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    StructuredNode, UniqueIdProperty, RelationshipTo, StringProperty,
-    DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, StringProperty, DateTimeProperty)
+
+from purview.models.base import PurviewStructuredNode
 
 
-class DistGitRepo(StructuredNode):
+class DistGitRepo(PurviewStructuredNode):
     name = StringProperty(required=True)
     namespace = StringProperty(required=True)
     branches = RelationshipTo('DistGitBranch', 'CONTAINS')
@@ -16,14 +17,14 @@ class DistGitRepo(StructuredNode):
     pushes = RelationshipTo('DistGitPush', 'CONTAINS')
 
 
-class DistGitBranch(StructuredNode):
+class DistGitBranch(PurviewStructuredNode):
     name = StringProperty(required=True)
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
     pushes = RelationshipTo('DistGitPush', 'CONTAINS')
     repos = RelationshipTo('DistGitRepo', 'CONTAINED_BY')
 
 
-class DistGitPush(StructuredNode):
+class DistGitPush(PurviewStructuredNode):
     id_ = UniqueIdProperty(db_property='id')
     push_date = DateTimeProperty(required=True)
     push_ip = StringProperty()
@@ -34,7 +35,7 @@ class DistGitPush(StructuredNode):
     repos = RelationshipTo('DistGitRepo', 'PUSHED_TO')
 
 
-class DistGitCommit(StructuredNode):
+class DistGitCommit(PurviewStructuredNode):
     author_date = DateTimeProperty(required=True)
     commit_date = DateTimeProperty(required=True)
     id_ = UniqueIdProperty(db_property='id')
