@@ -51,7 +51,7 @@ class FreshmakerScraper(BaseScraper):
 
                 advisory = Advisory.get_or_create(dict(
                     id=fm_event['search_key']
-                ))
+                ))[0]
 
                 advisory.triggers_freshmaker_event.connect(event)
                 event.triggered_by_advisory.connect(advisory)
