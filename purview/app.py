@@ -6,6 +6,7 @@ import os
 
 from flask import Flask
 from werkzeug.exceptions import default_exceptions
+from neomodel import config as neomodel_config
 
 from purview.logger import init_logging
 from purview.error import json_error, ValidationError
@@ -38,6 +39,9 @@ def create_app(config_obj=None):
 
     if app.config['PRODUCTION'] and app.secret_key == 'replace-me-with-something-random':
         raise Warning('You need to change the app.secret_key value for production')
+
+    # Set the Neo4j connection URI based on the Flask config
+    neomodel_config.DATABASE_URL = app.config.get('NEO4J_URI')
 
     init_logging(app)
 
