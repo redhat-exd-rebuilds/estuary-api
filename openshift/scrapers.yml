@@ -64,7 +64,7 @@ objects:
       type: Git
     strategy:
       dockerStrategy:
-        dockerfilePath: Dockerfile-scrapers
+        dockerfilePath: docker/Dockerfile-scrapers
       type: Docker
   triggers:
     - type: ConfigChange
