@@ -7,6 +7,7 @@ import os
 from flask import Flask
 from werkzeug.exceptions import default_exceptions
 from neomodel import config as neomodel_config
+from neo4j.exceptions import ServiceUnavailable, AuthError
 
 from purview.logger import init_logging
 from purview.error import json_error, ValidationError
@@ -48,6 +49,8 @@ def create_app(config_obj=None):
     for status_code in default_exceptions.keys():
         app.register_error_handler(status_code, json_error)
     app.register_error_handler(ValidationError, json_error)
+    app.register_error_handler(ServiceUnavailable, json_error)
+    app.register_error_handler(AuthError, json_error)
     app.register_blueprint(api_v1, url_prefix='/api/v1')
 
     return app
