@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+from datetime import datetime
 
 from neomodel import StructuredNode
 from neomodel.relationship_manager import RelationshipDefinition
@@ -19,6 +20,10 @@ class PurviewStructuredNode(StructuredNode):
             # Rename as "id" for clarity
             rv['id'] = rv['id_']
             del rv['id_']
+
+        for key, value in self.__properties__.items():
+            if isinstance(value, datetime):
+                rv[key] = value.isoformat()
 
         # Imported here to prevent a circular import
         from purview.models.user import User
