@@ -34,6 +34,7 @@ class KojiScraper(BaseScraper):
             LEFT JOIN events ON build.create_event = events.id
             LEFT JOIN package ON build.pkg_id = package.id
             WHERE events.time IS NOT NULL AND events.time >= '{}'
+            ORDER BY build.id
             """.format(start_date)
 
         return self.teiid.query(sql=sql_query)
