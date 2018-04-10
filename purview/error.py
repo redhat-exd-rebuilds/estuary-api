@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from flask import jsonify
 from werkzeug.exceptions import HTTPException
+from neo4j.exceptions import ServiceUnavailable, AuthError
 
 
 class ValidationError(ValueError):
@@ -24,11 +25,16 @@ def json_error(error):
         response.status_code = error.code
     else:
         status_code = 500
+        message = None
         if isinstance(error, ValidationError):
             status_code = 400
+        elif isinstance(error, ServiceUnavailable) or isinstance(error, AuthError):
+            status_code = 503
+            message = 'The database connection failed'
+
         response = jsonify({
             'status': status_code,
-            'message': str(error)
+            'message': message or str(error)
         })
         response.status_code = status_code
     return response
