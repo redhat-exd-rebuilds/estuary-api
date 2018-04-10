@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import re
 from datetime import datetime
+from six import text_type
 
 from purview import log
 
@@ -33,3 +34,15 @@ def timestamp_to_datetime(timestamp):
                 raise ValueError(error_msg)
 
     raise ValueError(error_msg)
+
+
+def str_to_bool(item):
+    """
+    Converts a string to boolean
+    :param item: string indicating a boolean value
+    :return: a boolean equivalent
+    """
+    if isinstance(item, text_type):
+        return item.lower() in ('true', '1')
+    else:
+        return False
