@@ -7,6 +7,6 @@ from purview.models.errata import Advisory, AdvisoryState
 from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
 from purview.models.user import User
 
-all_models = {Advisory, AdvisoryState, BugzillaBug, ContainerBuilds, DistGitBranch,
+all_models = (Advisory, AdvisoryState, BugzillaBug, ContainerBuilds, DistGitBranch,
               DistGitCommit, DistGitPush, DistGitRepo, FreshmakerEvent, KojiBuild,
-              KojiTag, KojiTask, User}
+              KojiTag, KojiTask, User)
