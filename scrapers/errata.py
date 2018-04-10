@@ -75,6 +75,7 @@ class ErrataScraper(BaseScraper):
 
             for state in self.get_advisory_states(advisory['id']):
                 adv_state = AdvisoryState.create_or_update({
+                    'id_': state['id'],
                     'name': state['name'],
                     'created_at': state['created_at'],
                     'updated_at': state['updated_at']
@@ -147,7 +148,7 @@ class ErrataScraper(BaseScraper):
         :return: a list of a dictionaries
         """
         sql = """\
-            SELECT states.created_at, states.current as name, states.updated_at,
+            SELECT states.created_at, states.id, states.current as name, states.updated_at,
                 users.login_name AS username
             FROM Errata_public.state_indices as states
             LEFT JOIN Errata_public.users as users ON states.who_id = users.id
