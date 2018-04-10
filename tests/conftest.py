@@ -1,12 +1,26 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+import os
 
 import pytest
+from neomodel import config as neomodel_config, db as neo4j_db
 
 from purview.app import create_app
+
+neomodel_config.DATABASE_URL = os.environ.get('NEO4J_BOLT_URL', 'bolt://neo4j:neo4j@localhost:7687')
+neomodel_config.AUTO_INSTALL_LABELS = True
 
 
 @pytest.fixture(scope='session')
 def client():
     return create_app('purview.config.TestConfig').test_client()
+
+
+# Reinitialize Neo4j before each test
+@pytest.yield_fixture(autouse=True)
+def run_before_tests():
+    # Code that runs before each test
+    neo4j_db.cypher_query('MATCH (a) DETACH DELETE a')
+    # A test function will be run at this point
+    yield

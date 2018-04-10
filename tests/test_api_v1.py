@@ -2,8 +2,6 @@
 
 from __future__ import unicode_literals
 
-from mock import patch
-
 from purview import version
 from purview.models.user import User
 
@@ -16,9 +14,8 @@ def test_about_endpoint(client):
 
 
 def test_get_user(client):
-    user = User(id=71, username='someuser', email='someuser@redhat.com')
-    with patch('neomodel.match.NodeSet.get_or_none') as mock_neo4j:
-        mock_neo4j.return_value = user
-        rv = client.get('/api/v1/user/someuser')
+    # Create a placeholder user
+    user = User.get_or_create({'username': 'tbrady', 'email': 'tom.brady@domain.local'})[0]
+    rv = client.get('/api/v1/user/tbrady')
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == user.serialized

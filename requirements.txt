@@ -1,3 +1,2 @@
 Flask
-# Use the master branch while we wait for a release newer than 3.2.5
-git+git://github.com/neo4j-contrib/neomodel.git@HEAD#egg=neomodel-dev
+neomodel

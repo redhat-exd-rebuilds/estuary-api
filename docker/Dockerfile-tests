@@ -1,0 +1,25 @@
+FROM fedora:27
+
+RUN dnf -y install \
+  --setopt=deltarpm=0 \
+  --setopt=install_weak_deps=false \
+  --setopt=tsflags=nodocs \
+  nmap-ncat \
+  python2-devel \
+  python3-devel \
+  python3-flake8 \
+  python2-flask \
+  python3-flask \
+  python2-mock \
+  python3-mock \
+  python2-neomodel \
+  python3-neomodel \
+  python2-pytest \
+  python3-pytest \
+  python3-tox \
+  && dnf clean all
+
+VOLUME /src
+WORKDIR /src
+# Inspired from https://github.com/neo4j-contrib/neomodel/blob/master/tests-with-docker-compose.sh
+CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; flake8 && pytest-2 -v tests/ && pytest-3 -v tests/"]
