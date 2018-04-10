@@ -35,6 +35,6 @@ def get_resource(resource, uid):
                     else:
                         raise NotFound('This item does not exist')
     model_names = [model.__name__.lower() for model in all_models]
-    error = ('The requested resource "{0}" is invalid. Choose from the following:',
+    error = ('The requested resource "{0}" is invalid. Choose from the following: '
              '{1}, and {2}.'.format(resource, ', '.join(model_names[:-1]), model_names[-1]))
     raise ValidationError(error)
