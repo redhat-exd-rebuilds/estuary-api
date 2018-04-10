@@ -34,7 +34,10 @@ def get_resource(resource, uid):
                         return jsonify(item.serialized)
                     else:
                         raise NotFound('This item does not exist')
-    model_names = [model.__name__.lower() for model in all_models]
-    error = ('The requested resource "{0}" is invalid. Choose from the following:',
+    # Some models don't have unique ID's and those should be skipped
+    models_wo_uid = ('DistGitRepo', 'DistGitBranch')
+    model_names = [model.__name__.lower() for model in all_models
+                   if model.__name__ not in models_wo_uid]
+    error = ('The requested resource "{0}" is invalid. Choose from the following: '
              '{1}, and {2}.'.format(resource, ', '.join(model_names[:-1]), model_names[-1]))
     raise ValidationError(error)
