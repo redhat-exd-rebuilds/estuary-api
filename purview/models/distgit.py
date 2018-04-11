@@ -43,6 +43,7 @@ class DistGitCommit(PurviewStructuredNode):
     authors = RelationshipTo('.user.User', 'AUTHORED_BY')
     branches = RelationshipTo('DistGitBranch', 'CONTAINED_BY')
     committers = RelationshipTo('.user.User', 'OWNED_BY')
+    koji_builds = RelationshipTo('.koji.KojiBuild', 'RELATED_TO')
     owners = RelationshipTo('.user.User', 'OWNED_BY')
     pushes = RelationshipTo('DistGitPush', 'PUSHED_IN')
     related_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED_TO')

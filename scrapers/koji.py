@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+import xml.etree.ElementTree as ET
 
 from scrapers.base import BaseScraper
 from purview.models.koji import KojiBuild, KojiTask, KojiTag
 from purview.models.user import User
+from purview.models.distgit import DistGitCommit
 import purview.utils.general as utils
 from purview import log
 
@@ -123,6 +125,12 @@ class KojiScraper(BaseScraper):
             if build_dict['task_id']:
                 # Getting task related to the current build
                 task_dict = self.get_task(build_dict['task_id'])[0]
+                xml_root = ET.fromstring(task_dict['request'])
+                commit_hash = None
+                for child in xml_root.iter('string'):
+                    if child.text.startswith('git://'):
+                        commit_hash = child.text.rsplit('?#', 1)[1]
+                        break
             else:
                 # Continue if the task_id is None
                 continue
@@ -148,6 +156,10 @@ class KojiScraper(BaseScraper):
             user.koji_tasks.connect(task)
             task.builds.connect(build)
             task.owner.connect(user)
+            if commit_hash:
+                commit = DistGitCommit.get_or_create(dict(sha=commit_hash))[0]
+                commit.koji_builds.connect(build)
+                build.commits.connect(commit)
 
             child_tasks = self.get_task_children(task_dict['id'])
 
