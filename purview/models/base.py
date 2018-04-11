@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from datetime import datetime
 
 from neomodel import StructuredNode
-from neomodel.relationship_manager import RelationshipDefinition
 
 
 class PurviewStructuredNode(StructuredNode):
@@ -24,16 +23,5 @@ class PurviewStructuredNode(StructuredNode):
         for key, value in self.__properties__.items():
             if isinstance(value, datetime):
                 rv[key] = value.isoformat()
-
-        # Imported here to prevent a circular import
-        from purview.models.user import User
-
-        for prop, prop_def in self.defined_properties().items():
-            if isinstance(prop_def, RelationshipDefinition) and \
-                    prop_def.definition['node_class'] == User:
-                prop_obj = getattr(self, prop)
-                # For now all user relationships will be lists since we don't know if they are
-                # one-to-one. To change this, we'd need cardinality.
-                rv[prop] = [user.username for user in prop_obj.all()]
 
         return rv

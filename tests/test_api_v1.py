@@ -126,9 +126,9 @@ def test_about_endpoint(client):
         'email': 'tom.brady@domain.local'
     })
 ])
-def test_get_resource(client, model, resource, uid, test_input):
+def test_get_resource_relationship_false(client, model, resource, uid, test_input):
     item = model.get_or_create(test_input)[0]
-    rv = client.get('/api/v1/{0}/{1}'.format(resource, uid))
+    rv = client.get('/api/v1/{0}/{1}?relationship=false'.format(resource, uid))
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == item.serialized
 
