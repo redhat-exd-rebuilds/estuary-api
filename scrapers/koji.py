@@ -29,12 +29,12 @@ class KojiScraper(BaseScraper):
         # SQL query to fetch all builds from start date until now
         log.info('Getting all Koji builds since {0}'.format(start_date))
         sql_query = """
-            SELECT build.*, user.krb_principal as owner_username,
+            SELECT build.*, brew.users.krb_principal as owner_username,
                 events.time as creation_time, package.name as package_name
             FROM build
             LEFT JOIN events ON build.create_event = events.id
             LEFT JOIN package ON build.pkg_id = package.id
-            LEFT JOIN brew.users ON build.owner = user.id
+            LEFT JOIN brew.users ON build.owner = brew.users.id
             WHERE events.time IS NOT NULL AND events.time >= '{}'
             ORDER BY build.id
             """.format(start_date)
