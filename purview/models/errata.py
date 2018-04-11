@@ -38,7 +38,7 @@ class Advisory(PurviewStructuredNode):
 
 
 class AdvisoryState(PurviewStructuredNode):
-    id_ = UniqueIdProperty()
+    id_ = UniqueIdProperty(db_property='id')
     created_at = DateTimeProperty()
     updated_at = DateTimeProperty()
     name = StringProperty(required=True)
