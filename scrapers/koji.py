@@ -129,7 +129,7 @@ class KojiScraper(BaseScraper):
                 commit_hash = None
                 for child in xml_root.iter('string'):
                     if child.text.startswith('git://'):
-                        commit_hash = child.text.rsplit('?#', 1)[1]
+                        commit_hash = child.text.rsplit('#', 1)[1]
                         break
             else:
                 # Continue if the task_id is None
