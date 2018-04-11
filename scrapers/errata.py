@@ -91,10 +91,20 @@ class ErrataScraper(BaseScraper):
                 adv.attached_bugs.connect(bug)
                 bug.attached_advisories.connect(adv)
 
-            for attached_build in self.get_attached_builds(advisory['id']):
-                build = KojiBuild.get_or_create(attached_build)[0]
-                adv.attached_builds.connect(build)
-                build.advisories.connect(adv)
+            for associated_build in self.get_associated_builds(advisory['id']):
+                # If this is set, that means it was once part of the advisory but not anymore.
+                # This relationship needs to be deleted if it exists.
+                if associated_build['removed_index_id']:
+                    build = KojiBuild.nodes.get_or_none(id_=associated_build['id_'])
+                    if build:
+                        adv.attached_builds.disconnect(build)
+                        build.advisories.disconnect(adv)
+                else:
+                    # This key shouldn't be stored in Neo4j
+                    del associated_build['removed_index_id']
+                    build = KojiBuild.get_or_create(associated_build)[0]
+                    adv.attached_builds.connect(build)
+                    build.advisories.connect(adv)
 
     def get_advisories(self, since):
         """
@@ -158,18 +168,20 @@ class ErrataScraper(BaseScraper):
         log.info('Getting states tied to the advisory with ID {0}'.format(advisory_id))
         return self.teiid.query(sql)
 
-    def get_attached_builds(self, advisory_id):
+    def get_associated_builds(self, advisory_id):
         """
-        Query TEIID to find the Brew builds attached to a specific advisory
+        Query TEIID to find the Brew builds associated with a specific advisory
         :param advisory_id: an int of the advisory ID
         :return: a list of a dictionaries
         """
         sql = """\
-            SELECT builds.id as id_, packages.name, builds.release, builds.version
-            FROM Errata_public.brew_builds as builds
-            LEFT JOIN Errata_public.packages AS packages ON builds.package_id = packages.id
-            WHERE builds.released_errata_id = {0}
-            ORDER BY builds.id;
+            SELECT brew_builds.id as id_, packages.name, brew_builds.release, removed_index_id,
+                brew_builds.version
+            FROM Errata_public.errata_brew_mappings as brew_mappings
+            LEFT JOIN Errata_public.brew_builds AS brew_builds
+                ON brew_builds.id = brew_mappings.brew_build_id
+            LEFT JOIN Errata_public.packages AS packages
+                ON brew_builds.package_id = packages.id WHERE errata_id = {0};
         """.format(advisory_id)
         log.info('Getting Brew builds tied to the advisory with ID {0}'.format(advisory_id))
         return self.teiid.query(sql)
