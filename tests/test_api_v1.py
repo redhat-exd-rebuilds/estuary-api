@@ -42,11 +42,10 @@ def test_about_endpoint(client):
         'push_date': datetime(2018, 3, 14, 5, 53, 19),
         'id_': '12345'
     }),
-    (DistGitCommit, 'distgitcommit', '12345', {
+    (DistGitCommit, 'distgitcommit', 'f4dfc64c10a90492303e4f14ad3549a1a2b13575', {
         'commit_date': datetime(2018, 3, 14, 5, 52, 19),
         'author_date': datetime(2018, 3, 14, 5, 53, 25),
         'log_message': 'Repo creation',
-        'id_': '12345',
         'sha': 'f4dfc64c10a90492303e4f14ad3549a1a2b13575'
     }),
     (Advisory, 'advisory', '12345', {
