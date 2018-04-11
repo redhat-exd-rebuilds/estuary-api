@@ -39,6 +39,11 @@ class FreshmakerScraper(BaseScraper):
             log.debug('Querying {0}'.format(fm_url))
             rv_json = session.get(fm_url, timeout=15).json()
             for fm_event in rv_json['items']:
+                try:
+                    int(fm_event['search_key'])
+                except ValueError:
+                    # Skip Freshmaker Events that don't have the search_key as the Advisory ID
+                    continue
                 event = FreshmakerEvent.create_or_update(dict(
                     id_=fm_event['id'],
                     event_type_id=fm_event['event_type_id'],
