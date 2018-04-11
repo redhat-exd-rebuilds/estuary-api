@@ -30,7 +30,8 @@ class KojiScraper(BaseScraper):
         log.info('Getting all Koji builds since {0}'.format(start_date))
         sql_query = """
             SELECT build.*, brew.users.krb_principal as owner_username,
-                events.time as creation_time, package.name as package_name
+                brew.users.name as owner_name, events.time as creation_time,
+                package.name as package_name
             FROM build
             LEFT JOIN events ON build.create_event = events.id
             LEFT JOIN package ON build.pkg_id = package.id
@@ -92,9 +93,11 @@ class KojiScraper(BaseScraper):
                 release=build_dict['release']
             ))[0]
 
-            user = User.get_or_create(dict(
-                username=build_dict['owner_username'].split('@')[0]
-            ))[0]
+            if build_dict['owner_username']:
+                username = build_dict['owner_username'].split('@')[0]
+            else:
+                username = build_dict['owner_name']
+            user = User.get_or_create(dict(username=username))[0]
 
             build.owner.connect(user)
             user.koji_builds.connect(build)
