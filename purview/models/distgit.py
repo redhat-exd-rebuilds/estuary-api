@@ -36,8 +36,8 @@ class DistGitPush(PurviewStructuredNode):
 
 
 class DistGitCommit(PurviewStructuredNode):
-    author_date = DateTimeProperty(required=True)
-    commit_date = DateTimeProperty(required=True)
+    author_date = DateTimeProperty()
+    commit_date = DateTimeProperty()
     hash_ = UniqueIdProperty(db_property='hash')
     log_message = StringProperty()
     authors = RelationshipTo('.user.User', 'AUTHORED_BY')
