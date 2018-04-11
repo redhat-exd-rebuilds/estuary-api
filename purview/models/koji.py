@@ -11,6 +11,7 @@ from purview.models.base import PurviewStructuredNode
 
 class KojiBuild(PurviewStructuredNode):
     advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
+    commits = RelationshipTo('.distgit.DistGitCommit', 'RELATED_TO')
     completion_time = DateTimeProperty()
     creation_time = DateTimeProperty()
     epoch = StringProperty()
