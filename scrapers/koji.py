@@ -157,7 +157,7 @@ class KojiScraper(BaseScraper):
             task.builds.connect(build)
             task.owner.connect(user)
             if commit_hash:
-                commit = DistGitCommit.get_or_create(dict(sha=commit_hash))[0]
+                commit = DistGitCommit.get_or_create(dict(hash_=commit_hash))[0]
                 commit.koji_builds.connect(build)
                 build.commits.connect(commit)
 

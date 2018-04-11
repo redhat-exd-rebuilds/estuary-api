@@ -81,7 +81,7 @@ class DistGitScraper(BaseScraper):
             commit = DistGitCommit.get_or_create({
                 'author_date': result['author_date'],
                 'commit_date': result['commit_date'],
-                'sha': result['sha'],
+                'hash_': result['sha'],
                 # In case we get unicode characters in Python 2
                 'log_message': bytes(result['log_message'], 'utf-8').decode()
             })[0]
