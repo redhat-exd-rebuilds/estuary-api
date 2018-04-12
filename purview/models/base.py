@@ -11,18 +11,17 @@ class PurviewStructuredNode(StructuredNode):
 
     @property
     def serialized(self):
-        rv = self.__properties__
-        # Remove the Neo4j internal ID
-        del rv['id']
-        # "id_" is actually the node's ID from the source
-        if 'id_' in rv:
-            # Rename as "id" for clarity
-            rv['id'] = rv['id_']
-            del rv['id_']
-
+        rv = {}
         for key, value in self.__properties__.items():
+            # id is the internal Neo4j ID that we don't want to display to the user
+            if key == 'id':
+                continue
+            actual_key = getattr(self.__class__, key).db_property or key
+
             if isinstance(value, datetime):
-                rv[key] = value.isoformat()
+                rv[actual_key] = value.isoformat()
+            else:
+                rv[actual_key] = value
 
         return rv
 
