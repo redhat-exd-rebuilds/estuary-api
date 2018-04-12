@@ -128,7 +128,7 @@ class KojiScraper(BaseScraper):
                 xml_root = ET.fromstring(task_dict['request'])
                 commit_hash = None
                 for child in xml_root.iter('string'):
-                    if child.text.startswith('git://'):
+                    if child.text and child.text.startswith('git'):
                         commit_hash = child.text.rsplit('#', 1)[1]
                         break
             else:
