@@ -38,14 +38,10 @@ def get_resource(resource, uid):
                     if not item:
                         raise NotFound('This item does not exist')
 
-                    if relationship is False:
+                    if relationship:
+                        return jsonify(item.serialized_all)
+                    else:
                         return jsonify(item.serialized)
-
-                    serialized = item.serialized
-                    for relationship_name, _ in item.__all_relationships__:
-                        serialized[relationship_name] = [
-                            obj.serialized for obj in getattr(item, relationship_name).all()]
-                    return jsonify(serialized)
 
     # Some models don't have unique ID's and those should be skipped
     models_wo_uid = ('DistGitRepo', 'DistGitBranch')
