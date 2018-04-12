@@ -19,6 +19,8 @@ class DistGitRepo(PurviewStructuredNode):
 
 class DistGitBranch(PurviewStructuredNode):
     name = StringProperty(required=True)
+    repo_name = StringProperty(required=True)
+    repo_namespace = StringProperty(required=True)
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
     pushes = RelationshipTo('DistGitPush', 'CONTAINS')
     repos = RelationshipTo('DistGitRepo', 'CONTAINED_BY')

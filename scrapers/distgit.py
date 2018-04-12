@@ -76,8 +76,11 @@ class DistGitScraper(BaseScraper):
                 'name': result['module']
             })[0]
             branch_name = result['ref'].rsplit('/', 1)[1]
-            branch = DistGitBranch.get_or_create(
-                {'name': branch_name}, relationships=repo.branches)[0]
+            branch = DistGitBranch.get_or_create({
+                'name': branch_name,
+                'repo_namespace': repo_info['namespace'],
+                'repo_name': result['module']
+            })[0]
             commit = DistGitCommit.create_or_update({
                 'author_date': result['author_date'],
                 'commit_date': result['commit_date'],
