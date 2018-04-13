@@ -222,49 +222,55 @@ class DistGitScraper(BaseScraper):
         # Workaround for BS4 in EL7 since `soup.find('th', string=person)` doesn't work in
         # that environment
         th_tags = soup.find_all('th')
-        # Temporary variables so that the content can be validated later before being added to rv
-        author = None
-        committer = None
+        data_found = {'author': False, 'committer': False, 'parent': False}
         for th_tag in th_tags:
-            if th_tag.string == 'author':
-                author = th_tag.next_sibling.string
-            elif th_tag.string == 'committer':
-                committer = th_tag.next_sibling.string
+            if th_tag.string in ('author', 'committer'):
+                data_found[th_tag.string] = True
+                username_key = '{0}_username'.format(th_tag.string)
+                email_key = '{0}_email'.format(th_tag.string)
+                rv[username_key], rv[email_key] = self._parse_username_email_from_cgit(
+                    th_tag, commit, namespace, repo)
             elif th_tag.string == 'parent':
+                data_found['parent'] = True
                 rv['parent'] = th_tag.next_sibling.find('a').string
 
-            if author and committer and rv['parent']:
+            # If all the "th" elements we're interested in were parsed, then break from the loop
+            # early
+            if all(data_found.values()):
                 break
 
-        for person in ('author', 'committer'):
-            # Set some defaults in the event the cgit entry is malformed
-            rv['{0}_username'.format(person)] = None
-            rv['{0}_email'.format(person)] = None
-            error_msg = 'Couldn\'t find the {0} for the commit "{1}" on repo "{2}/{3}"'.format(
-                person, commit, namespace, repo)
+        return rv
 
-            if person == 'author':
-                person_text = author
-            else:
-                person_text = committer
+    @staticmethod
+    def _parse_username_email_from_cgit(th_tag, commit, namespace, repo):
+        """
+        Parse the username and email address from a cgit "th" element of author or committer
+        :param th_tag: a BeautifulSoup4 element object
+        :param commit: a string of the commit being processed
+        :param namespace: a string of the namespace of the repo being processed
+        :param repo: a string of the repo being processed
+        :return: a tuple of (username, email)
+        """
+        person_text = th_tag.next_sibling.string
+        # Set some defaults in the event the cgit entry is malformed
+        username = None
+        email = None
 
-            if person_text is None:
-                log.error(error_msg)
-                continue
-
+        if person_text:
             match = re.match(
                 r'^.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>$', person_text)
-            if not match:
-                log.error(error_msg)
-                continue
+            if match:
+                match_dict = match.groupdict()
+                if match_dict['domain'].lower() == 'redhat.com':
+                    username = match_dict['username'].lower()
+                else:
+                    # If the email isn't a Red Hat email address, then use the whole email address
+                    # as the username. This should only happen with erroneous git configurations.
+                    username = match_dict['email'].lower()
+                email = match_dict['email'].lower()
 
-            match_dict = match.groupdict()
-            if match_dict['domain'] == 'redhat.com':
-                rv['{0}_username'.format(person)] = match_dict['username']
-            else:
-                # If the email isn't a Red Hat email address, then use the whole email address
-                # as the username. This should only happen with erroneous git configurations.
-                rv['{0}_username'.format(person)] = match_dict['email']
-            rv['{0}_email'.format(person)] = match_dict['email']
+        if username is None or email is None:
+            log.error('Couldn\'t find the {0} for the commit "{1}" on repo "{2}/{3}"'.format(
+                      th_tag.string, commit, namespace, repo))
 
-        return rv
+        return username, email
