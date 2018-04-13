@@ -26,7 +26,7 @@ $ scripts/run-flask.sh
 Since the unit tests require a running Neo4j instance, the tests are run in Docker containers using
 Docker Compose. The commands required to run the unit tests are abstracted in
 `scripts/run-tests.sh`. This script will create the Docker image required to run the tests based
-on `docker/Dockerfile-tests`, create a container with `neo4j`, create another container to run
+on `docker/Dockerfile-tests`, create a container with Neo4j, create another container to run
 the tests based on the built Docker image, and then delete the two created containers.
 
 To install Docker and Docker Compose on Fedora, run:
