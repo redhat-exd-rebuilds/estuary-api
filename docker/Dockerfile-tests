@@ -18,6 +18,7 @@ RUN dnf -y install \
   python3-pytest \
   python3-tox \
   && dnf clean all
+RUN pip install flake8-docstrings
 
 VOLUME /src
 WORKDIR /src
