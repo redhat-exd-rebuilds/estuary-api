@@ -9,9 +9,8 @@ from purview.utils.teiid import Teiid
 
 
 class BaseScraper(object):
-    """
-    Base scraper class to standardize the main scraper functionality
-    """
+    """Base scraper class to standardize the main scraper functionality."""
+
     teiid_host = 'virtualdb.engineering.redhat.com'
     teiid_port = 5432
     # Default start date to fetch data from
@@ -20,14 +19,14 @@ class BaseScraper(object):
     def __init__(self, teiid_user=None, teiid_password=None, kerberos=False, neo4j_user='neo4j',
                  neo4j_password='neo4j', neo4j_server='localhost'):
         """
-        Initializes the BaseScraper class
-        :kwarg teiid_user: a string of the user to connect as
-        :kwarg teiid_password: a string of the password to connect as
-        :kwarg kerberos: a bool determining if Kerberos authentication should be used
-        :kwarg neo4j_user: a string of the Neo4j user to connect as
-        :kwarg neo4j_password: a string of the Neo4j user's password to connect with
-        :kwarg neo4j_server: a string of the FQDN of the Neo4j server
-        :return: None
+        Initialize the BaseScraper class.
+
+        :kwarg str teiid_user: the user to connect as
+        :kwarg str teiid_password: the password to connect as
+        :kwarg bool kerberos: if Kerberos authentication should be used
+        :kwarg str neo4j_user: the Neo4j user to connect as
+        :kwarg str neo4j_password: the Neo4j user's password to connect with
+        :kwarg str neo4j_server: the FQDN of the Neo4j server
         """
         if kerberos:
             # In case credentials were passed in, we can wipe them since we won't be using them
@@ -40,9 +39,9 @@ class BaseScraper(object):
 
     def run(self, since=None):
         """
-        Run the scraper
-        :kwarg since: a string of a UTC timestamp in the ISO 8601 format or
-        a datetime object
-        :return: None
+        Run the scraper.
+
+        :kwarg str since: a datetime to start scraping data from
+        :raises NotImplementedError: if the function is not overridden
         """
         raise NotImplementedError()

@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 
 
 class Config(object):
-    """
-    A Purview Flask configuration
-    """
+    """The base Purview application configuration."""
+
     DEBUG = True
     # We configure logging explicitly, turn off the Flask-supplied log handler.
     LOGGER_HANDLER_POLICY = 'never'
@@ -18,13 +17,19 @@ class Config(object):
 
 
 class ProdConfig(Config):
+    """The production Purview application configuration."""
+
     DEBUG = False
     PRODUCTION = True
 
 
 class DevConfig(Config):
+    """The development Purview application configuration."""
+
     pass
 
 
 class TestConfig(Config):
+    """The test Purview application configuration."""
+
     pass

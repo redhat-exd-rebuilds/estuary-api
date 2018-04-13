@@ -9,6 +9,8 @@ from purview.models.base import PurviewStructuredNode
 
 
 class DistGitRepo(PurviewStructuredNode):
+    """Definition of a dist-git repo in Neo4j."""
+
     name = StringProperty(required=True)
     namespace = StringProperty(required=True)
     branches = RelationshipTo('DistGitBranch', 'CONTAINS')
@@ -18,6 +20,8 @@ class DistGitRepo(PurviewStructuredNode):
 
 
 class DistGitBranch(PurviewStructuredNode):
+    """Definition of a dist-git branch in Neo4j."""
+
     name = StringProperty(required=True)
     repo_name = StringProperty(required=True)
     repo_namespace = StringProperty(required=True)
@@ -27,6 +31,8 @@ class DistGitBranch(PurviewStructuredNode):
 
 
 class DistGitPush(PurviewStructuredNode):
+    """Definition of a dist-git push in Neo4j."""
+
     id_ = UniqueIdProperty(db_property='id')
     push_date = DateTimeProperty(required=True)
     push_ip = StringProperty()
@@ -38,6 +44,8 @@ class DistGitPush(PurviewStructuredNode):
 
 
 class DistGitCommit(PurviewStructuredNode):
+    """Definition of a dist-git commit in Neo4j."""
+
     author_date = DateTimeProperty()
     commit_date = DateTimeProperty()
     hash_ = UniqueIdProperty(db_property='hash')

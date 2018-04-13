@@ -1,4 +1,4 @@
 [flake8]
-ignore = E731
+ignore = D100,D104
 max-line-length = 100
-exclude = .tox,.git
+exclude = .git

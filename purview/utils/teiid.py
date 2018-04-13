@@ -9,8 +9,17 @@ from purview import log
 
 
 class Teiid(object):
+    """Abstracts interfacing with TEIID to simplify connections and queries."""
 
     def __init__(self, host, port, username, password):
+        """
+        Initialize the Teiid class.
+
+        :param str host: the TEIID FQDN or IP address
+        :param int port: the port to connect to TEIID with
+        :param str username: the username to connect to TEIID with
+        :param str password: the password to connect to TEIID with
+        """
         self.host = host
         self.port = port
         self.username = username
@@ -20,9 +29,11 @@ class Teiid(object):
 
     def get_connection(self, db_name):
         """
-        Return an existing psycopg2 connection and establish it if needed
-        :arg db_name: a string of the database name to get a connection to
-        :return: a psycopg2 connection
+        Return an existing psycopg2 connection and establish it if needed.
+
+        :param str db_name: the database name to get a connection to
+        :return: a connection to TEIID
+        :rtype: psycopg2 connection
         """
         if db_name in self._connections:
             return self._connections[db_name]
@@ -47,12 +58,14 @@ class Teiid(object):
 
     def query(self, sql, db='public', retry=3):
         """
-        Send the SQL query to Teiid and return the rows as a list
-        :param sql: a string of the SQL query to send to the database
-        :kwarg db: the database name to query on
-        :kwarg retry: an int of the  number of times to retry a failed query
+        Send the SQL query to Teiid and return the rows as a list.
+
+        :param str sql: the SQL query to send to the database
+        :kwarg str db: the database name to query on
+        :kwarg int retry: the  number of times to retry a failed query
         :return: a list of rows from Teiid. Each row is a dictionary
-        with the column header as the key.
+        with the column headers as the keys.
+        :rtype: list
         """
         con = self.get_connection(db)
         cursor = con.cursor()

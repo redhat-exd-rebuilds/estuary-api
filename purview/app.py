@@ -15,6 +15,11 @@ from purview.api.v1 import api_v1
 
 
 def load_config(app):
+    """
+    Determine the correct configuration to use and apply it.
+
+    :param flask.Flask app: a Flask application object
+    """
     default_config_file = None
     if os.getenv('DEV') and os.getenv('DEV').lower() == 'true':
         default_config_obj = 'purview.config.DevConfig'
@@ -32,6 +37,12 @@ def load_config(app):
 
 
 def create_app(config_obj=None):
+    """
+    Create a Flask application object.
+
+    :return: a Flask application object
+    :rtype: flask.Flask
+    """
     app = Flask(__name__)
     if config_obj:
         app.config.from_object(config_obj)

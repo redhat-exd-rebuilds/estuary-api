@@ -10,9 +10,12 @@ from purview import log
 
 def timestamp_to_datetime(timestamp):
     """
-    Parses a timestamp and return a datetime object
-    :param timestamp: a string of a timestamp
-    :return: a datetime object
+    Convert a string timestamp to a datetime object.
+
+    :param str timestamp: a generic or ISO-8601 timestamp
+    :return: datetime object of the timestamp
+    :rtype: datetime.datetime
+    :raises ValueError: if the timestamp is an unsupported or invalid format
     """
     log.debug('Trying to parse the timestamp "{0}"'.format(timestamp))
     error_msg = 'The timestamp "{0}" is an invalid format'.format(timestamp)
@@ -38,9 +41,11 @@ def timestamp_to_datetime(timestamp):
 
 def str_to_bool(item):
     """
-    Converts a string to boolean
-    :param item: string indicating a boolean value
+    Convert a string to a boolean.
+
+    :param str item: string to parse
     :return: a boolean equivalent
+    :rtype: boolean
     """
     if isinstance(item, text_type):
         return item.lower() in ('true', '1')

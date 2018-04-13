@@ -17,14 +17,25 @@ api_v1 = Blueprint('api_v1', __name__)
 @api_v1.route('/about')
 def about():
     """
-    Display version info about purview
-    :return: A JSON object with version info
+    Display general information about the app.
+
+    :rtype: flask.Response
     """
     return jsonify({'version': version})
 
 
 @api_v1.route('/<resource>/<uid>')
 def get_resource(resource, uid):
+    """
+    Get a resource from Neo4j.
+
+    :param str resource: a resource name that maps to a neomodel class
+    :param str uid: the value of the UniqueIdProperty to query with
+    :return: a Flask JSON response
+    :rtype: flask.Response
+    :raises NotFound: if the item is not found
+    :raises ValidationError: if an invalid resource was requested
+    """
     # Default the relationship flag to True
     relationship = True
     if request.args.get('relationship'):

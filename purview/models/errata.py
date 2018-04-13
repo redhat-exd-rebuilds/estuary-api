@@ -9,6 +9,8 @@ from purview.models.base import PurviewStructuredNode
 
 
 class Advisory(PurviewStructuredNode):
+    """Definition of an Errata advisory in Neo4j."""
+
     actual_ship_date = DateTimeProperty()
     advisory_name = StringProperty(unique=True)
     content_types = ArrayProperty()
@@ -38,6 +40,8 @@ class Advisory(PurviewStructuredNode):
 
 
 class AdvisoryState(PurviewStructuredNode):
+    """A representation of the states of an Errata advisory in Neo4j."""
+
     id_ = UniqueIdProperty(db_property='id')
     created_at = DateTimeProperty()
     updated_at = DateTimeProperty()

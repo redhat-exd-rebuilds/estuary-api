@@ -8,6 +8,12 @@ from requests.packages.urllib3.util.retry import Retry
 
 
 def retry_session():
+    """
+    Create a python-requests session that retries on connection failures.
+
+    :return: a configured session object
+    :rtype: requests.Session
+    """
     session = requests.Session()
     retry = Retry(
         total=5,

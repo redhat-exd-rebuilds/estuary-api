@@ -7,10 +7,18 @@ from neomodel import StructuredNode
 
 
 class PurviewStructuredNode(StructuredNode):
+    """Base class for Purview Neo4j models."""
+
     __abstract_node__ = True
 
     @property
     def serialized(self):
+        """
+        Convert a model to serialized form.
+
+        :return: a serialized form of the node
+        :rtype: dictionary
+        """
         rv = {}
         for key, value in self.__properties__.items():
             # id is the internal Neo4j ID that we don't want to display to the user
@@ -28,8 +36,11 @@ class PurviewStructuredNode(StructuredNode):
     @property
     def serialized_all(self):
         """
-        Returns a serialized form of the node with all its relationships
-        :return: a dictionary
+        Generate a serialized form of the node that includes all its relationships.
+
+        :return: a serialized form of the node with relationships
+        :rtype: dictionary
+        :raises RuntimeError: if the label of a Neo4j node can't be mapped back to a neomodel class
         """
         # Must be imported here to prevent a circular import
         from purview.models import all_models

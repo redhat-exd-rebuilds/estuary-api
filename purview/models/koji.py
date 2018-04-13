@@ -10,6 +10,8 @@ from purview.models.base import PurviewStructuredNode
 
 
 class KojiBuild(PurviewStructuredNode):
+    """Definition of a Koji build in Neo4j."""
+
     advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
     commits = RelationshipTo('.distgit.DistGitCommit', 'RELATED_TO')
     completion_time = DateTimeProperty()
@@ -28,6 +30,8 @@ class KojiBuild(PurviewStructuredNode):
 
 
 class KojiTask(PurviewStructuredNode):
+    """Definition of a Koji task in Neo4j."""
+
     arch = StringProperty(required=True)
     builds = RelationshipTo('KojiBuild', 'TRIGGERED_BY')
     children = RelationshipTo('KojiTask', 'CHILD')
@@ -44,6 +48,8 @@ class KojiTask(PurviewStructuredNode):
 
 
 class KojiTag(PurviewStructuredNode):
+    """Definition of a Koji tag in Neo4j."""
+
     builds = RelationshipTo('KojiBuild', 'CONTAINS')
     id_ = UniqueIdProperty(db_property='id')
     name = StringProperty(required=True)

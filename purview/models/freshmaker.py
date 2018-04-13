@@ -9,6 +9,8 @@ from purview.models.base import PurviewStructuredNode
 
 
 class FreshmakerEvent(PurviewStructuredNode):
+    """Definition of a Freshmaker event in Neo4j."""
+
     event_type_id = IntegerProperty(requried=True)
     id_ = UniqueIdProperty(db_property='id')
     message_id = StringProperty(unique=True, required=True)
@@ -22,6 +24,8 @@ class FreshmakerEvent(PurviewStructuredNode):
 
 
 class ContainerBuilds(PurviewStructuredNode):
+    """Definition of a container build triggered by Freshmaker in Neo4j."""
+
     build_id = IntegerProperty(unique=True, required=True)
     dep_on = StringProperty()
     event_id = IntegerProperty(required=True)

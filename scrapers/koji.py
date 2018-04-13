@@ -12,8 +12,14 @@ from purview import log
 
 
 class KojiScraper(BaseScraper):
+    """Scrapes the Koji tables in TEIID."""
 
     def run(self, since=None):
+        """
+        Run the Koji scraper.
+
+        :param str since: a datetime to start scraping data from
+        """
         log.info('Starting initial load for Koji')
         # Initialize a start date from which all builds must be fetched
         # If no input is given by the user, fetch builds from the past two years
@@ -28,6 +34,13 @@ class KojiScraper(BaseScraper):
         log.info('Initial load of Koji builds complete!')
 
     def get_koji_builds(self, start_date):
+        """
+        Query TEIID for Koji builds.
+
+        :param datetime.datetime start_date: determines when to start the query
+        :return: a list of dictionaries
+        :rtype: list
+        """
         # SQL query to fetch all builds from start date until now
         log.info('Getting all Koji builds since {0}'.format(start_date))
         sql_query = """
@@ -45,6 +58,13 @@ class KojiScraper(BaseScraper):
         return self.teiid.query(sql=sql_query)
 
     def get_task(self, task_id):
+        """
+        Query TEIID for a Koji task.
+
+        :param int task_id: the Koji task ID to query
+        :return: a list of dictionaries
+        :rtype: list
+        """
         # SQL query to fetch task related to a certain build
         sql_query = """
             SELECT *
@@ -55,6 +75,13 @@ class KojiScraper(BaseScraper):
         return self.teiid.query(sql=sql_query)
 
     def get_task_children(self, parent):
+        """
+        Query TEIID for all child tasks of a Koji task.
+
+        :param int parent: the parent Koji task ID
+        :return: a list of dictionaries
+        :rtype: list
+        """
         # SQL query to fetch all child tasks related to a
         # parent task
         sql_query = """
@@ -66,6 +93,13 @@ class KojiScraper(BaseScraper):
         return self.teiid.query(sql=sql_query)
 
     def get_build_tag(self, build_id):
+        """
+        Query TEIID for all tags a build is tagged in.
+
+        :param int build_id: the Koji build's ID
+        :return: a list of dictionaries
+        :rtype: list
+        """
         # SQL query to fetch tag name related to a certain build
         sql_query = """
             SELECT tag_listing.tag_id AS tag_id, tags.name AS tag_name
@@ -77,6 +111,11 @@ class KojiScraper(BaseScraper):
         return self.teiid.query(sql=sql_query)
 
     def update_neo4j(self, builds):
+        """
+        Update Neo4j with Koji build information from TEIID.
+
+        :param list builds: a list of dictionaries
+        """
         # Uploads builds data to their respective nodes
         log.info('Beginning to upload data to Neo4j')
         count = 0
