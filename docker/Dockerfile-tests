@@ -22,4 +22,4 @@ RUN dnf -y install \
 VOLUME /src
 WORKDIR /src
 # Inspired from https://github.com/neo4j-contrib/neomodel/blob/master/tests-with-docker-compose.sh
-CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; flake8 && pytest-2 -vvv tests/ && pytest-3 -vvv tests/"]
+CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; pytest-2 -vvv tests/ && pytest-3 -vvv tests/ && flake8"]
