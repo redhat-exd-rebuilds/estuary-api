@@ -76,8 +76,11 @@ class DistGitScraper(BaseScraper):
                 'name': result['module']
             })[0]
             branch_name = result['ref'].rsplit('/', 1)[1]
-            branch = DistGitBranch.get_or_create(
-                {'name': branch_name}, relationships=repo.branches)[0]
+            branch = DistGitBranch.get_or_create({
+                'name': branch_name,
+                'repo_namespace': repo_info['namespace'],
+                'repo_name': result['module']
+            })[0]
             commit = DistGitCommit.create_or_update({
                 'author_date': result['author_date'],
                 'commit_date': result['commit_date'],
@@ -143,6 +146,11 @@ class DistGitScraper(BaseScraper):
             commit.branches.connect(branch)
             commit.repos.connect(repo)
 
+            if repo_info['parent']:
+                parent_commit = DistGitCommit.get_or_create({'hash_': repo_info['parent']})[0]
+                commit.parents.connect(parent_commit)
+                parent_commit.children.connect(commit)
+
             if result['bugzilla_type'] == 'related':
                 commit.related_bugs.connect(bug)
                 bug.related_by_commits.connect(commit)
@@ -185,7 +193,7 @@ class DistGitScraper(BaseScraper):
         log.debug('Attempting to find the cgit URL for the commit "{0}" in repo "{1}"'
                   .format(commit, repo))
         session = retry_session()
-        rv = {'commit': commit}
+        rv = {'commit': commit, 'parent': None}
         cgit_result = None
         for namespace in self.namespaces:
             url = '{0}{1}/{2}/commit/?id={3}'.format(self.cgit_url, namespace, repo, commit)
@@ -207,38 +215,62 @@ class DistGitScraper(BaseScraper):
 
         log.debug('Found the cgit URL "{0}" for the commit "{1}" in repo "{2}"'.format(
             url, commit, repo))
-        soup = BeautifulSoup(cgit_result.text, 'html.parser')
         rv['namespace'] = namespace
-        for person in ('author', 'committer'):
-            # Set some defaults in the event the cgit entry is malformed
-            rv['{0}_username'.format(person)] = None
-            rv['{0}_email'.format(person)] = None
-            # Workaround for BS4 in EL7 since `soup.find('th', string=person)` doesn't work in
-            # that environment
-            th_tags = soup.find_all('th')
-            td_text = None
-            for th_tag in th_tags:
-                if th_tag.string == 'author':
-                    td_text = th_tag.next_sibling.string
-            error_msg = 'Couldn\'t find the {0} for the commit "{1}" on repo "{2}/{3}"'.format(
-                person, commit, namespace, repo)
-            if td_text is None:
-                log.error(error_msg)
-                continue
 
-            match = re.match(
-                r'^.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>$', td_text)
-            if not match:
-                log.error(error_msg)
-                continue
+        # Start parsing the cgit content
+        soup = BeautifulSoup(cgit_result.text, 'html.parser')
+        # Workaround for BS4 in EL7 since `soup.find('th', string=person)` doesn't work in
+        # that environment
+        th_tags = soup.find_all('th')
+        data_found = {'author': False, 'committer': False, 'parent': False}
+        for th_tag in th_tags:
+            if th_tag.string in ('author', 'committer'):
+                data_found[th_tag.string] = True
+                username_key = '{0}_username'.format(th_tag.string)
+                email_key = '{0}_email'.format(th_tag.string)
+                rv[username_key], rv[email_key] = self._parse_username_email_from_cgit(
+                    th_tag, commit, namespace, repo)
+            elif th_tag.string == 'parent':
+                data_found['parent'] = True
+                rv['parent'] = th_tag.next_sibling.find('a').string
 
-            match_dict = match.groupdict()
-            if match_dict['domain'] == 'redhat.com':
-                rv['{0}_username'.format(person)] = match_dict['username']
-            else:
-                # If the email isn't a Red Hat email address, then use the whole email address
-                # as the username. This should only happen with erroneous git configurations.
-                rv['{0}_username'.format(person)] = match_dict['email']
-            rv['{0}_email'.format(person)] = match_dict['email']
+            # If all the "th" elements we're interested in were parsed, then break from the loop
+            # early
+            if all(data_found.values()):
+                break
 
         return rv
+
+    @staticmethod
+    def _parse_username_email_from_cgit(th_tag, commit, namespace, repo):
+        """
+        Parse the username and email address from a cgit "th" element of author or committer
+        :param th_tag: a BeautifulSoup4 element object
+        :param commit: a string of the commit being processed
+        :param namespace: a string of the namespace of the repo being processed
+        :param repo: a string of the repo being processed
+        :return: a tuple of (username, email)
+        """
+        person_text = th_tag.next_sibling.string
+        # Set some defaults in the event the cgit entry is malformed
+        username = None
+        email = None
+
+        if person_text:
+            match = re.match(
+                r'^.+<(?P<email>(?P<username>.+)@(?P<domain>.+))>$', person_text)
+            if match:
+                match_dict = match.groupdict()
+                if match_dict['domain'].lower() == 'redhat.com':
+                    username = match_dict['username'].lower()
+                else:
+                    # If the email isn't a Red Hat email address, then use the whole email address
+                    # as the username. This should only happen with erroneous git configurations.
+                    username = match_dict['email'].lower()
+                email = match_dict['email'].lower()
+
+        if username is None or email is None:
+            log.error('Couldn\'t find the {0} for the commit "{1}" on repo "{2}/{3}"'.format(
+                      th_tag.string, commit, namespace, repo))
+
+        return username, email

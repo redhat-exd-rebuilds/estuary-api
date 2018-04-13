@@ -19,6 +19,8 @@ class DistGitRepo(PurviewStructuredNode):
 
 class DistGitBranch(PurviewStructuredNode):
     name = StringProperty(required=True)
+    repo_name = StringProperty(required=True)
+    repo_namespace = StringProperty(required=True)
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
     pushes = RelationshipTo('DistGitPush', 'CONTAINS')
     repos = RelationshipTo('DistGitRepo', 'CONTAINED_BY')
@@ -42,9 +44,11 @@ class DistGitCommit(PurviewStructuredNode):
     log_message = StringProperty()
     authors = RelationshipTo('.user.User', 'AUTHORED_BY')
     branches = RelationshipTo('DistGitBranch', 'CONTAINED_BY')
+    children = RelationshipTo('.distgit.DistGitCommit', 'CHILD')
     committers = RelationshipTo('.user.User', 'OWNED_BY')
     koji_builds = RelationshipTo('.koji.KojiBuild', 'RELATED_TO')
     owners = RelationshipTo('.user.User', 'OWNED_BY')
+    parents = RelationshipTo('.distgit.DistGitCommit', 'PARENT')
     pushes = RelationshipTo('DistGitPush', 'PUSHED_IN')
     related_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED_TO')
     repos = RelationshipTo('DistGitRepo', 'CONTAINED_BY')
