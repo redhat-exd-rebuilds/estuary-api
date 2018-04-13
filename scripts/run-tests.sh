@@ -6,7 +6,13 @@ for dir in purview tests; do
 done
 
 docker-compose -f docker/docker-compose-tests.yml up -d neo4j
-docker-compose -f docker/docker-compose-tests.yml run --rm tests
+if [ "$1" != "" ]; then
+    # The user passed at least one argument, so use those arguments as the run command instead
+    # of the default
+    docker-compose -f docker/docker-compose-tests.yml run --rm tests sh -c "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; $*"
+else
+    docker-compose -f docker/docker-compose-tests.yml run --rm tests
+fi
 RESULT=$?
 docker-compose -f docker/docker-compose-tests.yml rm --stop --force -v
 exit ${RESULT}
