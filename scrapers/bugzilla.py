@@ -10,12 +10,13 @@ from purview import log
 
 
 class BugzillaScraper(BaseScraper):
+    """Scrapes the Bugzilla tables in TEIID."""
 
     def run(self, since=None):
         """
-        Main function that runs the Bugzilla scraper
-        :param since: a string representing a datetime to start scraping data from
-        :return: None
+        Run the Bugzilla scraper.
+
+        :param str since: a datetime to start scraping data from
         """
         log.info('Starting initial load of Bugzilla bugs')
         if since is None:
@@ -30,9 +31,11 @@ class BugzillaScraper(BaseScraper):
 
     def get_bugzilla_bugs(self, start_date):
         """
-        Gets Buzilla bugs info from Teiid
-        :param start_date: a datetime object representing a datetime to start scraping data from
+        Get the Buzilla bugs information from Teiid.
+
+        :param datetime.datetime start_date: when to start scraping data from
         :return: list of dictionaries containing bug info
+        :rtype: list
         """
         log.info('Getting all Bugzilla bugs since {0}'.format(start_date))
         sql_query = """
@@ -53,8 +56,9 @@ class BugzillaScraper(BaseScraper):
 
     def create_user_node(self, email):
         """
-        Creates User node in Neo4j
-        :param email: a string representing user's email
+        Create a User node in Neo4j.
+
+        :param str email: the user's email
         :return: User object
         """
         # If email is a Red Hat email address, username is same as domain name
@@ -72,9 +76,9 @@ class BugzillaScraper(BaseScraper):
 
     def update_neo4j(self, bugs):
         """
-        Update Neo4j with Bugzilla bugs information from TEIID
-        :param bugs: a list of dictionaries
-        :return: None
+        Update Neo4j with Bugzilla bugs information from TEIID.
+
+        :param list bugs: a list of dictionaries
         """
         log.info('Beginning to upload data to Neo4j')
         count = 0

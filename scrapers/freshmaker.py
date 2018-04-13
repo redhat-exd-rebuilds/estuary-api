@@ -11,14 +11,15 @@ from purview import log
 
 
 class FreshmakerScraper(BaseScraper):
-    # Defining URL for Freshmaker API
+    """Scrapes the Freshmaker API."""
+
     freshmaker_url = "https://freshmaker.engineering.redhat.com/api/1/events/?per_page=100"
 
     def run(self, since=None):
         """
-        Main function that runs the Freshmaker scraper
-        :param since: a string representing a datetime to start scraping data from
-        :return: None
+        Run the Freshmaker scraper.
+
+        :param str since: a datetime to start scraping data from
         """
         if since:
             log.warn('Ignoring the since parameter; It doesn\'t apply to the Freshmaker scraper')
@@ -28,9 +29,9 @@ class FreshmakerScraper(BaseScraper):
 
     def query_api_and_update_neo4j(self):
         """
-        Scrapes Freshmaker API and uploads data to Neo4j
-        :param start_date: a string representing a datetime to start scraping data from
-        :return: None
+        Scrape the Freshmaker API and upload the data to Neo4j.
+
+        :param str start_date: a datetime to start scraping data from
         """
         # Initialize session and url
         session = retry_session()

@@ -9,6 +9,8 @@ from purview.models.base import PurviewStructuredNode
 
 
 class BugzillaBug(PurviewStructuredNode):
+    """Definition of a Bugzilla bug in Neo4j."""
+
     assignees = RelationshipTo('.user.User', 'ASSIGNED_TO')
     attached_advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
     # This will always be "Red Hat" initially

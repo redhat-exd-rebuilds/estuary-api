@@ -15,6 +15,7 @@ from purview.utils.general import timestamp_to_datetime
     ('2018-04-15T20:30:10.12312Z', datetime(2018, 4, 15, 20, 30, 10))
 ])
 def test_timestamp_to_datetime_iso(input_dt, expected_dt):
+    """Test that an ISO 8601 timestamp can be converted to a datetime object."""
     assert timestamp_to_datetime(input_dt) == expected_dt
 
 
@@ -25,6 +26,7 @@ def test_timestamp_to_datetime_iso(input_dt, expected_dt):
     ('2018-4-1 21:30:10', datetime(2018, 4, 1, 21, 30, 10))
 ])
 def test_timestamp_to_datetime(input_dt, expected_dt):
+    """Test that a generic timestamp can be converted to a datetime object."""
     assert timestamp_to_datetime(input_dt) == expected_dt
 
 
@@ -37,6 +39,7 @@ def test_timestamp_to_datetime(input_dt, expected_dt):
     ('2018-90-15'),
 ])
 def test_timestamp_to_datetime_invalid(input_dt):
+    """Test that an error is raised when an invalid timestamp is provided."""
     with pytest.raises(ValueError)as exc_info:
         timestamp_to_datetime(input_dt)
     assert 'The timestamp "{0}" is an invalid format'.format(input_dt) == str(exc_info.value)

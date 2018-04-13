@@ -8,14 +8,18 @@ from neo4j.exceptions import ServiceUnavailable, AuthError
 
 
 class ValidationError(ValueError):
+    """A custom exception handled by Flask to denote bad user input."""
+
     pass
 
 
 def json_error(error):
     """
-    Converts exceptions to JSON responses
-    :param: an Exception object
-    :return: a JSON response
+    Convert exceptions to JSON responses.
+
+    :param Exception error: an Exception to convert to JSON
+    :return: a Flask JSON response
+    :rtype: flask.Response
     """
     if isinstance(error, HTTPException):
         response = jsonify({

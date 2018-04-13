@@ -18,6 +18,8 @@ from purview import log
 
 
 class DistGitScraper(BaseScraper):
+    """Scrapes the GitBZ tables in TEIID."""
+
     cgit_url = 'http://pkgs.devel.redhat.com/cgit/'
     # The tuple of namespaces to try when determining which namespace this git module belongs
     # to since this information isn't stored in GitBZ yet
@@ -25,9 +27,9 @@ class DistGitScraper(BaseScraper):
 
     def run(self, since=None):
         """
-        Main function that runs the dist-git scraper
-        :param since: a string representing a datetime to start scraping data from
-        :return: None
+        Run the dist-git scraper.
+
+        :param str since: a datetime to start scraping data from
         """
         log.info('Starting initial load of dist-git commits and pushes')
         if since is None:
@@ -41,9 +43,9 @@ class DistGitScraper(BaseScraper):
 
     def update_neo4j(self, results):
         """
-        Update Neo4j with the dist-git commit and push information from TEIID
-        :param results: a list of dictionaries
-        :return: None
+        Update Neo4j with the dist-git commit and push information from TEIID.
+
+        :param list results: a list of dictionaries
         """
         pool = ThreadPool(8)
         counter = 0
@@ -163,9 +165,11 @@ class DistGitScraper(BaseScraper):
 
     def get_distgit_data(self, since):
         """
-        Query TEIID for the dist-git commit, push, and Bugzilla information
-        :param since: a datetime object that determines when to start query
+        Query TEIID for the dist-git commit, push, and Bugzilla information.
+
+        :param datetime.datetime since: determines when to start the query
         :return: a list of dictionaries
+        :rtype: list
         """
         sql = """\
             SELECT c.commit_id, c.author, c.author_date, c.committer, c.commit_date, c.log_message,
@@ -183,11 +187,12 @@ class DistGitScraper(BaseScraper):
 
     def _get_repo_info(self, repo_and_commit):
         """
-        Query cgit to find the namespace and the username and email address of the author and
-        committer
-        :param repo_and_commit: a tuple containing the repo and commit to query for
+        Query cgit for the namespace, parent commit, username and email of the author and committer.
+
+        :param tuple repo_and_commit: contains the repo and commit to query for
         :return: a dictionary with the keys namespace, author_username, author_email,
         committer_username, committer_email, and the commit
+        :rtype: dictionary
         """
         repo, commit = repo_and_commit
         log.debug('Attempting to find the cgit URL for the commit "{0}" in repo "{1}"'
@@ -244,12 +249,14 @@ class DistGitScraper(BaseScraper):
     @staticmethod
     def _parse_username_email_from_cgit(th_tag, commit, namespace, repo):
         """
-        Parse the username and email address from a cgit "th" element of author or committer
+        Parse the username and email address from a cgit "th" element of author or committer.
+
         :param th_tag: a BeautifulSoup4 element object
-        :param commit: a string of the commit being processed
-        :param namespace: a string of the namespace of the repo being processed
-        :param repo: a string of the repo being processed
+        :param str commit: the commit being processed
+        :param str namespace: the namespace of the repo being processed
+        :param str repo: the repo being processed
         :return: a tuple of (username, email)
+        :rtype: tuple
         """
         person_text = th_tag.next_sibling.string
         # Set some defaults in the event the cgit entry is malformed

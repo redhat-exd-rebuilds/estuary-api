@@ -8,6 +8,8 @@ from purview.models.base import PurviewStructuredNode
 
 
 class User(PurviewStructuredNode):
+    """Definition of a generic user in Neo4j."""
+
     _default_property = 'username'
     # A normalized relationship (same as advisories_reported_by)
     advisories = RelationshipTo('.errata.Advisory', 'OWNS')

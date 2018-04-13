@@ -16,7 +16,8 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
 from purview.models.koji import KojiBuild, KojiTask, KojiTag
 
 
-def test_about_endpoint(client):
+def test_about(client):
+    """Test the /api/v1/about route."""
     rv = client.get('/api/v1/about')
     assert json.loads(rv.data.decode('utf-8')) == {'version': version}
 
@@ -126,6 +127,7 @@ def test_about_endpoint(client):
     })
 ])
 def test_get_resource_relationship_false(client, model, resource, uid, test_input):
+    """Test getting a resource from Neo4j without its relationships."""
     item = model.get_or_create(test_input)[0]
     rv = client.get('/api/v1/{0}/{1}?relationship=false'.format(resource, uid))
     assert rv.status_code == 200
@@ -134,6 +136,7 @@ def test_get_resource_relationship_false(client, model, resource, uid, test_inpu
 
 @pytest.mark.parametrize('resource', ['distgitrepo', 'distgitbranch'])
 def test_get_on_model_wo_uid(client, resource):
+    """Test that an error is returned when a resource with a UniqueIdProperty is requested."""
     rv = client.get('/api/v1/{0}/some_repo'.format(resource))
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '

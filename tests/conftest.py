@@ -14,12 +14,14 @@ neomodel_config.AUTO_INSTALL_LABELS = True
 
 @pytest.fixture(scope='session')
 def client():
+    """Pytest fixture that creates a Flask application object for the pytest session."""
     return create_app('purview.config.TestConfig').test_client()
 
 
 # Reinitialize Neo4j before each test
 @pytest.yield_fixture(autouse=True)
 def run_before_tests():
+    """Pytest fixture that prepares the environment before each test."""
     # Code that runs before each test
     neo4j_db.cypher_query('MATCH (a) DETACH DELETE a')
     # A test function will be run at this point
