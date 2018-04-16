@@ -51,3 +51,26 @@ def str_to_bool(item):
         return item.lower() in ('true', '1')
     else:
         return False
+
+
+def inflate_node(result):
+    """
+    Inflate a Neo4j result to a neomodel model object.
+
+    :param neo4j.v1.types.Node result: a node from a cypher query result
+    :return: a model (PurviewStructuredNode) object
+    """
+    # To prevent a ciruclar import, this must be imported here
+    from purview.models import names_to_model
+
+    for label in result.labels:
+        if label in names_to_model:
+            node_model = names_to_model[label]
+            break
+    else:
+        # This should never happen unless Neo4j returns labels that aren't associated with
+        # classes in all_models
+        RuntimeError('A StructuredNode couldn\'t be found from the labels: {0}'.format(
+            ', '.join(result.labels)))
+
+    return node_model.inflate(result)
