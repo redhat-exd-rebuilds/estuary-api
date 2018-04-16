@@ -5,7 +5,10 @@ import re
 from datetime import datetime
 from six import text_type
 
+from neomodel import UniqueIdProperty
+
 from purview import log
+from purview.error import ValidationError
 
 
 def timestamp_to_datetime(timestamp):
@@ -74,3 +77,31 @@ def inflate_node(result):
             ', '.join(result.labels)))
 
     return node_model.inflate(result)
+
+
+def get_neo4j_node(resource_name, uid):
+    """
+    Get a Neo4j node based on a label and unique identifier.
+
+    :param str resource_name: a neomodel model label
+    :param str uid: a string of the unique identifier defined in the neomodel model
+    :return: a neomodel model object
+    :raises ValidationError: if the requested resource doesn't exist or doesn't have a
+    UniqueIdProperty
+    """
+    # To prevent a ciruclar import, we must import this here
+    from purview.models import all_models
+
+    for model in all_models:
+        if model.__label__.lower() == resource_name.lower():
+            for prop_name, prop_def in model.defined_properties().items():
+                if isinstance(prop_def, UniqueIdProperty):
+                    return model.nodes.get_or_none(**{prop_def.name: uid})
+
+    # Some models don't have unique ID's and those should be skipped
+    models_wo_uid = ('DistGitRepo', 'DistGitBranch')
+    model_names = [model.__name__.lower() for model in all_models
+                   if model.__name__ not in models_wo_uid]
+    error = ('The requested resource "{0}" is invalid. Choose from the following: '
+             '{1}, and {2}.'.format(resource_name, ', '.join(model_names[:-1]), model_names[-1]))
+    raise ValidationError(error)
