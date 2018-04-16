@@ -92,7 +92,7 @@ class KojiScraper(BaseScraper):
 
         return self.teiid.query(sql=sql_query)
 
-    def get_build_tag(self, build_id):
+    def get_build_tags(self, build_id):
         """
         Query TEIID for all tags a build is tagged in.
 
@@ -143,20 +143,24 @@ class KojiScraper(BaseScraper):
             build.owner.connect(user)
             user.koji_builds.connect(build)
 
-            try:
-                # Getting tag related to the current build
-                tag_dict = self.get_build_tag(build_dict['id'])[0]
-            except IndexError:
-                # Continue if no active tag is found for the current build
-                continue
+            tags = self.get_build_tags(build_dict['id'])
+            current_tag_ids = set()
+            for _tag in tags:
+                current_tag_ids.add(_tag['tag_id'])
+                tag = KojiTag.get_or_create(dict(
+                    id_=_tag['tag_id'],
+                    name=_tag['tag_name']
+                ))[0]
 
-            tag = KojiTag.get_or_create(dict(
-                id_=tag_dict['tag_id'],
-                name=tag_dict['tag_name']
-            ))[0]
+                tag.builds.connect(build)
+                build.tags.connect(tag)
 
-            tag.builds.connect(build)
-            build.tags.connect(tag)
+            # _tag.id_ must be cast as an int because it is stored as a string in Neo4j since
+            # it's a UniqueIdProperty
+            connected_tags = {int(_tag.id_): _tag for _tag in build.tags.all()}
+            extra_connected_tag_ids = set(connected_tags.keys()) - current_tag_ids
+            for tag_id in extra_connected_tag_ids:
+                build.tags.disconnect(connected_tags[tag_id])
 
             count += 1
             log.info('Uploaded {0} builds out of {1}'.format(count, len(builds)))
