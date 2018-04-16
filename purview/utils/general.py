@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 from six import text_type
 
-from neomodel import UniqueIdProperty
+from neomodel import UniqueIdProperty, db
 
 from purview import log
 from purview.error import ValidationError
@@ -105,3 +105,86 @@ def get_neo4j_node(resource_name, uid):
     error = ('The requested resource "{0}" is invalid. Choose from the following: '
              '{1}, and {2}.'.format(resource_name, ', '.join(model_names[:-1]), model_names[-1]))
     raise ValidationError(error)
+
+
+def node_query(node_label, uid_name=None, uid=None):
+    """
+    Build part of a raw cypher query for a node label.
+
+    :param str node_label: a Neo4j node label
+    :kwarg str uid_name: name of node's UniqueIdProperty
+    :kwarg str uid: value of node's UniqueIdProperty
+    :return: the node represented in raw cypher
+    :rtype: str
+    """
+    if uid_name and uid:
+        return '({0}:{1} {{{2}:"{3}"}})'.format(node_label.lower(), node_label,
+                                                uid_name.rstrip('_'), uid)
+    return '({0}:{1})'.format(node_label.lower(), node_label)
+
+
+def create_query(item, uid_name, uid, reverse=False):
+    """
+    Create a raw cypher query for a node label.
+
+    :param node item: a neo4j node whose story is requested by the user
+    :param str uid_name: name of node's UniqueIdProperty
+    :param str uid: value of node's UniqueIdProperty
+    :param bool reverse: boolean value to specify the direction to proceed
+    from current node corresponding to the story_flow
+    :return: a string containing raw cypher query to retrieve the story of an artifact from neo4j
+    :rtype: str
+    """
+    # To avoid circular imports
+    from purview.models import story_flow
+
+    query = ''
+
+    if reverse is True:
+        rel_label = 'backward_relationship'
+        node_label = 'backward_label'
+    else:
+        rel_label = 'forward_relationship'
+        node_label = 'forward_label'
+
+    curr_node_label = item.__label__
+    while curr_node_label:
+        if curr_node_label == item.__label__:
+            node = node_query(curr_node_label, uid_name, uid)
+        else:
+            node = node_query(curr_node_label)
+
+        next_node = node_query(story_flow[curr_node_label][node_label])
+        query += 'OPTIONAL MATCH {0}-[:{1}]->{2}\n'.format(
+            node, story_flow[curr_node_label][rel_label], next_node)
+
+        curr_node_label = story_flow[curr_node_label][node_label]
+
+    if query:
+        query += 'RETURN *'
+
+    return query
+
+
+def query_neo4j(query):
+    """
+    Query neo4j and serialize the results.
+
+    :param str query: raw cypher query
+    :return results_dict: a dictionary containing serialized results received from neo4j
+    :rtype: dict
+    """
+    results_dict = {}
+    results, _ = db.cypher_query(query)
+
+    if not results:
+        return results_dict
+
+    for node in results[0]:
+        if node:
+            inflated_node = inflate_node(node)
+            node_label = inflated_node.__label__
+            if node_label not in results_dict:
+                results_dict[node_label] = []
+            results_dict[node_label].append(inflated_node.serialized)
+    return results_dict
