@@ -10,3 +10,4 @@ from purview.models.user import User
 all_models = (Advisory, AdvisoryState, BugzillaBug, ContainerBuilds, DistGitBranch,
               DistGitCommit, DistGitPush, DistGitRepo, FreshmakerEvent, KojiBuild,
               KojiTag, KojiTask, User)
+names_to_model = {model.__label__: model for model in all_models}

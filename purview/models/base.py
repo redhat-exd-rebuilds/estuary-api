@@ -5,6 +5,8 @@ from datetime import datetime
 
 from neomodel import StructuredNode
 
+from purview.utils.general import inflate_node
+
 
 class PurviewStructuredNode(StructuredNode):
     """Base class for Purview Neo4j models."""
@@ -42,10 +44,6 @@ class PurviewStructuredNode(StructuredNode):
         :rtype: dictionary
         :raises RuntimeError: if the label of a Neo4j node can't be mapped back to a neomodel class
         """
-        # Must be imported here to prevent a circular import
-        from purview.models import all_models
-
-        names_to_model = {model.__label__: model for model in all_models}
         # A set that will keep track of all properties on the node that weren't returned from Neo4j
         null_props = set()
         # A mapping of Neo4j relationship names to class property names per label (model class name)
@@ -65,21 +63,12 @@ class PurviewStructuredNode(StructuredNode):
         # Get all the direct relationships
         results, _ = self.cypher('MATCH (a) WHERE id(a)={self} MATCH (a)-[r]->(all) RETURN r, all')
         for rel, node in results:
-            for label in node.labels:
-                if label in names_to_model:
-                    node_model = names_to_model[label]
-                    prop_name = relationship_map[label][rel.type]
-                    break
-            else:
-                # This should never happen unless Neo4j returns labels that aren't associated with
-                # classes in all_models
-                RuntimeError('A StructuredNode couldn\'t be found from the labels: {0}'.format(
-                    ', '.join(node.labels)))
-
+            inflated_node = inflate_node(node)
+            prop_name = relationship_map[inflated_node.__label__][rel.type]
             if not serialized.get(prop_name):
                 serialized[prop_name] = []
                 null_props.remove(prop_name)
-            serialized[prop_name].append(node_model.inflate(node).serialized)
+            serialized[prop_name].append(inflated_node.serialized)
 
         # Neo4j won't return back relationships it doesn't know about, so just make them empty
         # lists so that the keys are always consistent
