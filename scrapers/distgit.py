@@ -209,9 +209,15 @@ class DistGitScraper(BaseScraper):
                 log.error('The connection to "{0}" failed'.format(url))
                 continue
 
-            # If we get a 200 status code, we assume the page has the data we need
             if cgit_result.status_code == 200:
-                break
+                # If the repo is empty, cgit oddly returns a 200 status code, so let's correct the
+                # status code so that the remainder of the code knows it's a bad request
+                if 'Repository seems to be empty' in cgit_result.text:
+                    cgit_result.status_code = 404
+                else:
+                    # If the repo is populated and a 200 status code is returned, then we can
+                    # assume we found the correct repo
+                    break
 
         if not cgit_result or cgit_result.status_code != 200:
             log.error('Couldn\'t find the commit "{0}" for the repo "{1}" in the namespaces: {2}'
