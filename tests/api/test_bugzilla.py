@@ -85,11 +85,11 @@ def test_get_bug(client):
     rv = client.get('/api/v1/bugzillabug/12345')
     assert rv.status_code == 200
     expected = {
-        'assignee': [{
+        'assignee': {
             'email': 'matt.prahl@domain.local',
             'name': None,
             'username': 'mprahl'
-        }],
+        },
         'attached_advisories': [{
             'actual_ship_date': '2017-08-01T15:43:51+00:00',
             'advisory_name': 'RHBA-2017:2251-02',
@@ -116,16 +116,16 @@ def test_get_bug(client):
         'priority': 'high',
         'product_name': 'Red Hat Enterprise Linux',
         'product_version': '7.5',
-        'qa_contact': [{
+        'qa_contact': {
             'email': 'jsmith@domain.local',
             'name': None,
             'username': 'jsmith'
-        }],
+        },
         'related_by_commits': [],
-        'reporter': [{
+        'reporter': {
             'email': 'tom.brady@domain.local',
             'name': None,
-            'username': 'tbrady'}],
+            'username': 'tbrady'},
         'resolution': '',
         'resolved_by_commits': [
             {
