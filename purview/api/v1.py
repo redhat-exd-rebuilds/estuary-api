@@ -2,11 +2,13 @@
 
 from __future__ import unicode_literals
 
+import collections
 from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import NotFound
 
 from purview import version
 from purview.utils.general import str_to_bool, get_neo4j_node, create_query, query_neo4j
+from purview.models import story_flow
 from neomodel import UniqueIdProperty
 
 
@@ -72,11 +74,19 @@ def get_resource_story(resource, uid):
             backward_query = create_query(item, prop_def.name, uid, reverse=True)
             break
 
-    results = {}
+    results_unordered = {}
     if forward_query:
-        results = query_neo4j(forward_query)
+        results_unordered = query_neo4j(forward_query)
 
     if backward_query:
-        results.update(query_neo4j(backward_query))
+        results_unordered.update(query_neo4j(backward_query))
 
-    return jsonify(results or item)
+    results = collections.OrderedDict()
+    curr_label = 'BugzillaBug'
+    while curr_label:
+        if curr_label in results_unordered:
+            results[curr_label] = results_unordered[curr_label]
+
+        curr_label = story_flow[curr_label]['forward_label']
+
+    return jsonify(list(results.items()) or item)
