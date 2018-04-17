@@ -89,4 +89,4 @@ def get_resource_story(resource, uid):
 
         curr_label = story_flow[curr_label]['forward_label']
 
-    return jsonify(list(results.items()) or item)
+    return jsonify(list(results.items()) or item.serialized)
