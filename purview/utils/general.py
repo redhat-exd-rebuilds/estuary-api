@@ -148,7 +148,7 @@ def create_query(item, uid_name, uid, reverse=False):
         node_label = 'forward_label'
 
     curr_node_label = item.__label__
-    while curr_node_label:
+    while story_flow[curr_node_label][rel_label]:
         if curr_node_label == item.__label__:
             node = node_query(curr_node_label, uid_name, uid)
         else:
