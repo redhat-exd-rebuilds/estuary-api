@@ -31,17 +31,17 @@ story_flow = {
     'KojiBuild': {
         'forward_relationship': KojiBuild.advisories.definition['relation_type'],
         'forward_label': Advisory.__label__,
-        'backward_relationship': KojiBuild.commits.definition['relation_type'],
+        'backward_relationship': KojiBuild.commit.definition['relation_type'],
         'backward_label': DistGitCommit.__label__
     },
     'Advisory': {
-        'forward_relationship': Advisory.triggers_freshmaker_event.definition['relation_type'],
+        'forward_relationship': Advisory.triggered_freshmaker_event.definition['relation_type'],
         'forward_label': FreshmakerEvent.__label__,
         'backward_relationship': Advisory.attached_builds.definition['relation_type'],
         'backward_label': KojiBuild.__label__
     },
     'FreshmakerEvent': {
-        'forward_relationship': (FreshmakerEvent.triggers_container_builds
+        'forward_relationship': (FreshmakerEvent.triggered_container_builds
                                  .definition['relation_type']),
         'forward_label': ContainerBuilds.__label__,
         'backward_relationship': (FreshmakerEvent.triggered_by_advisory

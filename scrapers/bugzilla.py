@@ -106,18 +106,12 @@ class BugzillaScraper(BaseScraper):
             # Creating User nodes and updating their relationships
             if bug_dict['assigned_to']:
                 assignee = self.create_user_node(bug_dict['assigned_to_email'])
-                bug.assignees.connect(assignee)
-                assignee.bugs_assigned_to.connect(bug)
+                bug.assignee.connect(assignee)
 
             if bug_dict['reporter']:
                 reporter = self.create_user_node(bug_dict['reported_by_email'])
-                bug.reporters.connect(reporter)
-                # Normalized relationship
-                bug.owners.connect(reporter)
-                reporter.bugs_reported_by.connect(bug)
-                reporter.bugzilla_bugs.connect(bug)
+                bug.reporter.connect(reporter)
 
             if bug_dict['qa_contact']:
                 qa_contact = self.create_user_node(bug_dict['qa_contact_email'])
-                bug.qa_contacts.connect(qa_contact)
-                qa_contact.bugs_qa_contact_for.connect(bug)
+                bug.qa_contact.connect(qa_contact)

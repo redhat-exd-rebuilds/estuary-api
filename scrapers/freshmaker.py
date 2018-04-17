@@ -59,7 +59,6 @@ class FreshmakerScraper(BaseScraper):
                     id_=fm_event['search_key']
                 ))[0]
 
-                advisory.triggers_freshmaker_event.connect(event)
                 event.triggered_by_advisory.connect(advisory)
 
                 for build in fm_event['builds']:
@@ -87,8 +86,7 @@ class FreshmakerScraper(BaseScraper):
                         cb_params['time_completed'] = timestamp_to_datetime(
                             build['time_completed'])
                     cb = ContainerBuilds.create_or_update(cb_params)[0]
-                    cb.triggered_by_freshmaker_event.connect(event)
-                    event.triggers_container_builds.connect(cb)
+                    event.triggered_container_builds.connect(cb)
 
             if rv_json['meta'].get('next'):
                 fm_url = rv_json['meta']['next']

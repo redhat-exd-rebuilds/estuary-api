@@ -65,15 +65,11 @@ class ErrataScraper(BaseScraper):
             })[0]
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
             adv.assigned_to.connect(assigned_to)
-            assigned_to.advisories_assigned.connect(adv)
             package_owner = User.get_or_create(
                 {'username': advisory['package_owner'].split('@')[0]})[0]
-            adv.package_owners.connect(package_owner)
-            package_owner.advisories_package_owner.connect(adv)
+            adv.package_owner.connect(package_owner)
             reporter = User.get_or_create({'username': advisory['reporter'].split('@')[0]})[0]
-            adv.reporters.connect(reporter)
-            reporter.advisories_reported.connect(adv)
-            reporter.advisories.connect(adv)
+            adv.reporter.connect(reporter)
 
             for state in self.get_advisory_states(advisory['id']):
                 adv_state = AdvisoryState.create_or_update({
@@ -82,16 +78,13 @@ class ErrataScraper(BaseScraper):
                     'created_at': state['created_at'],
                     'updated_at': state['updated_at']
                 })[0]
-                adv.states.connect(adv_state)
-                adv_state.advisories.connect(adv)
-                state_owner = User.get_or_create({'username': state['username'].split('@')[0]})[0]
-                adv_state.owner.connect(state_owner)
-                state_owner.advisories_state_owner.connect(adv_state)
+                adv_state.advisory.connect(adv)
+                state_creator = User.get_or_create({'username': state['username'].split('@')[0]})[0]
+                adv_state.creator.connect(state_creator)
 
             for attached_bug in self.get_attached_bugs(advisory['id']):
                 bug = BugzillaBug.get_or_create(attached_bug)[0]
                 adv.attached_bugs.connect(bug)
-                bug.attached_advisories.connect(adv)
 
             for associated_build in self.get_associated_builds(advisory['id']):
                 # If this is set, that means it was once part of the advisory but not anymore.
@@ -100,13 +93,11 @@ class ErrataScraper(BaseScraper):
                     build = KojiBuild.nodes.get_or_none(id_=associated_build['id_'])
                     if build:
                         adv.attached_builds.disconnect(build)
-                        build.advisories.disconnect(adv)
                 else:
                     # This key shouldn't be stored in Neo4j
                     del associated_build['removed_index_id']
                     build = KojiBuild.get_or_create(associated_build)[0]
                     adv.attached_builds.connect(build)
-                    build.advisories.connect(adv)
 
     def get_advisories(self, since):
         """

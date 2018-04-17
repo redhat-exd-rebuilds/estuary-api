@@ -74,19 +74,18 @@ def test_get_bug(client):
         'target_milestone': 'rc',
         'votes': 0
     })[0]
-    bug.assignees.connect(mprahl)
-    bug.owners.connect(mprahl)
-    bug.qa_contacts.connect(jsmith)
-    bug.reporters.connect(tbrady)
-    bug.resolved_by_commits.connect(commit)
-    bug.resolved_by_commits.connect(commit_two)
-    bug.reverted_by_commits.connect(commit_three)
-    bug.attached_advisories.connect(advisory)
+    bug.assignee.connect(mprahl)
+    bug.qa_contact.connect(jsmith)
+    bug.reporter.connect(tbrady)
+    commit.resolved_bugs.connect(bug)
+    commit_two.resolved_bugs.connect(bug)
+    commit_three.reverted_bugs.connect(bug)
+    advisory.attached_bugs.connect(bug)
 
     rv = client.get('/api/v1/bugzillabug/12345')
     assert rv.status_code == 200
     expected = {
-        'assignees': [{
+        'assignee': [{
             'email': 'matt.prahl@domain.local',
             'name': None,
             'username': 'mprahl'
@@ -114,21 +113,16 @@ def test_get_bug(client):
         'creation_time': '2017-04-02T19:39:06+00:00',
         'id': '12345',
         'modified_time': '2018-02-07T19:30:47+00:00',
-        'owners': [{
-            'email': 'matt.prahl@domain.local',
-            'name': None,
-            'username': 'mprahl'
-        }],
         'priority': 'high',
         'product_name': 'Red Hat Enterprise Linux',
         'product_version': '7.5',
-        'qa_contacts': [{
+        'qa_contact': [{
             'email': 'jsmith@domain.local',
             'name': None,
             'username': 'jsmith'
         }],
         'related_by_commits': [],
-        'reporters': [{
+        'reporter': [{
             'email': 'tom.brady@domain.local',
             'name': None,
             'username': 'tbrady'}],

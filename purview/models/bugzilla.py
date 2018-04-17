@@ -3,7 +3,8 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    UniqueIdProperty, RelationshipTo, IntegerProperty, StringProperty, DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, RelationshipFrom, IntegerProperty, StringProperty,
+    DateTimeProperty, ZeroOrOne)
 
 from purview.models.base import PurviewStructuredNode
 
@@ -11,24 +12,22 @@ from purview.models.base import PurviewStructuredNode
 class BugzillaBug(PurviewStructuredNode):
     """Definition of a Bugzilla bug in Neo4j."""
 
-    assignees = RelationshipTo('.user.User', 'ASSIGNED_TO')
-    attached_advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
-    # This will always be "Red Hat" initially
+    assignee = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
+    attached_advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
     classification = StringProperty()
     creation_time = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
-    modified_time = DateTimeProperty()  # delta_ts
-    owners = RelationshipTo('.user.User', 'OWNED_BY')  # same as the reporter
+    modified_time = DateTimeProperty()
     priority = StringProperty()
     # Called product_name in case we want to use product as a relationship later on
     product_name = StringProperty()
     product_version = StringProperty()
-    qa_contacts = RelationshipTo('.user.User', 'QA_BY')
-    related_by_commits = RelationshipTo('.distgit.DistGitCommit', 'RELATED_TO')
-    reporters = RelationshipTo('.user.User', 'REPORTED_BY')
+    qa_contact = RelationshipTo('.user.User', 'QA_BY', cardinality=ZeroOrOne)
+    related_by_commits = RelationshipFrom('.distgit.DistGitCommit', 'RELATED')
+    reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
     resolution = StringProperty()
-    resolved_by_commits = RelationshipTo('.distgit.DistGitCommit', 'RESOLVED_BY')
-    reverted_by_commits = RelationshipTo('.distgit.DistGitCommit', 'REVERTED_BY')
+    resolved_by_commits = RelationshipFrom('.distgit.DistGitCommit', 'RESOLVED')
+    reverted_by_commits = RelationshipFrom('.distgit.DistGitCommit', 'REVERTED')
     severity = StringProperty()
     short_description = StringProperty()
     status = StringProperty()

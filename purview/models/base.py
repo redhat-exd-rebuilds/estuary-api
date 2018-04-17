@@ -61,7 +61,7 @@ class PurviewStructuredNode(StructuredNode):
         # This variable will contain the current node as serialized + all relationships
         serialized = self.serialized
         # Get all the direct relationships
-        results, _ = self.cypher('MATCH (a) WHERE id(a)={self} MATCH (a)-[r]->(all) RETURN r, all')
+        results, _ = self.cypher('MATCH (a) WHERE id(a)={self} MATCH (a)-[r]-(all) RETURN r, all')
         for rel, node in results:
             inflated_node = inflate_node(node)
             prop_name = relationship_map[inflated_node.__label__][rel.type]

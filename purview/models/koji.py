@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from neomodel import (
     StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty, FloatProperty,
-    RelationshipTo)
+    RelationshipTo, RelationshipFrom, ZeroOrOne)
 
 from purview.models.base import PurviewStructuredNode
 
@@ -12,20 +12,20 @@ from purview.models.base import PurviewStructuredNode
 class KojiBuild(PurviewStructuredNode):
     """Definition of a Koji build in Neo4j."""
 
-    advisories = RelationshipTo('.errata.Advisory', 'RELATED_TO')
-    commits = RelationshipTo('.distgit.DistGitCommit', 'RELATED_TO')
+    advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
+    commit = RelationshipTo('.distgit.DistGitCommit', 'BUILT_FROM', cardinality=ZeroOrOne)
     completion_time = DateTimeProperty()
     creation_time = DateTimeProperty()
     epoch = StringProperty()
     extra = StringProperty()
     id_ = UniqueIdProperty(db_property='id')
     name = StringProperty(required=True)
-    owner = RelationshipTo('.user.User', 'OWNED_BY')
+    owner = RelationshipTo('.user.User', 'OWNED_BY', cardinality=ZeroOrOne)
     release = StringProperty(required=True)
     start_time = DateTimeProperty()
     state = IntegerProperty()
-    tags = RelationshipTo('KojiTag', 'CONTAINED_BY')
-    tasks = RelationshipTo('KojiTask', 'TRIGGERS')
+    tags = RelationshipFrom('KojiTag', 'CONTAINS')
+    tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
     version = StringProperty(required=True)
 
 
@@ -33,14 +33,16 @@ class KojiTask(PurviewStructuredNode):
     """Definition of a Koji task in Neo4j."""
 
     arch = StringProperty(required=True)
-    builds = RelationshipTo('KojiBuild', 'TRIGGERED_BY')
-    children = RelationshipTo('KojiTask', 'CHILD')
+    builds = RelationshipTo('KojiBuild', 'TRIGGERED')
+    # Cardinality is enforced on the `parent` property, so the `children` property should be
+    # treated as read-only
+    children = RelationshipFrom('KojiTask', 'PARENT')
     completion_time = DateTimeProperty()
     create_time = DateTimeProperty(required=True)
     id_ = UniqueIdProperty(db_property='id')
     method = StringProperty(required=True)
     owner = RelationshipTo('.user.User', 'OWNED_BY')
-    parents = RelationshipTo('KojiTask', 'PARENT')
+    parent = RelationshipTo('KojiTask', 'PARENT', cardinality=ZeroOrOne)
     priority = IntegerProperty()
     start_time = DateTimeProperty()
     state = IntegerProperty(required=True)
