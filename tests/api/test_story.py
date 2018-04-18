@@ -91,7 +91,6 @@ def test_get_stories(client):
     bug.resolved_by_commits.connect(commit)
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
-    build.commit.connect(commit)
     build.advisories.connect(advisory)
     advisory.attached_builds.connect(build)
     fm_event.triggered_by_advisory.connect(advisory)
