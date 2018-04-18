@@ -68,7 +68,7 @@ def get_resource_story(resource, uid):
     if not item:
         raise NotFound('This item does not exist')
 
-    for prop_def in item.defined_properties().values():
+    for _, prop_def in item.__all_properties__:
         if isinstance(prop_def, UniqueIdProperty):
             forward_query = create_query(item, prop_def.name, uid)
             backward_query = create_query(item, prop_def.name, uid, reverse=True)

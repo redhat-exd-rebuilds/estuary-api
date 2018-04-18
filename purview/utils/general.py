@@ -94,7 +94,7 @@ def get_neo4j_node(resource_name, uid):
 
     for model in all_models:
         if model.__label__.lower() == resource_name.lower():
-            for prop_name, prop_def in model.defined_properties().items():
+            for _, prop_def in model.__all_properties__:
                 if isinstance(prop_def, UniqueIdProperty):
                     return model.nodes.get_or_none(**{prop_def.name: uid})
 
