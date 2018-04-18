@@ -59,7 +59,7 @@ class DistGitCommit(PurviewStructuredNode):
     committer = RelationshipTo('.user.User', 'COMMITTED_BY', cardinality=ZeroOrOne)
     koji_builds = RelationshipFrom('.koji.KojiBuild', 'BUILT_FROM')
     parent = RelationshipTo('.distgit.DistGitCommit', 'PARENT', cardinality=ZeroOrOne)
-    pushes = RelationshipFrom('DistGitPush', 'CONTAINS')
+    pushes = RelationshipFrom('DistGitPush', 'PUSHED')
     related_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED')
     repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
     resolved_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RESOLVED')
