@@ -59,7 +59,7 @@ class FreshmakerScraper(BaseScraper):
                     id_=fm_event['search_key']
                 ))[0]
 
-                event.triggered_by_advisory.connect(advisory)
+                event.conditional_connect(event.triggered_by_advisory, advisory)
 
                 for build in fm_event['builds']:
                     # To handle a faulty container build in Freshmaker
