@@ -3,7 +3,8 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    UniqueIdProperty, RelationshipTo, StringProperty, ArrayProperty, DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty, ArrayProperty,
+    DateTimeProperty, ZeroOrOne)
 
 from purview.models.base import PurviewStructuredNode
 
@@ -28,15 +29,13 @@ class Advisory(PurviewStructuredNode):
     type_ = StringProperty(db_property='type')
     update_date = DateTimeProperty()
     updated_at = DateTimeProperty()
-    assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO')
-    attached_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED_TO')
-    attached_builds = RelationshipTo('.koji.KojiBuild', 'RELATED_TO')
-    # A normalized relationship name (same as reporters)
-    owners = RelationshipTo('.user.User', 'OWNED_BY')
-    package_owners = RelationshipTo('.user.User', 'PACKAGE_OWNED_BY')
-    reporters = RelationshipTo('.user.User', 'REPORTED_BY')
-    states = RelationshipTo('AdvisoryState', 'RELATED_TO')
-    triggers_freshmaker_event = RelationshipTo('.freshmaker.FreshmakerEvent', 'TRIGGERS')
+    assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
+    attached_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'ATTACHED')
+    attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED')
+    package_owner = RelationshipTo('.user.User', 'PACKAGE_OWNED_BY', cardinality=ZeroOrOne)
+    reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
+    states = RelationshipFrom('AdvisoryState', 'STATE_OF')
+    triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
 
 
 class AdvisoryState(PurviewStructuredNode):
@@ -46,6 +45,5 @@ class AdvisoryState(PurviewStructuredNode):
     created_at = DateTimeProperty()
     updated_at = DateTimeProperty()
     name = StringProperty(required=True)
-    # Should only be one advisory but using plural since this is a list
-    advisories = RelationshipTo('Advisory', 'RELATED_TO')
-    owner = RelationshipTo('.user.User', 'OWNED_BY')
+    advisory = RelationshipTo('Advisory', 'STATE_OF', cardinality=ZeroOrOne)
+    creator = RelationshipTo('.user.User', 'CREATED_BY', cardinality=ZeroOrOne)

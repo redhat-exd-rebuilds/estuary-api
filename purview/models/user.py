@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from neomodel import StringProperty, UniqueIdProperty, RelationshipTo
+from neomodel import StringProperty, UniqueIdProperty, RelationshipFrom
 
 from purview.models.base import PurviewStructuredNode
 
@@ -10,24 +10,22 @@ from purview.models.base import PurviewStructuredNode
 class User(PurviewStructuredNode):
     """Definition of a generic user in Neo4j."""
 
-    _default_property = 'username'
-    # A normalized relationship (same as advisories_reported_by)
-    advisories = RelationshipTo('.errata.Advisory', 'OWNS')
-    advisories_assigned = RelationshipTo('.errata.Advisory', 'ASSIGNED')
-    advisories_package_owner = RelationshipTo('.errata.Advisory', 'PACKAGE_OWNED')
-    advisories_reported = RelationshipTo('.errata.Advisory', 'REPORTED')
-    advisories_state_owner = RelationshipTo('.errata.AdvisoryState', 'OWNS')
-    bugs_assigned_to = RelationshipTo('.bugzilla.BugzillaBug', 'ASSIGNED')
-    bugs_qa_contact_for = RelationshipTo('.bugzilla.BugzillaBug', 'QA_CONTACT_FOR')
-    bugs_reported_by = RelationshipTo('.bugzilla.BugzillaBug', 'REPORTED')
-    bugzilla_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'OWNS')
-    distgit_authored_commits = RelationshipTo('.distgit.DistGitCommit', 'OWNS')
-    distgit_branches = RelationshipTo('.distgit.DistGitBranch', 'CONTRIBUTED')
-    distgit_committed_commits = RelationshipTo('.distgit.DistGitCommit', 'COMMITTED')
-    distgit_pushes = RelationshipTo('.distgit.DistGitPush', 'PUSHED')
-    distgit_repos = RelationshipTo('.distgit.DistGitRepo', 'CONTRIBUTED')
+    # These relationships can be reverse relationships of ones with cardinality set. So
+    # these relationships should be treated as read-only or else cardinality will not be respected.
+    advisories_assigned = RelationshipFrom('.errata.Advisory', 'ASSIGNED_TO')
+    advisories_package_owner = RelationshipFrom('.errata.Advisory', 'PACKAGE_OWNED_BY')
+    advisories_reported = RelationshipFrom('.errata.Advisory', 'REPORTED_BY')
+    advisories_state_creator = RelationshipFrom('.errata.AdvisoryState', 'CREATED_BY')
+    bugs_assigned = RelationshipFrom('.bugzilla.BugzillaBug', 'ASSIGNED_TO')
+    bugs_qa_contact_for = RelationshipFrom('.bugzilla.BugzillaBug', 'QA_BY')
+    bugs_reported = RelationshipFrom('.bugzilla.BugzillaBug', 'REPORTED_BY')
+    distgit_authored_commits = RelationshipFrom('.distgit.DistGitCommit', 'AUTHORED_BY')
+    distgit_branches = RelationshipFrom('.distgit.DistGitBranch', 'CONTRIBUTED_BY')
+    distgit_committed_commits = RelationshipFrom('.distgit.DistGitCommit', 'COMMITTED_BY')
+    distgit_pushes = RelationshipFrom('.distgit.DistGitPush', 'PUSHED_BY')
+    distgit_repos = RelationshipFrom('.distgit.DistGitRepo', 'CONTRIBUTED_BY')
     email = StringProperty()
-    koji_builds = RelationshipTo('.koji.KojiBuild', 'OWNS')
-    koji_tasks = RelationshipTo('.koji.KojiTask', 'OWNS')
+    koji_builds = RelationshipFrom('.koji.KojiBuild', 'OWNED_BY')
+    koji_tasks = RelationshipFrom('.koji.KojiTask', 'OWNED_BY')
     name = StringProperty()
     username = UniqueIdProperty()

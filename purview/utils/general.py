@@ -155,7 +155,7 @@ def create_query(item, uid_name, uid, reverse=False):
             node = node_query(curr_node_label)
 
         next_node = node_query(story_flow[curr_node_label][node_label])
-        query += 'OPTIONAL MATCH {0}-[:{1}]->{2}\n'.format(
+        query += 'OPTIONAL MATCH {0}-[:{1}]-{2}\n'.format(
             node, story_flow[curr_node_label][rel_label], next_node)
 
         curr_node_label = story_flow[curr_node_label][node_label]

@@ -89,20 +89,13 @@ def test_get_stories(client):
     })[0]
 
     bug.resolved_by_commits.connect(commit)
-
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
-
-    build.commits.connect(commit)
+    build.commit.connect(commit)
     build.advisories.connect(advisory)
-
     advisory.attached_builds.connect(build)
-    advisory.triggers_freshmaker_event.connect(fm_event)
-
     fm_event.triggered_by_advisory.connect(advisory)
-    fm_event.triggers_container_builds.connect(cb)
-
-    cb.triggered_by_freshmaker_event.connect(fm_event)
+    fm_event.triggered_container_builds.connect(cb)
 
     expected = [['BugzillaBug',
                  [{'classification': 'Red Hat',

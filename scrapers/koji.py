@@ -141,7 +141,6 @@ class KojiScraper(BaseScraper):
             user = User.get_or_create(dict(username=username))[0]
 
             build.owner.connect(user)
-            user.koji_builds.connect(build)
 
             tags = self.get_build_tags(build_dict['id'])
             current_tag_ids = set()
@@ -153,7 +152,6 @@ class KojiScraper(BaseScraper):
                 ))[0]
 
                 tag.builds.connect(build)
-                build.tags.connect(tag)
 
             # _tag.id_ must be cast as an int because it is stored as a string in Neo4j since
             # it's a UniqueIdProperty
@@ -195,14 +193,12 @@ class KojiScraper(BaseScraper):
             ))[0]
 
             # Defining Relationships
-            build.tasks.connect(task)
-            user.koji_tasks.connect(task)
             task.builds.connect(build)
             task.owner.connect(user)
             if commit_hash:
                 commit = DistGitCommit.get_or_create(dict(hash_=commit_hash))[0]
                 commit.koji_builds.connect(build)
-                build.commits.connect(commit)
+                build.commit.connect(commit)
 
             child_tasks = self.get_task_children(task_dict['id'])
 
@@ -223,5 +219,4 @@ class KojiScraper(BaseScraper):
                     method=child_task_dict['method']
                 ))[0]
 
-                child_task.parents.connect(task)
-                task.children.connect(child_task)
+                child_task.parent.connect(task)

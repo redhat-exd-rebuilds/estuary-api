@@ -113,18 +113,6 @@ class DistGitScraper(BaseScraper):
 
             log.debug('Creating the relationships associated with commit ID {0} and push ID {1}'
                       .format(result['commit_id'], result['push_id']))
-            author.distgit_authored_commits.connect(commit)
-            author.distgit_branches.connect(branch)
-            author.distgit_repos.connect(repo)
-
-            committer.distgit_committed_commits.connect(commit)
-            committer.distgit_branches.connect(branch)
-            committer.distgit_repos.connect(repo)
-
-            pusher.distgit_pushes.connect(push)
-            pusher.distgit_branches.connect(branch)
-            pusher.distgit_repos.connect(repo)
-
             repo.contributors.connect(author)
             repo.contributors.connect(committer)
             repo.contributors.connect(pusher)
@@ -132,36 +120,28 @@ class DistGitScraper(BaseScraper):
             repo.pushes.connect(push)
             repo.branches.connect(branch)
 
+            branch.contributors.connect(author)
+            branch.contributors.connect(committer)
+            branch.contributors.connect(pusher)
             branch.commits.connect(commit)
             branch.pushes.connect(push)
 
-            push.owners.connect(pusher)
-            push.pushers.connect(pusher)
+            push.pusher.connect(pusher)
             push.commits.connect(commit)
-            push.branches.connect(branch)
-            push.repos.connect(repo)
 
-            commit.owners.connect(author)
-            commit.authors.connect(author)
-            commit.committers.connect(committer)
-            commit.pushes.connect(push)
-            commit.branches.connect(branch)
-            commit.repos.connect(repo)
+            commit.author.connect(author)
+            commit.committer.connect(committer)
 
             if repo_info['parent']:
                 parent_commit = DistGitCommit.get_or_create({'hash_': repo_info['parent']})[0]
-                commit.parents.connect(parent_commit)
-                parent_commit.children.connect(commit)
+                commit.parent.connect(parent_commit)
 
             if result['bugzilla_type'] == 'related':
                 commit.related_bugs.connect(bug)
-                bug.related_by_commits.connect(commit)
             elif result['bugzilla_type'] == 'resolves':
                 commit.resolved_bugs.connect(bug)
-                bug.resolved_by_commits.connect(commit)
             elif result['bugzilla_type'] == 'reverted':
                 commit.reverted_bugs.connect(bug)
-                bug.reverted_by_commits.connect(commit)
 
     def get_distgit_data(self, since):
         """

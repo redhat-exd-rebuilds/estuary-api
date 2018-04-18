@@ -3,7 +3,8 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    UniqueIdProperty, RelationshipTo, IntegerProperty, StringProperty, DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, RelationshipFrom, IntegerProperty, StringProperty,
+    DateTimeProperty, ZeroOrOne)
 
 from purview.models.base import PurviewStructuredNode
 
@@ -18,8 +19,8 @@ class FreshmakerEvent(PurviewStructuredNode):
     state_name = StringProperty(required=True)
     state_reason = StringProperty()
     triggered_by_advisory = RelationshipTo(
-        '.errata.Advisory', 'TRIGGERED_BY')
-    triggers_container_builds = RelationshipTo('ContainerBuilds', 'TRIGGERS')
+        '.errata.Advisory', 'TRIGGERED_BY', cardinality=ZeroOrOne)
+    triggered_container_builds = RelationshipTo('ContainerBuilds', 'TRIGGERED')
     url = StringProperty(unique=True, required=True)
 
 
@@ -38,8 +39,8 @@ class ContainerBuilds(PurviewStructuredNode):
     state_reason = StringProperty()
     time_completed = DateTimeProperty()
     time_submitted = DateTimeProperty(required=True)
-    triggered_by_freshmaker_event = RelationshipTo(
-        'FreshmakerEvent', 'TRIGGERED_BY')
+    triggered_by_freshmaker_event = RelationshipFrom(
+        'FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
     type_ = IntegerProperty(required=True, db_property='type')
     type_name = StringProperty(required=True)
     url = StringProperty(required=True)

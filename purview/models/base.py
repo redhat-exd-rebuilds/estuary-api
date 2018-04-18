@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 from datetime import datetime
 
-from neomodel import StructuredNode
+from neomodel import StructuredNode, One, ZeroOrOne
 
 from purview.utils.general import inflate_node
 
@@ -46,8 +46,8 @@ class PurviewStructuredNode(StructuredNode):
         """
         # A set that will keep track of all properties on the node that weren't returned from Neo4j
         null_props = set()
-        # A mapping of Neo4j relationship names to class property names per label (model class name)
-        # e.g. {'Advisory': {'ASSIGNED': 'advisories_assigned', ...}}
+        # A mapping of Neo4j relationship names to class property names and cardinality per label
+        # (model class name) e.g. {'Advisory': {'ASSIGNED': 'advisories_assigned', ...}}
         relationship_map = {}
         for prop_name, rel in self.__all_relationships__:
             label = rel.definition['node_class'].__label__
@@ -55,20 +55,25 @@ class PurviewStructuredNode(StructuredNode):
 
             if not relationship_map.get(label):
                 relationship_map[label] = {}
-            relationship_map[label][neo4j_rel] = prop_name
+            relationship_map[label][neo4j_rel] = (prop_name, rel.manager)
             null_props.add(prop_name)
 
         # This variable will contain the current node as serialized + all relationships
         serialized = self.serialized
         # Get all the direct relationships
-        results, _ = self.cypher('MATCH (a) WHERE id(a)={self} MATCH (a)-[r]->(all) RETURN r, all')
+        results, _ = self.cypher('MATCH (a) WHERE id(a)={self} MATCH (a)-[r]-(all) RETURN r, all')
         for rel, node in results:
             inflated_node = inflate_node(node)
-            prop_name = relationship_map[inflated_node.__label__][rel.type]
+            prop_name, cardinality_class = relationship_map[inflated_node.__label__][rel.type]
             if not serialized.get(prop_name):
-                serialized[prop_name] = []
                 null_props.remove(prop_name)
-            serialized[prop_name].append(inflated_node.serialized)
+
+            if cardinality_class in (One, ZeroOrOne):
+                serialized[prop_name] = inflated_node.serialized
+            else:
+                if not serialized.get(prop_name):
+                    serialized[prop_name] = []
+                serialized[prop_name].append(inflated_node.serialized)
 
         # Neo4j won't return back relationships it doesn't know about, so just make them empty
         # lists so that the keys are always consistent

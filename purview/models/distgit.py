@@ -3,7 +3,8 @@
 from __future__ import unicode_literals
 
 from neomodel import (
-    UniqueIdProperty, RelationshipTo, StringProperty, DateTimeProperty)
+    UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty, DateTimeProperty,
+    ZeroOrOne)
 
 from purview.models.base import PurviewStructuredNode
 
@@ -26,8 +27,9 @@ class DistGitBranch(PurviewStructuredNode):
     repo_name = StringProperty(required=True)
     repo_namespace = StringProperty(required=True)
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
+    contributors = RelationshipTo('.user.User', 'CONTRIBUTED_BY')
     pushes = RelationshipTo('DistGitPush', 'CONTAINS')
-    repos = RelationshipTo('DistGitRepo', 'CONTAINED_BY')
+    repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
 
 
 class DistGitPush(PurviewStructuredNode):
@@ -36,11 +38,10 @@ class DistGitPush(PurviewStructuredNode):
     id_ = UniqueIdProperty(db_property='id')
     push_date = DateTimeProperty(required=True)
     push_ip = StringProperty()
-    branches = RelationshipTo('DistGitBranch', 'PUSHED_TO')
+    branch = RelationshipFrom('DistGitBranch', 'CONTAINS', cardinality=ZeroOrOne)
     commits = RelationshipTo('DistGitCommit', 'PUSHED')
-    owners = RelationshipTo('.user.User', 'OWNED_BY')  # same as pushers
-    pushers = RelationshipTo('.user.User', 'PUSHED_BY')
-    repos = RelationshipTo('DistGitRepo', 'PUSHED_TO')
+    pusher = RelationshipTo('.user.User', 'PUSHED_BY', cardinality=ZeroOrOne)
+    repo = RelationshipFrom('DistGitRepo', 'CONTAINS', cardinality=ZeroOrOne)
 
 
 class DistGitCommit(PurviewStructuredNode):
@@ -50,15 +51,16 @@ class DistGitCommit(PurviewStructuredNode):
     commit_date = DateTimeProperty()
     hash_ = UniqueIdProperty(db_property='hash')
     log_message = StringProperty()
-    authors = RelationshipTo('.user.User', 'AUTHORED_BY')
-    branches = RelationshipTo('DistGitBranch', 'CONTAINED_BY')
-    children = RelationshipTo('.distgit.DistGitCommit', 'CHILD')
-    committers = RelationshipTo('.user.User', 'OWNED_BY')
-    koji_builds = RelationshipTo('.koji.KojiBuild', 'RELATED_TO')
-    owners = RelationshipTo('.user.User', 'OWNED_BY')
-    parents = RelationshipTo('.distgit.DistGitCommit', 'PARENT')
-    pushes = RelationshipTo('DistGitPush', 'PUSHED_IN')
-    related_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED_TO')
-    repos = RelationshipTo('DistGitRepo', 'CONTAINED_BY')
+    author = RelationshipTo('.user.User', 'AUTHORED_BY', cardinality=ZeroOrOne)
+    branches = RelationshipFrom('DistGitBranch', 'CONTAINS')
+    # Cardinality is enforced on the `parent` property, so the `children` property should be
+    # treated as read-only
+    children = RelationshipFrom('.distgit.DistGitCommit', 'PARENT')
+    committer = RelationshipTo('.user.User', 'COMMITTED_BY', cardinality=ZeroOrOne)
+    koji_builds = RelationshipFrom('.koji.KojiBuild', 'BUILT_FROM')
+    parent = RelationshipTo('.distgit.DistGitCommit', 'PARENT', cardinality=ZeroOrOne)
+    pushes = RelationshipFrom('DistGitPush', 'CONTAINS')
+    related_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED')
+    repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
     resolved_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RESOLVED')
     reverted_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'REVERTED')
