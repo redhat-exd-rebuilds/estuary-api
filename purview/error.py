@@ -6,6 +6,8 @@ from flask import jsonify
 from werkzeug.exceptions import HTTPException
 from neo4j.exceptions import ServiceUnavailable, AuthError
 
+from purview import log
+
 
 class ValidationError(ValueError):
     """A custom exception handled by Flask to denote bad user input."""
@@ -28,6 +30,8 @@ def json_error(error):
         })
         response.status_code = error.code
     else:
+        # Log the actual exception before it's gobbled up by Flask
+        log.exception(error)
         status_code = 500
         message = None
         if isinstance(error, ValidationError):
