@@ -64,12 +64,12 @@ class ErrataScraper(BaseScraper):
                 'updated_at': advisory['updated_at']
             })[0]
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
-            adv.assigned_to.connect(assigned_to)
+            adv.conditional_connect(adv.assigned_to, assigned_to)
             package_owner = User.get_or_create(
                 {'username': advisory['package_owner'].split('@')[0]})[0]
-            adv.package_owner.connect(package_owner)
+            adv.conditional_connect(adv.package_owner, package_owner)
             reporter = User.get_or_create({'username': advisory['reporter'].split('@')[0]})[0]
-            adv.reporter.connect(reporter)
+            adv.conditional_connect(adv.reporter, reporter)
 
             for state in self.get_advisory_states(advisory['id']):
                 adv_state = AdvisoryState.create_or_update({
@@ -78,9 +78,9 @@ class ErrataScraper(BaseScraper):
                     'created_at': state['created_at'],
                     'updated_at': state['updated_at']
                 })[0]
-                adv_state.advisory.connect(adv)
+                adv_state.conditional_connect(adv_state.advisory, adv)
                 state_creator = User.get_or_create({'username': state['username'].split('@')[0]})[0]
-                adv_state.creator.connect(state_creator)
+                adv_state.conditional_connect(adv_state.creator, state_creator)
 
             for attached_bug in self.get_attached_bugs(advisory['id']):
                 bug = BugzillaBug.get_or_create(attached_bug)[0]

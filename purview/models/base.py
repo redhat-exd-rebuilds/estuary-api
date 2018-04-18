@@ -81,3 +81,25 @@ class PurviewStructuredNode(StructuredNode):
             serialized[prop_name] = []
 
         return serialized
+
+    @staticmethod
+    def conditional_connect(relationship, new_node):
+        """
+        Wrap the connect and replace methods for conditional relationship handling.
+
+        :param neomodel.RelationshipManager relationship: a relationship to connect on
+        :param neomodel.StructuredNode new_node: the node to create the relationship with
+        :raises NotImplementedError: if this method is called with a relationship of cardinality of
+        one
+        """
+        if new_node not in relationship:
+            if len(relationship) == 0:
+                relationship.connect(new_node)
+            else:
+                if isinstance(relationship, ZeroOrOne):
+                    relationship.replace(new_node)
+                elif isinstance(relationship, One):
+                    raise NotImplementedError(
+                        'conditional_connect doesn\'t support cardinality of one')
+                else:
+                    relationship.connect(new_node)

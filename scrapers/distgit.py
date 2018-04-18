@@ -126,15 +126,15 @@ class DistGitScraper(BaseScraper):
             branch.commits.connect(commit)
             branch.pushes.connect(push)
 
-            push.pusher.connect(pusher)
+            push.conditional_connect(push.pusher, pusher)
             push.commits.connect(commit)
 
-            commit.author.connect(author)
-            commit.committer.connect(committer)
+            commit.conditional_connect(commit.author, author)
+            commit.conditional_connect(commit.committer, committer)
 
             if repo_info['parent']:
                 parent_commit = DistGitCommit.get_or_create({'hash_': repo_info['parent']})[0]
-                commit.parent.connect(parent_commit)
+                commit.conditional_connect(commit.parent, parent_commit)
 
             if result['bugzilla_type'] == 'related':
                 commit.related_bugs.connect(bug)

@@ -139,8 +139,7 @@ class KojiScraper(BaseScraper):
             else:
                 username = build_dict['owner_name']
             user = User.get_or_create(dict(username=username))[0]
-
-            build.owner.connect(user)
+            build.conditional_connect(build.owner, user)
 
             tags = self.get_build_tags(build_dict['id'])
             current_tag_ids = set()
@@ -194,11 +193,10 @@ class KojiScraper(BaseScraper):
 
             # Defining Relationships
             task.builds.connect(build)
-            task.owner.connect(user)
+            task.conditional_connect(task.owner, user)
             if commit_hash:
                 commit = DistGitCommit.get_or_create(dict(hash_=commit_hash))[0]
-                commit.koji_builds.connect(build)
-                build.commit.connect(commit)
+                build.conditional_connect(build.commit, commit)
 
             child_tasks = self.get_task_children(task_dict['id'])
 
@@ -218,5 +216,4 @@ class KojiScraper(BaseScraper):
                     arch=child_task_dict['arch'],
                     method=child_task_dict['method']
                 ))[0]
-
-                child_task.parent.connect(task)
+                child_task.conditional_connect(child_task.parent, task)
