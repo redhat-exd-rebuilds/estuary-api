@@ -3,8 +3,9 @@
 from __future__ import unicode_literals
 from datetime import datetime
 
-from neomodel import StructuredNode, One, ZeroOrOne
+from neomodel import StructuredNode, One, ZeroOrOne, OUTGOING, INCOMING, EITHER
 
+from purview import log
 from purview.utils.general import inflate_node
 
 
@@ -45,40 +46,85 @@ class PurviewStructuredNode(StructuredNode):
         :raises RuntimeError: if the label of a Neo4j node can't be mapped back to a neomodel class
         """
         # A set that will keep track of all properties on the node that weren't returned from Neo4j
-        null_props = set()
-        # A mapping of Neo4j relationship names to class property names and cardinality per label
-        # (model class name) e.g. {'Advisory': {'ASSIGNED': 'advisories_assigned', ...}}
+        null_properties = set()
+        # A mapping of Neo4j relationship names in the format of:
+        # {
+        #     node_label: {
+        #         relationship_name: {
+        #             'property_names': {direction: property_name, ...},
+        #             'cardinality_class': cardinality_class
+        #         }
+        #     }
+        # }
         relationship_map = {}
-        for prop_name, rel in self.__all_relationships__:
-            label = rel.definition['node_class'].__label__
-            neo4j_rel = rel.definition['relation_type']
+        for property_name, relationship in self.__all_relationships__:
+            node_label = relationship.definition['node_class'].__label__
+            relationship_name = relationship.definition['relation_type']
+            if node_label not in relationship_map:
+                relationship_map[node_label] = {}
+            label_info = relationship_map[node_label]
 
-            if not relationship_map.get(label):
-                relationship_map[label] = {}
-            relationship_map[label][neo4j_rel] = (prop_name, rel.manager)
-            null_props.add(prop_name)
+            relationship_direction = relationship.definition['direction']
+            if relationship_direction == EITHER:
+                # The direction can be coming from either direction, so map both
+                property_names = {INCOMING: property_name, OUTGOING: property_name}
+            else:
+                property_names = {relationship_direction: property_name}
+
+            if relationship_name not in label_info:
+                label_info[relationship_name] = {
+                    'property_names': property_names,
+                    'cardinality_class': relationship.manager
+                }
+            else:
+                label_info[relationship_name]['property_names'].update(property_names)
+            null_properties.add(property_name)
 
         # This variable will contain the current node as serialized + all relationships
         serialized = self.serialized
-        # Get all the direct relationships
+        # Get all the direct relationships in both directions
         results, _ = self.cypher('MATCH (a) WHERE id(a)={self} MATCH (a)-[r]-(all) RETURN r, all')
-        for rel, node in results:
-            inflated_node = inflate_node(node)
-            prop_name, cardinality_class = relationship_map[inflated_node.__label__][rel.type]
-            if not serialized.get(prop_name):
-                null_props.remove(prop_name)
-
-            if cardinality_class in (One, ZeroOrOne):
-                serialized[prop_name] = inflated_node.serialized
+        for relationship, node in results:
+            # If the starting node in the relationship is the same as the node being serialized,
+            # we know that the relationship is outgoing
+            if relationship.start == self.id:
+                direction = OUTGOING
             else:
-                if not serialized.get(prop_name):
-                    serialized[prop_name] = []
-                serialized[prop_name].append(inflated_node.serialized)
+                direction = INCOMING
+
+            # Convert the Neo4j result into a model object
+            inflated_node = inflate_node(node)
+            try:
+                relationship_info = relationship_map[inflated_node.__label__][relationship.type]
+                property_name = relationship_info['property_names'][direction]
+            except KeyError:
+                if direction == OUTGOING:
+                    direction_text = 'outgoing'
+                else:
+                    direction_text = 'incoming'
+                log.warn(
+                    'An {0} {1} relationship of {2!r} with {3!r} is not mapped in the models and '
+                    'will be ignored'.format(direction_text, relationship.type, self, inflate_node))
+                continue
+
+            if not serialized.get(property_name):
+                null_properties.remove(property_name)
+
+            if relationship_info['cardinality_class'] in (One, ZeroOrOne):
+                serialized[property_name] = inflated_node.serialized
+            else:
+                if not serialized.get(property_name):
+                    serialized[property_name] = []
+                serialized[property_name].append(inflated_node.serialized)
 
         # Neo4j won't return back relationships it doesn't know about, so just make them empty
-        # lists so that the keys are always consistent
-        for prop_name in null_props:
-            serialized[prop_name] = []
+        # so that the keys are always consistent
+        for property_name in null_properties:
+            prop = getattr(self, property_name)
+            if isinstance(prop, One) or isinstance(prop, ZeroOrOne):
+                serialized[property_name] = None
+            else:
+                serialized[property_name] = []
 
         return serialized
 
