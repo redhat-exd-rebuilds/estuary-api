@@ -2,7 +2,7 @@
 source = purview
 
 [report]
-fail_under = 78
+fail_under = 85
 exclude_lines =
     pragma: no cover
     if __name__ == .__main__.:
