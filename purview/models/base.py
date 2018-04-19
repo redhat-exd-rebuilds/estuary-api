@@ -50,10 +50,7 @@ class PurviewStructuredNode(StructuredNode):
         # A mapping of Neo4j relationship names in the format of:
         # {
         #     node_label: {
-        #         relationship_name: {
-        #             'property_names': {direction: property_name, ...},
-        #             'cardinality_class': cardinality_class
-        #         }
+        #         relationship_name: {direction: (property_name, cardinality_class) ...},
         #     }
         # }
         relationship_map = {}
@@ -62,22 +59,21 @@ class PurviewStructuredNode(StructuredNode):
             relationship_name = relationship.definition['relation_type']
             if node_label not in relationship_map:
                 relationship_map[node_label] = {}
-            label_info = relationship_map[node_label]
 
             relationship_direction = relationship.definition['direction']
             if relationship_direction == EITHER:
                 # The direction can be coming from either direction, so map both
-                property_names = {INCOMING: property_name, OUTGOING: property_name}
-            else:
-                property_names = {relationship_direction: property_name}
-
-            if relationship_name not in label_info:
-                label_info[relationship_name] = {
-                    'property_names': property_names,
-                    'cardinality_class': relationship.manager
+                properties = {
+                    INCOMING: (property_name, relationship.manager),
+                    OUTGOING: (property_name, relationship.manager),
                 }
             else:
-                label_info[relationship_name]['property_names'].update(property_names)
+                properties = {relationship_direction: (property_name, relationship.manager)}
+
+            if relationship_name not in relationship_map[node_label]:
+                relationship_map[node_label][relationship_name] = properties
+            else:
+                relationship_map[node_label][relationship_name].update(properties)
             null_properties.add(property_name)
 
         # This variable will contain the current node as serialized + all relationships
@@ -95,8 +91,8 @@ class PurviewStructuredNode(StructuredNode):
             # Convert the Neo4j result into a model object
             inflated_node = inflate_node(node)
             try:
-                relationship_info = relationship_map[inflated_node.__label__][relationship.type]
-                property_name = relationship_info['property_names'][direction]
+                property_name, cardinality_class = \
+                    relationship_map[inflated_node.__label__][relationship.type][direction]
             except KeyError:
                 if direction == OUTGOING:
                     direction_text = 'outgoing'
@@ -110,7 +106,7 @@ class PurviewStructuredNode(StructuredNode):
             if not serialized.get(property_name):
                 null_properties.remove(property_name)
 
-            if relationship_info['cardinality_class'] in (One, ZeroOrOne):
+            if cardinality_class in (One, ZeroOrOne):
                 serialized[property_name] = inflated_node.serialized
             else:
                 if not serialized.get(property_name):
