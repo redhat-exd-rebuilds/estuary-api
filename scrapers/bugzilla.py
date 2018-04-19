@@ -49,7 +49,7 @@ class BugzillaScraper(BaseScraper):
             LEFT JOIN bugzilla.profiles AS assigned ON bugs.assigned_to = assigned.userid
             LEFT JOIN bugzilla.profiles AS reported ON bugs.reporter = reported.userid
             LEFT JOIN bugzilla.profiles AS qa ON bugs.qa_contact = qa.userid
-            WHERE classifications.name = 'Red Hat' AND bugs.creation_ts > '{}'
+            WHERE classifications.name = 'Red Hat' AND bugs.delta_ts > '{}'
             """.format(start_date)
 
         return self.teiid.query(sql=sql_query)
