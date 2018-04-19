@@ -140,7 +140,7 @@ class ErrataScraper(BaseScraper):
                 ON main.package_owner_id = package_users.id
             LEFT JOIN Errata_public.users AS reporter_users
                 ON main.reporter_id = reporter_users.id
-            WHERE main.created_at >= '{0}'
+            WHERE main.updated_at >= '{0}'
             ORDER BY main.id;
         """.format(since)
         log.info('Getting Errata advisories since {0}'.format(since))
