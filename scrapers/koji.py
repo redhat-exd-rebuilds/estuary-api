@@ -44,9 +44,20 @@ class KojiScraper(BaseScraper):
         # SQL query to fetch all builds from start date until now
         log.info('Getting all Koji builds since {0}'.format(start_date))
         sql_query = """
-            SELECT build.*, brew.users.krb_principal as owner_username,
-                brew.users.name as owner_name, events.time as creation_time,
-                package.name as package_name
+            SELECT
+                events.time as creation_time,
+                build.completion_time,
+                build.epoch,
+                build.extra,
+                build.id,
+                brew.users.name as owner_name,
+                brew.users.krb_principal as owner_username,
+                package.name as package_name,
+                build.release,
+                build.start_time,
+                build.state,
+                build.task_id,
+                build.version
             FROM build
             LEFT JOIN events ON build.create_event = events.id
             LEFT JOIN package ON build.pkg_id = package.id
@@ -67,7 +78,8 @@ class KojiScraper(BaseScraper):
         """
         # SQL query to fetch task related to a certain build
         sql_query = """
-            SELECT *
+            SELECT arch, completion_time, create_time, id, "method", priority, request, start_time,
+                   state, weight
             FROM brew.task
             WHERE id = {}
             """.format(task_id)
@@ -85,7 +97,8 @@ class KojiScraper(BaseScraper):
         # SQL query to fetch all child tasks related to a
         # parent task
         sql_query = """
-            SELECT *
+            SELECT arch, completion_time, create_time, id, "method", priority, request, start_time,
+                   state, weight
             FROM brew.task
             WHERE parent = {}
             """.format(parent)
