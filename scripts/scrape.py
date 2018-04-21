@@ -17,7 +17,8 @@ log.setLevel(logging.DEBUG)
 
 parser = argparse.ArgumentParser(description='Run a scraper')
 parser.add_argument('scraper', type=str, help='The scraper to run. To run them all, use "all".')
-parser.add_argument('--since', type=str, help='A UTC date formatted in "yyyy-mm-dd" limit results')
+parser.add_argument('--since', type=str,
+                    help='Process results starting from a UTC date formatted in "yyyy-mm-dd"')
 parser.add_argument('--teiid-user', type=str, help='The Teiid user')
 parser.add_argument('--teiid-password', type=str, help='The Teiid password')
 parser.add_argument('--neo4j-user', type=str, default='neo4j', help='The Neo4j user')
