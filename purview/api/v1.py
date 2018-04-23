@@ -2,7 +2,6 @@
 
 from __future__ import unicode_literals
 
-import collections
 from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import NotFound
 
@@ -81,12 +80,15 @@ def get_resource_story(resource, uid):
     if backward_query:
         results_unordered.update(query_neo4j(backward_query))
 
-    results = collections.OrderedDict()
+    results = []
     curr_label = 'BugzillaBug'
     while curr_label:
         if curr_label in results_unordered:
-            results[curr_label] = results_unordered[curr_label]
+            # Have each index of results be a list with the 0 index being the resource name
+            # and the the rest of the indexes being resources
+            results_unordered[curr_label].insert(0, curr_label)
+            results.append(results_unordered[curr_label])
 
         curr_label = story_flow[curr_label]['forward_label']
 
-    return jsonify(list(results.items()) or item.serialized)
+    return jsonify(results)

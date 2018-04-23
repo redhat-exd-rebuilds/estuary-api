@@ -97,78 +97,104 @@ def test_get_stories(client):
     fm_event.triggered_by_advisory.connect(advisory)
     fm_event.triggered_container_builds.connect(cb)
 
-    expected = [['BugzillaBug',
-                 [{'classification': 'Red Hat',
-                   'creation_time': '2017-04-02T19:39:06+00:00',
-                   'id': '12345',
-                   'modified_time': '2018-02-07T19:30:47+00:00',
-                   'priority': 'high',
-                   'product_name': 'Red Hat Enterprise Linux',
-                   'product_version': '7.5',
-                   'resolution': '',
-                   'severity': 'low',
-                   'short_description': 'Some description',
-                   'status': 'VERIFIED',
-                   'target_milestone': 'rc',
-                   'votes': 0}]],
-                ['DistGitCommit',
-                 [{'author_date': '2017-04-26T11:44:38+00:00',
-                   'commit_date': '2017-04-26T11:44:38+00:00',
-                   'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
-                   'log_message': 'Related: #12345 - fix xyz'}]],
-                ['KojiBuild',
-                 [{'completion_time': '2017-04-02T19:39:06+00:00',
-                   'creation_time': '2017-04-02T19:39:06+00:00',
-                   'epoch': '0',
-                   'extra': None,
-                   'id': '2345',
-                   'name': 'slf4j',
-                   'release': '4.el7_4',
-                   'start_time': '2017-04-02T19:39:06+00:00',
-                   'state': 1,
-                   'version': '1.7.4'}]],
-                ['Advisory',
-                 [{'actual_ship_date': '2017-08-01T15:43:51+00:00',
-                   'advisory_name': 'RHBA-2017:2251-02',
-                   'content_types': ['docker'],
-                   'created_at': '2017-04-03T14:47:23+00:00',
-                   'id': '27825',
-                   'issue_date': '2017-08-01T05:59:34+00:00',
-                   'product_name': 'Red Hat Enterprise Linux',
-                   'product_short_name': 'RHEL',
-                   'release_date': None,
-                   'security_impact': 'None',
-                   'security_sla': None,
-                   'state': 'SHIPPED_LIVE',
-                   'status_time': '2017-08-01T15:43:51+00:00',
-                   'synopsis': 'cifs-utils bug fix update',
-                   'type': 'RHBA',
-                   'update_date': '2017-08-01T07:16:00+00:00',
-                   'updated_at': '2017-08-01T15:43:51+00:00'}]],
-                ['FreshmakerEvent',
-                 [{'event_type_id': 8,
-                   'id': '1180',
-                   'message_id': 'ID:messaging-devops-broker01.test',
-                   'state': 2,
-                   'state_name': 'COMPLETE',
-                   'state_reason': 'All container images have been rebuilt.',
-                   'url': '/api/1/events/1180'}]],
-                ['ContainerBuilds',
-                 [{'build_id': 15639047,
-                   'dep_on': None,
-                   'event_id': 1180,
-                   'id': '397',
-                   'name': 'jboss-eap-7-eap70-openshift-docker',
-                   'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                   'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                   'state': 1,
-                   'state_name': 'DONE',
-                   'state_reason': 'Built successfully.',
-                   'time_completed': '2017-04-02T19:39:06+00:00',
-                   'time_submitted': '2017-04-02T19:39:06+00:00',
-                   'type': 1,
-                   'type_name': 'IMAGE',
-                   'url': '/api/1/builds/397'}]]]
+    expected = [
+        [
+            'BugzillaBug',
+            {
+                'classification': 'Red Hat',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'id': '12345',
+                'modified_time': '2018-02-07T19:30:47+00:00',
+                'priority': 'high',
+                'product_name': 'Red Hat Enterprise Linux',
+                'product_version': '7.5',
+                'resolution': '',
+                'severity': 'low',
+                'short_description': 'Some description',
+                'status': 'VERIFIED',
+                'target_milestone': 'rc',
+                'votes': 0
+            }
+        ],
+        [
+            'DistGitCommit',
+            {
+                'author_date': '2017-04-26T11:44:38+00:00',
+                'commit_date': '2017-04-26T11:44:38+00:00',
+                'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
+                'log_message': 'Related: #12345 - fix xyz'
+            }
+        ],
+        [
+            'KojiBuild',
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '2345',
+                'name': 'slf4j',
+                'release': '4.el7_4',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 1,
+                'version': '1.7.4'
+            }
+        ],
+        [
+            'Advisory',
+            {
+                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'advisory_name': 'RHBA-2017:2251-02',
+                'content_types': ['docker'],
+                'created_at': '2017-04-03T14:47:23+00:00',
+                'id': '27825',
+                'issue_date': '2017-08-01T05:59:34+00:00',
+                'product_name': 'Red Hat Enterprise Linux',
+                'product_short_name': 'RHEL',
+                'release_date': None,
+                'security_impact': 'None',
+                'security_sla': None,
+                'state': 'SHIPPED_LIVE',
+                'status_time': '2017-08-01T15:43:51+00:00',
+                'synopsis': 'cifs-utils bug fix update',
+                'type': 'RHBA',
+                'update_date': '2017-08-01T07:16:00+00:00',
+                'updated_at': '2017-08-01T15:43:51+00:00'
+            }
+        ],
+        [
+            'FreshmakerEvent',
+            {
+                'event_type_id': 8,
+                'id': '1180',
+                'message_id': 'ID:messaging-devops-broker01.test',
+                'state': 2,
+                'state_name': 'COMPLETE',
+                'state_reason': 'All container images have been rebuilt.',
+                'url': '/api/1/events/1180'
+            }
+        ],
+        [
+            'ContainerBuilds',
+            {
+                'build_id': 15639047,
+                'dep_on': None,
+                'event_id': 1180,
+                'id': '397',
+                'name': 'jboss-eap-7-eap70-openshift-docker',
+                'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
+                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
+                'state': 1,
+                'state_name': 'DONE',
+                'state_reason': 'Built successfully.',
+                'time_completed': '2017-04-02T19:39:06+00:00',
+                'time_submitted': '2017-04-02T19:39:06+00:00',
+                'type': 1,
+                'type_name': 'IMAGE',
+                'url': '/api/1/builds/397'
+            }
+        ]
+    ]
 
     rv = client.get('/api/v1/story/bugzillabug/12345')
     assert rv.status_code == 200
