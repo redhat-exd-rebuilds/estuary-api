@@ -14,6 +14,7 @@ class Config(object):
     SHOW_DB_URI = False
     SECRET_KEY = 'replace-me-with-something-random'
     NEO4J_URI = 'bolt://neo4j:neo4j@localhost:7687'
+    CORS_URL = '*'
 
 
 class ProdConfig(Config):
