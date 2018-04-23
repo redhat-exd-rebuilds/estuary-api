@@ -9,6 +9,7 @@ from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitCommit
 from purview.models.errata import Advisory
 from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
+from purview.models.user import User
 
 
 def test_get_stories(client):
@@ -191,4 +192,16 @@ def test_get_stories(client):
 
     rv = client.get('/api/v1/story/containerbuilds/397')
     assert rv.status_code == 200
+    assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+def test_get_stories_not_available(client):
+    """Test getting a resource story on a resource that can't have a story."""
+    User.get_or_create({'username': 'tbrady'})
+    rv = client.get('/api/v1/story/user/tbrady')
+    expected = {
+        'message': 'The story is not available for this kind of resource',
+        'status': 400
+    }
+    assert rv.status_code == 400
     assert json.loads(rv.data.decode('utf-8')) == expected
