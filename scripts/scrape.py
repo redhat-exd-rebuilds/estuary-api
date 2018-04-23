@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 import argparse
 import logging
+from datetime import datetime, timedelta
 import sys
 import os
 # So we can import the scrapers module
@@ -17,7 +18,9 @@ log.setLevel(logging.DEBUG)
 
 parser = argparse.ArgumentParser(description='Run a scraper')
 parser.add_argument('scraper', type=str, help='The scraper to run. To run them all, use "all".')
-parser.add_argument('--since', type=str, help='A UTC date formatted in "yyyy-mm-dd" limit results')
+parser.add_argument('--since', type=str,
+                    help='Process results starting from a UTC date formatted in "yyyy-mm-dd"')
+parser.add_argument('--days-ago', type=int, help='Process results starting from "x" days ago')
 parser.add_argument('--teiid-user', type=str, help='The Teiid user')
 parser.add_argument('--teiid-password', type=str, help='The Teiid password')
 parser.add_argument('--neo4j-user', type=str, default='neo4j', help='The Neo4j user')
@@ -26,6 +29,11 @@ parser.add_argument('--neo4j-server', type=str, default='localhost',
                     help='The FQDN to the Neo4j server')
 parser.add_argument('--kerberos', action='store_true', help='Use Kerberos for authentication')
 args = parser.parse_args()
+
+if args.since and args.days_ago:
+    error = 'You can\'t specify both "--since" and "--days-ago"'
+    log.error(error)
+    raise RuntimeError(error)
 
 scraper_classes = tuple()
 if args.scraper.lower() == 'all':
@@ -49,4 +57,7 @@ for scraper_class in scraper_classes:
     scraper = scraper_class(
         args.teiid_user, args.teiid_password, args.kerberos, args.neo4j_user, args.neo4j_password,
         args.neo4j_server)
-    scraper.run(since=args.since)
+    since = args.since
+    if args.days_ago:
+        since = (datetime.utcnow() - timedelta(days=args.days_ago)).strftime('%Y-%m-%d')
+    scraper.run(since=since)
