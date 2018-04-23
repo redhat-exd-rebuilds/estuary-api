@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 import os
 
-from flask import Flask
+from flask import Flask, current_app
 from werkzeug.exceptions import default_exceptions
 from neomodel import config as neomodel_config
 from neo4j.exceptions import ServiceUnavailable, AuthError
@@ -36,6 +36,22 @@ def load_config(app):
         app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
 
+def insert_headers(response):
+    """
+    Insert configured HTTP headers into the Flask response.
+
+    :param flask.Response response: the response to insert headers into
+    :return: modified Flask response
+    :rtype: flask.Response
+    """
+    cors_url = current_app.config.get('CORS_URL')
+    if cors_url:
+        response.headers['Access-Control-Allow-Origin'] = cors_url
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Method'] = 'GET, OPTIONS'
+    return response
+
+
 def create_app(config_obj=None):
     """
     Create a Flask application object.
@@ -63,5 +79,7 @@ def create_app(config_obj=None):
     app.register_error_handler(ServiceUnavailable, json_error)
     app.register_error_handler(AuthError, json_error)
     app.register_blueprint(api_v1, url_prefix='/api/v1')
+
+    app.after_request(insert_headers)
 
     return app
