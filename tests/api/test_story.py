@@ -64,29 +64,29 @@ def test_get_stories(client):
         'version': '1.7.4'
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        "event_type_id": 8,
-        "id_": "1180",
-        "message_id": "ID:messaging-devops-broker01.test",
-        "state": 2,
-        "state_name": "COMPLETE",
-        "state_reason": "All container images have been rebuilt.",
-        "url": "/api/1/events/1180"
+        'event_type_id': 8,
+        'id_': '1180',
+        'message_id': 'ID:messaging-devops-broker01.test',
+        'state': 2,
+        'state_name': 'COMPLETE',
+        'state_reason': 'All container images have been rebuilt.',
+        'url': '/api/1/events/1180'
     })[0]
     cb = ContainerBuilds.get_or_create({
-        "build_id": 15639047,
-        "event_id": 1180,
-        "id_": "397",
-        "name": "jboss-eap-7-eap70-openshift-docker",
-        "original_nvr": "jboss-eap-7-eap70-openshift-docker-1.4-36",
-        "rebuilt_nvr": "jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763",
-        "state": 1,
-        "state_name": "DONE",
-        "state_reason": "Built successfully.",
-        "time_completed": datetime(2017, 4, 2, 19, 39, 6),
-        "time_submitted": datetime(2017, 4, 2, 19, 39, 6),
-        "type_": 1,
-        "type_name": "IMAGE",
-        "url": "/api/1/builds/397"
+        'build_id': 15639047,
+        'event_id': 1180,
+        'id_': '397',
+        'name': 'jboss-eap-7-eap70-openshift-docker',
+        'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
+        'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
+        'state': 1,
+        'state_name': 'DONE',
+        'state_reason': 'Built successfully.',
+        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
+        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
+        'type_': 1,
+        'type_name': 'IMAGE',
+        'url': '/api/1/builds/397'
     })[0]
 
     bug.resolved_by_commits.connect(commit)
@@ -217,6 +217,50 @@ def test_get_stories(client):
     assert json.loads(rv.data.decode('utf-8')) == expected
 
     rv = client.get('/api/v1/story/containerbuilds/397')
+    assert rv.status_code == 200
+    assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+def test_get_artifact_story_not_available(client):
+    """Test getting a resource story on a resource that doesn't have any relationships."""
+    BugzillaBug.get_or_create({
+        'classification': 'Red Hat',
+        'creation_time': datetime(2017, 4, 2, 6, 43, 58),
+        'id_': '5555',
+        'modified_time': datetime(2017, 12, 5, 10, 12, 47),
+        'priority': 'unspecified',
+        'product_name': 'Red Hat CloudForms Management Engine',
+        'product_version': '5.7.0',
+        'resolution': 'WORKSFORME',
+        'severity': 'unspecified',
+        'short_description': 'Fail to delete OSP tenant by CFME',
+        'status': 'CLOSED',
+        'target_milestone': 'GA',
+        'votes': 0
+    })[0]
+
+    expected = [
+        [
+            'BugzillaBug',
+            {
+                'classification': 'Red Hat',
+                'creation_time': '2017-04-02T06:43:58+00:00',
+                'id': '5555',
+                'modified_time': '2017-12-05T10:12:47+00:00',
+                'priority': 'unspecified',
+                'product_name': 'Red Hat CloudForms Management Engine',
+                'product_version': '5.7.0',
+                'resolution': 'WORKSFORME',
+                'severity': 'unspecified',
+                'short_description': 'Fail to delete OSP tenant by CFME',
+                'status': 'CLOSED',
+                'target_milestone': 'GA',
+                'votes': 0
+            }
+        ]
+    ]
+
+    rv = client.get('/api/v1/story/bugzillabug/5555')
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
 
