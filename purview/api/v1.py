@@ -91,4 +91,8 @@ def get_resource_story(resource, uid):
 
         curr_label = story_flow[curr_label]['forward_label']
 
+    if len(results) == 0:
+        # If no relationships are found, return the artifact by itself
+        results.append([item.__label__, item.serialized])
+
     return jsonify(results)
