@@ -45,7 +45,7 @@ class KojiTask(PurviewStructuredNode):
     parent = RelationshipTo('KojiTask', 'PARENT', cardinality=ZeroOrOne)
     priority = IntegerProperty()
     start_time = DateTimeProperty()
-    state = IntegerProperty(required=True)
+    state = IntegerProperty()
     weight = FloatProperty()
 
 
