@@ -52,6 +52,21 @@ def test_get_stories(client):
         'target_milestone': 'rc',
         'votes': 0
     })[0]
+    bug_two = BugzillaBug.get_or_create({
+        'classification': 'Red Hat',
+        'creation_time': datetime(2017, 4, 2, 6, 43, 58),
+        'id_': '5555',
+        'modified_time': datetime(2017, 12, 5, 10, 12, 47),
+        'priority': 'unspecified',
+        'product_name': 'Red Hat CloudForms Management Engine',
+        'product_version': '5.7.0',
+        'resolution': 'WORKSFORME',
+        'severity': 'unspecified',
+        'short_description': 'Fail to delete OSP tenant by CFME',
+        'status': 'CLOSED',
+        'target_milestone': 'GA',
+        'votes': 0
+    })[0]
     build = KojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -89,7 +104,7 @@ def test_get_stories(client):
         'url': '/api/1/builds/397'
     })[0]
 
-    bug.resolved_by_commits.connect(commit)
+    commit.resolved_bugs.connect(bug_two)
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
     build.advisories.connect(advisory)
@@ -199,6 +214,22 @@ def test_get_stories(client):
     rv = client.get('/api/v1/story/bugzillabug/12345')
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
+
+    expected[0].append({
+        'classification': 'Red Hat',
+        'creation_time': '2017-04-02T06:43:58+00:00',
+        'id': '5555',
+        'modified_time': '2017-12-05T10:12:47+00:00',
+        'priority': 'unspecified',
+        'product_name': 'Red Hat CloudForms Management Engine',
+        'product_version': '5.7.0',
+        'resolution': 'WORKSFORME',
+        'severity': 'unspecified',
+        'short_description': 'Fail to delete OSP tenant by CFME',
+        'status': 'CLOSED',
+        'target_milestone': 'GA',
+        'votes': 0
+    })
 
     rv = client.get('/api/v1/story/distgitcommit/8a63adb248ba633e200067e1ad6dc61931727bad')
     assert rv.status_code == 200
