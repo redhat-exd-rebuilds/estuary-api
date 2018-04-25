@@ -183,11 +183,14 @@ def query_neo4j(query):
     if not results:
         return results_dict
 
-    for node in results[0]:
-        if node:
-            inflated_node = inflate_node(node)
-            node_label = inflated_node.__label__
-            if node_label not in results_dict:
-                results_dict[node_label] = []
-            results_dict[node_label].append(inflated_node.serialized)
+    for result in results:
+        for node in result:
+            if node:
+                inflated_node = inflate_node(node)
+                node_label = inflated_node.__label__
+                if node_label not in results_dict:
+                    results_dict[node_label] = []
+                serialized_node = inflated_node.serialized
+                if serialized_node not in results_dict[node_label]:
+                    results_dict[node_label].append(inflated_node.serialized)
     return results_dict
