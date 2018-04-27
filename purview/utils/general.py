@@ -6,6 +6,7 @@ from datetime import datetime
 from six import text_type
 
 from neomodel import UniqueIdProperty, db
+from neo4j.v1.types import Path
 
 from purview import log
 from purview.error import ValidationError
@@ -107,22 +108,6 @@ def get_neo4j_node(resource_name, uid):
     raise ValidationError(error)
 
 
-def node_query(node_label, uid_name=None, uid=None):
-    """
-    Build part of a raw cypher query for a node label.
-
-    :param str node_label: a Neo4j node label
-    :kwarg str uid_name: name of node's UniqueIdProperty
-    :kwarg str uid: value of node's UniqueIdProperty
-    :return: the node represented in raw cypher
-    :rtype: str
-    """
-    if uid_name and uid:
-        return '({0}:{1} {{{2}:"{3}"}})'.format(node_label.lower(), node_label,
-                                                uid_name.rstrip('_'), uid)
-    return '({0}:{1})'.format(node_label.lower(), node_label)
-
-
 def create_query(item, uid_name, uid, reverse=False):
     """
     Create a raw cypher query for a node label.
@@ -153,18 +138,21 @@ def create_query(item, uid_name, uid, reverse=False):
 
     while story_flow[curr_node_label][rel_label]:
         if curr_node_label == item.__label__:
-            node = node_query(curr_node_label, uid_name, uid)
-        else:
-            node = node_query(curr_node_label)
+            query += 'MATCH ({0}:{1} {{{2}:"{3}"}})\n'.format(
+                curr_node_label.lower(), curr_node_label, uid_name.rstrip('_'), uid)
+            query += 'CALL apoc.path.expandConfig({0}, {{sequence:\'{1}'.format(
+                curr_node_label.lower(), curr_node_label)
+            count = 0
 
-        next_node = node_query(story_flow[curr_node_label][node_label])
-        query += 'OPTIONAL MATCH {0}-[:{1}]-{2}\n'.format(
-            node, story_flow[curr_node_label][rel_label], next_node)
+        query += ', {0}, {1}'.format(
+            story_flow[curr_node_label][rel_label], story_flow[curr_node_label][node_label])
 
+        count += 1
         curr_node_label = story_flow[curr_node_label][node_label]
 
     if query:
-        query += 'RETURN *'
+        query += ('\', maxLevel: {0}}}) YIELD path\nRETURN path\n'
+                  'ORDER BY length(path) DESC\nLIMIT 1').format(count)
 
     return query
 
@@ -182,6 +170,9 @@ def query_neo4j(query):
 
     if not results:
         return results_dict
+
+    if isinstance(results[0][0], Path):
+        results = [list(results[0][0].nodes)]
 
     for result in results:
         for node in result:
