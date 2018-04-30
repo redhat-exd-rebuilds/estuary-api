@@ -18,6 +18,7 @@ names_to_model = {model.__label__: model for model in all_models}
 story_flow = {
 
     'BugzillaBug': {
+        'uid_name': 'id',
         'forward_relationship': '{0}<'.format(
             BugzillaBug.resolved_by_commits.definition['relation_type']),
         'forward_label': DistGitCommit.__label__,
@@ -25,6 +26,7 @@ story_flow = {
         'backward_label': None
     },
     'DistGitCommit': {
+        'uid_name': 'hash',
         'forward_relationship': '{0}<'.format(
             DistGitCommit.koji_builds.definition['relation_type']),
         'forward_label': KojiBuild.__label__,
@@ -33,12 +35,14 @@ story_flow = {
         'backward_label': BugzillaBug.__label__
     },
     'KojiBuild': {
+        'uid_name': 'id',
         'forward_relationship': '{0}<'.format(KojiBuild.advisories.definition['relation_type']),
         'forward_label': Advisory.__label__,
         'backward_relationship': '{0}>'.format(KojiBuild.commit.definition['relation_type']),
         'backward_label': DistGitCommit.__label__
     },
     'Advisory': {
+        'uid_name': 'id',
         'forward_relationship': '{0}<'.format(
             Advisory.triggered_freshmaker_event.definition['relation_type']),
         'forward_label': FreshmakerEvent.__label__,
@@ -47,6 +51,7 @@ story_flow = {
         'backward_label': KojiBuild.__label__
     },
     'FreshmakerEvent': {
+        'uid_name': 'id',
         'forward_relationship': '{0}>'.format(FreshmakerEvent.triggered_container_builds
                                               .definition['relation_type']),
         'forward_label': ContainerBuilds.__label__,
@@ -55,6 +60,7 @@ story_flow = {
         'backward_label': Advisory.__label__
     },
     'ContainerBuilds': {
+        'uid_name': 'id',
         'forward_relationship': None,
         'forward_label': None,
         'backward_relationship': '{0}<'.format(ContainerBuilds.triggered_by_freshmaker_event

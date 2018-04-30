@@ -108,6 +108,21 @@ def get_neo4j_node(resource_name, uid):
     raise ValidationError(error)
 
 
+def node_query(node_label, uid_name=None, uid=None):
+    """
+    Build part of a raw cypher query for a node label.
+    :param str node_label: a Neo4j node label
+    :kwarg str uid_name: name of node's UniqueIdProperty
+    :kwarg str uid: value of node's UniqueIdProperty
+    :return: the node represented in raw cypher
+    :rtype: str
+    """
+    if uid_name and uid:
+        return '({0}:{1} {{{2}:"{3}"}})'.format(node_label.lower(), node_label,
+                                                uid_name.rstrip('_'), uid)
+    return '({0}:{1})'.format(node_label.lower(), node_label)
+
+
 def create_query(item, uid_name, uid, reverse=False):
     """
     Create a raw cypher query for a node label.
@@ -136,13 +151,12 @@ def create_query(item, uid_name, uid, reverse=False):
     if curr_node_label not in story_flow:
         raise ValidationError('The story is not available for this kind of resource')
 
+    count = 0
     while story_flow[curr_node_label][rel_label]:
         if curr_node_label == item.__label__:
-            query += 'MATCH ({0}:{1} {{{2}:"{3}"}})\n'.format(
-                curr_node_label.lower(), curr_node_label, uid_name.rstrip('_'), uid)
-            query += 'CALL apoc.path.expandConfig({0}, {{sequence:\'{1}'.format(
+            query += 'MATCH {0}'.format(node_query(curr_node_label, uid_name.rstrip('_'), uid))
+            query += '\nCALL apoc.path.expandConfig({0}, {{sequence:\'{1}'.format(
                 curr_node_label.lower(), curr_node_label)
-            count = 0
 
         query += ', {0}, {1}'.format(
             story_flow[curr_node_label][rel_label], story_flow[curr_node_label][node_label])
@@ -171,6 +185,9 @@ def query_neo4j(query):
     if not results:
         return results_dict
 
+    if isinstance(results[0][0], int):
+        return results[0][0]-1
+
     if isinstance(results[0][0], Path):
         results = [list(results[0][0].nodes)]
 
@@ -185,3 +202,38 @@ def query_neo4j(query):
                 if serialized_node not in results_dict[node_label]:
                     results_dict[node_label].append(inflated_node.serialized)
     return results_dict
+
+
+def get_corelated_nodes(results, count=True):
+    """
+    Create a raw cypher query for story nodes and get corelated nodes or their count.
+    """
+    # To avoid circular imports
+    from purview.models import story_flow
+
+    queries_dict = {}
+    for artifact in results:
+        query = 'MATCH '
+        if story_flow[artifact[0]]['backward_label']:
+            node = node_query(artifact[0], story_flow[artifact[0]]['uid_name'], artifact[
+                              1][story_flow[artifact[0]]['uid_name']])
+            next_node = node_query(story_flow[artifact[0]]['backward_label'])
+            query += '{0}-[:{1}]-{2}\n'.format(node, story_flow[artifact[0]]
+                                               ['backward_relationship'][:-1], next_node)
+            if count:
+                query += 'RETURN COUNT({0}) AS count'.format(
+                    story_flow[artifact[0]]['backward_label'].lower())
+            else:
+                query += 'RETURN {0}'.format(story_flow[artifact[0]]['backward_label'].lower())
+
+            queries_dict[story_flow[artifact[0]]['backward_label']] = query
+
+    nodes_count_dict = {}
+    nodes_list = []
+    for label, query in queries_dict.items():
+        if count:
+            nodes_count_dict[label] = query_neo4j(query)
+        else:
+            nodes_list.append(query_neo4j(query))
+
+    return nodes_count_dict or nodes_list

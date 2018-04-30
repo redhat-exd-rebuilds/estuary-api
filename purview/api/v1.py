@@ -6,10 +6,10 @@ from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import NotFound
 
 from purview import version
-from purview.utils.general import str_to_bool, get_neo4j_node, create_query, query_neo4j
 from purview.models import story_flow
 from neomodel import UniqueIdProperty
-
+from purview.utils.general import (str_to_bool, get_neo4j_node,
+                                   create_query, query_neo4j, get_corelated_nodes)
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -94,5 +94,8 @@ def get_resource_story(resource, uid):
     if len(results) == 0:
         # If no relationships are found, return the artifact by itself
         results.append([item.__label__, item.serialized])
+    else:
+        corelated_nodes = get_corelated_nodes(results, count=True)
+        results.append(['Co-related Nodes', corelated_nodes])
 
     return jsonify(results)
