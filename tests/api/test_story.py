@@ -207,7 +207,8 @@ def test_get_stories(client):
                 'BugzillaBug': 1,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
-                'KojiBuild': 0
+                'KojiBuild': 0,
+                'ContainerBuilds': 0
             }
         }
     }
@@ -280,7 +281,8 @@ def test_get_artifact_story_not_available(client):
                 'BugzillaBug': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
-                'KojiBuild': 0
+                'KojiBuild': 0,
+                'ContainerBuilds': 0
             }
         }
     }

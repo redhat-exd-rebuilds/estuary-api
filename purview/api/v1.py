@@ -82,8 +82,7 @@ def get_resource_story(resource, uid):
         results_unordered.update(query_neo4j(backward_query))
 
     results = OrderedDict({'data': [], 'meta': {}})
-    results['meta']['related_nodes'] = {
-        key: 0 for key in story_flow.keys() if key not in ['ContainerBuilds']}
+    results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}
     curr_label = 'BugzillaBug'
     while curr_label:
         if curr_label in results_unordered:

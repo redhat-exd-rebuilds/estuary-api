@@ -221,24 +221,48 @@ def get_corelated_nodes(results):
     """
     # To avoid circular imports
     from purview.models import story_flow
+    from purview.models.bugzilla import BugzillaBug
 
     nodes_count_dict = {}
-    for label, artifacts in results.items():
-        # Only grab the first element since there will only be one
-        artifact = artifacts[0]
-        query = 'MATCH '
-        backward_label = story_flow[label]['backward_label']
-        if backward_label:
-            backward_rel = story_flow[label]['backward_relationship'][:-1]
-            uid_name = story_flow[label]['uid_name']
-            node_subquery = create_node_subquery(label, uid_name, artifact[uid_name])
-            next_node_subquery = create_node_subquery(backward_label)
-            query += '{0}-[:{1}]-{2}\n'.format(node_subquery, backward_rel, next_node_subquery)
-            query += 'RETURN COUNT({0}) AS count'.format(backward_label.lower())
-
+    curr_label = BugzillaBug.__label__
+    last = False
+    while not last:
+        node_count = 0
+        forward_label = story_flow[curr_label]['forward_label']
+        if forward_label in results:
+            query = 'MATCH '
+            # Only grab the first element since there will only be one
+            next_node = results[forward_label][0]
+            forward_rel = story_flow[curr_label]['forward_relationship'][:-1]
+            uid_name = story_flow[forward_label]['uid_name']
+            node_subquery = create_node_subquery(curr_label)
+            next_node_subquery = create_node_subquery(forward_label, uid_name, next_node[uid_name])
+            query += '{0}-[:{1}]-{2}\n'.format(node_subquery, forward_rel, next_node_subquery)
+            query += 'RETURN COUNT({0}) AS count'.format(curr_label.lower())
             node_count = get_node_count(query)
-            if node_count > 0:
-                nodes_count_dict[backward_label] = node_count - 1
+
+        backward_label = story_flow[curr_label]['backward_label']
+        # If this evaluates to true, then this is the end of the story for the node, so we get
+        # the backwards related nodes (e.g. all the ContainerBuilds that were triggered by a
+        # Freshmaker event)
+        if (not forward_label or forward_label not in results) and backward_label:
+            last = True
+            query = 'MATCH '
+            backward_node = results[backward_label][0]
+            backward_rel = story_flow[curr_label]['backward_relationship'][:-1]
+            uid_name = story_flow[backward_label]['uid_name']
+            node_subquery = create_node_subquery(backward_label, uid_name, backward_node[uid_name])
+            next_node_subquery = create_node_subquery(curr_label)
+            query += '{0}-[:{1}]-{2}\n'.format(node_subquery, backward_rel, next_node_subquery)
+            query += 'RETURN COUNT({0}) AS count'.format(curr_label.lower())
+            node_count = get_node_count(query)
+
+        # If there are related nodes, then there always be at least a value of one because it
+        # includes the node already in the story. This is why we subtract here.
+        if node_count > 0:
+            nodes_count_dict[curr_label] = node_count - 1
+
+        curr_label = forward_label
 
     return nodes_count_dict
 
