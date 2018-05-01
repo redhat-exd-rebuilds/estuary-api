@@ -82,6 +82,8 @@ def get_resource_story(resource, uid):
         results_unordered.update(query_neo4j(backward_query))
 
     results = OrderedDict({'data': [], 'meta': {}})
+    results['meta']['related_nodes'] = {
+        key: 0 for key in story_flow.keys() if key not in ['ContainerBuilds']}
     curr_label = 'BugzillaBug'
     while curr_label:
         if curr_label in results_unordered:
@@ -89,6 +91,6 @@ def get_resource_story(resource, uid):
 
         curr_label = story_flow[curr_label]['forward_label']
 
-    results['meta']['related_nodes'] = get_corelated_nodes(results_unordered)
+    results['meta']['related_nodes'].update(get_corelated_nodes(results_unordered))
 
     return jsonify(results)
