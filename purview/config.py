@@ -27,7 +27,7 @@ class ProdConfig(Config):
 class DevConfig(Config):
     """The development Purview application configuration."""
 
-    pass
+    NEO4J_URI = 'bolt://neo4j:redhat@10.8.248.133:7687'
 
 
 class TestConfig(Config):

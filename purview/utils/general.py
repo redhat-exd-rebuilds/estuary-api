@@ -234,7 +234,9 @@ def get_corelated_nodes(results):
             query += '{0}-[:{1}]-{2}\n'.format(node_subquery, backward_rel, next_node_subquery)
             query += 'RETURN COUNT({0}) AS count'.format(backward_label.lower())
 
-            nodes_count_dict[backward_label] = get_node_count(query) - 1
+            node_count = get_node_count(query)
+            if node_count > 0:
+                nodes_count_dict[backward_label] = node_count - 1
 
     return nodes_count_dict
 
