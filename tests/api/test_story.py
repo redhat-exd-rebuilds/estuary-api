@@ -112,9 +112,8 @@ def test_get_stories(client):
     fm_event.triggered_by_advisory.connect(advisory)
     fm_event.triggered_container_builds.connect(cb)
 
-    expected = [
-        [
-            'BugzillaBug',
+    expected = {
+        'data': [
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06+00:00',
@@ -124,24 +123,20 @@ def test_get_stories(client):
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
                 'resolution': '',
+                'resource_type': 'BugzillaBug',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'votes': 0
-            }
-        ],
-        [
-            'DistGitCommit',
+            },
             {
                 'author_date': '2017-04-26T11:44:38+00:00',
                 'commit_date': '2017-04-26T11:44:38+00:00',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
-                'log_message': 'Related: #12345 - fix xyz'
-            }
-        ],
-        [
-            'KojiBuild',
+                'log_message': 'Related: #12345 - fix xyz',
+                'resource_type': 'DistGitCommit'
+            },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
                 'creation_time': '2017-04-02T19:39:06+00:00',
@@ -150,47 +145,43 @@ def test_get_stories(client):
                 'id': '2345',
                 'name': 'slf4j',
                 'release': '4.el7_4',
+                'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
-            }
-        ],
-        [
-            'Advisory',
+            },
             {
                 'actual_ship_date': '2017-08-01T15:43:51+00:00',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
-                'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
-                'product_name': 'Red Hat Enterprise Linux',
-                'product_short_name': 'RHEL',
-                'release_date': None,
-                'security_impact': 'None',
-                'security_sla': None,
-                'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
-                'synopsis': 'cifs-utils bug fix update',
-                'type': 'RHBA',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
-            }
-        ],
-        [
-            'FreshmakerEvent',
+                'content_types': [
+                    'docker'
+                ],
+                'created_at':'2017-04-03T14:47:23+00:00',
+                'id':'27825',
+                'issue_date':'2017-08-01T05:59:34+00:00',
+                'product_name':'Red Hat Enterprise Linux',
+                'product_short_name':'RHEL',
+                'release_date':None,
+                'resource_type':'Advisory',
+                'security_impact':'None',
+                'security_sla':None,
+                'state':'SHIPPED_LIVE',
+                'status_time':'2017-08-01T15:43:51+00:00',
+                'synopsis':'cifs-utils bug fix update',
+                'type':'RHBA',
+                'update_date':'2017-08-01T07:16:00+00:00',
+                'updated_at':'2017-08-01T15:43:51+00:00'
+            },
             {
                 'event_type_id': 8,
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
+                'resource_type': 'FreshmakerEvent',
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'url': '/api/1/events/1180'
-            }
-        ],
-        [
-            'ContainerBuilds',
+            },
             {
                 'build_id': 15639047,
                 'dep_on': None,
@@ -199,6 +190,7 @@ def test_get_stories(client):
                 'name': 'jboss-eap-7-eap70-openshift-docker',
                 'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
                 'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
+                'resource_type': 'ContainerBuilds',
                 'state': 1,
                 'state_name': 'DONE',
                 'state_reason': 'Built successfully.',
@@ -208,28 +200,21 @@ def test_get_stories(client):
                 'type_name': 'IMAGE',
                 'url': '/api/1/builds/397'
             }
-        ]
-    ]
+        ],
+        'meta': {
+            'related_nodes': {
+                'Advisory': 0,
+                'BugzillaBug': 1,
+                'DistGitCommit': 0,
+                'FreshmakerEvent': 0,
+                'KojiBuild': 0
+            }
+        }
+    }
 
     rv = client.get('/api/v1/story/bugzillabug/12345')
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
-
-    expected[0].append({
-        'classification': 'Red Hat',
-        'creation_time': '2017-04-02T06:43:58+00:00',
-        'id': '5555',
-        'modified_time': '2017-12-05T10:12:47+00:00',
-        'priority': 'unspecified',
-        'product_name': 'Red Hat CloudForms Management Engine',
-        'product_version': '5.7.0',
-        'resolution': 'WORKSFORME',
-        'severity': 'unspecified',
-        'short_description': 'Fail to delete OSP tenant by CFME',
-        'status': 'CLOSED',
-        'target_milestone': 'GA',
-        'votes': 0
-    })
 
     rv = client.get('/api/v1/story/distgitcommit/8a63adb248ba633e200067e1ad6dc61931727bad')
     assert rv.status_code == 200
@@ -270,9 +255,8 @@ def test_get_artifact_story_not_available(client):
         'votes': 0
     })[0]
 
-    expected = [
-        [
-            'BugzillaBug',
+    expected = {
+        'data': [
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T06:43:58+00:00',
@@ -282,14 +266,24 @@ def test_get_artifact_story_not_available(client):
                 'product_name': 'Red Hat CloudForms Management Engine',
                 'product_version': '5.7.0',
                 'resolution': 'WORKSFORME',
+                'resource_type': 'BugzillaBug',
                 'severity': 'unspecified',
                 'short_description': 'Fail to delete OSP tenant by CFME',
                 'status': 'CLOSED',
                 'target_milestone': 'GA',
                 'votes': 0
             }
-        ]
-    ]
+        ],
+        'meta': {
+            'related_nodes': {
+                'Advisory': 0,
+                'BugzillaBug': 0,
+                'DistGitCommit': 0,
+                'FreshmakerEvent': 0,
+                'KojiBuild': 0
+            }
+        }
+    }
 
     rv = client.get('/api/v1/story/bugzillabug/5555')
     assert rv.status_code == 200

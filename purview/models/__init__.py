@@ -18,42 +18,53 @@ names_to_model = {model.__label__: model for model in all_models}
 story_flow = {
 
     'BugzillaBug': {
-        'forward_relationship': BugzillaBug.resolved_by_commits.definition['relation_type'],
+        'uid_name': BugzillaBug.id_.db_property or BugzillaBug.id.name,
+        'forward_relationship': '{0}<'.format(
+            BugzillaBug.resolved_by_commits.definition['relation_type']),
         'forward_label': DistGitCommit.__label__,
         'backward_relationship': None,
         'backward_label': None
     },
     'DistGitCommit': {
-        'forward_relationship': DistGitCommit.koji_builds.definition['relation_type'],
+        'uid_name': DistGitCommit.hash_.db_property or DistGitCommit.hash.name,
+        'forward_relationship': '{0}<'.format(
+            DistGitCommit.koji_builds.definition['relation_type']),
         'forward_label': KojiBuild.__label__,
-        'backward_relationship': DistGitCommit.resolved_bugs.definition['relation_type'],
+        'backward_relationship': '{0}>'.format(
+            DistGitCommit.resolved_bugs.definition['relation_type']),
         'backward_label': BugzillaBug.__label__
     },
     'KojiBuild': {
-        'forward_relationship': KojiBuild.advisories.definition['relation_type'],
+        'uid_name': KojiBuild.id_.db_property or KojiBuild.id.name,
+        'forward_relationship': '{0}<'.format(KojiBuild.advisories.definition['relation_type']),
         'forward_label': Advisory.__label__,
-        'backward_relationship': KojiBuild.commit.definition['relation_type'],
+        'backward_relationship': '{0}>'.format(KojiBuild.commit.definition['relation_type']),
         'backward_label': DistGitCommit.__label__
     },
     'Advisory': {
-        'forward_relationship': Advisory.triggered_freshmaker_event.definition['relation_type'],
+        'uid_name': Advisory.id_.db_property or Advisory.id.name,
+        'forward_relationship': '{0}<'.format(
+            Advisory.triggered_freshmaker_event.definition['relation_type']),
         'forward_label': FreshmakerEvent.__label__,
-        'backward_relationship': Advisory.attached_builds.definition['relation_type'],
+        'backward_relationship': '{0}>'.format(
+            Advisory.attached_builds.definition['relation_type']),
         'backward_label': KojiBuild.__label__
     },
     'FreshmakerEvent': {
-        'forward_relationship': (FreshmakerEvent.triggered_container_builds
-                                 .definition['relation_type']),
+        'uid_name': FreshmakerEvent.id_.db_property or FreshmakerEvent.id.name,
+        'forward_relationship': '{0}>'.format(FreshmakerEvent.triggered_container_builds
+                                              .definition['relation_type']),
         'forward_label': ContainerBuilds.__label__,
-        'backward_relationship': (FreshmakerEvent.triggered_by_advisory
-                                  .definition['relation_type']),
+        'backward_relationship': '{0}>'.format(FreshmakerEvent.triggered_by_advisory
+                                               .definition['relation_type']),
         'backward_label': Advisory.__label__
     },
     'ContainerBuilds': {
+        'uid_name': ContainerBuilds.id_.db_property or ContainerBuilds.id.name,
         'forward_relationship': None,
         'forward_label': None,
-        'backward_relationship': (ContainerBuilds.triggered_by_freshmaker_event
-                                  .definition['relation_type']),
+        'backward_relationship': '{0}<'.format(ContainerBuilds.triggered_by_freshmaker_event
+                                               .definition['relation_type']),
         'backward_label': FreshmakerEvent.__label__
     }
 

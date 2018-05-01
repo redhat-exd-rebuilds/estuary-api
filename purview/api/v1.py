@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+from collections import OrderedDict
 
 from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import NotFound
-
-from purview import version
-from purview.utils.general import str_to_bool, get_neo4j_node, create_query, query_neo4j
-from purview.models import story_flow
 from neomodel import UniqueIdProperty
 
+from purview import version
+from purview.models import story_flow
+from purview.utils.general import (
+    str_to_bool, get_neo4j_node, create_query, query_neo4j, get_corelated_nodes)
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -80,19 +81,16 @@ def get_resource_story(resource, uid):
     if backward_query:
         results_unordered.update(query_neo4j(backward_query))
 
-    results = []
+    results = OrderedDict({'data': [], 'meta': {}})
+    results['meta']['related_nodes'] = {
+        key: 0 for key in story_flow.keys() if key not in ['ContainerBuilds']}
     curr_label = 'BugzillaBug'
     while curr_label:
         if curr_label in results_unordered:
-            # Have each index of results be a list with the 0 index being the resource name
-            # and the the rest of the indexes being resources
-            results_unordered[curr_label].insert(0, curr_label)
-            results.append(results_unordered[curr_label])
+            results['data'].append(results_unordered[curr_label][0])
 
         curr_label = story_flow[curr_label]['forward_label']
 
-    if len(results) == 0:
-        # If no relationships are found, return the artifact by itself
-        results.append([item.__label__, item.serialized])
+    results['meta']['related_nodes'].update(get_corelated_nodes(results_unordered))
 
     return jsonify(results)

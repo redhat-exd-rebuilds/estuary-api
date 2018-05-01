@@ -6,6 +6,7 @@ from datetime import datetime
 from six import text_type
 
 from neomodel import UniqueIdProperty, db
+from neo4j.v1.types import Path
 
 from purview import log
 from purview.error import ValidationError
@@ -107,7 +108,7 @@ def get_neo4j_node(resource_name, uid):
     raise ValidationError(error)
 
 
-def node_query(node_label, uid_name=None, uid=None):
+def create_node_subquery(node_label, uid_name=None, uid=None):
     """
     Build part of a raw cypher query for a node label.
 
@@ -153,18 +154,26 @@ def create_query(item, uid_name, uid, reverse=False):
 
     while story_flow[curr_node_label][rel_label]:
         if curr_node_label == item.__label__:
-            node = node_query(curr_node_label, uid_name, uid)
-        else:
-            node = node_query(curr_node_label)
+            query = """\
+                MATCH ({var}:{label} {{{uid_name}:"{uid}"}})
+                CALL apoc.path.expandConfig({var}, {{sequence:\'{label}
+                """.format(var=curr_node_label.lower(),
+                           label=curr_node_label,
+                           uid_name=uid_name.rstrip('_'),
+                           uid=uid)
 
-        next_node = node_query(story_flow[curr_node_label][node_label])
-        query += 'OPTIONAL MATCH {0}-[:{1}]-{2}\n'.format(
-            node, story_flow[curr_node_label][rel_label], next_node)
+        query += ', {0}, {1}'.format(
+            story_flow[curr_node_label][rel_label], story_flow[curr_node_label][node_label])
 
         curr_node_label = story_flow[curr_node_label][node_label]
 
     if query:
-        query += 'RETURN *'
+        query += """\
+            \'}) YIELD path
+            RETURN path
+            ORDER BY length(path) DESC
+            LIMIT 1
+            """
 
     return query
 
@@ -183,6 +192,11 @@ def query_neo4j(query):
     if not results:
         return results_dict
 
+    # Assuming that if Path is the first result,
+    # then that's all we want to process.
+    if isinstance(results[0][0], Path):
+        results = [list(results[0][0].nodes)]
+
     for result in results:
         for node in result:
             if node:
@@ -191,6 +205,52 @@ def query_neo4j(query):
                 if node_label not in results_dict:
                     results_dict[node_label] = []
                 serialized_node = inflated_node.serialized
+                serialized_node['resource_type'] = node_label
                 if serialized_node not in results_dict[node_label]:
-                    results_dict[node_label].append(inflated_node.serialized)
+                    results_dict[node_label].append(serialized_node)
     return results_dict
+
+
+def get_corelated_nodes(results):
+    """
+    Create a raw cypher query for story nodes and get a count of the nodes co-related to them.
+
+    :param dict results: a dictionary containing story nodes
+    :return nodes_count_dict: a dictionary containing counts of all co-related nodes from Neo4j
+    :rtype: dict
+    """
+    # To avoid circular imports
+    from purview.models import story_flow
+
+    nodes_count_dict = {}
+    for label, artifact in results.items():
+        query = 'MATCH '
+        backward_label = story_flow[label]['backward_label']
+        if backward_label:
+            backward_rel = story_flow[label]['backward_relationship'][:-1]
+            uid_name = story_flow[label]['uid_name']
+            node_subquery = create_node_subquery(label, uid_name, artifact[0][uid_name])
+            next_node_subquery = create_node_subquery(backward_label)
+            query += '{0}-[:{1}]-{2}\n'.format(node_subquery, backward_rel, next_node_subquery)
+            query += 'RETURN COUNT({0}) AS count'.format(backward_label.lower())
+
+            nodes_count_dict[backward_label] = get_node_count(query) - 1
+
+    return nodes_count_dict
+
+
+def get_node_count(query):
+    """
+    Query neo4j and return the count of results.
+
+    :param str query: raw cypher query
+    :return results_dict: a dictionary containing count of results received from neo4j.
+    :rtype: int
+    """
+    results_dict = {}
+    results, _ = db.cypher_query(query)
+
+    if not results:
+        return results_dict
+
+    return results[0][0]
