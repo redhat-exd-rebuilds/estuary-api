@@ -223,13 +223,15 @@ def get_corelated_nodes(results):
     from purview.models import story_flow
 
     nodes_count_dict = {}
-    for label, artifact in results.items():
+    for label, artifacts in results.items():
+        # Only grab the first element since there will only be one
+        artifact = artifacts[0]
         query = 'MATCH '
         backward_label = story_flow[label]['backward_label']
         if backward_label:
             backward_rel = story_flow[label]['backward_relationship'][:-1]
             uid_name = story_flow[label]['uid_name']
-            node_subquery = create_node_subquery(label, uid_name, artifact[0][uid_name])
+            node_subquery = create_node_subquery(label, uid_name, artifact[uid_name])
             next_node_subquery = create_node_subquery(backward_label)
             query += '{0}-[:{1}]-{2}\n'.format(node_subquery, backward_rel, next_node_subquery)
             query += 'RETURN COUNT({0}) AS count'.format(backward_label.lower())
