@@ -51,8 +51,6 @@ class ErrataScraper(BaseScraper):
                 'created_at': advisory['created_at'],
                 'id_': advisory['id'],
                 'issue_date': advisory['issue_date'],
-                'product_name': advisory['product_name'],
-                'product_short_name': advisory['product_short_name'],
                 'release_date': advisory['release_date'],
                 'security_impact': advisory['security_impact'],
                 'security_sla': advisory['security_sla'],

@@ -55,3 +55,4 @@ class KojiTag(PurviewStructuredNode):
     builds = RelationshipTo('KojiBuild', 'CONTAINS')
     id_ = UniqueIdProperty(db_property='id')
     name = StringProperty(required=True)
+    products = RelationshipFrom('.errata.Product', 'ASSOCIATED_WITH')
