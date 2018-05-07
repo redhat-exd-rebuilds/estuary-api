@@ -76,10 +76,10 @@ def get_resource_story(resource, uid):
 
     results_unordered = {}
     if forward_query:
-        results_unordered = query_neo4j(forward_query)
+        results_unordered = query_neo4j(forward_query, [resource])
 
     if backward_query:
-        results_unordered.update(query_neo4j(backward_query))
+        results_unordered.update(query_neo4j(backward_query, [resource]))
 
     results = OrderedDict({'data': [], 'meta': {}})
     results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}

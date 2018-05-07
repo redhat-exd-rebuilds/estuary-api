@@ -178,7 +178,7 @@ def create_query(item, uid_name, uid, reverse=False):
     return query
 
 
-def query_neo4j(query):
+def query_neo4j(query, resources_to_expand=None):
     """
     Query neo4j and serialize the results.
 
@@ -188,6 +188,9 @@ def query_neo4j(query):
     """
     results_dict = {}
     results, _ = db.cypher_query(query)
+
+    if resources_to_expand is None:
+        resources_to_expand = []
 
     if not results:
         return results_dict
@@ -204,7 +207,12 @@ def query_neo4j(query):
                 node_label = inflated_node.__label__
                 if node_label not in results_dict:
                     results_dict[node_label] = []
-                serialized_node = inflated_node.serialized
+
+                if node_label.lower() in resources_to_expand:
+                    serialized_node = inflated_node.serialized_all
+                else:
+                    serialized_node = inflated_node.serialized
+
                 serialized_node['resource_type'] = node_label
                 if serialized_node not in results_dict[node_label]:
                     results_dict[node_label].append(serialized_node)
