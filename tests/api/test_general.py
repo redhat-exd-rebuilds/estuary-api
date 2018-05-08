@@ -144,3 +144,18 @@ def test_get_on_model_wo_uid(client, resource):
                    'distgitpush, freshmakerevent, kojibuild, kojitag, kojitask, and user.'
                    .format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
+
+
+def test_get_resources(client):
+    """Test the /api/v1/story route."""
+    rv = client.get('/api/v1/story')
+    assert rv.status_code == 200
+    expected = {
+        'advisory': 'id',
+        'bugzillabug': 'id',
+        'containerbuilds': 'id',
+        'distgitcommit': 'hash',
+        'freshmakerevent': 'id',
+        'kojibuild': 'id',
+    }
+    assert json.loads(rv.data.decode('utf-8')) == expected

@@ -52,6 +52,17 @@ def get_resource(resource, uid):
         return jsonify(item.serialized)
 
 
+@api_v1.route('/story')
+def get_available_resources():
+    """
+    List the available resources and their unique ID property.
+
+    :return: a Flask JSON response
+    :rtype: flask.Response
+    """
+    return jsonify({label.lower(): info['uid_name'] for label, info in story_flow.items()})
+
+
 @api_v1.route('/story/<resource>/<uid>')
 def get_resource_story(resource, uid):
     """
