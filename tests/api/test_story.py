@@ -10,7 +10,7 @@ from purview.models.koji import KojiBuild
 from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitCommit
 from purview.models.errata import Advisory
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
+from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
 from purview.models.user import User
 
 
@@ -113,7 +113,7 @@ from purview.models.user import User
                 'name': 'jboss-eap-7-eap70-openshift-docker',
                 'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
                 'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuilds',
+                'resource_type': 'ContainerBuild',
                 'state': 1,
                 'state_name': 'DONE',
                 'state_reason': 'Built successfully.',
@@ -128,7 +128,7 @@ from purview.models.user import User
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuilds': 0,
+                'ContainerBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -280,7 +280,7 @@ from purview.models.user import User
                 'name': 'jboss-eap-7-eap70-openshift-docker',
                 'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
                 'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuilds',
+                'resource_type': 'ContainerBuild',
                 'state': 1,
                 'state_name': 'DONE',
                 'state_reason': 'Built successfully.',
@@ -295,7 +295,7 @@ from purview.models.user import User
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuilds': 0,
+                'ContainerBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -416,7 +416,7 @@ from purview.models.user import User
                 'name': 'jboss-eap-7-eap70-openshift-docker',
                 'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
                 'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuilds',
+                'resource_type': 'ContainerBuild',
                 'state': 1,
                 'state_name': 'DONE',
                 'state_reason': 'Built successfully.',
@@ -431,7 +431,7 @@ from purview.models.user import User
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuilds': 0,
+                'ContainerBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -550,7 +550,7 @@ from purview.models.user import User
                 'name': 'jboss-eap-7-eap70-openshift-docker',
                 'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
                 'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuilds',
+                'resource_type': 'ContainerBuild',
                 'state': 1,
                 'state_name': 'DONE',
                 'state_reason': 'Built successfully.',
@@ -565,7 +565,7 @@ from purview.models.user import User
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuilds': 0,
+                'ContainerBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -690,7 +690,7 @@ from purview.models.user import User
                 'name': 'jboss-eap-7-eap70-openshift-docker',
                 'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
                 'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuilds',
+                'resource_type': 'ContainerBuild',
                 'state': 1,
                 'state_name': 'DONE',
                 'state_reason': 'Built successfully.',
@@ -705,14 +705,14 @@ from purview.models.user import User
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuilds': 0,
+                'ContainerBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
             }
         }
     }),
-    ('containerbuilds', '397', {
+    ('containerbuild', '397', {
         'data': [
             {
                 'classification': 'Red Hat',
@@ -790,7 +790,7 @@ from purview.models.user import User
                 'name': 'jboss-eap-7-eap70-openshift-docker',
                 'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
                 'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuilds',
+                'resource_type': 'ContainerBuild',
                 'state': 1,
                 'state_name': 'DONE',
                 'state_reason': 'Built successfully.',
@@ -814,7 +814,7 @@ from purview.models.user import User
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuilds': 0,
+                'ContainerBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -897,7 +897,7 @@ def test_get_stories(client, resource, uid, expected):
         'state_reason': 'All container images have been rebuilt.',
         'url': '/api/1/events/1180'
     })[0]
-    cb = ContainerBuilds.get_or_create({
+    cb = ContainerBuild.get_or_create({
         'build_id': 15639047,
         'event_id': 1180,
         'id_': '397',
@@ -983,7 +983,7 @@ def test_get_artifact_story_not_available(client):
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 0,
-                'ContainerBuilds': 0,
+                'ContainerBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0

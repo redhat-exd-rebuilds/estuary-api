@@ -11,7 +11,7 @@ from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitCommit, DistGitPush, DistGitBranch, DistGitRepo
 from purview.models.errata import Advisory, AdvisoryState
 from purview.models.koji import KojiBuild, KojiTask, KojiTag
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
+from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
 
 
 @pytest.mark.parametrize('resource,uid,expected', [
@@ -399,7 +399,7 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
         ],
         'url': '/api/1/events/1180'
     }),
-    ('containerbuilds', '397', {
+    ('containerbuild', '397', {
         'build_id': 15639047,
         'dep_on': None,
         'event_id': 1180,
@@ -575,7 +575,7 @@ def test_get_resources(client, resource, uid, expected):
         'state_reason': 'All container images have been rebuilt',
         'url': '/api/1/events/1180'
     })[0]
-    cb = ContainerBuilds.get_or_create({
+    cb = ContainerBuild.get_or_create({
         'build_id': 15639047,
         'event_id': 1180,
         'id_': '397',
@@ -633,7 +633,7 @@ def test_get_resources(client, resource, uid, expected):
         fm_event.conditional_connect(fm_event.triggered_by_advisory, advisory)
         fm_event.triggered_container_builds.connect(cb)
 
-    if resource == 'containerbuilds':
+    if resource == 'containerbuild':
         fm_event.triggered_container_builds.connect(cb)
 
     rv = client.get('/api/v1/{0}/{1}'.format(resource, uid))

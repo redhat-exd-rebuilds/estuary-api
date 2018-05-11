@@ -12,7 +12,7 @@ from purview.models.user import User
 from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitPush, DistGitCommit
 from purview.models.errata import Advisory, AdvisoryState
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
+from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
 from purview.models.koji import KojiBuild, KojiTask, KojiTag
 
 
@@ -80,7 +80,7 @@ def test_about(client):
         'url': '/api/1/events/12345',
         'event_type_id': 8
     }),
-    (ContainerBuilds, 'containerbuilds', '12345', {
+    (ContainerBuild, 'containerbuild', '12345', {
         'rebuilt_nvr': 'python-3.6-123.1522949725',
         'type_name': 'IMAGE',
         'state_reason': 'Some reason',
@@ -140,7 +140,7 @@ def test_get_on_model_wo_uid(client, resource):
     rv = client.get('/api/v1/{0}/some_repo'.format(resource))
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
-                   'advisory, advisorystate, bugzillabug, containerbuilds, distgitcommit, '
+                   'advisory, advisorystate, bugzillabug, containerbuild, distgitcommit, '
                    'distgitpush, freshmakerevent, kojibuild, kojitag, kojitask, and user.'
                    .format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
@@ -153,7 +153,7 @@ def test_get_resources(client):
     expected = {
         'advisory': 'id',
         'bugzillabug': 'id',
-        'containerbuilds': 'id',
+        'containerbuild': 'id',
         'distgitcommit': 'hash',
         'freshmakerevent': 'id',
         'kojibuild': 'id',
