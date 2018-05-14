@@ -8,6 +8,7 @@ ENV SCRAPER=all \
     NEO4J_PASSWORD=neo4j \
     NEO4J_SERVER=neo4j
 
+WORKDIR /src
 RUN dnf -y install \
     --setopt=deltarpm=0 \
     --setopt=install_weak_deps=false \
@@ -20,5 +21,8 @@ RUN dnf -y install \
     python3-requests \
     python3-six \
     && dnf clean all
+# This will allow a non-root user to install a custom root CA at run-time
+RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
-CMD python3 scripts/scrape.py $SCRAPER --teiid-user $TEIID_USER --teiid-password $TEIID_PASSWORD --neo4j-user $NEO4J_USER --neo4j-password $NEO4J_PASSWORD --neo4j-server $NEO4J_SERVER
+USER 1001
+CMD ["bash", "docker/run-scrapers.sh"]
