@@ -255,6 +255,8 @@ def get_corelated_nodes(results):
         # Freshmaker event)
         if (not forward_label or forward_label not in results) and backward_label:
             last = True
+            if backward_label not in results:
+                continue
             query = 'MATCH '
             backward_node = results[backward_label][0]
             backward_rel = story_flow[curr_label]['backward_relationship'][:-1]
