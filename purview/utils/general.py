@@ -251,7 +251,7 @@ def get_corelated_nodes(results):
 
         backward_label = story_flow[curr_label]['backward_label']
         # If this evaluates to true, then this is the end of the story for the node, so we get
-        # the backwards related nodes (e.g. all the ContainerBuilds that were triggered by a
+        # the backwards related nodes (e.g. all the ContainerBuild that were triggered by a
         # Freshmaker event)
         if (not forward_label or forward_label not in results) and backward_label:
             last = True

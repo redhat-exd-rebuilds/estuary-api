@@ -20,11 +20,11 @@ class FreshmakerEvent(PurviewStructuredNode):
     state_reason = StringProperty()
     triggered_by_advisory = RelationshipTo(
         '.errata.Advisory', 'TRIGGERED_BY', cardinality=ZeroOrOne)
-    triggered_container_builds = RelationshipTo('ContainerBuilds', 'TRIGGERED')
+    triggered_container_builds = RelationshipTo('ContainerBuild', 'TRIGGERED')
     url = StringProperty(unique=True, required=True)
 
 
-class ContainerBuilds(PurviewStructuredNode):
+class ContainerBuild(PurviewStructuredNode):
     """Definition of a container build triggered by Freshmaker in Neo4j."""
 
     build_id = IntegerProperty(unique=True, required=True)

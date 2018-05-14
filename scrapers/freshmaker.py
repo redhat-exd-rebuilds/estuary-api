@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from scrapers.base import BaseScraper
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuilds
+from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
 from purview.models.errata import Advisory
 from scrapers.utils import retry_session
 from purview.utils.general import timestamp_to_datetime
@@ -85,7 +85,7 @@ class FreshmakerScraper(BaseScraper):
                     if build['time_completed']:
                         cb_params['time_completed'] = timestamp_to_datetime(
                             build['time_completed'])
-                    cb = ContainerBuilds.create_or_update(cb_params)[0]
+                    cb = ContainerBuild.create_or_update(cb_params)[0]
                     event.triggered_container_builds.connect(cb)
 
             if rv_json['meta'].get('next'):
