@@ -6,7 +6,6 @@ from datetime import datetime
 from six import text_type
 
 from neomodel import UniqueIdProperty, db
-from neo4j.v1.types import Path
 
 from purview import log
 from purview.error import ValidationError
@@ -124,16 +123,16 @@ def create_node_subquery(node_label, uid_name=None, uid=None):
     return '({0}:{1})'.format(node_label.lower(), node_label)
 
 
-def create_query(item, uid_name, uid, reverse=False):
+def create_story_query(item, uid_name, uid, reverse=False, limit=False):
     """
-    Create a raw cypher query for a node label.
+    Create a raw cypher query for story of an artifact.
 
-    :param node item: a neo4j node whose story is requested by the user
+    :param node item: a Neo4j node whose story is requested by the user
     :param str uid_name: name of node's UniqueIdProperty
     :param str uid: value of node's UniqueIdProperty
     :param bool reverse: boolean value to specify the direction to proceed
     from current node corresponding to the story_flow
-    :return: a string containing raw cypher query to retrieve the story of an artifact from neo4j
+    :return: a string containing raw cypher query to retrieve the story of an artifact from Neo4j
     :rtype: str
     """
     # To avoid circular imports
@@ -169,54 +168,15 @@ def create_query(item, uid_name, uid, reverse=False):
 
     if query:
         query += """\
-            \'}) YIELD path
+            \', minLevel:1}) YIELD path
             RETURN path
             ORDER BY length(path) DESC
-            LIMIT 1
             """
 
+    if query and limit:
+        query += ' LIMIT 1'
+
     return query
-
-
-def query_neo4j(query, resources_to_expand=None):
-    """
-    Query neo4j and serialize the results.
-
-    :param str query: raw cypher query
-    :return results_dict: a dictionary containing serialized results received from neo4j
-    :rtype: dict
-    """
-    results_dict = {}
-    results, _ = db.cypher_query(query)
-
-    if resources_to_expand is None:
-        resources_to_expand = []
-
-    if not results:
-        return results_dict
-
-    # Assuming that if Path is the first result,
-    # then that's all we want to process.
-    if isinstance(results[0][0], Path):
-        results = [list(results[0][0].nodes)]
-
-    for result in results:
-        for node in result:
-            if node:
-                inflated_node = inflate_node(node)
-                node_label = inflated_node.__label__
-                if node_label not in results_dict:
-                    results_dict[node_label] = []
-
-                if node_label.lower() in resources_to_expand:
-                    serialized_node = inflated_node.serialized_all
-                else:
-                    serialized_node = inflated_node.serialized
-
-                serialized_node['resource_type'] = node_label
-                if serialized_node not in results_dict[node_label]:
-                    results_dict[node_label].append(serialized_node)
-    return results_dict
 
 
 def get_corelated_nodes(results):
@@ -224,7 +184,7 @@ def get_corelated_nodes(results):
     Create a raw cypher query for story nodes and get a count of the nodes co-related to them.
 
     :param dict results: a dictionary containing story nodes
-    :return nodes_count_dict: a dictionary containing counts of all co-related nodes from Neo4j
+    :return: a dictionary containing counts of all co-related nodes from Neo4j
     :rtype: dict
     """
     # To avoid circular imports
@@ -279,10 +239,10 @@ def get_corelated_nodes(results):
 
 def get_node_count(query):
     """
-    Query neo4j and return the count of results.
+    Query Neo4j and return the count of results.
 
     :param str query: raw cypher query
-    :return results_dict: a dictionary containing count of results received from neo4j.
+    :return: a dictionary containing the results count received from Neo4j.
     :rtype: int
     """
     results_dict = {}
@@ -292,3 +252,28 @@ def get_node_count(query):
         return results_dict
 
     return results[0][0]
+
+
+def _order_story_results(result):
+    """
+    Order results to follow the story flow sequence.
+
+    :param dict results: contains serialized results from Neo4j
+    :return: a dict containing results ordered in the story flow sequence
+    :rtype: dict
+    """
+    # To avoid circular imports
+    from purview.models import story_flow
+
+    results = {'data': [], 'meta': {}}
+    results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}
+    curr_label = 'BugzillaBug'
+    while curr_label:
+        if curr_label in result:
+            results['data'].append(result[curr_label][0])
+
+        curr_label = story_flow[curr_label]['forward_label']
+
+    results['meta']['related_nodes'].update(get_corelated_nodes(result))
+
+    return results

@@ -5,12 +5,14 @@ from collections import OrderedDict
 
 from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import NotFound
-from neomodel import UniqueIdProperty
+from neomodel import db
 
 from purview import version
 from purview.models import story_flow
+from purview.models.base import PurviewStructuredNode
+
 from purview.utils.general import (
-    str_to_bool, get_neo4j_node, create_query, query_neo4j, get_corelated_nodes)
+    str_to_bool, get_neo4j_node, get_corelated_nodes, _order_story_results, create_story_query)
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -79,21 +81,41 @@ def get_resource_story(resource, uid):
     if not item:
         raise NotFound('This item does not exist')
 
-    for _, prop_def in item.__all_properties__:
-        if isinstance(prop_def, UniqueIdProperty):
-            forward_query = create_query(item, prop_def.name, uid)
-            backward_query = create_query(item, prop_def.name, uid, reverse=True)
-            break
+    uid_name = item.unique_id_property
+    forward_query = create_story_query(item, uid_name, uid, limit=True)
+    backward_query = create_story_query(item, uid_name, uid, reverse=True,
+                                        limit=True)
+
+    def _get_partial_story(query, resources_to_expand):
+        results_list = []
+        results, _ = db.cypher_query(query)
+
+        if not results:
+            return results_list
+
+        # Assuming that if Path is the first result, then that's all we want to process.
+        results = [list(results[0][0].nodes)]
+
+        return PurviewStructuredNode.inflate_results(results, resources_to_expand)[0]
 
     results_unordered = {}
     if forward_query:
-        results_unordered = query_neo4j(forward_query, [resource])
+        results_unordered = _get_partial_story(forward_query, [resource])
 
     if backward_query:
-        results_unordered.update(query_neo4j(backward_query, [resource]))
+        results_unordered.update(
+            _get_partial_story(backward_query, [resource]))
 
     results = OrderedDict({'data': [], 'meta': {}})
     results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}
+
+    # Adding the artifact itself if it's story is not available
+    if len(results_unordered) == 0:
+        results['data'].append(item.serialized_all)
+        results['data'][0]['resource_type'] = item.__label__
+        print("RESULTS", results)
+        return jsonify(results)
+
     curr_label = 'BugzillaBug'
     while curr_label:
         if curr_label in results_unordered:
@@ -104,3 +126,102 @@ def get_resource_story(resource, uid):
     results['meta']['related_nodes'].update(get_corelated_nodes(results_unordered))
 
     return jsonify(results)
+
+
+@api_v1.route('/allstories/<resource>/<uid>')
+def get_resource_all_stories(resource, uid):
+    """
+    Get all unique stories of an artifact from Neo4j.
+
+    :param str resource: a resource name that maps to a neomodel class
+    :param str uid: the value of the UniqueIdProperty to query with
+    :return: a Flask JSON response
+    :rtype: flask.Response
+    :raises NotFound: if the item is not found
+    :raises ValidationError: if an invalid resource was requested
+    """
+    item = get_neo4j_node(resource, uid)
+    if not item:
+        raise NotFound('This item does not exist')
+
+    uid_name = item.unique_id_property
+    forward_query = create_story_query(item, uid_name, uid)
+    backward_query = create_story_query(item, uid_name, uid, reverse=True)
+
+    def _get_partial_stories(query, resources_to_expand):
+
+        results_list = []
+        results, _ = db.cypher_query(query)
+
+        if not results:
+            return [results_list]
+
+        # Creating a list of lists where each list is a collection of node IDs
+        # of the nodes present in that particular story path.
+        # Paths are re-sorted in ascending order to simplify the logic below
+        path_nodes_id = []
+        for path in reversed(results):
+            path_nodes_id.append([node.id for node in path[0].nodes])
+
+        unique_paths = []
+        for index, node_set in enumerate(path_nodes_id[:-1]):
+            unique = True
+            for alternate_set in path_nodes_id[index + 1:]:
+                # If the node_set is a subset of alternate_set,
+                # we know they are the same path except the alternate_set is longer.
+                # If alternate_set and node_set only have one node ID of difference,
+                # we know it's the same path but from the perspective of different siblings.
+                if set(node_set).issubset(set(alternate_set)) or len(
+                        set(alternate_set).difference(set(node_set))) == 1:
+                    unique = False
+                    break
+            if unique:
+                # Since results is from longest to shortest, we need to get the opposite index.
+                unique_paths.append(results[(len(path_nodes_id) - index) - 1][0])
+        # While traversing, the outer for loop only goes until the second to last element
+        # because the inner for loop always starts one element ahead of the outer for loop.
+        # Hence, all the subsets of the last element will not be added to the unique_paths
+        # list as the for loops will eliminate them. So we add the last element
+        # since we are sure it is unique.
+        unique_paths.append(results[0][0])
+        unique_paths_nodes = [path.nodes for path in unique_paths]
+
+        return PurviewStructuredNode.inflate_results(unique_paths_nodes, resources_to_expand)
+
+    if forward_query:
+        results_unordered_forward = _get_partial_stories(forward_query, [resource])
+    else:
+        results_unordered_forward = []
+
+    if backward_query:
+        results_unordered_backward = _get_partial_stories(backward_query, [resource])
+    else:
+        results_unordered_backward = []
+
+    all_results = []
+    if not results_unordered_backward or not results_unordered_forward:
+        if results_unordered_forward:
+            results_unordered_unidir = results_unordered_forward
+        else:
+            results_unordered_unidir = results_unordered_backward
+
+        for result in results_unordered_unidir:
+            all_results.append(_order_story_results(result))
+
+    else:
+        # Combining all the backward and forward paths to generate all the possible full paths
+        for result_forward in results_unordered_forward:
+            for result_backward in results_unordered_backward:
+                results_unordered = result_forward.copy()
+                results_unordered.update(result_backward)
+                all_results.append(_order_story_results(results_unordered))
+
+    # Adding the artifact itself if its story is not available
+    if len(all_results) == 0:
+        results = {'data': [], 'meta': {}}
+        results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}
+        results['data'].append(item.serialized_all)
+        results['data'][0]['resource_type'] = item.__label__
+        all_results.append(results)
+
+    return jsonify(all_results)
