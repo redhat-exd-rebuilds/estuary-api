@@ -8,6 +8,13 @@ try { // massive try{} catch{} around the entire build for failure notifications
                     image.push()
                 }
             }
+
+            stage('Build the API Docker image') {
+                docker.withRegistry('https://quay.io/', 'quay-io-factory2-builder-sa-credentials') {
+                    def image = docker.build "factory2/purview-api:latest", "-f docker/Dockerfile-api ."
+                    image.push()
+                }
+            }
         }
     }
 } catch (e) {
