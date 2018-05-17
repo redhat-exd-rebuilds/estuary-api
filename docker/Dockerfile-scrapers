@@ -26,4 +26,4 @@ RUN dnf -y install \
 RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
 USER 1001
-CMD ["bash", "docker/run-scrapers.sh"]
+ENTRYPOINT docker/install-ca.sh && exec python3 scripts/scrape.py $SCRAPER --teiid-user $TEIID_USER --teiid-password $TEIID_PASSWORD --neo4j-user $NEO4J_USER --neo4j-password $NEO4J_PASSWORD --neo4j-server $NEO4J_SERVER --days-ago $SCRAPE_FROM_DAYS_AGO
