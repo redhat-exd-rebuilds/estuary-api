@@ -6,7 +6,8 @@ ENV SCRAPER=all \
     TEIID_PASSWORD=password \
     NEO4J_USER=neo4j \
     NEO4J_PASSWORD=neo4j \
-    NEO4J_SERVER=neo4j
+    NEO4J_SERVER=neo4j \
+    SCRAPE_FROM_DAYS_AGO=730
 
 WORKDIR /src
 RUN dnf -y install \
