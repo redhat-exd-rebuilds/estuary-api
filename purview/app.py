@@ -29,7 +29,7 @@ def load_config(app):
 
     app.config.from_object(default_config_obj)
     config_file = os.environ.get('PURVIEW_CONFIG', default_config_file)
-    if config_file:
+    if config_file and os.path.isfile(config_file):
         app.config.from_pyfile(config_file)
 
     if os.environ.get('SECRET_KEY'):
