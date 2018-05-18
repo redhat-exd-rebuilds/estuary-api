@@ -34,6 +34,8 @@ def load_config(app):
 
     if os.environ.get('SECRET_KEY'):
         app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+    if os.environ.get('NEO4J_URI'):
+        app.config['NEO4J_URI'] = os.environ['NEO4J_URI']
 
 
 def insert_headers(response):
