@@ -1,8 +1,6 @@
 FROM fedora:28
 LABEL maintainer="Factory 2.0"
 
-# Mount the config file here
-VOLUME /etc/purview
 WORKDIR /src
 RUN dnf -y install \
     --setopt=deltarpm=0 \
