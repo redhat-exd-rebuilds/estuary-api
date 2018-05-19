@@ -69,17 +69,22 @@ class Teiid(object):
         """
         con = self.get_connection(db)
         cursor = con.cursor()
+        if retry < 1:
+            raise ValueError('The retry keyword must contain a value greater than 0')
 
         log.debug('Querying Teiid DB "{0}" with SQL:\n{1}'.format(db, sql))
 
-        for _ in range(retry):
+        attempts = 0
+        while True:
+            attempts += 1
             try:
                 cursor.execute(sql)
                 break
-            except psycopg2.extensions.QueryCanceledError as err:
-                log.warning('Teiid query failed')
-        else:
-            raise err  # noqa: F821
+            except psycopg2.extensions.QueryCanceledError:
+                if attempts < retry:
+                    log.warning('Teiid query failed')
+                else:
+                    raise
 
         data = cursor.fetchall()
         # column header names
