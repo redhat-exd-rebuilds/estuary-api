@@ -3,6 +3,8 @@
 
 from __future__ import unicode_literals
 
+from time import sleep
+
 import psycopg2
 
 from purview import log
@@ -56,24 +58,27 @@ class Teiid(object):
         self._connections[db_name] = conn
         return conn
 
-    def query(self, sql, db='public', retry=3):
+    def query(self, sql, db='public', retry=None):
         """
         Send the SQL query to Teiid and return the rows as a list.
 
         :param str sql: the SQL query to send to the database
         :kwarg str db: the database name to query on
-        :kwarg int retry: the  number of times to retry a failed query
+        :kwarg int retry: the  number of times to retry a failed query. If this
+        is not set, then the TEIID query will be repeated until it is successful.
         :return: a list of rows from Teiid. Each row is a dictionary
         with the column headers as the keys.
         :rtype: list
         """
         con = self.get_connection(db)
         cursor = con.cursor()
-        if retry < 1:
+        if retry is not None and retry < 1:
             raise ValueError('The retry keyword must contain a value greater than 0')
 
         log.debug('Querying Teiid DB "{0}" with SQL:\n{1}'.format(db, sql))
 
+        fifteen_mins = 15 * 60
+        backoff = 30
         attempts = 0
         while True:
             attempts += 1
@@ -81,10 +86,18 @@ class Teiid(object):
                 cursor.execute(sql)
                 break
             except psycopg2.extensions.QueryCanceledError:
-                if attempts < retry:
-                    log.warning('Teiid query failed')
-                else:
+                if retry and attempts > retry:
                     raise
+                else:
+                    if backoff < fifteen_mins:
+                        # Double the backoff time
+                        backoff = backoff * 2
+                    elif backoff > fifteen_mins:
+                        # Max out the backoff time to 15 minutes
+                        backoff = fifteen_mins
+                    log.warning('The Teiid query failed on attempt {0}. Sleeping for {1} seconds.'
+                                .format(attempts, backoff))
+                    sleep(backoff)
 
         data = cursor.fetchall()
         # column header names
