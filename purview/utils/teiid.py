@@ -48,6 +48,7 @@ class Teiid(object):
             port=str(self.port),
             user=self.username,
             password=self.password,
+            connect_timeout=60
         )
 
         # Teiid does not support setting this value at all and unless we
