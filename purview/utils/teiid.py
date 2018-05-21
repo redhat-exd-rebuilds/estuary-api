@@ -29,15 +29,17 @@ class Teiid(object):
         # a dict mapping db names to cursors
         self._connections = {}
 
-    def get_connection(self, db_name):
+    def get_connection(self, db_name, force_new=False):
         """
         Return an existing psycopg2 connection and establish it if needed.
 
         :param str db_name: the database name to get a connection to
+        :kwarg bool force_new: forces a new database connection even if one
+        already exists
         :return: a connection to TEIID
         :rtype: psycopg2 connection
         """
-        if db_name in self._connections:
+        if not force_new and db_name in self._connections:
             return self._connections[db_name]
 
         log.debug('Connecting to Teiid host {0}:{1}'.format(
@@ -84,9 +86,12 @@ class Teiid(object):
         while True:
             attempts += 1
             try:
+                if attempts > 1:
+                    # Restart the database connection after failed queries
+                    con = self.get_connection(db, force_new=True)
                 cursor.execute(sql)
                 break
-            except psycopg2.extensions.QueryCanceledError:
+            except psycopg2.OperationalError:
                 if retry and attempts > retry:
                     raise
                 else:
