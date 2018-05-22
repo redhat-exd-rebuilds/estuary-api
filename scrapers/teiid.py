@@ -57,13 +57,14 @@ class Teiid(object):
                     port=str(self.port),
                     user=self.username,
                     password=self.password,
-                    connect_timeout=60
+                    connect_timeout=300
                 )
                 break
-            except psycopg2.OperationalError:
+            except psycopg2.OperationalError as e:
                 if retry and attempts > retry:
                     raise
                 else:
+                    log.exception(e)
                     log.warning('The Teiid connection failed on attempt {0}. Sleeping for 60 '
                                 'seconds.'.format(attempts))
                     sleep(60)
@@ -107,10 +108,11 @@ class Teiid(object):
                     cursor = con.cursor()
                 cursor.execute(sql)
                 break
-            except psycopg2.OperationalError:
+            except psycopg2.OperationalError as e:
                 if retry and attempts > retry:
                     raise
                 else:
+                    log.exception(e)
                     if backoff < fifteen_mins:
                         # Double the backoff time
                         backoff = backoff * 2
