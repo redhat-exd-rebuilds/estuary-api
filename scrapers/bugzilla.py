@@ -10,7 +10,7 @@ from purview import log
 
 
 class BugzillaScraper(BaseScraper):
-    """Scrapes the Bugzilla tables in TEIID."""
+    """Scrapes the Bugzilla tables in Teiid."""
 
     def run(self, since=None):
         """
@@ -76,7 +76,7 @@ class BugzillaScraper(BaseScraper):
 
     def update_neo4j(self, bugs):
         """
-        Update Neo4j with Bugzilla bugs information from TEIID.
+        Update Neo4j with Bugzilla bugs information from Teiid.
 
         :param list bugs: a list of dictionaries
         """
