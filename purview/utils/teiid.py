@@ -82,7 +82,7 @@ class Teiid(object):
 
         :param str sql: the SQL query to send to the database
         :kwarg str db: the database name to query on
-        :kwarg int retry: the  number of times to retry a failed query. If this
+        :kwarg int retry: the number of times to retry a failed query. If this
         is not set, then the TEIID query will be repeated until it is successful.
         :return: a list of rows from Teiid. Each row is a dictionary
         with the column headers as the keys.
