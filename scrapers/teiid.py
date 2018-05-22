@@ -57,7 +57,7 @@ class Teiid(object):
                     port=str(self.port),
                     user=self.username,
                     password=self.password,
-                    connect_timeout=60
+                    connect_timeout=300
                 )
                 break
             except psycopg2.OperationalError:
