@@ -41,7 +41,7 @@ if args.scraper.lower() == 'all':
     log.debug('Running all the scrapers in order')
     scraper_classes = all_scrapers
 else:
-    scrapers_to_run = set([s.strip() for s in args.scrapers.lower().split(',')])
+    scrapers_to_run = set([s.strip() for s in args.scraper.lower().split(',')])
     log.debug('Searching for the "{0}" scraper'.format(args.scraper))
     for item in all_scrapers:
         if item.__name__[0:-7].lower() in scrapers_to_run:
