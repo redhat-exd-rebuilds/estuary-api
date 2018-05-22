@@ -5,7 +5,7 @@ from datetime import datetime
 
 from neomodel import config as neomodel_config
 
-from purview.utils.teiid import Teiid
+from scrapers.teiid import Teiid
 
 
 class BaseScraper(object):
