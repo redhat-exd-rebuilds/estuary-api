@@ -104,6 +104,7 @@ class Teiid(object):
                 if attempts > 1:
                     # Restart the database connection after failed queries
                     con = self.get_connection(db, force_new=True)
+                    cursor = con.cursor()
                 cursor.execute(sql)
                 break
             except psycopg2.OperationalError:
