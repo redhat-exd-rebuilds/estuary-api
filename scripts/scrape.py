@@ -17,7 +17,8 @@ log = logging.getLogger('purview')
 log.setLevel(logging.DEBUG)
 
 parser = argparse.ArgumentParser(description='Run a scraper')
-parser.add_argument('scraper', type=str, help='The scraper to run. To run them all, use "all".')
+parser.add_argument('scraper', type=str, help=('The scraper to run. To run them all, use "all". '
+                                               'This can also be a comma-separated list'))
 parser.add_argument('--since', type=str,
                     help='Process results starting from a UTC date formatted in "yyyy-mm-dd"')
 parser.add_argument('--days-ago', type=int, help='Process results starting from "x" days ago')
@@ -35,18 +36,21 @@ if args.since and args.days_ago:
     log.error(error)
     raise RuntimeError(error)
 
-scraper_classes = tuple()
+scraper_classes = []
 if args.scraper.lower() == 'all':
     log.debug('Running all the scrapers in order')
     scraper_classes = all_scrapers
 else:
+    scrapers_to_run = set([s.strip() for s in args.scrapers.lower().split(',')])
     log.debug('Searching for the "{0}" scraper'.format(args.scraper))
     for item in all_scrapers:
-        if item.__name__[0:-7].lower() == args.scraper.lower():
+        if item.__name__[0:-7].lower() in scrapers_to_run:
             log.debug('Matched "scraper.{0}" to the desired scraper of "{1}"'.format(
                 item.__name__, args.scraper))
-            scraper_classes = tuple([item])
-            break
+            scraper_classes.append(item)
+    if scraper_classes and len(scraper_classes) != len(scrapers_to_run):
+        log.warn('{0} requested scraper(s) couldn\'t be found and will be skipped'.format(
+            len(scrapers_to_run) - len(scraper_classes)))
 
 if not scraper_classes:
     error = 'A scraper for "{0}" couldn\'t be found'.format(args.scraper)
