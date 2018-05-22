@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 from datetime import datetime
 
-from neomodel import StructuredNode, One, ZeroOrOne, OUTGOING, INCOMING, EITHER
+from neomodel import StructuredNode, One, ZeroOrOne, OUTGOING, INCOMING, EITHER, UniqueIdProperty
 
 from purview import log
 from purview.utils.general import inflate_node
@@ -145,3 +145,47 @@ class PurviewStructuredNode(StructuredNode):
                         'conditional_connect doesn\'t support cardinality of one')
                 else:
                     relationship.connect(new_node)
+
+    @property
+    def unique_id_property(self):
+        """
+        Get the name of the UniqueIdProperty for the node.
+
+        :return: a string containing name of the unique ID property of a node
+        :rtype: str
+        """
+        for _, prop_def in self.__all_properties__:
+            if isinstance(prop_def, UniqueIdProperty):
+                return prop_def.name
+
+    @staticmethod
+    def inflate_results(results, resources_to_expand):
+        """
+        Inflate and serialize the results.
+
+        :param str results: results obtained from Neo4j
+        :param list resources_to_expand: resources to expand
+        :return: a list of dictionaries containing serialized results received from Neo4j
+        :rtype: list
+        """
+        results_list = []
+        for raw_result in results:
+            temp = {}
+            for node in raw_result:
+                if node:
+                    inflated_node = inflate_node(node)
+                    node_label = inflated_node.__label__
+                    if node_label not in temp:
+                        temp[node_label] = []
+
+                    if node_label.lower() in resources_to_expand:
+                        serialized_node = inflated_node.serialized_all
+                    else:
+                        serialized_node = inflated_node.serialized
+
+                    serialized_node['resource_type'] = node_label
+                    if serialized_node not in temp[node_label]:
+                        temp[node_label].append(serialized_node)
+            results_list.append(temp)
+
+        return results_list
