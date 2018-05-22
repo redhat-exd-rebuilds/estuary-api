@@ -29,29 +29,44 @@ class Teiid(object):
         # a dict mapping db names to cursors
         self._connections = {}
 
-    def get_connection(self, db_name, force_new=False):
+    def get_connection(self, db_name, force_new=False, retry=None):
         """
         Return an existing psycopg2 connection and establish it if needed.
 
         :param str db_name: the database name to get a connection to
         :kwarg bool force_new: forces a new database connection even if one
         already exists
+        :kwarg int retry: the number of times to retry a failed connection. If this
+        is not set, then the TEIID connection attempt will be repeated until it is successful.
         :return: a connection to TEIID
         :rtype: psycopg2 connection
         """
         if not force_new and db_name in self._connections:
             return self._connections[db_name]
+        if retry is not None and retry < 1:
+            raise ValueError('The retry keyword must contain a value greater than 0')
 
-        log.debug('Connecting to Teiid host {0}:{1}'.format(
-            self.host, self.port))
-        conn = psycopg2.connect(
-            database=db_name,
-            host=self.host,
-            port=str(self.port),
-            user=self.username,
-            password=self.password,
-            connect_timeout=60
-        )
+        log.debug('Connecting to Teiid host {0}:{1}'.format(self.host, self.port))
+        attempts = 0
+        while True:
+            attempts += 1
+            try:
+                conn = psycopg2.connect(
+                    database=db_name,
+                    host=self.host,
+                    port=str(self.port),
+                    user=self.username,
+                    password=self.password,
+                    connect_timeout=60
+                )
+                break
+            except psycopg2.OperationalError:
+                if retry and attempts > retry:
+                    raise
+                else:
+                    log.warning('The Teiid connection failed on attempt {0}. Sleeping for 60 '
+                                'seconds.'.format(attempts))
+                    sleep(60)
 
         # Teiid does not support setting this value at all and unless we
         # specify ISOLATION_LEVEL_AUTOCOMMIT (zero), psycopg2 will send a
