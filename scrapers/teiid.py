@@ -11,16 +11,16 @@ from purview import log
 
 
 class Teiid(object):
-    """Abstracts interfacing with TEIID to simplify connections and queries."""
+    """Abstracts interfacing with Teiid to simplify connections and queries."""
 
     def __init__(self, host, port, username, password):
         """
         Initialize the Teiid class.
 
-        :param str host: the TEIID FQDN or IP address
-        :param int port: the port to connect to TEIID with
-        :param str username: the username to connect to TEIID with
-        :param str password: the password to connect to TEIID with
+        :param str host: the Teiid FQDN or IP address
+        :param int port: the port to connect to Teiid with
+        :param str username: the username to connect to Teiid with
+        :param str password: the password to connect to Teiid with
         """
         self.host = host
         self.port = port
@@ -37,8 +37,8 @@ class Teiid(object):
         :kwarg bool force_new: forces a new database connection even if one
         already exists
         :kwarg int retry: the number of times to retry a failed connection. If this
-        is not set, then the TEIID connection attempt will be repeated until it is successful.
-        :return: a connection to TEIID
+        is not set, then the Teiid connection attempt will be repeated until it is successful.
+        :return: a connection to Teiid
         :rtype: psycopg2 connection
         """
         if not force_new and db_name in self._connections:
@@ -83,7 +83,7 @@ class Teiid(object):
         :param str sql: the SQL query to send to the database
         :kwarg str db: the database name to query on
         :kwarg int retry: the number of times to retry a failed query. If this
-        is not set, then the TEIID query will be repeated until it is successful.
+        is not set, then the Teiid query will be repeated until it is successful.
         :return: a list of rows from Teiid. Each row is a dictionary
         with the column headers as the keys.
         :rtype: list

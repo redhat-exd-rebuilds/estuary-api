@@ -18,7 +18,7 @@ from purview import log
 
 
 class DistGitScraper(BaseScraper):
-    """Scrapes the GitBZ tables in TEIID."""
+    """Scrapes the GitBZ tables in Teiid."""
 
     cgit_url = 'http://pkgs.devel.redhat.com/cgit/'
     # The tuple of namespaces to try when determining which namespace this git module belongs
@@ -37,13 +37,13 @@ class DistGitScraper(BaseScraper):
         else:
             dt_since = timestamp_to_datetime(since)
         results = self.get_distgit_data(dt_since)
-        log.info('Successfully fetched {0} results from TEIID'.format(len(results)))
+        log.info('Successfully fetched {0} results from Teiid'.format(len(results)))
         self.update_neo4j(results)
         log.info('Initial load of dist-git commits and pushes complete!')
 
     def update_neo4j(self, results):
         """
-        Update Neo4j with the dist-git commit and push information from TEIID.
+        Update Neo4j with the dist-git commit and push information from Teiid.
 
         :param list results: a list of dictionaries
         """
@@ -145,7 +145,7 @@ class DistGitScraper(BaseScraper):
 
     def get_distgit_data(self, since):
         """
-        Query TEIID for the dist-git commit, push, and Bugzilla information.
+        Query Teiid for the dist-git commit, push, and Bugzilla information.
 
         :param datetime.datetime since: determines when to start the query
         :return: a list of dictionaries

@@ -14,7 +14,7 @@ from purview.models.koji import KojiBuild
 
 
 class ErrataScraper(BaseScraper):
-    """Scrapes the Errata Tool tables in TEIID."""
+    """Scrapes the Errata Tool tables in Teiid."""
 
     def run(self, since=None):
         """
@@ -28,13 +28,13 @@ class ErrataScraper(BaseScraper):
         else:
             dt_since = timestamp_to_datetime(since)
         advisories = self.get_advisories(dt_since)
-        log.info('Successfully fetched {0} advisories from TEIID'.format(len(advisories)))
+        log.info('Successfully fetched {0} advisories from Teiid'.format(len(advisories)))
         self.update_neo4j(advisories)
         log.info('Initial load of Errata advisories complete!')
 
     def update_neo4j(self, advisories):
         """
-        Update Neo4j with Errata Tool advisories from TEIID.
+        Update Neo4j with Errata Tool advisories from Teiid.
 
         :param list advisories: a list of dictionaries of advisories
         """
@@ -101,7 +101,7 @@ class ErrataScraper(BaseScraper):
 
     def get_advisories(self, since):
         """
-        Query TEIID for the Errata Tool advisories.
+        Query Teiid for the Errata Tool advisories.
 
         :param datetime.datetime since: determines when to start querying
         :return: a list of dictionaries
@@ -148,7 +148,7 @@ class ErrataScraper(BaseScraper):
 
     def get_advisory_states(self, advisory_id):
         """
-        Query TEIID to find the states of a specific advisory.
+        Query Teiid to find the states of a specific advisory.
 
         :param int advisory_id: the advisory ID
         :return: a list of a dictionaries
@@ -167,7 +167,7 @@ class ErrataScraper(BaseScraper):
 
     def get_associated_builds(self, advisory_id):
         """
-        Query TEIID to find the Brew builds associated with a specific advisory.
+        Query Teiid to find the Brew builds associated with a specific advisory.
 
         :param int advisory_id: the advisory ID
         :return: a list of a dictionaries
@@ -187,7 +187,7 @@ class ErrataScraper(BaseScraper):
 
     def get_attached_bugs(self, advisory_id):
         """
-        Query TEIID to find the Bugzilla bugs attached to a specific advisory.
+        Query Teiid to find the Bugzilla bugs attached to a specific advisory.
 
         :param int advisory_id: the advisory ID
         :return: a list of a dictionaries

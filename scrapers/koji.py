@@ -12,7 +12,7 @@ from purview import log
 
 
 class KojiScraper(BaseScraper):
-    """Scrapes the Koji tables in TEIID."""
+    """Scrapes the Koji tables in Teiid."""
 
     def run(self, since=None):
         """
@@ -35,7 +35,7 @@ class KojiScraper(BaseScraper):
 
     def get_koji_builds(self, start_date):
         """
-        Query TEIID for Koji builds.
+        Query Teiid for Koji builds.
 
         :param datetime.datetime start_date: determines when to start the query
         :return: a list of dictionaries
@@ -70,7 +70,7 @@ class KojiScraper(BaseScraper):
 
     def get_task(self, task_id):
         """
-        Query TEIID for a Koji task.
+        Query Teiid for a Koji task.
 
         :param int task_id: the Koji task ID to query
         :return: a list of dictionaries
@@ -88,7 +88,7 @@ class KojiScraper(BaseScraper):
 
     def get_task_children(self, parent):
         """
-        Query TEIID for all child tasks of a Koji task.
+        Query Teiid for all child tasks of a Koji task.
 
         :param int parent: the parent Koji task ID
         :return: a list of dictionaries
@@ -107,7 +107,7 @@ class KojiScraper(BaseScraper):
 
     def get_build_tags(self, build_id):
         """
-        Query TEIID for all tags a build is tagged in.
+        Query Teiid for all tags a build is tagged in.
 
         :param int build_id: the Koji build's ID
         :return: a list of dictionaries
@@ -125,7 +125,7 @@ class KojiScraper(BaseScraper):
 
     def update_neo4j(self, builds):
         """
-        Update Neo4j with Koji build information from TEIID.
+        Update Neo4j with Koji build information from Teiid.
 
         :param list builds: a list of dictionaries
         """
