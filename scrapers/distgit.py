@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import re
 from multiprocessing.dummy import Pool as ThreadPool
+from os import getenv
 
 from builtins import bytes
 from bs4 import BeautifulSoup
@@ -20,7 +21,7 @@ from purview import log
 class DistGitScraper(BaseScraper):
     """Scrapes the GitBZ tables in Teiid."""
 
-    cgit_url = 'http://pkgs.devel.redhat.com/cgit/'
+    cgit_url = getenv('PURVIEW_CGIT_URL', 'http://pkgs.devel.redhat.com/cgit/')
     # The tuple of namespaces to try when determining which namespace this git module belongs
     # to since this information isn't stored in GitBZ yet
     namespaces = ('rpms', 'containers', 'modules', 'tests')
