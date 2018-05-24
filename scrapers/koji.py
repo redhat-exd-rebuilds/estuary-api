@@ -141,7 +141,7 @@ class KojiScraper(BaseScraper):
         count = 0
 
         for build_dict in builds:
-            build = KojiBuild.create_or_update(dict(
+            build_params = dict(
                 id_=build_dict['id'],
                 epoch=build_dict['epoch'],
                 state=build_dict['state'],
@@ -152,7 +152,24 @@ class KojiScraper(BaseScraper):
                 name=build_dict['package_name'],
                 version=build_dict['version'],
                 release=build_dict['release']
-            ))[0]
+            )
+
+            package_name = build_dict['package_name']
+            try:
+                extra_json = json.loads(build_dict['extra'])
+            except (json.JSONDecodeError, TypeError):
+                extra_json = {}
+
+            # Checking a heuristic for determining if a build is a container build since, currently
+            # there is no definitive way to do it.
+            if extra_json and extra_json.get('container_koji_build_id'):
+                build_params['type_'] = 'container'
+            # Checking another heuristic for determining if a build is a container build since
+            # currently there is no definitive way to do it.
+            elif (package_name.endswith('-container') or package_name.endswith('-docker')):
+                build_params['type_'] = 'container'
+
+            build = KojiBuild.create_or_update(build_params)[0]
 
             if build_dict['owner_username']:
                 username = build_dict['owner_username'].split('@')[0]
