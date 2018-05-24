@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import re
 from multiprocessing.dummy import Pool as ThreadPool
 from os import getenv
+import gc
 
 from builtins import bytes
 from bs4 import BeautifulSoup
@@ -143,6 +144,10 @@ class DistGitScraper(BaseScraper):
                 commit.resolved_bugs.connect(bug)
             elif result['bugzilla_type'] == 'reverted':
                 commit.reverted_bugs.connect(bug)
+            # This is no longer needed so it can be cleared to save RAM
+            del repos_info
+            # Force RAM to be cleared on every iteration of the loop
+            gc.collect()
 
     def get_distgit_data(self, since):
         """
