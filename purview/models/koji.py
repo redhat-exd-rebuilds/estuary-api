@@ -19,14 +19,17 @@ class KojiBuild(PurviewStructuredNode):
     epoch = StringProperty()
     extra = StringProperty()
     id_ = UniqueIdProperty(db_property='id')
-    name = StringProperty(required=True)
+    name = StringProperty()
     owner = RelationshipTo('.user.User', 'OWNED_BY', cardinality=ZeroOrOne)
-    release = StringProperty(required=True)
+    release = StringProperty()
     start_time = DateTimeProperty()
     state = IntegerProperty()
     tags = RelationshipFrom('KojiTag', 'CONTAINS')
     tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
-    version = StringProperty(required=True)
+    triggered_by_freshmaker_event = RelationshipFrom(
+        '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
+    type_ = StringProperty()
+    version = StringProperty()
 
 
 class KojiTask(PurviewStructuredNode):

@@ -4,10 +4,10 @@ from purview.models.koji import KojiBuild, KojiTask, KojiTag
 from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitRepo, DistGitPush, DistGitBranch, DistGitCommit
 from purview.models.errata import Advisory, AdvisoryState
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
+from purview.models.freshmaker import FreshmakerEvent
 from purview.models.user import User
 
-all_models = (Advisory, AdvisoryState, BugzillaBug, ContainerBuild, DistGitBranch,
+all_models = (Advisory, AdvisoryState, BugzillaBug, DistGitBranch,
               DistGitCommit, DistGitPush, DistGitRepo, FreshmakerEvent, KojiBuild,
               KojiTag, KojiTask, User)
 names_to_model = {model.__label__: model for model in all_models}
@@ -49,20 +49,10 @@ story_flow = {
     },
     'FreshmakerEvent': {
         'uid_name': FreshmakerEvent.id_.db_property or FreshmakerEvent.id.name,
-        'forward_relationship': '{0}>'.format(FreshmakerEvent.triggered_container_builds
-                                              .definition['relation_type']),
-        'forward_label': ContainerBuild.__label__,
+        'forward_relationship': None,
+        'forward_label': None,
         'backward_relationship': '{0}>'.format(FreshmakerEvent.triggered_by_advisory
                                                .definition['relation_type']),
         'backward_label': Advisory.__label__
-    },
-    'ContainerBuild': {
-        'uid_name': ContainerBuild.id_.db_property or ContainerBuild.id.name,
-        'forward_relationship': None,
-        'forward_label': None,
-        'backward_relationship': '{0}<'.format(ContainerBuild.triggered_by_freshmaker_event
-                                               .definition['relation_type']),
-        'backward_label': FreshmakerEvent.__label__
     }
-
 }
