@@ -231,6 +231,7 @@ class DistGitScraper(BaseScraper):
             if all(data_found.values()):
                 break
 
+        soup.decompose()
         return rv
 
     @staticmethod
