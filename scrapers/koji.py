@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 import xml.etree.ElementTree as ET
+import json
 
 from scrapers.base import BaseScraper
 from purview.models.koji import KojiBuild, KojiTask, KojiTag
@@ -175,18 +176,26 @@ class KojiScraper(BaseScraper):
             count += 1
             log.info('Uploaded {0} builds out of {1}'.format(count, len(builds)))
 
+            try:
+                extra_json = json.loads(build_dict['extra'])
+            except (json.JSONDecodeError, TypeError):
+                extra_json = {}
+
             if build_dict['task_id']:
-                # Getting task related to the current build
-                task_dict = self.get_task(build_dict['task_id'])[0]
-                xml_root = ET.fromstring(task_dict['request'])
-                commit_hash = None
-                for child in xml_root.iter('string'):
-                    if child.text and child.text.startswith('git'):
-                        commit_hash = child.text.rsplit('#', 1)[1]
-                        break
+                task_id = build_dict['task_id']
+            elif extra_json.get('container_koji_build_id'):
+                task_id = build_dict['container_koji_build_id']
             else:
                 # Continue if the task_id is None
                 continue
+            # Getting task related to the current build
+            task_dict = self.get_task(task_id)[0]
+            xml_root = ET.fromstring(task_dict['request'])
+            commit_hash = None
+            for child in xml_root.iter('string'):
+                if child.text and child.text.startswith('git'):
+                    commit_hash = child.text.rsplit('#', 1)[1]
+                    break
 
             if not task_dict:
                 # Continue if no corresponding task found
