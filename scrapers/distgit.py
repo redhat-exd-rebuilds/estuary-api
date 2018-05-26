@@ -2,8 +2,9 @@
 
 from __future__ import unicode_literals
 import re
-from multiprocessing.dummy import Pool as ThreadPool
+from multiprocessing import Pool
 from os import getenv
+import json
 
 from builtins import bytes
 from bs4 import BeautifulSoup
@@ -20,11 +21,6 @@ from purview import log
 
 class DistGitScraper(BaseScraper):
     """Scrapes the GitBZ tables in Teiid."""
-
-    cgit_url = getenv('PURVIEW_CGIT_URL', 'http://pkgs.devel.redhat.com/cgit/')
-    # The tuple of namespaces to try when determining which namespace this git module belongs
-    # to since this information isn't stored in GitBZ yet
-    namespaces = ('rpms', 'containers', 'modules', 'tests')
 
     def run(self, since=None):
         """
@@ -48,7 +44,7 @@ class DistGitScraper(BaseScraper):
 
         :param list results: a list of dictionaries
         """
-        pool = ThreadPool(8)
+        pool = Pool(processes=8)
         counter = 0
         for result in results:
             if counter % 200 == 0:
@@ -60,7 +56,10 @@ class DistGitScraper(BaseScraper):
                 unique_commits = set([(c['module'], c['sha']) for c in results[counter:until]])
                 log.debug('Getting the author and committer email addresses from cgit in parallel '
                           'for results {0} to {1}'.format(counter, until))
-                repos_info = {r['commit']: r for r in pool.map(self._get_repo_info, unique_commits)}
+                repos_info = {}
+                for _r in pool.map(DistGitScraper._get_repo_info, unique_commits):
+                    r = json.loads(_r)
+                    repos_info[r['commit']] = r
                 # This is no longer needed so it can be cleared to save RAM
                 del unique_commits
             counter += 1
@@ -166,14 +165,15 @@ class DistGitScraper(BaseScraper):
         log.info('Getting dist-git commits since {0}'.format(since))
         return self.teiid.query(sql)
 
-    def _get_repo_info(self, repo_and_commit):
+    @staticmethod
+    def _get_repo_info(repo_and_commit):
         """
         Query cgit for the namespace, parent commit, username and email of the author and committer.
 
         :param tuple repo_and_commit: contains the repo and commit to query for
-        :return: a dictionary with the keys namespace, author_username, author_email,
-        committer_username, committer_email, and the commit
-        :rtype: dictionary
+        :return: a JSON string of a dictionary with the keys namespace, author_username,
+        author_email, committer_username, committer_email, and the commit
+        :rtype: str
         """
         repo, commit = repo_and_commit
         log.debug('Attempting to find the cgit URL for the commit "{0}" in repo "{1}"'
@@ -181,8 +181,12 @@ class DistGitScraper(BaseScraper):
         session = retry_session()
         rv = {'commit': commit, 'parent': None}
         cgit_result = None
-        for namespace in self.namespaces:
-            url = '{0}{1}/{2}/commit/?id={3}'.format(self.cgit_url, namespace, repo, commit)
+        # The tuple of namespaces to try when determining which namespace this git module belongs
+        # to since this information isn't stored in GitBZ yet
+        namespaces = ('rpms', 'containers', 'modules', 'tests')
+        cgit_url = getenv('PURVIEW_CGIT_URL', 'http://pkgs.devel.redhat.com/cgit/')
+        for namespace in namespaces:
+            url = '{0}{1}/{2}/commit/?id={3}'.format(cgit_url, namespace, repo, commit)
             log.debug('Trying the URL "{0}"'.format(url))
             try:
                 cgit_result = session.get(url, timeout=15)
@@ -202,8 +206,8 @@ class DistGitScraper(BaseScraper):
 
         if not cgit_result or cgit_result.status_code != 200:
             log.error('Couldn\'t find the commit "{0}" for the repo "{1}" in the namespaces: {2}'
-                      .format(commit, repo, ', '.join(self.namespaces)))
-            return rv
+                      .format(commit, repo, ', '.join(namespaces)))
+            return json.dumps(rv)
 
         log.debug('Found the cgit URL "{0}" for the commit "{1}" in repo "{2}"'.format(
             url, commit, repo))
@@ -220,7 +224,7 @@ class DistGitScraper(BaseScraper):
                 data_found[th_tag.string] = True
                 username_key = '{0}_username'.format(th_tag.string)
                 email_key = '{0}_email'.format(th_tag.string)
-                rv[username_key], rv[email_key] = self._parse_username_email_from_cgit(
+                rv[username_key], rv[email_key] = DistGitScraper._parse_username_email_from_cgit(
                     th_tag, commit, namespace, repo)
             elif th_tag.string == 'parent':
                 data_found['parent'] = True
@@ -232,7 +236,7 @@ class DistGitScraper(BaseScraper):
                 break
 
         soup.decompose()
-        return rv
+        return json.dumps(rv)
 
     @staticmethod
     def _parse_username_email_from_cgit(th_tag, commit, namespace, repo):
