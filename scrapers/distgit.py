@@ -5,6 +5,7 @@ import re
 from multiprocessing import Pool
 from os import getenv
 import json
+import gc
 
 from builtins import bytes
 from bs4 import BeautifulSoup
@@ -62,6 +63,9 @@ class DistGitScraper(BaseScraper):
                     repos_info[r['commit']] = r
                 # This is no longer needed so it can be cleared to save RAM
                 del unique_commits
+                # A lot of RAM was allocated or used up, so let's call gc.collect() to ensure it
+                # is removed
+                gc.collect()
             counter += 1
             log.info('Processing commit and push entry {0}/{1}'.format(
                 str(counter), str(len(results))))
@@ -142,6 +146,8 @@ class DistGitScraper(BaseScraper):
                 commit.resolved_bugs.connect(bug)
             elif result['bugzilla_type'] == 'reverted':
                 commit.reverted_bugs.connect(bug)
+            # This is no longer needed so it can be cleared to save RAM
+            del repo_info
 
     def get_distgit_data(self, since):
         """
