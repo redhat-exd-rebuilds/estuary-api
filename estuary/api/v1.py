@@ -8,11 +8,11 @@ from werkzeug.exceptions import NotFound
 from neomodel import db
 
 from estuary import version
-from estuary.models import story_flow
+from estuary.models import story_flow_list
 from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
-    str_to_bool, get_neo4j_node, get_corelated_nodes, _order_story_results, create_story_query)
+    str_to_bool, get_neo4j_node, _order_story_results, create_story_query, story_flow)
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -62,7 +62,7 @@ def get_available_resources():
     :return: a Flask JSON response
     :rtype: flask.Response
     """
-    return jsonify({label.lower(): info['uid_name'] for label, info in story_flow.items()})
+    return jsonify({label.lower(): story_flow(label)['uid_name'] for label in story_flow_list})
 
 
 @api_v1.route('/story/<resource>/<uid>')
@@ -105,26 +105,15 @@ def get_resource_story(resource, uid):
         results_unordered.update(
             _get_partial_story(backward_query, [resource]))
 
-    results = OrderedDict({'data': [], 'meta': {}})
-    results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}
-
     # Adding the artifact itself if it's story is not available
     if len(results_unordered) == 0:
+        results = {'data': [], 'meta': {}}
+        results['meta']['related_nodes'] = {key: 0 for key in story_flow_list}
         results['data'].append(item.serialized_all)
         results['data'][0]['resource_type'] = item.__label__
-        print("RESULTS", results)
         return jsonify(results)
 
-    curr_label = 'BugzillaBug'
-    while curr_label:
-        if curr_label in results_unordered:
-            results['data'].append(results_unordered[curr_label][0])
-
-        curr_label = story_flow[curr_label]['forward_label']
-
-    results['meta']['related_nodes'].update(get_corelated_nodes(results_unordered))
-
-    return jsonify(results)
+    return jsonify(_order_story_results(results_unordered))
 
 
 @api_v1.route('/allstories/<resource>/<uid>')
@@ -218,7 +207,7 @@ def get_resource_all_stories(resource, uid):
     # Adding the artifact itself if its story is not available
     if len(all_results) == 0:
         results = {'data': [], 'meta': {}}
-        results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}
+        results['meta']['related_nodes'] = {key: 0 for key in story_flow_list}
         results['data'].append(item.serialized_all)
         results['data'][0]['resource_type'] = item.__label__
         all_results.append(results)

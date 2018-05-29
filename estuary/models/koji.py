@@ -26,14 +26,13 @@ class KojiBuild(EstuaryStructuredNode):
     state = IntegerProperty()
     tags = RelationshipFrom('KojiTag', 'CONTAINS')
     tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
-    triggered_by_freshmaker_event = RelationshipFrom(
-        '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
     version = StringProperty()
 
 
 class ContainerKojiBuild(KojiBuild):
     """Creating another label for KojiBuild"""
-    pass
+    triggered_by_freshmaker_event = RelationshipFrom(
+        '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 
 
 class KojiTask(EstuaryStructuredNode):
