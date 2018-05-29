@@ -1006,3 +1006,67 @@ def test_get_stories_not_available(client):
     }
     assert rv.status_code == 400
     assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+def test_get_stories_just_artifact(client):
+    """Test getting the story for a resource but only the artifact is returned."""
+    Advisory.get_or_create({
+        'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
+        'advisory_name': 'RHBA-2017:2251-02',
+        'content_types': ['docker'],
+        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'id_': '27825',
+        'issue_date': datetime(2017, 8, 1, 5, 59, 34),
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'security_impact': 'None',
+        'state': 'SHIPPED_LIVE',
+        'status_time': datetime(2017, 8, 1, 15, 43, 51),
+        'synopsis': 'cifs-utils bug fix update',
+        'type_': 'RHBA',
+        'update_date': datetime(2017, 8, 1, 7, 16),
+        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+    })[0]
+    expected = {
+        'data': [{
+            'actual_ship_date': '2017-08-01T15:43:51+00:00',
+            'advisory_name': 'RHBA-2017:2251-02',
+            'assigned_to': None,
+            'attached_bugs': [],
+            'attached_builds': [],
+            'content_types': ['docker'],
+            'created_at': '2017-04-03T14:47:23+00:00',
+            'id': '27825',
+            'issue_date': '2017-08-01T05:59:34+00:00',
+            'package_owner': None,
+            'product_name': 'Red Hat Enterprise Linux',
+            'product_short_name': 'RHEL',
+            'release_date': None,
+            'reporter': None,
+            'resource_type': 'Advisory',
+            'security_impact': 'None',
+            'security_sla': None,
+            'state': 'SHIPPED_LIVE',
+            'states': [],
+            'status_time': '2017-08-01T15:43:51+00:00',
+            'synopsis': 'cifs-utils bug fix update',
+            'triggered_freshmaker_event': [],
+            'type': 'RHBA',
+            'update_date': '2017-08-01T07:16:00+00:00',
+            'updated_at': '2017-08-01T15:43:51+00:00'
+        }],
+        'meta': {
+            'related_nodes': {
+                'Advisory': 0,
+                'BugzillaBug': 0,
+                'ContainerBuild': 0,
+                'DistGitCommit': 0,
+                'FreshmakerEvent': 0,
+                'KojiBuild': 0
+            }
+        }
+    }
+
+    rv = client.get('/api/v1/story/advisory/27825')
+    assert rv.status_code == 200
+    assert json.loads(rv.data.decode('utf-8')) == expected

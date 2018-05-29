@@ -87,11 +87,10 @@ def get_resource_story(resource, uid):
                                         limit=True)
 
     def _get_partial_story(query, resources_to_expand):
-        results_list = []
         results, _ = db.cypher_query(query)
 
         if not results:
-            return results_list
+            return {}
 
         # Assuming that if Path is the first result, then that's all we want to process.
         results = [list(results[0][0].nodes)]
