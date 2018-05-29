@@ -136,7 +136,7 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
     :rtype: str
     """
     # To avoid circular imports
-    from purview.models import story_flow
+    from purview.models import story_flow_list
 
     query = ''
 
@@ -148,10 +148,13 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
         node_label = 'forward_label'
 
     curr_node_label = item.__label__
-    if curr_node_label not in story_flow:
+    if curr_node_label not in story_flow_list:
         raise ValidationError('The story is not available for this kind of resource')
 
-    while story_flow[curr_node_label][rel_label]:
+    while True:
+        if not story_flow(curr_node_label):
+            break
+
         if curr_node_label == item.__label__:
             query = """\
                 MATCH ({var}:{label} {{{uid_name}:"{uid}"}})
@@ -162,9 +165,9 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
                            uid=uid)
 
         query += ', {0}, {1}'.format(
-            story_flow[curr_node_label][rel_label], story_flow[curr_node_label][node_label])
+            story_flow(curr_node_label)[rel_label], story_flow(curr_node_label)[node_label])
 
-        curr_node_label = story_flow[curr_node_label][node_label]
+        curr_node_label = story_flow(curr_node_label)[node_label]
 
     if query:
         query += """\
@@ -188,7 +191,6 @@ def get_corelated_nodes(results):
     :rtype: dict
     """
     # To avoid circular imports
-    from purview.models import story_flow
     from purview.models.bugzilla import BugzillaBug
 
     nodes_count_dict = {}
@@ -196,20 +198,20 @@ def get_corelated_nodes(results):
     last = False
     while not last:
         node_count = 0
-        forward_label = story_flow[curr_label]['forward_label']
+        forward_label = story_flow(curr_label)['forward_label']
         if forward_label in results:
             query = 'MATCH '
             # Only grab the first element since there will only be one
             next_node = results[forward_label][0]
-            forward_rel = story_flow[curr_label]['forward_relationship'][:-1]
-            uid_name = story_flow[forward_label]['uid_name']
+            forward_rel = story_flow(curr_label)['forward_relationship'][:-1]
+            uid_name = story_flow(forward_label)['uid_name']
             node_subquery = create_node_subquery(curr_label)
             next_node_subquery = create_node_subquery(forward_label, uid_name, next_node[uid_name])
             query += '{0}-[:{1}]-{2}\n'.format(node_subquery, forward_rel, next_node_subquery)
             query += 'RETURN COUNT({0}) AS count'.format(curr_label.lower())
             node_count = get_node_count(query)
 
-        backward_label = story_flow[curr_label]['backward_label']
+        backward_label = story_flow(curr_label)['backward_label']
         # If this evaluates to true, then this is the end of the story for the node, so we get
         # the backwards related nodes (e.g. all the ContainerBuild that were triggered by a
         # Freshmaker event)
@@ -219,8 +221,8 @@ def get_corelated_nodes(results):
                 continue
             query = 'MATCH '
             backward_node = results[backward_label][0]
-            backward_rel = story_flow[curr_label]['backward_relationship'][:-1]
-            uid_name = story_flow[backward_label]['uid_name']
+            backward_rel = story_flow(curr_label)['backward_relationship'][:-1]
+            uid_name = story_flow(backward_label)['uid_name']
             node_subquery = create_node_subquery(backward_label, uid_name, backward_node[uid_name])
             next_node_subquery = create_node_subquery(curr_label)
             query += '{0}-[:{1}]-{2}\n'.format(node_subquery, backward_rel, next_node_subquery)
@@ -262,18 +264,93 @@ def _order_story_results(result):
     :return: a dict containing results ordered in the story flow sequence
     :rtype: dict
     """
-    # To avoid circular imports
-    from purview.models import story_flow
-
-    results = {'data': [], 'meta': {}}
-    results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}
+    results = {'data': [], 'meta': {'related_nodes': {}}}
     curr_label = 'BugzillaBug'
     while curr_label:
+        results['meta']['related_nodes'][curr_label] = 0
         if curr_label in result:
             results['data'].append(result[curr_label][0])
 
-        curr_label = story_flow[curr_label]['forward_label']
+        curr_label = story_flow(curr_label)['forward_label']
 
     results['meta']['related_nodes'].update(get_corelated_nodes(result))
 
     return results
+
+
+def story_flow(label):
+    """
+    Get the next/previous node in a story flow/pipeline path.
+
+    :param str label: Neo4j node label
+    :return: uid and relationship information in both forward and backward directions
+    :rtype: dict
+    """
+    # To avoid circular imports
+    from purview.models.koji import ContainerKojiBuild, KojiBuild
+    from purview.models.bugzilla import BugzillaBug
+    from purview.models.distgit import DistGitCommit
+    from purview.models.errata import Advisory
+    from purview.models.freshmaker import FreshmakerEvent
+
+    if not label:
+        return
+
+    if label == BugzillaBug.__label__:
+        return {
+            'uid_name': BugzillaBug.id_.db_property or BugzillaBug.id.name,
+            'forward_relationship': '{0}<'.format(
+                BugzillaBug.resolved_by_commits.definition['relation_type']),
+            'forward_label': DistGitCommit.__label__,
+            'backward_relationship': None,
+            'backward_label': None
+        }
+    elif label == DistGitCommit.__label__:
+        return {
+            'uid_name': DistGitCommit.hash_.db_property or DistGitCommit.hash.name,
+            'forward_relationship': '{0}<'.format(
+                DistGitCommit.koji_builds.definition['relation_type']),
+            'forward_label': KojiBuild.__label__,
+            'backward_relationship': '{0}>'.format(
+                DistGitCommit.resolved_bugs.definition['relation_type']),
+            'backward_label': BugzillaBug.__label__
+        }
+    elif label == KojiBuild.__label__:
+        return {
+            'uid_name': KojiBuild.id_.db_property or KojiBuild.id.name,
+            'forward_relationship': '{0}<'.format(KojiBuild.advisories.definition['relation_type']),
+            'forward_label': Advisory.__label__,
+            'backward_relationship': '{0}>'.format(KojiBuild.commit.definition['relation_type']),
+            'backward_label': DistGitCommit.__label__
+        }
+    elif label == Advisory.__label__:
+        return {
+            'uid_name': Advisory.id_.db_property or Advisory.id.name,
+            'forward_relationship': '{0}<'.format(
+                Advisory.triggered_freshmaker_event.definition['relation_type']),
+            'forward_label': FreshmakerEvent.__label__,
+            'backward_relationship': '{0}>'.format(
+                Advisory.attached_builds.definition['relation_type']),
+            'backward_label': KojiBuild.__label__
+        }
+    elif label == FreshmakerEvent.__label__:
+        return {
+            'uid_name': FreshmakerEvent.id_.db_property or FreshmakerEvent.id.name,
+            'forward_relationship': '{0}>'.format(
+                FreshmakerEvent.triggered_container_builds.definition['relation_type']),
+            'forward_label': ContainerKojiBuild.__label__,
+            'backward_relationship': '{0}>'.format(FreshmakerEvent.triggered_by_advisory
+                                                   .definition['relation_type']),
+            'backward_label': Advisory.__label__
+        }
+    elif label == ContainerKojiBuild.__label__:
+        return {
+            'uid_name': KojiBuild.id_.db_property or KojiBuild.id.name,
+            'forward_relationship': None,
+            'forward_label': None,
+            'backward_relationship': '{0}<'.format(
+                ContainerKojiBuild.triggered_by_freshmaker_event.definition['relation_type']),
+            'backward_label': FreshmakerEvent.__label__
+        }
+    else:
+        raise ValueError('The label should belong to a Neo4j node class')
