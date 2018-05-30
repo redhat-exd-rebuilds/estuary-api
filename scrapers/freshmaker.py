@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 from scrapers.base import BaseScraper
 from purview.models.freshmaker import FreshmakerEvent
 from purview.models.errata import Advisory
-from purview.models.koji import KojiBuild
+from purview.models.koji import ContainerKojiBuild
 from scrapers.utils import retry_session
 from purview import log
 
@@ -79,7 +79,7 @@ class FreshmakerScraper(BaseScraper):
                     build_id = xml_root.find(".//*[name='koji_builds'].//string")
 
                     if build_id:
-                        build = KojiBuild.get_or_create(dict(id_=build_id))[0]
+                        build = ContainerKojiBuild.get_or_create(dict(id_=build_id))[0]
                         event.triggered_container_builds.connect(build)
 
             if rv_json['meta'].get('next'):
