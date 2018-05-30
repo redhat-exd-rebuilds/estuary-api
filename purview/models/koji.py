@@ -28,8 +28,12 @@ class KojiBuild(PurviewStructuredNode):
     tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
     triggered_by_freshmaker_event = RelationshipFrom(
         '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
-    type_ = StringProperty()
     version = StringProperty()
+
+
+class ContainerKojiBuild(KojiBuild):
+    """Creating another label for KojiBuild"""
+    pass
 
 
 class KojiTask(PurviewStructuredNode):

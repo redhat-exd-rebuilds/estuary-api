@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import json
 
 from scrapers.base import BaseScraper
-from purview.models.koji import KojiBuild, KojiTask, KojiTag
+from purview.models.koji import ContainerKojiBuild, KojiBuild, KojiTask, KojiTag
 from purview.models.user import User
 from purview.models.distgit import DistGitCommit
 import purview.utils.general as utils
@@ -160,16 +160,20 @@ class KojiScraper(BaseScraper):
             except (json.JSONDecodeError, TypeError):
                 extra_json = {}
 
+            container_build = False
             # Checking a heuristic for determining if a build is a container build since, currently
             # there is no definitive way to do it.
             if extra_json and extra_json.get('container_koji_build_id'):
-                build_params['type_'] = 'container'
+                container_build = True
             # Checking another heuristic for determining if a build is a container build since
             # currently there is no definitive way to do it.
             elif (package_name.endswith('-container') or package_name.endswith('-docker')):
-                build_params['type_'] = 'container'
+                container_build = True
 
-            build = KojiBuild.create_or_update(build_params)[0]
+            if container_build:
+                build = ContainerKojiBuild.create_or_update(build_params)[0]
+            else:
+                build = KojiBuild.create_or_update(build_params)[0]
 
             if build_dict['owner_username']:
                 username = build_dict['owner_username'].split('@')[0]
