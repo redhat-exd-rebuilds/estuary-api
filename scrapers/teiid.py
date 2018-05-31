@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 from time import sleep
+from datetime import datetime, timedelta
 
 import psycopg2
 
@@ -28,6 +29,7 @@ class Teiid(object):
         self.password = password
         # a dict mapping db names to cursors
         self._connections = {}
+        self._last_query_dt = None
 
     def get_connection(self, db_name, force_new=False, retry=None):
         """
@@ -94,6 +96,12 @@ class Teiid(object):
         if retry is not None and retry < 1:
             raise ValueError('The retry keyword must contain a value greater than 0')
 
+        if self._last_query_dt:
+            now = datetime.utcnow()
+            now_and_last_diff = now - self._last_query_dt
+            if now_and_last_diff < timedelta(seconds=0.5):
+                sleep(now_and_last_diff.total_seconds())
+
         log.debug('Querying Teiid DB "{0}" with SQL:\n{1}'.format(db, sql))
 
         fifteen_mins = 15 * 60
@@ -107,6 +115,7 @@ class Teiid(object):
                     con = self.get_connection(db, force_new=True)
                     cursor = con.cursor()
                 cursor.execute(sql)
+                self._last_query_dt = datetime.utcnow()
                 break
             except psycopg2.OperationalError as e:
                 if retry and attempts > retry:
