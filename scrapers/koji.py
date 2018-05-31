@@ -181,10 +181,11 @@ class KojiScraper(BaseScraper):
             except (json.JSONDecodeError, TypeError):
                 extra_json = {}
 
+            container_koji_task_id = extra_json.get('container_koji_task_id')
             if build_dict['task_id']:
                 task_id = build_dict['task_id']
-            elif extra_json.get('container_koji_build_id'):
-                task_id = build_dict['container_koji_build_id']
+            elif container_koji_task_id:
+                task_id = container_koji_task_id
             else:
                 # Continue if the task_id is None
                 continue
