@@ -15,14 +15,16 @@ class FreshmakerScraper(BaseScraper):
 
     freshmaker_url = "https://freshmaker.engineering.redhat.com/api/1/events/?per_page=100"
 
-    def run(self, since=None):
+    def run(self, since=None, until=None):
         """
         Run the Freshmaker scraper.
 
         :param str since: a datetime to start scraping data from
+        :param str until: a datetime to scrape data until
         """
-        if since:
-            log.warn('Ignoring the since parameter; It doesn\'t apply to the Freshmaker scraper')
+        if since or until:
+            log.warn('Ignoring the since/until parameter; They do not apply to the'
+                     'Freshmaker scraper')
         log.info('Starting initial load of Freshmaker events')
         self.query_api_and_update_neo4j()
         log.info('Initial load of Freshmaker events complete!')
