@@ -16,18 +16,24 @@ from purview.models.koji import KojiBuild
 class ErrataScraper(BaseScraper):
     """Scrapes the Errata Tool tables in Teiid."""
 
-    def run(self, since=None):
+    def run(self, since=None, until=None):
         """
         Run the Errata Tool scraper.
 
         :param str since: a datetime to start scraping data from
+        :param str until: a datetime to scrape data until
         """
         log.info('Starting initial load of Errata advisories')
         if since is None:
-            dt_since = self.default_since
+            start_date = self.default_since
         else:
-            dt_since = timestamp_to_datetime(since)
-        advisories = self.get_advisories(dt_since)
+            start_date = timestamp_to_datetime(since)
+
+        if until is None:
+            end_date = self.default_until
+        else:
+            end_date = timestamp_to_datetime(until)
+        advisories = self.get_advisories(start_date, end_date)
         log.info('Successfully fetched {0} advisories from Teiid'.format(len(advisories)))
         self.update_neo4j(advisories)
         log.info('Initial load of Errata advisories complete!')
@@ -99,11 +105,12 @@ class ErrataScraper(BaseScraper):
                     build = KojiBuild.get_or_create(associated_build)[0]
                     adv.attached_builds.connect(build)
 
-    def get_advisories(self, since):
+    def get_advisories(self, since, until):
         """
         Query Teiid for the Errata Tool advisories.
 
         :param datetime.datetime since: determines when to start querying
+        :param datetime.datetime until: determines until when to scrape data
         :return: a list of dictionaries
         :rtype: list
         """
@@ -140,10 +147,10 @@ class ErrataScraper(BaseScraper):
                 ON main.package_owner_id = package_users.id
             LEFT JOIN Errata_public.users AS reporter_users
                 ON main.reporter_id = reporter_users.id
-            WHERE main.updated_at >= '{0}'
+            WHERE main.updated_at >= '{0}' AND main.updated_at <= '{1}'
             ORDER BY main.id;
-        """.format(since)
-        log.info('Getting Errata advisories since {0}'.format(since))
+        """.format(since, until)
+        log.info('Getting Errata advisories since {0} until {1}'.format(since, until))
         return self.teiid.query(sql)
 
     def get_advisory_states(self, advisory_id):

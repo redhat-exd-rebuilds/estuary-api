@@ -12,11 +12,12 @@ from purview import log
 class BugzillaScraper(BaseScraper):
     """Scrapes the Bugzilla tables in Teiid."""
 
-    def run(self, since=None):
+    def run(self, since=None, until=None):
         """
         Run the Bugzilla scraper.
 
         :param str since: a datetime to start scraping data from
+        :param str until: a datetime to scrape data until
         """
         log.info('Starting initial load of Bugzilla bugs')
         if since is None:
@@ -24,20 +25,26 @@ class BugzillaScraper(BaseScraper):
         else:
             start_date = timestamp_to_datetime(since)
 
-        bugs = self.get_bugzilla_bugs(start_date)
+        if until is None:
+            end_date = self.default_until
+        else:
+            end_date = timestamp_to_datetime(until)
+
+        bugs = self.get_bugzilla_bugs(start_date, end_date)
         log.info('Successfully fetched {0} bugs from teiid'.format(len(bugs)))
         self.update_neo4j(bugs)
         log.info('Initial load of Bugzilla bugs complete!')
 
-    def get_bugzilla_bugs(self, start_date):
+    def get_bugzilla_bugs(self, start_date, end_date):
         """
         Get the Buzilla bugs information from Teiid.
 
         :param datetime.datetime start_date: when to start scraping data from
+        :param datetime.datetime end_date: determines until when to scrape data
         :return: list of dictionaries containing bug info
         :rtype: list
         """
-        log.info('Getting all Bugzilla bugs since {0}'.format(start_date))
+        log.info('Getting all Bugzilla bugs since {0} until {1}'.format(start_date, end_date))
         sql_query = """
             SELECT bugs.*, products.name AS product_name, classifications.name AS classification,
                 assigned.login_name AS assigned_to_email, reported.login_name AS reported_by_email,
@@ -49,8 +56,9 @@ class BugzillaScraper(BaseScraper):
             LEFT JOIN bugzilla.profiles AS assigned ON bugs.assigned_to = assigned.userid
             LEFT JOIN bugzilla.profiles AS reported ON bugs.reporter = reported.userid
             LEFT JOIN bugzilla.profiles AS qa ON bugs.qa_contact = qa.userid
-            WHERE classifications.name = 'Red Hat' AND bugs.delta_ts > '{}'
-            """.format(start_date)
+            WHERE classifications.name = 'Red Hat' AND bugs.delta_ts >= '{0}'
+                AND bugs.delta_ts <= '{1}'
+            """.format(start_date, end_date)
 
         return self.teiid.query(sql=sql_query)
 

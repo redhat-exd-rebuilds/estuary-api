@@ -15,30 +15,36 @@ from purview import log
 class KojiScraper(BaseScraper):
     """Scrapes the Koji tables in Teiid."""
 
-    def run(self, since=None):
+    def run(self, since=None, until=None):
         """
         Run the Koji scraper.
 
         :param str since: a datetime to start scraping data from
+        :param str until: a datetime to scrape data until
         """
         log.info('Starting initial load for Koji')
         # Initialize a start date from which all builds must be fetched
         # If no input is given by the user, fetch builds from the past two years
         if since is None:
-            since = self.default_since
+            start_date = self.default_since
         else:
-            since = utils.timestamp_to_datetime(since)
+            start_date = utils.timestamp_to_datetime(since)
 
-        builds = self.get_koji_builds(since)
+        if until is None:
+            end_date = self.default_until
+        else:
+            end_date = utils.timestamp_to_datetime(until)
+        builds = self.get_koji_builds(start_date, end_date)
         log.info('Successfully fetched {0} builds from teiid'.format(len(builds)))
         self.update_neo4j(builds)
         log.info('Initial load of Koji builds complete!')
 
-    def get_koji_builds(self, start_date):
+    def get_koji_builds(self, start_date, end_date):
         """
         Query Teiid for Koji builds.
 
         :param datetime.datetime start_date: determines when to start the query
+        :param datetime.datetime end_date: determines until when to scrape data
         :return: a list of dictionaries
         :rtype: list
         """
@@ -63,9 +69,9 @@ class KojiScraper(BaseScraper):
             LEFT JOIN events ON build.create_event = events.id
             LEFT JOIN package ON build.pkg_id = package.id
             LEFT JOIN brew.users ON build.owner = brew.users.id
-            WHERE events.time IS NOT NULL AND events.time >= '{}'
+            WHERE events.time IS NOT NULL AND events.time >= '{0}' AND events.time <= '{1}'
             ORDER BY build.id
-            """.format(start_date)
+            """.format(start_date, end_date)
 
         return self.teiid.query(sql=sql_query)
 

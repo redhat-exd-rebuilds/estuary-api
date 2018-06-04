@@ -23,18 +23,24 @@ from purview import log
 class DistGitScraper(BaseScraper):
     """Scrapes the GitBZ tables in Teiid."""
 
-    def run(self, since=None):
+    def run(self, since=None, until=None):
         """
         Run the dist-git scraper.
 
         :param str since: a datetime to start scraping data from
+        :param str until: a datetime to scrape data until
         """
         log.info('Starting initial load of dist-git commits and pushes')
         if since is None:
-            dt_since = self.default_since
+            start_date = self.default_since
         else:
-            dt_since = timestamp_to_datetime(since)
-        results = self.get_distgit_data(dt_since)
+            start_date = timestamp_to_datetime(since)
+
+        if until is None:
+            end_date = self.default_until
+        else:
+            end_date = timestamp_to_datetime(until)
+        results = self.get_distgit_data(start_date, end_date)
         log.info('Successfully fetched {0} results from Teiid'.format(len(results)))
         self.update_neo4j(results)
         log.info('Initial load of dist-git commits and pushes complete!')
@@ -149,11 +155,12 @@ class DistGitScraper(BaseScraper):
             # This is no longer needed so it can be cleared to save RAM
             del repo_info
 
-    def get_distgit_data(self, since):
+    def get_distgit_data(self, since, until):
         """
         Query Teiid for the dist-git commit, push, and Bugzilla information.
 
         :param datetime.datetime since: determines when to start the query
+        :param datetime.datetime until: determines until when to scrape data
         :return: a list of dictionaries
         :rtype: list
         """
@@ -165,10 +172,10 @@ class DistGitScraper(BaseScraper):
             LEFT JOIN gitbz.git_push_commit_map as map ON c.commit_id = map.commit_id
             LEFT JOIN gitbz.git_pushes as p ON p.push_id = map.push_id
             LEFT JOIN gitbz.redhat_bugzilla_references as bz ON c.commit_id = bz.commit_id
-            WHERE c.commit_date > '{0}'
+            WHERE c.commit_date >= '{0}' AND c.commit_date <= '{1}'
             ORDER BY c.commit_id ASC;
-        """.format(since)
-        log.info('Getting dist-git commits since {0}'.format(since))
+        """.format(since, until)
+        log.info('Getting dist-git commits since {0} until {1}'.format(since, until))
         return self.teiid.query(sql)
 
     @staticmethod

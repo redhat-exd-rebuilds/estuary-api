@@ -21,6 +21,8 @@ parser.add_argument('scraper', type=str, help=('The scraper to run. To run them 
                                                'This can also be a comma-separated list'))
 parser.add_argument('--since', type=str,
                     help='Process results starting from a UTC date formatted in "yyyy-mm-dd"')
+parser.add_argument('--until', type=str,
+                    help='Process results until a UTC date formatted in "yyyy-mm-dd"')
 parser.add_argument('--days-ago', type=int, help='Process results starting from "x" days ago')
 parser.add_argument('--teiid-user', type=str, help='The Teiid user')
 parser.add_argument('--teiid-password', type=str, help='The Teiid password')
@@ -62,6 +64,7 @@ for scraper_class in scraper_classes:
         args.teiid_user, args.teiid_password, args.kerberos, args.neo4j_user, args.neo4j_password,
         args.neo4j_server)
     since = args.since
+    until = args.until
     if args.days_ago:
         since = (datetime.utcnow() - timedelta(days=args.days_ago)).strftime('%Y-%m-%d')
-    scraper.run(since=since)
+    scraper.run(since=since, until=args.until)
