@@ -10,8 +10,8 @@ from purview.models.user import User
 from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitCommit, DistGitPush, DistGitBranch, DistGitRepo
 from purview.models.errata import Advisory, AdvisoryState
-from purview.models.koji import KojiBuild, KojiTask, KojiTag
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
+from purview.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
+from purview.models.freshmaker import FreshmakerEvent
 
 
 @pytest.mark.parametrize('resource,uid,expected', [
@@ -378,52 +378,38 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
             'update_date':'2017-08-01T07:16:00+00:00',
             'updated_at':'2017-08-01T15:43:51+00:00'
         },
-        'triggered_container_builds':[
-            {
-                'build_id': 15639047,
-                'dep_on': None,
-                'event_id': 1180,
-                'id': '397',
-                'name': 'jboss-eap-7-eap70-openshift-docker',
-                'original_nvr': 'jboss-eap-7-eap70-openshift-test',
-                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-test',
-                'state': 1,
-                'state_name': 'DONE',
-                'state_reason': 'Built successfully.',
-                'time_completed': '2017-04-02T19:39:06+00:00',
-                'time_submitted': '2017-04-02T19:39:06+00:00',
-                'type': 1,
-                'type_name': 'IMAGE',
-                'url': '/api/1/builds/397'
-            }
-        ],
+        'triggered_container_builds': [{
+            'completion_time': '2017-04-02T19:39:06+00:00',
+            'creation_time': '2017-04-02T19:39:06+00:00',
+            'epoch': '0',
+            'extra': None,
+            'id': '710',
+            'name': 'slf4j_2',
+            'release': '4.el7_4_as',
+            'start_time': '2017-04-02T19:39:06+00:00',
+            'state': 1,
+            'version': '1.7.4'}],
         'url': '/api/1/events/1180'
     }),
-    ('containerbuild', '397', {
-        'build_id': 15639047,
-        'dep_on': None,
-        'event_id': 1180,
-        'id': '397',
-        'name': 'jboss-eap-7-eap70-openshift-docker',
-        'original_nvr': 'jboss-eap-7-eap70-openshift-test',
-        'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-test',
-        'state': 1,
-        'state_name': 'DONE',
-        'state_reason': 'Built successfully.',
-        'time_completed': '2017-04-02T19:39:06+00:00',
-        'time_submitted': '2017-04-02T19:39:06+00:00',
-        'triggered_by_freshmaker_event': {
-            'event_type_id': 8,
-            'id': '1180',
-            'message_id': 'ID:messaging-devops-broker01.test',
-            'state': 2,
-            'state_name': 'COMPLETE',
-            'state_reason': 'All container images have been rebuilt',
-            'url': '/api/1/events/1180'
-        },
-        'type': 1,
-        'type_name': 'IMAGE',
-        'url': '/api/1/builds/397'
+    ('containerkojibuild', '710', {
+        'advisories': [
+
+        ],
+        'commit':None,
+        'completion_time':'2017-04-02T19:39:06+00:00',
+        'creation_time':'2017-04-02T19:39:06+00:00',
+        'epoch':'0',
+        'extra':None,
+        'id':'710',
+        'name':'slf4j_2',
+        'owner':None,
+        'release':'4.el7_4_as',
+        'start_time':'2017-04-02T19:39:06+00:00',
+        'state':1,
+        'tags':[],
+        'tasks':[],
+        'triggered_by_freshmaker_event':None,
+        'version':'1.7.4'
     })
 ])
 def test_get_resources(client, resource, uid, expected):
@@ -575,21 +561,16 @@ def test_get_resources(client, resource, uid, expected):
         'state_reason': 'All container images have been rebuilt',
         'url': '/api/1/events/1180'
     })[0]
-    cb = ContainerBuild.get_or_create({
-        'build_id': 15639047,
-        'event_id': 1180,
-        'id_': '397',
-        'name': 'jboss-eap-7-eap70-openshift-docker',
-        'original_nvr': 'jboss-eap-7-eap70-openshift-test',
-        'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-test',
+    cb = ContainerKojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '710',
+        'name': 'slf4j_2',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
         'state': 1,
-        'state_name': 'DONE',
-        'state_reason': 'Built successfully.',
-        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
-        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
-        'type_': 1,
-        'type_name': 'IMAGE',
-        'url': '/api/1/builds/397'
+        'version': '1.7.4'
     })[0]
 
     if resource == 'bugzillabug':
@@ -630,7 +611,7 @@ def test_get_resources(client, resource, uid, expected):
         advisory.attached_bugs.connect(bug)
 
     if resource == 'freshmakerevent':
-        fm_event.conditional_connect(fm_event.triggered_by_advisory, advisory)
+        fm_event.triggered_by_advisory.connect(advisory)
         fm_event.triggered_container_builds.connect(cb)
 
     if resource == 'containerbuild':

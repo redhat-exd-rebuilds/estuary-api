@@ -6,11 +6,11 @@ from datetime import datetime
 
 import pytest
 
-from purview.models.koji import KojiBuild
+from purview.models.koji import KojiBuild, ContainerKojiBuild
 from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitCommit
 from purview.models.errata import Advisory
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
+from purview.models.freshmaker import FreshmakerEvent
 from purview.models.user import User
 
 
@@ -106,29 +106,24 @@ from purview.models.user import User
                 'url': '/api/1/events/1180'
             },
             {
-                'build_id': 15639047,
-                'dep_on': None,
-                'event_id': 1180,
-                'id': '397',
-                'name': 'jboss-eap-7-eap70-openshift-docker',
-                'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuild',
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '710',
+                'name': 'slf4j_2',
+                'release': '4.el7_4_as',
+                'resource_type': 'ContainerKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
-                'state_name': 'DONE',
-                'state_reason': 'Built successfully.',
-                'time_completed': '2017-04-02T19:39:06+00:00',
-                'time_submitted': '2017-04-02T19:39:06+00:00',
-                'type': 1,
-                'type_name': 'IMAGE',
-                'url': '/api/1/builds/397'
+                'version': '1.7.4'
             }
         ],
         'meta': {
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -273,29 +268,24 @@ from purview.models.user import User
                 'url': '/api/1/events/1180'
             },
             {
-                'build_id': 15639047,
-                'dep_on': None,
-                'event_id': 1180,
-                'id': '397',
-                'name': 'jboss-eap-7-eap70-openshift-docker',
-                'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuild',
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '710',
+                'name': 'slf4j_2',
+                'release': '4.el7_4_as',
+                'resource_type': 'ContainerKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
-                'state_name': 'DONE',
-                'state_reason': 'Built successfully.',
-                'time_completed': '2017-04-02T19:39:06+00:00',
-                'time_submitted': '2017-04-02T19:39:06+00:00',
-                'type': 1,
-                'type_name': 'IMAGE',
-                'url': '/api/1/builds/397'
+                'version': '1.7.4'
             }
         ],
         'meta': {
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -409,29 +399,24 @@ from purview.models.user import User
                 'url': '/api/1/events/1180'
             },
             {
-                'build_id': 15639047,
-                'dep_on': None,
-                'event_id': 1180,
-                'id': '397',
-                'name': 'jboss-eap-7-eap70-openshift-docker',
-                'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuild',
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '710',
+                'name': 'slf4j_2',
+                'release': '4.el7_4_as',
+                'resource_type': 'ContainerKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
-                'state_name': 'DONE',
-                'state_reason': 'Built successfully.',
-                'time_completed': '2017-04-02T19:39:06+00:00',
-                'time_submitted': '2017-04-02T19:39:06+00:00',
-                'type': 1,
-                'type_name': 'IMAGE',
-                'url': '/api/1/builds/397'
+                'version': '1.7.4'
             }
         ],
         'meta': {
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -543,29 +528,24 @@ from purview.models.user import User
                 'url': '/api/1/events/1180'
             },
             {
-                'build_id': 15639047,
-                'dep_on': None,
-                'event_id': 1180,
-                'id': '397',
-                'name': 'jboss-eap-7-eap70-openshift-docker',
-                'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuild',
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '710',
+                'name': 'slf4j_2',
+                'release': '4.el7_4_as',
+                'resource_type': 'ContainerKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
-                'state_name': 'DONE',
-                'state_reason': 'Built successfully.',
-                'time_completed': '2017-04-02T19:39:06+00:00',
-                'time_submitted': '2017-04-02T19:39:06+00:00',
-                'type': 1,
-                'type_name': 'IMAGE',
-                'url': '/api/1/builds/397'
+                'version': '1.7.4'
             }
         ],
         'meta': {
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -663,56 +643,46 @@ from purview.models.user import User
                 },
                 'triggered_container_builds':[
                     {
-                        'build_id': 15639047,
-                        'dep_on': None,
-                        'event_id': 1180,
-                        'id': '397',
-                        'name': 'jboss-eap-7-eap70-openshift-docker',
-                        'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                        'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
+                        'completion_time': '2017-04-02T19:39:06+00:00',
+                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'epoch': '0',
+                        'extra': None,
+                        'id': '710',
+                        'name': 'slf4j_2',
+                        'release': '4.el7_4_as',
+                        'start_time': '2017-04-02T19:39:06+00:00',
                         'state': 1,
-                        'state_name': 'DONE',
-                        'state_reason': 'Built successfully.',
-                        'time_completed': '2017-04-02T19:39:06+00:00',
-                        'time_submitted': '2017-04-02T19:39:06+00:00',
-                        'type': 1,
-                        'type_name': 'IMAGE',
-                        'url': '/api/1/builds/397'
+                        'version': '1.7.4'
                     }
                 ],
                 'url': '/api/1/events/1180'
             },
             {
-                'build_id': 15639047,
-                'dep_on': None,
-                'event_id': 1180,
-                'id': '397',
-                'name': 'jboss-eap-7-eap70-openshift-docker',
-                'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuild',
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '710',
+                'name': 'slf4j_2',
+                'release': '4.el7_4_as',
+                'resource_type': 'ContainerKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
-                'state_name': 'DONE',
-                'state_reason': 'Built successfully.',
-                'time_completed': '2017-04-02T19:39:06+00:00',
-                'time_submitted': '2017-04-02T19:39:06+00:00',
-                'type': 1,
-                'type_name': 'IMAGE',
-                'url': '/api/1/builds/397'
+                'version': '1.7.4'
             }
         ],
         'meta': {
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
             }
         }
     }),
-    ('containerbuild', '397', {
+    ('containerkojibuild', '710', {
         'data': [
             {
                 'classification': 'Red Hat',
@@ -783,20 +753,28 @@ from purview.models.user import User
                 'url': '/api/1/events/1180'
             },
             {
-                'build_id': 15639047,
-                'dep_on': None,
-                'event_id': 1180,
-                'id': '397',
-                'name': 'jboss-eap-7-eap70-openshift-docker',
-                'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-                'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
-                'resource_type': 'ContainerBuild',
-                'state': 1,
-                'state_name': 'DONE',
-                'state_reason': 'Built successfully.',
-                'time_completed': '2017-04-02T19:39:06+00:00',
-                'time_submitted': '2017-04-02T19:39:06+00:00',
-                'triggered_by_freshmaker_event': {
+                'advisories': [
+
+                ],
+                'commit':None,
+                'completion_time':'2017-04-02T19:39:06+00:00',
+                'creation_time':'2017-04-02T19:39:06+00:00',
+                'epoch':'0',
+                'extra':None,
+                'id':'710',
+                'name':'slf4j_2',
+                'owner':None,
+                'release':'4.el7_4_as',
+                'resource_type':'ContainerKojiBuild',
+                'start_time':'2017-04-02T19:39:06+00:00',
+                'state':1,
+                'tags':[
+
+                ],
+                'tasks':[
+
+                ],
+                'triggered_by_freshmaker_event':{
                     'event_type_id': 8,
                     'id': '1180',
                     'message_id': 'ID:messaging-devops-broker01.test',
@@ -805,16 +783,14 @@ from purview.models.user import User
                     'state_reason': 'All container images have been rebuilt.',
                     'url': '/api/1/events/1180'
                 },
-                'type': 1,
-                'type_name': 'IMAGE',
-                'url': '/api/1/builds/397'
+                'version': '1.7.4'
             }
         ],
         'meta': {
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 1,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -897,21 +873,16 @@ def test_get_stories(client, resource, uid, expected):
         'state_reason': 'All container images have been rebuilt.',
         'url': '/api/1/events/1180'
     })[0]
-    cb = ContainerBuild.get_or_create({
-        'build_id': 15639047,
-        'event_id': 1180,
-        'id_': '397',
-        'name': 'jboss-eap-7-eap70-openshift-docker',
-        'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-        'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
+    cb = ContainerKojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '710',
+        'name': 'slf4j_2',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
         'state': 1,
-        'state_name': 'DONE',
-        'state_reason': 'Built successfully.',
-        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
-        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
-        'type_': 1,
-        'type_name': 'IMAGE',
-        'url': '/api/1/builds/397'
+        'version': '1.7.4'
     })[0]
 
     commit.resolved_bugs.connect(bug_two)
@@ -983,7 +954,7 @@ def test_get_artifact_story_not_available(client):
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 0,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
@@ -1059,7 +1030,7 @@ def test_get_stories_just_artifact(client):
             'related_nodes': {
                 'Advisory': 0,
                 'BugzillaBug': 0,
-                'ContainerBuild': 0,
+                'ContainerKojiBuild': 0,
                 'DistGitCommit': 0,
                 'FreshmakerEvent': 0,
                 'KojiBuild': 0
