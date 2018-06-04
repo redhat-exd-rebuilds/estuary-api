@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
-from collections import OrderedDict
 
 from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import NotFound
