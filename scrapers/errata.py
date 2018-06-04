@@ -25,15 +25,15 @@ class ErrataScraper(BaseScraper):
         """
         log.info('Starting initial load of Errata advisories')
         if since is None:
-            dt_since = self.default_since
+            start_date = self.default_since
         else:
-            dt_since = timestamp_to_datetime(since)
+            start_date = timestamp_to_datetime(since)
 
         if until is None:
-            dt_until = self.default_until
+            end_date = self.default_until
         else:
-            dt_until = timestamp_to_datetime(until)
-        advisories = self.get_advisories(dt_since, dt_until)
+            end_date = timestamp_to_datetime(until)
+        advisories = self.get_advisories(start_date, end_date)
         log.info('Successfully fetched {0} advisories from Teiid'.format(len(advisories)))
         self.update_neo4j(advisories)
         log.info('Initial load of Errata advisories complete!')

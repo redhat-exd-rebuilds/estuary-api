@@ -26,15 +26,15 @@ class KojiScraper(BaseScraper):
         # Initialize a start date from which all builds must be fetched
         # If no input is given by the user, fetch builds from the past two years
         if since is None:
-            since = self.default_since
+            start_date = self.default_since
         else:
-            since = utils.timestamp_to_datetime(since)
+            start_date = utils.timestamp_to_datetime(since)
 
         if until is None:
-            until = self.default_until
+            end_date = self.default_until
         else:
-            until = utils.timestamp_to_datetime(until)
-        builds = self.get_koji_builds(since, until)
+            end_date = utils.timestamp_to_datetime(until)
+        builds = self.get_koji_builds(start_date, end_date)
         log.info('Successfully fetched {0} builds from teiid'.format(len(builds)))
         self.update_neo4j(builds)
         log.info('Initial load of Koji builds complete!')

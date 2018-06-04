@@ -32,15 +32,15 @@ class DistGitScraper(BaseScraper):
         """
         log.info('Starting initial load of dist-git commits and pushes')
         if since is None:
-            dt_since = self.default_since
+            start_date = self.default_since
         else:
-            dt_since = timestamp_to_datetime(since)
+            start_date = timestamp_to_datetime(since)
 
         if until is None:
-            dt_until = self.default_until
+            end_date = self.default_until
         else:
-            dt_until = timestamp_to_datetime(until)
-        results = self.get_distgit_data(dt_since, dt_until)
+            end_date = timestamp_to_datetime(until)
+        results = self.get_distgit_data(start_date, end_date)
         log.info('Successfully fetched {0} results from Teiid'.format(len(results)))
         self.update_neo4j(results)
         log.info('Initial load of dist-git commits and pushes complete!')
