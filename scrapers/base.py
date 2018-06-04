@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from neomodel import config as neomodel_config
 
@@ -14,7 +14,7 @@ class BaseScraper(object):
     teiid_host = 'virtualdb.engineering.redhat.com'
     teiid_port = 5432
     # Default start date and end date to fetch data
-    default_since = datetime(2016, 3, 1)
+    default_since = (datetime.utcnow() - timedelta(days=365)).strftime('%Y-%m-%d')
     default_until = str(date.today())
 
     def __init__(self, teiid_user=None, teiid_password=None, kerberos=False, neo4j_user='neo4j',
