@@ -157,7 +157,7 @@ class KojiScraper(BaseScraper):
             package_name = build_dict['package_name']
             try:
                 extra_json = json.loads(build_dict['extra'])
-            except (json.JSONDecodeError, TypeError):
+            except (ValueError, TypeError):
                 extra_json = {}
 
             container_build = False
@@ -205,7 +205,7 @@ class KojiScraper(BaseScraper):
 
             try:
                 extra_json = json.loads(build_dict['extra'])
-            except (json.JSONDecodeError, TypeError):
+            except (ValueError, TypeError):
                 extra_json = {}
 
             container_koji_task_id = extra_json.get('container_koji_task_id')
