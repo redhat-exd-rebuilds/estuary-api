@@ -32,6 +32,7 @@ class KojiBuild(PurviewStructuredNode):
 class ContainerKojiBuild(KojiBuild):
     """Creating another label for KojiBuild."""
 
+    original_nvr = StringProperty()
     triggered_by_freshmaker_event = RelationshipFrom(
         '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 
