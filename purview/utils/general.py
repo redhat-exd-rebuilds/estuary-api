@@ -66,14 +66,20 @@ def inflate_node(result):
     # To prevent a ciruclar import, this must be imported here
     from purview.models import names_to_model
 
-    for label in result.labels:
-        if label in names_to_model:
-            node_model = names_to_model[label]
-            break
+    if 'ContainerKojiBuild' in result.labels:
+        result_label = 'ContainerKojiBuild'
+    elif len(result.labels) > 1:
+        raise RuntimeError('inflate_node encounted a node with multiple labels: {0}. '
+                           'Which one should be used?'.format(', '.join(result.labels)))
+    else:
+        result_label = list(result.labels)[0]
+
+    if result_label in names_to_model:
+        node_model = names_to_model[result_label]
     else:
         # This should never happen unless Neo4j returns labels that aren't associated with
         # classes in all_models
-        RuntimeError('A StructuredNode couldn\'t be found from the labels: {0}'.format(
+        raise RuntimeError('A StructuredNode couldn\'t be found from the labels: {0}'.format(
             ', '.join(result.labels)))
 
     return node_model.inflate(result)

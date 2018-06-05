@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from neomodel import (
     UniqueIdProperty, RelationshipTo, IntegerProperty, StringProperty,
-    DateTimeProperty, ZeroOrOne)
+    ZeroOrOne)
 
 from purview.models.base import PurviewStructuredNode
 

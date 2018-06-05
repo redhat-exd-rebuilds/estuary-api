@@ -19,10 +19,8 @@ def client():
 
 
 # Reinitialize Neo4j before each test
-@pytest.yield_fixture(autouse=True)
+@pytest.fixture(autouse=True)
 def run_before_tests():
     """Pytest fixture that prepares the environment before each test."""
     # Code that runs before each test
     neo4j_db.cypher_query('MATCH (a) DETACH DELETE a')
-    # A test function will be run at this point
-    yield

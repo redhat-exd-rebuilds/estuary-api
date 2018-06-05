@@ -6,11 +6,11 @@ from datetime import datetime
 
 import pytest
 
-from purview.models.koji import KojiBuild
+from purview.models.koji import KojiBuild, ContainerKojiBuild
 from purview.models.bugzilla import BugzillaBug
 from purview.models.distgit import DistGitCommit
 from purview.models.errata import Advisory
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
+from purview.models.freshmaker import FreshmakerEvent
 
 
 @pytest.mark.parametrize('resource,uid,expected', [
@@ -100,7 +100,7 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
                 'related_nodes': {
                     'Advisory': 1,
                     'BugzillaBug': 0,
-                    'ContainerBuild': 0,
+                    'ContainerKojiBuild': 0,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
                     'KojiBuild': 0
@@ -198,29 +198,24 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
                     'url': '/api/1/events/1180'
                 },
                 {
-                    'build_id': 56789,
-                    'dep_on': None,
-                    'event_id': 345,
-                    'id': '12345',
-                    'name': 'e2e-container-test-product-docker',
-                    'original_nvr': 'e2e-container-test-product-docker-7.3-1458',
-                    'rebuilt_nvr': 'python-3.6-123.1522949725',
-                    'resource_type': 'ContainerBuild',
+                    'completion_time': '2018-04-02T19:39:06+00:00',
+                    'creation_time': '2018-04-02T19:39:06+00:00',
+                    'epoch': '0',
+                    'extra': None,
+                    'id': '811',
+                    'name': 'some_build',
+                    'release': '4.el7_4_as',
+                    'resource_type': 'ContainerKojiBuild',
+                    'start_time': '2018-04-02T19:39:06+00:00',
                     'state': 2,
-                    'state_name': 'FAILED',
-                    'state_reason': 'Some reason',
-                    'time_completed': '2018-03-14T05:53:25+00:00',
-                    'time_submitted': '2018-03-14T05:48:05+00:00',
-                    'type': 1,
-                    'type_name': 'IMAGE',
-                    'url': '/api/1/builds/12345'
+                    'version': '1.7.5'
                 }
             ],
             'meta': {
                 'related_nodes': {
                     'Advisory': 0,
                     'BugzillaBug': 0,
-                    'ContainerBuild': 1,
+                    'ContainerKojiBuild': 1,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
                     'KojiBuild': 0
@@ -351,7 +346,7 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
                 'related_nodes': {
                     'Advisory': 1,
                     'BugzillaBug': 0,
-                    'ContainerBuild': 0,
+                    'ContainerKojiBuild': 0,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
                     'KojiBuild': 0
@@ -480,7 +475,7 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
                 'related_nodes': {
                     'Advisory': 1,
                     'BugzillaBug': 0,
-                    'ContainerBuild': 0,
+                    'ContainerKojiBuild': 0,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
                     'KojiBuild': 0
@@ -615,29 +610,24 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
                     'url': '/api/1/events/1180'
                 },
                 {
-                    'build_id': 56789,
-                    'dep_on': None,
-                    'event_id': 345,
-                    'id': '12345',
-                    'name': 'e2e-container-test-product-docker',
-                    'original_nvr': 'e2e-container-test-product-docker-7.3-1458',
-                    'rebuilt_nvr': 'python-3.6-123.1522949725',
-                    'resource_type': 'ContainerBuild',
+                    'completion_time': '2018-04-02T19:39:06+00:00',
+                    'creation_time': '2018-04-02T19:39:06+00:00',
+                    'epoch': '0',
+                    'extra': None,
+                    'id': '811',
+                    'name': 'some_build',
+                    'release': '4.el7_4_as',
+                    'resource_type': 'ContainerKojiBuild',
+                    'start_time': '2018-04-02T19:39:06+00:00',
                     'state': 2,
-                    'state_name': 'FAILED',
-                    'state_reason': 'Some reason',
-                    'time_completed': '2018-03-14T05:53:25+00:00',
-                    'time_submitted': '2018-03-14T05:48:05+00:00',
-                    'type': 1,
-                    'type_name': 'IMAGE',
-                    'url': '/api/1/builds/12345'
+                    'version': '1.7.5'
                 }
             ],
             'meta': {
                 'related_nodes': {
                     'Advisory': 0,
                     'BugzillaBug': 0,
-                    'ContainerBuild': 1,
+                    'ContainerKojiBuild': 1,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
                     'KojiBuild': 0
@@ -772,29 +762,24 @@ from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
                     'url': '/api/1/events/1180'
                 },
                 {
-                    'build_id': 56789,
-                    'dep_on': None,
-                    'event_id': 345,
-                    'id': '12345',
-                    'name': 'e2e-container-test-product-docker',
-                    'original_nvr': 'e2e-container-test-product-docker-7.3-1458',
-                    'rebuilt_nvr': 'python-3.6-123.1522949725',
-                    'resource_type': 'ContainerBuild',
+                    'completion_time': '2018-04-02T19:39:06+00:00',
+                    'creation_time': '2018-04-02T19:39:06+00:00',
+                    'epoch': '0',
+                    'extra': None,
+                    'id': '811',
+                    'name': 'some_build',
+                    'release': '4.el7_4_as',
+                    'resource_type': 'ContainerKojiBuild',
+                    'start_time': '2018-04-02T19:39:06+00:00',
                     'state': 2,
-                    'state_name': 'FAILED',
-                    'state_reason': 'Some reason',
-                    'time_completed': '2018-03-14T05:53:25+00:00',
-                    'time_submitted': '2018-03-14T05:48:05+00:00',
-                    'type': 1,
-                    'type_name': 'IMAGE',
-                    'url': '/api/1/builds/12345'
+                    'version': '1.7.5'
                 }
             ],
             'meta': {
                 'related_nodes': {
                     'Advisory': 0,
                     'BugzillaBug': 0,
-                    'ContainerBuild': 1,
+                    'ContainerKojiBuild': 1,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
                     'KojiBuild': 0
@@ -901,37 +886,27 @@ def test_all_stories(client, resource, uid, expected):
         'state_reason': 'All container images have been rebuilt.',
         'url': '/api/1/events/1180'
     })[0]
-    cb = ContainerBuild.get_or_create({
-        'build_id': 15639047,
-        'event_id': 1180,
-        'id_': '397',
-        'name': 'jboss-eap-7-eap70-openshift-docker',
-        'original_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36',
-        'rebuilt_nvr': 'jboss-eap-7-eap70-openshift-docker-1.4-36.1522094763',
+    cb = ContainerKojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '710',
+        'name': 'slf4j_2',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
         'state': 1,
-        'state_name': 'DONE',
-        'state_reason': 'Built successfully.',
-        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
-        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
-        'type_': 1,
-        'type_name': 'IMAGE',
-        'url': '/api/1/builds/397'
+        'version': '1.7.4'
     })[0]
-    cb_two = ContainerBuild.get_or_create({
-        'rebuilt_nvr': 'python-3.6-123.1522949725',
-        'type_name': 'IMAGE',
-        'state_reason': 'Some reason',
-        'time_completed': datetime(2018, 3, 14, 5, 53, 25),
-        'original_nvr': 'e2e-container-test-product-docker-7.3-1458',
-        'type_': 1,
-        'time_submitted': datetime(2018, 3, 14, 5, 48, 5),
-        'url': '/api/1/builds/12345',
-        'event_id': 345,
-        'state_name': 'FAILED',
-        'build_id': 56789,
-        'name': 'e2e-container-test-product-docker',
+    cb_two = ContainerKojiBuild.get_or_create({
+        'completion_time': datetime(2018, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2018, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '811',
+        'name': 'some_build',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2018, 4, 2, 19, 39, 6),
         'state': 2,
-        'id_': '12345'
+        'version': '1.7.5'
     })[0]
 
     # Longest story
@@ -949,4 +924,7 @@ def test_all_stories(client, resource, uid, expected):
 
     rv = client.get('/api/v1/allstories/{0}/{1}'.format(resource, uid))
     assert rv.status_code == 200
+    import pprint
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(json.loads(rv.data.decode('utf-8')))
     assert json.loads(rv.data.decode('utf-8')) == expected
