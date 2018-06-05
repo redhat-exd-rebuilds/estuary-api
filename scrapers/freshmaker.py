@@ -81,7 +81,10 @@ class FreshmakerScraper(BaseScraper):
                     build_id = xml_root.find(".//*[name='koji_builds'].//string")
 
                     if build_id:
-                        build = ContainerKojiBuild.get_or_create(dict(id_=build_id))[0]
+                        build = ContainerKojiBuild.get_or_create(dict(
+                            id_=build_id,
+                            original_nvr=build_dict['original_nvr']
+                        ))[0]
                         event.triggered_container_builds.connect(build)
 
             if rv_json['meta'].get('next'):
