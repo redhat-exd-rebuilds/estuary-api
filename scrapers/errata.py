@@ -7,10 +7,10 @@ import yaml
 from purview.utils.general import timestamp_to_datetime
 from scrapers.base import BaseScraper
 from purview import log
-from purview.models.errata import Advisory, AdvisoryState
+from purview.models.errata import Advisory, AdvisoryState, Product
 from purview.models.user import User
 from purview.models.bugzilla import BugzillaBug
-from purview.models.koji import KojiBuild
+from purview.models.koji import KojiBuild, KojiTag
 
 
 class ErrataScraper(BaseScraper):
@@ -57,8 +57,6 @@ class ErrataScraper(BaseScraper):
                 'created_at': advisory['created_at'],
                 'id_': advisory['id'],
                 'issue_date': advisory['issue_date'],
-                'product_name': advisory['product_name'],
-                'product_short_name': advisory['product_short_name'],
                 'release_date': advisory['release_date'],
                 'security_impact': advisory['security_impact'],
                 'security_sla': advisory['security_sla'],
@@ -76,6 +74,25 @@ class ErrataScraper(BaseScraper):
             adv.conditional_connect(adv.package_owner, package_owner)
             reporter = User.get_or_create({'username': advisory['reporter'].split('@')[0]})[0]
             adv.conditional_connect(adv.reporter, reporter)
+
+            product_version_info = self.get_product_version_info(advisory['product_id'])
+            for product_item in product_version_info:
+                product = Product.create_or_update({
+                    'id_': advisory['product_id'],
+                    'product_name': advisory['product_name'],
+                    'product_short_name': advisory['product_short_name'],
+                    'product_version_name': product_item['version_name']
+                })[0]
+                koji_tags = self.get_associated_koji_tags(product_item['product_version_id'])
+                print(koji_tags)
+                print(product)
+                for tag_obj in koji_tags:
+                    tag = KojiTag.create_or_update({
+                        'id_': tag_obj['tag_id'],
+                        'name': tag_obj['tag_name']
+                        })[0]
+                    product.associated_koji_tags.connect(tag)
+                adv.products.connect(product)
 
             for state in self.get_advisory_states(advisory['id']):
                 adv_state = AdvisoryState.create_or_update({
@@ -124,6 +141,7 @@ class ErrataScraper(BaseScraper):
                 main.created_at,
                 main.id AS id,
                 main.issue_date,
+                main.product_id,
                 package_users.login_name AS package_owner,
                 products.name as product_name,
                 products.short_name as product_short_name,
@@ -206,4 +224,38 @@ class ErrataScraper(BaseScraper):
             WHERE filed_bugs.errata_id = {0};
         """.format(advisory_id)
         log.info('Getting Bugzilla bugs tied to the advisory with ID {0}'.format(advisory_id))
+        return self.teiid.query(sql)
+
+    def get_product_version_info(self, product_id):
+        """
+        Query TEIID to find the product version name from a product ID.
+
+        :param int product_id: the product ID
+        :return: a list of dictionaries
+        :rtype: list
+        """
+        sql = """\
+            SELECT pv.name as version_name, pv.id as product_version_id
+            FROM Errata_public.product_versions_releases AS pvr
+            LEFT JOIN Errata_public.product_versions AS pv
+                ON pvr.product_version_id = pv.id
+            WHERE pv.product_id = {0};
+        """.format(product_id)
+        return self.teiid.query(sql)
+
+    def get_associated_koji_tags(self, product_version_id):
+        """
+        Query TEIID to find the associated koji tag from a product version ID.
+
+        :param int product_version_id: the product version ID
+        :return: a list of dictionaries
+        :rtype: list
+        """
+        sql = """\
+            SELECT tags.id AS tag_id, tags.name AS tag_name
+            FROM Errata_public.brew_tags AS tags
+            LEFT JOIN Errata_public.brew_tags_product_versions AS tags_pv
+                ON tags_pv.brew_tag_id = tags.id
+            WHERE tags_pv.product_version_id = {0};
+        """.format(product_version_id)
         return self.teiid.query(sql)

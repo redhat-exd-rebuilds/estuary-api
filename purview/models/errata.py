@@ -18,7 +18,6 @@ class Advisory(PurviewStructuredNode):
     created_at = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
     issue_date = DateTimeProperty()
-    product_name = StringProperty()
     product_short_name = StringProperty()
     release_date = DateTimeProperty()
     security_impact = StringProperty()
@@ -33,6 +32,7 @@ class Advisory(PurviewStructuredNode):
     attached_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'ATTACHED')
     attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED')
     package_owner = RelationshipTo('.user.User', 'PACKAGE_OWNED_BY', cardinality=ZeroOrOne)
+    products = RelationshipTo('Product', 'ASSOCIATED_WITH')
     reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
     states = RelationshipFrom('AdvisoryState', 'STATE_OF')
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
@@ -47,3 +47,14 @@ class AdvisoryState(PurviewStructuredNode):
     name = StringProperty(required=True)
     advisory = RelationshipTo('Advisory', 'STATE_OF', cardinality=ZeroOrOne)
     creator = RelationshipTo('.user.User', 'CREATED_BY', cardinality=ZeroOrOne)
+
+
+class Product(PurviewStructuredNode):
+    """Definition of a released Product."""
+
+    associated_koji_tags = RelationshipTo('.koji.KojiTag', 'ASSOCIATED_WITH')
+    associated_advisories = RelationshipFrom('Advisory', 'ASSOCIATED_WITH')
+    id_ = UniqueIdProperty(db_property='id')
+    product_name = StringProperty()
+    product_short_name = product_name = StringProperty()
+    product_version_name = ArrayProperty()
