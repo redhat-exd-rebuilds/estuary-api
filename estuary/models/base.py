@@ -5,12 +5,12 @@ from datetime import datetime
 
 from neomodel import StructuredNode, One, ZeroOrOne, OUTGOING, INCOMING, EITHER, UniqueIdProperty
 
-from purview import log
-from purview.utils.general import inflate_node
+from estuary import log
+from estuary.utils.general import inflate_node
 
 
-class PurviewStructuredNode(StructuredNode):
-    """Base class for Purview Neo4j models."""
+class EstuaryStructuredNode(StructuredNode):
+    """Base class for Estuary Neo4j models."""
 
     __abstract_node__ = True
 

@@ -6,10 +6,10 @@ from neomodel import (
     UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty, DateTimeProperty,
     ZeroOrOne)
 
-from purview.models.base import PurviewStructuredNode
+from estuary.models.base import EstuaryStructuredNode
 
 
-class DistGitRepo(PurviewStructuredNode):
+class DistGitRepo(EstuaryStructuredNode):
     """Definition of a dist-git repo in Neo4j."""
 
     name = StringProperty(required=True)
@@ -20,7 +20,7 @@ class DistGitRepo(PurviewStructuredNode):
     pushes = RelationshipTo('DistGitPush', 'CONTAINS')
 
 
-class DistGitBranch(PurviewStructuredNode):
+class DistGitBranch(EstuaryStructuredNode):
     """Definition of a dist-git branch in Neo4j."""
 
     name = StringProperty(required=True)
@@ -32,7 +32,7 @@ class DistGitBranch(PurviewStructuredNode):
     repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
 
 
-class DistGitPush(PurviewStructuredNode):
+class DistGitPush(EstuaryStructuredNode):
     """Definition of a dist-git push in Neo4j."""
 
     id_ = UniqueIdProperty(db_property='id')
@@ -44,7 +44,7 @@ class DistGitPush(PurviewStructuredNode):
     repo = RelationshipFrom('DistGitRepo', 'CONTAINS', cardinality=ZeroOrOne)
 
 
-class DistGitCommit(PurviewStructuredNode):
+class DistGitCommit(EstuaryStructuredNode):
     """Definition of a dist-git commit in Neo4j."""
 
     author_date = DateTimeProperty()

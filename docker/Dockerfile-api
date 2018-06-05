@@ -17,4 +17,4 @@ RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
 RUN python3 setup.py install --prefix /usr
 USER 1001
-CMD ["/usr/bin/bash", "-c", "docker/install-ca.sh && exec gunicorn-3 --bind 0.0.0.0:8080 --access-logfile=- --enable-stdio-inheritance purview.wsgi:app"]
+CMD ["/usr/bin/bash", "-c", "docker/install-ca.sh && exec gunicorn-3 --bind 0.0.0.0:8080 --access-logfile=- --enable-stdio-inheritance estuary.wsgi:app"]

@@ -6,9 +6,9 @@ import logging
 import pkg_resources
 
 
-log = logging.getLogger('purview')
+log = logging.getLogger('estuary')
 
 try:
-    version = pkg_resources.get_distribution('purview').version
+    version = pkg_resources.get_distribution('estuary').version
 except pkg_resources.DistributionNotFound:
     version = 'unknown'

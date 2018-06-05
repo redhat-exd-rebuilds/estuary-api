@@ -6,10 +6,10 @@ from neomodel import (
     StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty, FloatProperty,
     RelationshipTo, RelationshipFrom, ZeroOrOne)
 
-from purview.models.base import PurviewStructuredNode
+from estuary.models.base import EstuaryStructuredNode
 
 
-class KojiBuild(PurviewStructuredNode):
+class KojiBuild(EstuaryStructuredNode):
     """Definition of a Koji build in Neo4j."""
 
     advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
@@ -29,7 +29,7 @@ class KojiBuild(PurviewStructuredNode):
     version = StringProperty(required=True)
 
 
-class KojiTask(PurviewStructuredNode):
+class KojiTask(EstuaryStructuredNode):
     """Definition of a Koji task in Neo4j."""
 
     arch = StringProperty(required=True)
@@ -49,7 +49,7 @@ class KojiTask(PurviewStructuredNode):
     weight = FloatProperty()
 
 
-class KojiTag(PurviewStructuredNode):
+class KojiTag(EstuaryStructuredNode):
     """Definition of a Koji tag in Neo4j."""
 
     builds = RelationshipTo('KojiBuild', 'CONTAINS')

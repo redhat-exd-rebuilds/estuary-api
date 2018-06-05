@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 import psycopg2
 
-from purview import log
+from estuary import log
 
 
 class Teiid(object):

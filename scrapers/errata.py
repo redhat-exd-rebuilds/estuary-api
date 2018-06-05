@@ -4,13 +4,13 @@ from __future__ import unicode_literals
 
 import yaml
 
-from purview.utils.general import timestamp_to_datetime
+from estuary.utils.general import timestamp_to_datetime
 from scrapers.base import BaseScraper
-from purview import log
-from purview.models.errata import Advisory, AdvisoryState
-from purview.models.user import User
-from purview.models.bugzilla import BugzillaBug
-from purview.models.koji import KojiBuild
+from estuary import log
+from estuary.models.errata import Advisory, AdvisoryState
+from estuary.models.user import User
+from estuary.models.bugzilla import BugzillaBug
+from estuary.models.koji import KojiBuild
 
 
 class ErrataScraper(BaseScraper):

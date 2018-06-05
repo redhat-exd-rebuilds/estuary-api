@@ -7,8 +7,8 @@ from six import text_type
 
 from neomodel import UniqueIdProperty, db
 
-from purview import log
-from purview.error import ValidationError
+from estuary import log
+from estuary.error import ValidationError
 
 
 def timestamp_to_datetime(timestamp):
@@ -61,10 +61,10 @@ def inflate_node(result):
     Inflate a Neo4j result to a neomodel model object.
 
     :param neo4j.v1.types.Node result: a node from a cypher query result
-    :return: a model (PurviewStructuredNode) object
+    :return: a model (EstuaryStructuredNode) object
     """
     # To prevent a ciruclar import, this must be imported here
-    from purview.models import names_to_model
+    from estuary.models import names_to_model
 
     for label in result.labels:
         if label in names_to_model:
@@ -90,7 +90,7 @@ def get_neo4j_node(resource_name, uid):
     UniqueIdProperty
     """
     # To prevent a ciruclar import, we must import this here
-    from purview.models import all_models
+    from estuary.models import all_models
 
     for model in all_models:
         if model.__label__.lower() == resource_name.lower():
@@ -136,7 +136,7 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
     :rtype: str
     """
     # To avoid circular imports
-    from purview.models import story_flow
+    from estuary.models import story_flow
 
     query = ''
 
@@ -188,8 +188,8 @@ def get_corelated_nodes(results):
     :rtype: dict
     """
     # To avoid circular imports
-    from purview.models import story_flow
-    from purview.models.bugzilla import BugzillaBug
+    from estuary.models import story_flow
+    from estuary.models.bugzilla import BugzillaBug
 
     nodes_count_dict = {}
     curr_label = BugzillaBug.__label__
@@ -263,7 +263,7 @@ def _order_story_results(result):
     :rtype: dict
     """
     # To avoid circular imports
-    from purview.models import story_flow
+    from estuary.models import story_flow
 
     results = {'data': [], 'meta': {}}
     results['meta']['related_nodes'] = {key: 0 for key in story_flow.keys()}

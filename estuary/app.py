@@ -9,9 +9,9 @@ from werkzeug.exceptions import default_exceptions
 from neomodel import config as neomodel_config
 from neo4j.exceptions import ServiceUnavailable, AuthError
 
-from purview.logger import init_logging
-from purview.error import json_error, ValidationError
-from purview.api.v1 import api_v1
+from estuary.logger import init_logging
+from estuary.error import json_error, ValidationError
+from estuary.api.v1 import api_v1
 
 
 def load_config(app):
@@ -22,13 +22,13 @@ def load_config(app):
     """
     default_config_file = None
     if os.getenv('DEV') and os.getenv('DEV').lower() == 'true':
-        default_config_obj = 'purview.config.DevConfig'
+        default_config_obj = 'estuary.config.DevConfig'
     else:
-        default_config_obj = 'purview.config.ProdConfig'
-        default_config_file = '/etc/purview/settings.py'
+        default_config_obj = 'estuary.config.ProdConfig'
+        default_config_file = '/etc/estuary/settings.py'
 
     app.config.from_object(default_config_obj)
-    config_file = os.environ.get('PURVIEW_CONFIG', default_config_file)
+    config_file = os.environ.get('ESTUARY_CONFIG', default_config_file)
     if config_file and os.path.isfile(config_file):
         app.config.from_pyfile(config_file)
 

@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 from builtins import bytes
 
 from scrapers.base import BaseScraper
-from purview.models.bugzilla import BugzillaBug
-from purview.models.user import User
-from purview.utils.general import timestamp_to_datetime
-from purview import log
+from estuary.models.bugzilla import BugzillaBug
+from estuary.models.user import User
+from estuary.utils.general import timestamp_to_datetime
+from estuary import log
 
 
 class BugzillaScraper(BaseScraper):

@@ -5,11 +5,11 @@ import xml.etree.ElementTree as ET
 import json
 
 from scrapers.base import BaseScraper
-from purview.models.koji import KojiBuild, KojiTask, KojiTag
-from purview.models.user import User
-from purview.models.distgit import DistGitCommit
-import purview.utils.general as utils
-from purview import log
+from estuary.models.koji import KojiBuild, KojiTask, KojiTag
+from estuary.models.user import User
+from estuary.models.distgit import DistGitCommit
+import estuary.utils.general as utils
+from estuary import log
 
 
 class KojiScraper(BaseScraper):

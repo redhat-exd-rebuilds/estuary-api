@@ -6,10 +6,10 @@ from neomodel import (
     UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty, ArrayProperty,
     DateTimeProperty, ZeroOrOne)
 
-from purview.models.base import PurviewStructuredNode
+from estuary.models.base import EstuaryStructuredNode
 
 
-class Advisory(PurviewStructuredNode):
+class Advisory(EstuaryStructuredNode):
     """Definition of an Errata advisory in Neo4j."""
 
     actual_ship_date = DateTimeProperty()
@@ -38,7 +38,7 @@ class Advisory(PurviewStructuredNode):
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
 
 
-class AdvisoryState(PurviewStructuredNode):
+class AdvisoryState(EstuaryStructuredNode):
     """A representation of the states of an Errata advisory in Neo4j."""
 
     id_ = UniqueIdProperty(db_property='id')

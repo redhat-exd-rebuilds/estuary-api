@@ -6,10 +6,10 @@ from neomodel import (
     UniqueIdProperty, RelationshipTo, RelationshipFrom, IntegerProperty, StringProperty,
     DateTimeProperty, ZeroOrOne)
 
-from purview.models.base import PurviewStructuredNode
+from estuary.models.base import EstuaryStructuredNode
 
 
-class BugzillaBug(PurviewStructuredNode):
+class BugzillaBug(EstuaryStructuredNode):
     """Definition of a Bugzilla bug in Neo4j."""
 
     assignee = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)

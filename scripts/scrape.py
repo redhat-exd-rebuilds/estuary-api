@@ -13,7 +13,7 @@ sys.path.insert(1, os.path.abspath(os.path.join(sys.path[0], '..')))
 from scrapers import all_scrapers  # noqa: E402
 
 logging.basicConfig(format='[%(filename)s:%(lineno)s:%(funcName)s] %(message)s')
-log = logging.getLogger('purview')
+log = logging.getLogger('estuary')
 log.setLevel(logging.DEBUG)
 
 parser = argparse.ArgumentParser(description='Run a scraper')

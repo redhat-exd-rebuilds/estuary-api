@@ -13,11 +13,11 @@ from requests import ConnectionError
 
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
-from purview.utils.general import timestamp_to_datetime
-from purview.models.distgit import DistGitRepo, DistGitBranch, DistGitPush, DistGitCommit
-from purview.models.bugzilla import BugzillaBug
-from purview.models.user import User
-from purview import log
+from estuary.utils.general import timestamp_to_datetime
+from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitPush, DistGitCommit
+from estuary.models.bugzilla import BugzillaBug
+from estuary.models.user import User
+from estuary import log
 
 
 class DistGitScraper(BaseScraper):
@@ -197,7 +197,7 @@ class DistGitScraper(BaseScraper):
         # The tuple of namespaces to try when determining which namespace this git module belongs
         # to since this information isn't stored in GitBZ yet
         namespaces = ('rpms', 'containers', 'modules', 'tests')
-        cgit_url = getenv('PURVIEW_CGIT_URL', 'http://pkgs.devel.redhat.com/cgit/')
+        cgit_url = getenv('ESTUARY_CGIT_URL', 'http://pkgs.devel.redhat.com/cgit/')
         for namespace in namespaces:
             url = '{0}{1}/{2}/commit/?id={3}'.format(cgit_url, namespace, repo, commit)
             log.debug('Trying the URL "{0}"'.format(url))

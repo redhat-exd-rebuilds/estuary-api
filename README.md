@@ -1,4 +1,4 @@
-# Purview API and Scrapers
+# Estuary API and Scrapers
 
 ## Development
 

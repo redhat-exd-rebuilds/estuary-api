@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script runs the test suite using Docker and Docker Compose
 
-for dir in purview tests; do
+for dir in estuary tests; do
     find ${dir} -type f \( -name '*.pyc' -or -name '*.pyc' \) -exec rm -f {} \;
 done
 

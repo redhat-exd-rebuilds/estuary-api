@@ -4,10 +4,10 @@ from __future__ import unicode_literals
 
 from neomodel import StringProperty, UniqueIdProperty, RelationshipFrom
 
-from purview.models.base import PurviewStructuredNode
+from estuary.models.base import EstuaryStructuredNode
 
 
-class User(PurviewStructuredNode):
+class User(EstuaryStructuredNode):
     """Definition of a generic user in Neo4j."""
 
     # These relationships can be reverse relationships of ones with cardinality set. So

@@ -6,10 +6,10 @@ from neomodel import (
     UniqueIdProperty, RelationshipTo, RelationshipFrom, IntegerProperty, StringProperty,
     DateTimeProperty, ZeroOrOne)
 
-from purview.models.base import PurviewStructuredNode
+from estuary.models.base import EstuaryStructuredNode
 
 
-class FreshmakerEvent(PurviewStructuredNode):
+class FreshmakerEvent(EstuaryStructuredNode):
     """Definition of a Freshmaker event in Neo4j."""
 
     event_type_id = IntegerProperty(requried=True)
@@ -24,7 +24,7 @@ class FreshmakerEvent(PurviewStructuredNode):
     url = StringProperty(unique=True, required=True)
 
 
-class ContainerBuild(PurviewStructuredNode):
+class ContainerBuild(EstuaryStructuredNode):
     """Definition of a container build triggered by Freshmaker in Neo4j."""
 
     build_id = IntegerProperty(unique=True, required=True)
