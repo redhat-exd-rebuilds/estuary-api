@@ -30,7 +30,8 @@ class KojiBuild(EstuaryStructuredNode):
 
 
 class ContainerKojiBuild(KojiBuild):
-    """Creating another label for KojiBuild"""
+    """Creating another label for KojiBuild."""
+
     triggered_by_freshmaker_event = RelationshipFrom(
         '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 
