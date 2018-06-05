@@ -69,7 +69,7 @@ def inflate_node(result):
     if 'ContainerKojiBuild' in result.labels:
         result_label = 'ContainerKojiBuild'
     elif len(result.labels) > 1:
-        raise RuntimeError('inflate_node encounted a node with the multiple labels: {0}. '
+        raise RuntimeError('inflate_node encounted a node with multiple labels: {0}. '
                            'Which one should be used?'.format(', '.join(result.labels)))
     else:
         result_label = list(result.labels)[0]
