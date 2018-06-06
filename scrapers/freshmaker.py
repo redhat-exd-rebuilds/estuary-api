@@ -78,7 +78,10 @@ class FreshmakerScraper(BaseScraper):
                     # Extract the build ID from a task result
                     xml_root = ET.fromstring(task_result['result'])
                     # TODO: Change this if a task can trigger multiple builds
-                    build_id = xml_root.find(".//*[name='koji_builds'].//string")
+                    try:
+                        build_id = xml_root.find(".//*[name='koji_builds'].//string").text
+                    except AttributeError:
+                        build_id = None
 
                     if build_id:
                         build = ContainerKojiBuild.get_or_create(dict(
