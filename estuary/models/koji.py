@@ -30,7 +30,7 @@ class KojiBuild(EstuaryStructuredNode):
 
 
 class ContainerKojiBuild(KojiBuild):
-    """Creating another label for KojiBuild."""
+    """A Neo4j definition of a build that represents a container build in Koji."""
 
     original_nvr = StringProperty()
     triggered_by_freshmaker_event = RelationshipFrom(

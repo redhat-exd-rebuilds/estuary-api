@@ -69,16 +69,18 @@ class FreshmakerScraper(BaseScraper):
                     if not build_dict['build_id'] or int(build_dict['build_id']) < 0:
                         continue
 
-                    try:
-                        # The build ID obtained from Freshmaker API is actually a Koji task ID
-                        task_result = self.get_task_results(build_dict['build_id'])[0]
-                    except IndexError:
+                    # The build ID obtained from Freshmaker API is actually a Koji task ID
+                    task_result = self.get_koji_task_result(build_dict['build_id'])
+                    if not task_result:
                         continue
 
                     # Extract the build ID from a task result
-                    xml_root = ET.fromstring(task_result['result'])
+                    xml_root = ET.fromstring(task_result)
                     # TODO: Change this if a task can trigger multiple builds
-                    build_id = xml_root.find(".//*[name='koji_builds'].//string")
+                    try:
+                        build_id = xml_root.find(".//*[name='koji_builds'].//string").text
+                    except AttributeError:
+                        build_id = None
 
                     if build_id:
                         build = ContainerKojiBuild.get_or_create(dict(
@@ -92,13 +94,13 @@ class FreshmakerScraper(BaseScraper):
             else:
                 break
 
-    def get_task_results(self, task_id):
+    def get_koji_task_result(self, task_id):
         """
         Query Teiid for a Koji task's result attribute.
 
         :param int task_id: the Koji task ID to query
-        :return: a list of dictionaries
-        :rtype: list
+        :return: an XML string
+        :rtype: str
         """
         # SQL query to fetch task related to a certain build
         sql_query = """
@@ -107,4 +109,7 @@ class FreshmakerScraper(BaseScraper):
             WHERE id = {}
             """.format(task_id)
 
-        return self.teiid.query(sql=sql_query)
+        try:
+            return self.teiid.query(sql=sql_query)[0]['result']
+        except (IndexError, KeyError):
+            return None

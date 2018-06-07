@@ -158,7 +158,8 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
         raise ValidationError('The story is not available for this kind of resource')
 
     while True:
-        if not story_flow(curr_node_label):
+        curr_node_info = story_flow(curr_node_label)
+        if not curr_node_info:
             break
 
         if curr_node_label == item.__label__:
@@ -170,10 +171,9 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
                            uid_name=uid_name.rstrip('_'),
                            uid=uid)
 
-        query += ', {0}, {1}'.format(
-            story_flow(curr_node_label)[rel_label], story_flow(curr_node_label)[node_label])
+        query += ', {0}, {1}'.format(curr_node_info[rel_label], curr_node_info[node_label])
 
-        curr_node_label = story_flow(curr_node_label)[node_label]
+        curr_node_label = curr_node_info[node_label]
 
     if query:
         query += """\
@@ -204,12 +204,13 @@ def get_corelated_nodes(results):
     last = False
     while not last:
         node_count = 0
-        forward_label = story_flow(curr_label)['forward_label']
+        next_node_info = story_flow(curr_label)
+        forward_label = next_node_info['forward_label']
         if forward_label in results:
             query = 'MATCH '
             # Only grab the first element since there will only be one
             next_node = results[forward_label][0]
-            forward_rel = story_flow(curr_label)['forward_relationship'][:-1]
+            forward_rel = next_node_info['forward_relationship'][:-1]
             uid_name = story_flow(forward_label)['uid_name']
             node_subquery = create_node_subquery(curr_label)
             next_node_subquery = create_node_subquery(forward_label, uid_name, next_node[uid_name])
@@ -217,7 +218,7 @@ def get_corelated_nodes(results):
             query += 'RETURN COUNT({0}) AS count'.format(curr_label.lower())
             node_count = get_node_count(query)
 
-        backward_label = story_flow(curr_label)['backward_label']
+        backward_label = next_node_info['backward_label']
         # If this evaluates to true, then this is the end of the story for the node, so we get
         # the backwards related nodes (e.g. all the ContainerBuild that were triggered by a
         # Freshmaker event)
@@ -227,7 +228,7 @@ def get_corelated_nodes(results):
                 continue
             query = 'MATCH '
             backward_node = results[backward_label][0]
-            backward_rel = story_flow(curr_label)['backward_relationship'][:-1]
+            backward_rel = next_node_info['backward_relationship'][:-1]
             uid_name = story_flow(backward_label)['uid_name']
             node_subquery = create_node_subquery(backward_label, uid_name, backward_node[uid_name])
             next_node_subquery = create_node_subquery(curr_label)
