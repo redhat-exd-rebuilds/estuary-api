@@ -49,7 +49,7 @@ class KojiScraper(BaseScraper):
         :rtype: list
         """
         # SQL query to fetch all builds from start date until now
-        log.info('Getting all Koji builds since {0}'.format(start_date))
+        log.info('Getting all Koji builds since {0} until {1}'.format(start_date, end_date))
         sql_query = """
             SELECT
                 events.time as creation_time,
