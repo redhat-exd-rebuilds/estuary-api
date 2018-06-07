@@ -12,6 +12,9 @@ RUN dnf -y install \
   python3-flask \
   python2-mock \
   python3-mock \
+  # Until 1.6.0 is supported, we need to hardcode these two entries
+  python2-neo4j-driver-1.5.3 \
+  python3-neo4j-driver-1.5.3 \
   python2-neomodel \
   python3-neomodel \
   python2-pytest \
