@@ -28,12 +28,12 @@ class KojiScraper(BaseScraper):
         if since is None:
             start_date = self.default_since
         else:
-            start_date = utils.timestamp_to_datetime(since)
+            start_date = utils.timestamp_to_date(since)
 
         if until is None:
             end_date = self.default_until
         else:
-            end_date = utils.timestamp_to_datetime(until)
+            end_date = utils.timestamp_to_date(until)
         builds = self.get_koji_builds(start_date, end_date)
         log.info('Successfully fetched {0} builds from teiid'.format(len(builds)))
         self.update_neo4j(builds)

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 import yaml
 
-from estuary.utils.general import timestamp_to_datetime
+from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
 from estuary import log
 from estuary.models.errata import Advisory, AdvisoryState
@@ -27,12 +27,12 @@ class ErrataScraper(BaseScraper):
         if since is None:
             start_date = self.default_since
         else:
-            start_date = timestamp_to_datetime(since)
+            start_date = timestamp_to_date(since)
 
         if until is None:
             end_date = self.default_until
         else:
-            end_date = timestamp_to_datetime(until)
+            end_date = timestamp_to_date(until)
         advisories = self.get_advisories(start_date, end_date)
         log.info('Successfully fetched {0} advisories from Teiid'.format(len(advisories)))
         self.update_neo4j(advisories)
