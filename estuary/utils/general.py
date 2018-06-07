@@ -142,7 +142,7 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
     :rtype: str
     """
     # To avoid circular imports
-    from purview.models import story_flow_list
+    from estuary.models import story_flow_list
 
     query = ''
 
@@ -197,7 +197,7 @@ def get_corelated_nodes(results):
     :rtype: dict
     """
     # To avoid circular imports
-    from purview.models.bugzilla import BugzillaBug
+    from estuary.models.bugzilla import BugzillaBug
 
     nodes_count_dict = {}
     curr_label = BugzillaBug.__label__
@@ -294,11 +294,11 @@ def story_flow(label):
     :rtype: dict
     """
     # To avoid circular imports
-    from purview.models.koji import ContainerKojiBuild, KojiBuild
-    from purview.models.bugzilla import BugzillaBug
-    from purview.models.distgit import DistGitCommit
-    from purview.models.errata import Advisory
-    from purview.models.freshmaker import FreshmakerEvent
+    from estuary.models.koji import ContainerKojiBuild, KojiBuild
+    from estuary.models.bugzilla import BugzillaBug
+    from estuary.models.distgit import DistGitCommit
+    from estuary.models.errata import Advisory
+    from estuary.models.freshmaker import FreshmakerEvent
 
     if not label:
         return
