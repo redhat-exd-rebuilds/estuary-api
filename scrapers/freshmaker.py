@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+import xml.etree.ElementTree as ET
 
 from scrapers.base import BaseScraper
-from estuary.models.freshmaker import FreshmakerEvent, ContainerBuild
+from estuary.models.freshmaker import FreshmakerEvent
 from estuary.models.errata import Advisory
+from estuary.models.koji import ContainerKojiBuild
 from scrapers.utils import retry_session
-from estuary.utils.general import timestamp_to_datetime
 from estuary import log
 
 
@@ -63,34 +64,52 @@ class FreshmakerScraper(BaseScraper):
 
                 event.conditional_connect(event.triggered_by_advisory, advisory)
 
-                for build in fm_event['builds']:
+                for build_dict in fm_event['builds']:
                     # To handle a faulty container build in Freshmaker
-                    if not build['build_id']:
+                    if not build_dict['build_id'] or int(build_dict['build_id']) < 0:
                         continue
 
-                    cb_params = dict(
-                        id_=build['id'],
-                        build_id=build['build_id'],
-                        dep_on=build['dep_on'],
-                        event_id=build['event_id'],
-                        name=build['name'],
-                        original_nvr=build['original_nvr'],
-                        rebuilt_nvr=build['rebuilt_nvr'],
-                        state=build['state'],
-                        state_name=build['state_name'],
-                        state_reason=build['state_reason'],
-                        time_submitted=timestamp_to_datetime(build['time_submitted']),
-                        type_=build['type'],
-                        type_name=build['type_name'],
-                        url=build['url']
-                    )
-                    if build['time_completed']:
-                        cb_params['time_completed'] = timestamp_to_datetime(
-                            build['time_completed'])
-                    cb = ContainerBuild.create_or_update(cb_params)[0]
-                    event.triggered_container_builds.connect(cb)
+                    # The build ID obtained from Freshmaker API is actually a Koji task ID
+                    task_result = self.get_koji_task_result(build_dict['build_id'])
+                    if not task_result:
+                        continue
+
+                    # Extract the build ID from a task result
+                    xml_root = ET.fromstring(task_result)
+                    # TODO: Change this if a task can trigger multiple builds
+                    try:
+                        build_id = xml_root.find(".//*[name='koji_builds'].//string").text
+                    except AttributeError:
+                        build_id = None
+
+                    if build_id:
+                        build = ContainerKojiBuild.get_or_create(dict(
+                            id_=build_id,
+                            original_nvr=build_dict['original_nvr']
+                        ))[0]
+                        event.triggered_container_builds.connect(build)
 
             if rv_json['meta'].get('next'):
                 fm_url = rv_json['meta']['next']
             else:
                 break
+
+    def get_koji_task_result(self, task_id):
+        """
+        Query Teiid for a Koji task's result attribute.
+
+        :param int task_id: the Koji task ID to query
+        :return: an XML string
+        :rtype: str
+        """
+        # SQL query to fetch task related to a certain build
+        sql_query = """
+            SELECT result
+            FROM brew.task
+            WHERE id = {}
+            """.format(task_id)
+
+        try:
+            return self.teiid.query(sql=sql_query)[0]['result']
+        except (IndexError, KeyError):
+            return None

@@ -19,14 +19,22 @@ class KojiBuild(EstuaryStructuredNode):
     epoch = StringProperty()
     extra = StringProperty()
     id_ = UniqueIdProperty(db_property='id')
-    name = StringProperty(required=True)
+    name = StringProperty()
     owner = RelationshipTo('.user.User', 'OWNED_BY', cardinality=ZeroOrOne)
-    release = StringProperty(required=True)
+    release = StringProperty()
     start_time = DateTimeProperty()
     state = IntegerProperty()
     tags = RelationshipFrom('KojiTag', 'CONTAINS')
     tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
-    version = StringProperty(required=True)
+    version = StringProperty()
+
+
+class ContainerKojiBuild(KojiBuild):
+    """A Neo4j definition of a build that represents a container build in Koji."""
+
+    original_nvr = StringProperty()
+    triggered_by_freshmaker_event = RelationshipFrom(
+        '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 
 
 class KojiTask(EstuaryStructuredNode):

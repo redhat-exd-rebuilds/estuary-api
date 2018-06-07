@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import json
 
 from scrapers.base import BaseScraper
-from estuary.models.koji import KojiBuild, KojiTask, KojiTag
+from estuary.models.koji import ContainerKojiBuild, KojiBuild, KojiTask, KojiTag
 from estuary.models.user import User
 from estuary.models.distgit import DistGitCommit
 import estuary.utils.general as utils
@@ -141,7 +141,7 @@ class KojiScraper(BaseScraper):
         count = 0
 
         for build_dict in builds:
-            build = KojiBuild.create_or_update(dict(
+            build_params = dict(
                 id_=build_dict['id'],
                 epoch=build_dict['epoch'],
                 state=build_dict['state'],
@@ -152,7 +152,28 @@ class KojiScraper(BaseScraper):
                 name=build_dict['package_name'],
                 version=build_dict['version'],
                 release=build_dict['release']
-            ))[0]
+            )
+
+            package_name = build_dict['package_name']
+            try:
+                extra_json = json.loads(build_dict['extra'])
+            except (ValueError, TypeError):
+                extra_json = {}
+
+            container_build = False
+            # Checking a heuristic for determining if a build is a container build since, currently
+            # there is no definitive way to do it.
+            if extra_json and extra_json.get('container_koji_build_id'):
+                container_build = True
+            # Checking another heuristic for determining if a build is a container build since
+            # currently there is no definitive way to do it.
+            elif (package_name.endswith('-container') or package_name.endswith('-docker')):
+                container_build = True
+
+            if container_build:
+                build = ContainerKojiBuild.create_or_update(build_params)[0]
+            else:
+                build = KojiBuild.create_or_update(build_params)[0]
 
             if build_dict['owner_username']:
                 username = build_dict['owner_username'].split('@')[0]
@@ -184,7 +205,7 @@ class KojiScraper(BaseScraper):
 
             try:
                 extra_json = json.loads(build_dict['extra'])
-            except (json.JSONDecodeError, TypeError):
+            except (ValueError, TypeError):
                 extra_json = {}
 
             container_koji_task_id = extra_json.get('container_koji_task_id')

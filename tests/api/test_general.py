@@ -12,8 +12,8 @@ from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitPush, DistGitCommit
 from estuary.models.errata import Advisory, AdvisoryState
-from estuary.models.freshmaker import FreshmakerEvent, ContainerBuild
-from estuary.models.koji import KojiBuild, KojiTask, KojiTag
+from estuary.models.freshmaker import FreshmakerEvent
+from estuary.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
 
 
 def test_about(client):
@@ -80,21 +80,16 @@ def test_about(client):
         'url': '/api/1/events/12345',
         'event_type_id': 8
     }),
-    (ContainerBuild, 'containerbuild', '12345', {
-        'rebuilt_nvr': 'python-3.6-123.1522949725',
-        'type_name': 'IMAGE',
-        'state_reason': 'Some reason',
-        'time_completed': datetime(2018, 3, 14, 5, 53, 25),
-        'original_nvr': 'e2e-container-test-product-docker-7.3-1458',
-        'type_': 1,
-        'time_submitted': datetime(2018, 3, 14, 5, 48, 5),
-        'url': '/api/1/builds/12345',
-        'event_id': 345,
-        'state_name': 'FAILED',
-        'build_id': 56789,
-        'name': 'e2e-container-test-product-docker',
-        'state': 2,
-        'id_': '12345'
+    (ContainerKojiBuild, 'containerkojibuild', '710', {
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '710',
+        'name': 'slf4j_2',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'state': 1,
+        'version': '1.7.4'
     }),
     (KojiBuild, 'kojibuild', '12345', {
         'creation_time': datetime(2018, 3, 14, 5, 51, 8),
@@ -140,7 +135,7 @@ def test_get_on_model_wo_uid(client, resource):
     rv = client.get('/api/v1/{0}/some_repo'.format(resource))
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
-                   'advisory, advisorystate, bugzillabug, containerbuild, distgitcommit, '
+                   'advisory, advisorystate, bugzillabug, containerkojibuild, distgitcommit, '
                    'distgitpush, freshmakerevent, kojibuild, kojitag, kojitask, and user.'
                    .format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
@@ -153,7 +148,7 @@ def test_get_resources(client):
     expected = {
         'advisory': 'id',
         'bugzillabug': 'id',
-        'containerbuild': 'id',
+        'containerkojibuild': 'id',
         'distgitcommit': 'hash',
         'freshmakerevent': 'id',
         'kojibuild': 'id',
