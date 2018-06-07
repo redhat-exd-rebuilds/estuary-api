@@ -156,24 +156,7 @@ class KojiScraper(BaseScraper):
                 release=build_dict['release']
             )
 
-            package_name = build_dict['package_name']
-            try:
-                extra_json = json.loads(build_dict['extra'])
-            except (ValueError, TypeError):
-                extra_json = {}
-
-            container_build = False
-            # Checking a heuristic for determining if a build is a container build since, currently
-            # there is no definitive way to do it.
-            if extra_json and (extra_json.get('container_koji_build_id') or
-                               extra_json.get('container_koji_task_id')):
-                container_build = True
-            # Checking another heuristic for determining if a build is a container build since
-            # currently there is no definitive way to do it.
-            elif (package_name.endswith('-container') or package_name.endswith('-docker')):
-                container_build = True
-
-            if container_build:
+            if self.is_container_build(build_dict):
                 try:
                     build = ContainerKojiBuild.create_or_update(build_params)[0]
                 except neomodel.exceptions.ConstraintValidationFailed:
