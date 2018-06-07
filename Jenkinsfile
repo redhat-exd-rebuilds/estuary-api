@@ -4,14 +4,14 @@ try { // massive try{} catch{} around the entire build for failure notifications
             checkout scm
             stage('Build the scrapers Docker image') {
                 docker.withRegistry('https://quay.io/', 'quay-io-factory2-builder-sa-credentials') {
-                    def image = docker.build "factory2/purview-scrapers:latest", "-f docker/Dockerfile-scrapers ."
+                    def image = docker.build "factory2/estuary-scrapers:latest", "-f docker/Dockerfile-scrapers ."
                     image.push()
                 }
             }
 
             stage('Build the API Docker image') {
                 docker.withRegistry('https://quay.io/', 'quay-io-factory2-builder-sa-credentials') {
-                    def image = docker.build "factory2/purview-api:latest", "-f docker/Dockerfile-api ."
+                    def image = docker.build "factory2/estuary-api:latest", "-f docker/Dockerfile-api ."
                     image.push()
                 }
             }

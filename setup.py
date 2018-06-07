@@ -2,9 +2,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='purview',
+    name='estuary',
     version='0.1',
-    description='The Purview API used to query the build to release pipeline',
+    description='The Estuary API used to query the build to release pipeline',
     author='Red Hat, Inc.',
     author_email='mprahl@redhat.com',
     license='GPLv3+',

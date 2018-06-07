@@ -3,11 +3,11 @@
 from __future__ import unicode_literals
 
 from scrapers.base import BaseScraper
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
-from purview.models.errata import Advisory
+from estuary.models.freshmaker import FreshmakerEvent, ContainerBuild
+from estuary.models.errata import Advisory
 from scrapers.utils import retry_session
-from purview.utils.general import timestamp_to_datetime
-from purview import log
+from estuary.utils.general import timestamp_to_datetime
+from estuary import log
 
 
 class FreshmakerScraper(BaseScraper):

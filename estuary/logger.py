@@ -34,4 +34,4 @@ def init_logging(app):
     # Note that the log level on the handler above controls what
     # will actually appear on stdout.
     logging.getLogger().setLevel(logging.INFO)
-    logging.getLogger('purview').setLevel(logging.DEBUG)
+    logging.getLogger('estuary').setLevel(logging.DEBUG)

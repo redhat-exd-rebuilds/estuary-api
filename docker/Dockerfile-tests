@@ -25,4 +25,4 @@ RUN pip install flake8-docstrings
 VOLUME /src
 WORKDIR /src
 # Inspired from https://github.com/neo4j-contrib/neomodel/blob/master/tests-with-docker-compose.sh
-CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; pytest-2 -vvv --cov-report term-missing --cov=purview tests/ && pytest-3 -vvv --cov-report term-missing --cov=purview tests/ && flake8"]
+CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; pytest-2 -vvv --cov-report term-missing --cov=estuary tests/ && pytest-3 -vvv --cov-report term-missing --cov=estuary tests/ && flake8"]

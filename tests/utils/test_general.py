@@ -5,7 +5,7 @@ from datetime import datetime
 
 import pytest
 
-from purview.utils.general import timestamp_to_datetime
+from estuary.utils.general import timestamp_to_datetime
 
 
 @pytest.mark.parametrize('input_dt,expected_dt', [

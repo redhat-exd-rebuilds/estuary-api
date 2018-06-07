@@ -7,11 +7,11 @@ from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import NotFound
 from neomodel import db
 
-from purview import version
-from purview.models import story_flow
-from purview.models.base import PurviewStructuredNode
+from estuary import version
+from estuary.models import story_flow
+from estuary.models.base import EstuaryStructuredNode
 
-from purview.utils.general import (
+from estuary.utils.general import (
     str_to_bool, get_neo4j_node, get_corelated_nodes, _order_story_results, create_story_query)
 
 api_v1 = Blueprint('api_v1', __name__)
@@ -95,7 +95,7 @@ def get_resource_story(resource, uid):
         # Assuming that if Path is the first result, then that's all we want to process.
         results = [list(results[0][0].nodes)]
 
-        return PurviewStructuredNode.inflate_results(results, resources_to_expand)[0]
+        return EstuaryStructuredNode.inflate_results(results, resources_to_expand)[0]
 
     results_unordered = {}
     if forward_query:
@@ -185,7 +185,7 @@ def get_resource_all_stories(resource, uid):
         unique_paths.append(results[0][0])
         unique_paths_nodes = [path.nodes for path in unique_paths]
 
-        return PurviewStructuredNode.inflate_results(unique_paths_nodes, resources_to_expand)
+        return EstuaryStructuredNode.inflate_results(unique_paths_nodes, resources_to_expand)
 
     if forward_query:
         results_unordered_forward = _get_partial_stories(forward_query, [resource])

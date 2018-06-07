@@ -6,12 +6,12 @@ from datetime import datetime
 
 import pytest
 
-from purview.models.koji import KojiBuild
-from purview.models.bugzilla import BugzillaBug
-from purview.models.distgit import DistGitCommit
-from purview.models.errata import Advisory
-from purview.models.freshmaker import FreshmakerEvent, ContainerBuild
-from purview.models.user import User
+from estuary.models.koji import KojiBuild
+from estuary.models.bugzilla import BugzillaBug
+from estuary.models.distgit import DistGitCommit
+from estuary.models.errata import Advisory
+from estuary.models.freshmaker import FreshmakerEvent, ContainerBuild
+from estuary.models.user import User
 
 
 @pytest.mark.parametrize('resource,uid,expected', [

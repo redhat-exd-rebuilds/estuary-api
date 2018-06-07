@@ -6,7 +6,7 @@ from flask import jsonify
 from werkzeug.exceptions import HTTPException
 from neo4j.exceptions import ServiceUnavailable, AuthError
 
-from purview import log
+from estuary import log
 
 
 class ValidationError(ValueError):

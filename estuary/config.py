@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 
 class Config(object):
-    """The base Purview application configuration."""
+    """The base Estuary application configuration."""
 
     DEBUG = True
     # We configure logging explicitly, turn off the Flask-supplied log handler.
@@ -18,19 +18,19 @@ class Config(object):
 
 
 class ProdConfig(Config):
-    """The production Purview application configuration."""
+    """The production Estuary application configuration."""
 
     DEBUG = False
     PRODUCTION = True
 
 
 class DevConfig(Config):
-    """The development Purview application configuration."""
+    """The development Estuary application configuration."""
 
     pass
 
 
 class TestConfig(Config):
-    """The test Purview application configuration."""
+    """The test Estuary application configuration."""
 
     pass
