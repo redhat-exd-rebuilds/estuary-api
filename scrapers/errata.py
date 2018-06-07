@@ -3,14 +3,15 @@
 from __future__ import unicode_literals
 
 import yaml
+import neomodel
 
 from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
 from estuary import log
-from estuary.models.errata import Advisory, AdvisoryState
+from estuary.models.errata import Advisory, AdvisoryState, ContainerBuildAdvisory
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.koji import KojiBuild
+from estuary.models.koji import KojiBuild, ContainerKojiBuild
 
 
 class ErrataScraper(BaseScraper):
@@ -50,7 +51,7 @@ class ErrataScraper(BaseScraper):
             log.info('Processing advisory {0}/{1}'.format(count, len(advisories)))
             # The content_types column is a string with YAML in it, so convert it to a list
             content_types = yaml.safe_load(advisory['content_types'])
-            adv = Advisory.create_or_update({
+            adv_params = {
                 'actual_ship_date': advisory['actual_ship_date'],
                 'advisory_name': advisory['advisory_name'],
                 'content_types': content_types,
@@ -68,7 +69,55 @@ class ErrataScraper(BaseScraper):
                 'type_': advisory['type'],
                 'update_date': advisory['update_date'],
                 'updated_at': advisory['updated_at']
-            })[0]
+            }
+
+            associated_builds = self.get_associated_builds(advisory['id'])
+            if not associated_builds:
+                adv = Advisory.create_or_update(adv_params)[0]
+
+            for associated_build in associated_builds:
+                build = ContainerKojiBuild.nodes.get_or_none(id_=associated_build['id_'])
+                if not build:
+                    build = KojiBuild.nodes.get_or_none(id_=associated_build['id_'])
+
+                container_adv = False
+                if build:
+                    if build.__label__ == 'ContainerKojiBuild':
+                        adv = self.create_container_build_advisory(adv_params)
+                        container_adv = True
+                    else:
+                        adv = Advisory.create_or_update(adv_params)[0]
+
+                # If this is set, that means it was once part of the advisory but not anymore.
+                # This relationship needs to be deleted if it exists.
+                if associated_build['removed_index_id']:
+                    if build:
+                        adv.attached_builds.disconnect(build)
+                else:
+                    # This key shouldn't be stored in Neo4j
+                    del associated_build['removed_index_id']
+                    # Query Teiid only if the build is not present in Neo4j
+                    if build:
+                        if container_adv:
+                            is_container_build = True
+                        else:
+                            is_container_build = False
+                    else:
+                        attached_build = self.get_koji_build(associated_build['id_'])
+                        if attached_build:
+                            is_container_build = self.is_container_build(attached_build)
+                        else:
+                            is_container_build = False
+
+                    if is_container_build:
+                        build = ContainerKojiBuild.get_or_create(
+                            {'id_': associated_build['id_']})[0]
+                        adv = self.create_container_build_advisory(adv_params)
+                    else:
+                        build = KojiBuild.get_or_create({'id_': associated_build['id_']})[0]
+                        adv = Advisory.create_or_update(adv_params)[0]
+                    adv.attached_builds.connect(build)
+
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
             adv.conditional_connect(adv.assigned_to, assigned_to)
             package_owner = User.get_or_create(
@@ -91,19 +140,6 @@ class ErrataScraper(BaseScraper):
             for attached_bug in self.get_attached_bugs(advisory['id']):
                 bug = BugzillaBug.get_or_create(attached_bug)[0]
                 adv.attached_bugs.connect(bug)
-
-            for associated_build in self.get_associated_builds(advisory['id']):
-                # If this is set, that means it was once part of the advisory but not anymore.
-                # This relationship needs to be deleted if it exists.
-                if associated_build['removed_index_id']:
-                    build = KojiBuild.nodes.get_or_none(id_=associated_build['id_'])
-                    if build:
-                        adv.attached_builds.disconnect(build)
-                else:
-                    # This key shouldn't be stored in Neo4j
-                    del associated_build['removed_index_id']
-                    build = KojiBuild.get_or_create(associated_build)[0]
-                    adv.attached_builds.connect(build)
 
     def get_advisories(self, since, until):
         """
@@ -206,3 +242,45 @@ class ErrataScraper(BaseScraper):
         """.format(advisory_id)
         log.info('Getting Bugzilla bugs tied to the advisory with ID {0}'.format(advisory_id))
         return self.teiid.query(sql)
+
+    def get_koji_build(self, build_id):
+        """
+        Query Teiid to find the Koji build attached to a specific advisory.
+
+        :param int build_id: the build ID
+        :return: a list of a dictionaries
+        :rtype: list
+        """
+        sql = """\
+            SELECT
+                build.extra,
+                package.name as package_name
+            FROM build
+            LEFT JOIN package ON build.pkg_id = package.id
+            WHERE build.id = {0};
+            """.format(build_id)
+
+        result = self.teiid.query(sql)
+        return result[0] if len(result) > 0 else None
+
+    def create_container_build_advisory(self, advisory_params):
+        """
+        Create a ContainerBuildAdvisory node in Neo4j and remove duplicates if present.
+
+        :param dict advisory_params: parameters for a ContainerBuildAdvisory
+        :return: Neo4j object
+        :rtype: ContainerBuildAdvisory
+        """
+        try:
+            adv = ContainerBuildAdvisory.create_or_update(advisory_params)[0]
+        except neomodel.exceptions.ConstraintValidationFailed:
+            # This must have errantly been created as an Advisory instead of a
+            # ContainerBuildAdvisory, so let's fix that.
+            adv = Advisory.nodes.get_or_none(id_=advisory_params['id_'])
+            if not adv:
+                # If there was a constraint validation failure and the build isn't just the
+                # wrong label, then we can't recover.
+                raise
+            adv.add_label(ContainerBuildAdvisory.__label__)
+            adv = ContainerBuildAdvisory.create_or_update(advisory_params)[0]
+        return adv
