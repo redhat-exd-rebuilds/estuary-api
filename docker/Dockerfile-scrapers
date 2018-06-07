@@ -7,7 +7,7 @@ ENV SCRAPER=all \
     NEO4J_USER=neo4j \
     NEO4J_PASSWORD=neo4j \
     NEO4J_SERVER=neo4j \
-    SCRAPE_FROM_DAYS_AGO=730 \
+    SCRAPE_FROM_DAYS_AGO=365 \
     WAIT_FOR=0
 
 WORKDIR /src
@@ -29,4 +29,4 @@ RUN dnf -y install \
 RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
 USER 1001
-ENTRYPOINT docker/install-ca.sh && sleep $WAIT_FOR && exec python3 scripts/scrape.py $SCRAPER --teiid-user $TEIID_USER --teiid-password $TEIID_PASSWORD --neo4j-user $NEO4J_USER --neo4j-password $NEO4J_PASSWORD --neo4j-server $NEO4J_SERVER --days-ago $SCRAPE_FROM_DAYS_AGO
+CMD ["/usr/bin/bash", "-c", "docker/scrape.sh"]
