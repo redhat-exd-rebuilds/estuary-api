@@ -5,7 +5,7 @@ from builtins import bytes
 from scrapers.base import BaseScraper
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.user import User
-from estuary.utils.general import timestamp_to_datetime
+from estuary.utils.general import timestamp_to_date
 from estuary import log
 
 
@@ -23,12 +23,11 @@ class BugzillaScraper(BaseScraper):
         if since is None:
             start_date = self.default_since
         else:
-            start_date = timestamp_to_datetime(since)
-
+            start_date = timestamp_to_date(since)
         if until is None:
             end_date = self.default_until
         else:
-            end_date = timestamp_to_datetime(until)
+            end_date = timestamp_to_date(until)
 
         bugs = self.get_bugzilla_bugs(start_date, end_date)
         log.info('Successfully fetched {0} bugs from teiid'.format(len(bugs)))

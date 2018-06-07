@@ -42,6 +42,18 @@ def timestamp_to_datetime(timestamp):
     raise ValueError(error_msg)
 
 
+def timestamp_to_date(timestamp):
+    """
+    Convert a string timestamp to a date object.
+
+    :param str timestamp: a generic or ISO-8601 timestamp
+    :return: date object of the timestamp
+    :rtype: datetime.date
+    :raises ValueError: if the timestamp is an unsupported or invalid format
+    """
+    return timestamp_to_datetime(timestamp).date()
+
+
 def str_to_bool(item):
     """
     Convert a string to a boolean.

@@ -13,7 +13,7 @@ from requests import ConnectionError
 
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
-from estuary.utils.general import timestamp_to_datetime
+from estuary.utils.general import timestamp_to_date
 from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitPush, DistGitCommit
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.user import User
@@ -34,12 +34,12 @@ class DistGitScraper(BaseScraper):
         if since is None:
             start_date = self.default_since
         else:
-            start_date = timestamp_to_datetime(since)
+            start_date = timestamp_to_date(since)
 
         if until is None:
             end_date = self.default_until
         else:
-            end_date = timestamp_to_datetime(until)
+            end_date = timestamp_to_date(until)
         results = self.get_distgit_data(start_date, end_date)
         log.info('Successfully fetched {0} results from Teiid'.format(len(results)))
         self.update_neo4j(results)
