@@ -62,4 +62,4 @@ class KojiTag(EstuaryStructuredNode):
 
     builds = RelationshipTo('KojiBuild', 'CONTAINS')
     id_ = UniqueIdProperty(db_property='id')
-    name = StringProperty(required=True)
+    name = StringProperty()

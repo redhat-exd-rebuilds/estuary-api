@@ -186,7 +186,7 @@ class KojiScraper(BaseScraper):
             current_tag_ids = set()
             for _tag in tags:
                 current_tag_ids.add(_tag['tag_id'])
-                tag = KojiTag.get_or_create(dict(
+                tag = KojiTag.create_or_update(dict(
                     id_=_tag['tag_id'],
                     name=_tag['tag_name']
                 ))[0]
