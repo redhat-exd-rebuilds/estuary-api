@@ -62,7 +62,7 @@ class Teiid(object):
                     connect_timeout=300
                 )
                 break
-            except psycopg2.OperationalError as e:
+            except (psycopg2.OperationalError, psycopg2.InternalError) as e:
                 if retry and attempts > retry:
                     raise
                 else:
@@ -117,7 +117,7 @@ class Teiid(object):
                 cursor.execute(sql)
                 self._last_query_dt = datetime.utcnow()
                 break
-            except psycopg2.OperationalError as e:
+            except (psycopg2.OperationalError, psycopg2.InternalError) as e:
                 if retry and attempts > retry:
                     raise
                 else:
