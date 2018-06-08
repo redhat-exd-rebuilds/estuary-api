@@ -2,10 +2,8 @@
 
 from __future__ import unicode_literals
 import re
-from multiprocessing import Pool
+from multiprocessing.dummy import Pool as ThreadPool
 from os import getenv
-import json
-import gc
 
 from builtins import bytes
 from bs4 import BeautifulSoup
@@ -51,7 +49,7 @@ class DistGitScraper(BaseScraper):
 
         :param list results: a list of dictionaries
         """
-        pool = Pool(processes=8)
+        pool = ThreadPool(8)
         counter = 0
         for result in results:
             if counter % 200 == 0:
@@ -63,15 +61,9 @@ class DistGitScraper(BaseScraper):
                 unique_commits = set([(c['module'], c['sha']) for c in results[counter:until]])
                 log.debug('Getting the author and committer email addresses from cgit in parallel '
                           'for results {0} to {1}'.format(counter, until))
-                repos_info = {}
-                for _r in pool.map(DistGitScraper._get_repo_info, unique_commits):
-                    r = json.loads(_r)
-                    repos_info[r['commit']] = r
+                repos_info = {r['commit']: r for r in pool.map(self._get_repo_info, unique_commits)}
                 # This is no longer needed so it can be cleared to save RAM
                 del unique_commits
-                # A lot of RAM was allocated or used up, so let's call gc.collect() to ensure it
-                # is removed
-                gc.collect()
             counter += 1
             log.info('Processing commit and push entry {0}/{1}'.format(
                 str(counter), str(len(results))))
@@ -220,7 +212,7 @@ class DistGitScraper(BaseScraper):
         if not cgit_result or cgit_result.status_code != 200:
             log.error('Couldn\'t find the commit "{0}" for the repo "{1}" in the namespaces: {2}'
                       .format(commit, repo, ', '.join(namespaces)))
-            return json.dumps(rv)
+            return rv
 
         log.debug('Found the cgit URL "{0}" for the commit "{1}" in repo "{2}"'.format(
             url, commit, repo))
@@ -249,7 +241,7 @@ class DistGitScraper(BaseScraper):
                 break
 
         soup.decompose()
-        return json.dumps(rv)
+        return rv
 
     @staticmethod
     def _parse_username_email_from_cgit(th_tag, commit, namespace, repo):
