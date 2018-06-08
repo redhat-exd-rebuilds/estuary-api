@@ -2,12 +2,16 @@
 
 from __future__ import unicode_literals
 import re
+from multiprocessing import Pool
 from multiprocessing.dummy import Pool as ThreadPool
 from os import getenv
+from itertools import islice
+from functools import partial
 
 from builtins import bytes
 from bs4 import BeautifulSoup
 from requests import ConnectionError
+from neomodel import config as neomodel_config
 
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
@@ -40,16 +44,52 @@ class DistGitScraper(BaseScraper):
             end_date = timestamp_to_date(until)
         results = self.get_distgit_data(start_date, end_date)
         log.info('Successfully fetched {0} results from Teiid'.format(len(results)))
-        self.update_neo4j(results)
+        # Upload the results to Neo4j
+        _update_neo4j_partial = partial(
+            self._update_neo4j, neomodel_config.DATABASE_URL, len(results))
+        # Create a multi-processing pool to process chunks of results
+        pool = Pool(2)
+        pool.map(_update_neo4j_partial, self._get_result_chunks(results))
         log.info('Initial load of dist-git commits and pushes complete!')
 
-    def update_neo4j(self, results):
+    @staticmethod
+    def _get_result_chunks(results):
         """
-        Update Neo4j with the dist-git commit and push information from Teiid.
+        Yield a tuple with a counter and chunk of results.
 
-        :param list results: a list of dictionaries
+        :param list results: a list of dictionaries representing results from Teiid to chunk up
+        :return: generator of a tuple with a counter and chunk of results
+        :rtype: generator
         """
-        pool = ThreadPool(8)
+        list_iterator = iter(results)
+        chunk_size = 10000
+        count = 0
+        while True:
+            chunk = list(islice(list_iterator, chunk_size))
+            if chunk:
+                yield (count, chunk)
+            else:
+                break
+            count += chunk_size
+
+    @staticmethod
+    def _update_neo4j(neo4j_url, total_results, counter_and_results):
+        """
+        Update Neo4j results via mapping with multiprocessing.
+
+        :param str neo4j_url: database url for Neo4j
+        :param int total_results: the total number of results that will be processed. This is used
+        for a logging statement about progress.
+        :param tuple counter_and_results: a tuple where the first index is the current counter and
+        the second index is a list of dictionaries representing results from Teiid
+        """
+        previous_total = counter_and_results[0]
+        results = counter_and_results[1]
+        # Since _update_neo4j will be run in a separate process, we must configure the database
+        # URL every time the method is run.
+        neomodel_config.DATABASE_URL = neo4j_url
+        # Create a thread pool with 4 threads to speed up queries to cgit
+        pool = ThreadPool(4)
         counter = 0
         for result in results:
             if counter % 200 == 0:
@@ -61,12 +101,13 @@ class DistGitScraper(BaseScraper):
                 unique_commits = set([(c['module'], c['sha']) for c in results[counter:until]])
                 log.debug('Getting the author and committer email addresses from cgit in parallel '
                           'for results {0} to {1}'.format(counter, until))
-                repos_info = {r['commit']: r for r in pool.map(self._get_repo_info, unique_commits)}
+                repos_info = {r['commit']: r for r in pool.map(
+                    DistGitScraper._get_repo_info, unique_commits)}
                 # This is no longer needed so it can be cleared to save RAM
                 del unique_commits
             counter += 1
             log.info('Processing commit and push entry {0}/{1}'.format(
-                str(counter), str(len(results))))
+                previous_total + counter, total_results))
             repo_info = repos_info[result['sha']]
             if not repo_info.get('namespace'):
                 log.info('Skipping nodes creation with commit ID {0} and push ID {1}'.format(
