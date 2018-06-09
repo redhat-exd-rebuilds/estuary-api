@@ -165,7 +165,8 @@ class KojiScraper(BaseScraper):
             container_build = False
             # Checking a heuristic for determining if a build is a container build since, currently
             # there is no definitive way to do it.
-            if extra_json and extra_json.get('container_koji_build_id'):
+            if extra_json and (extra_json.get('container_koji_build_id') or
+                               extra_json.get('container_koji_task_id')):
                 container_build = True
             # Checking another heuristic for determining if a build is a container build since
             # currently there is no definitive way to do it.
