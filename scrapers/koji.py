@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 import xml.etree.ElementTree as ET
 import json
 
+import neomodel
+
 from scrapers.base import BaseScraper
 from estuary.models.koji import ContainerKojiBuild, KojiBuild, KojiTask, KojiTag
 from estuary.models.user import User
@@ -171,7 +173,18 @@ class KojiScraper(BaseScraper):
                 container_build = True
 
             if container_build:
-                build = ContainerKojiBuild.create_or_update(build_params)[0]
+                try:
+                    build = ContainerKojiBuild.create_or_update(build_params)[0]
+                except neomodel.exceptions.ConstraintValidationFailed:
+                    # This must have errantly been created as a KojiBuild instead of a
+                    # ContainerKojiBuild, so let's fix that.
+                    build = KojiBuild.nodes.get_or_none(id_=build_params['id_'])
+                    if not build:
+                        # If there was a constraint validation failure and the build isn't just the
+                        # wrong label, then we can't recover.
+                        raise
+                    build.add_label(ContainerKojiBuild.__label__)
+                    build = ContainerKojiBuild.create_or_update(build_params)[0]
             else:
                 build = KojiBuild.create_or_update(build_params)[0]
 
