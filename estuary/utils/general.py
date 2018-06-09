@@ -218,6 +218,12 @@ def get_corelated_nodes(results):
         node_count = 0
         next_node_info = story_flow(curr_label)
         forward_label = next_node_info['forward_label']
+        if curr_label not in results:
+            # Keep looping until we get to a point in the story flow that is applicable to the
+            # passed in results
+            curr_label = forward_label
+            continue
+
         if forward_label in results:
             query = 'MATCH '
             # Only grab the first element since there will only be one

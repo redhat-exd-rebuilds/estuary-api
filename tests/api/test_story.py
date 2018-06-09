@@ -1048,3 +1048,136 @@ def test_get_stories_just_artifact(client):
     rv = client.get('/api/v1/story/advisory/27825')
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+def test_get_story_partial_story(client):
+    """Test getting the story for a resource that doesn't span the whole pipeline."""
+    advisory = Advisory.get_or_create({
+        'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
+        'advisory_name': 'RHBA-2017:2251-02',
+        'content_types': ['docker'],
+        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'id_': '27825',
+        'issue_date': datetime(2017, 8, 1, 5, 59, 34),
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'security_impact': 'None',
+        'state': 'SHIPPED_LIVE',
+        'status_time': datetime(2017, 8, 1, 15, 43, 51),
+        'synopsis': 'cifs-utils bug fix update',
+        'type_': 'RHBA',
+        'update_date': datetime(2017, 8, 1, 7, 16),
+        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+    })[0]
+    fm_event = FreshmakerEvent.get_or_create({
+        'event_type_id': 8,
+        'id_': '1180',
+        'message_id': 'ID:messaging-devops-broker01.test',
+        'state': 2,
+        'state_name': 'COMPLETE',
+        'state_reason': 'All container images have been rebuilt.',
+        'url': '/api/1/events/1180'
+    })[0]
+    cb = ContainerKojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '710',
+        'name': 'slf4j_2',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'state': 1,
+        'version': '1.7.4'
+    })[0]
+    cb2 = ContainerKojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '711',
+        'name': 'slf4j_2',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'state': 1,
+        'version': '1.8.4'
+    })[0]
+
+    fm_event.triggered_by_advisory.connect(advisory)
+    fm_event.triggered_container_builds.connect(cb)
+    fm_event.triggered_container_builds.connect(cb2)
+    expected = {
+        'data': [
+            {
+                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'advisory_name': 'RHBA-2017:2251-02',
+                'assigned_to': None,
+                'attached_bugs': [],
+                'attached_builds': [],
+                'content_types': ['docker'],
+                'created_at': '2017-04-03T14:47:23+00:00',
+                'id': '27825',
+                'issue_date': '2017-08-01T05:59:34+00:00',
+                'package_owner': None,
+                'product_name': 'Red Hat Enterprise Linux',
+                'product_short_name': 'RHEL',
+                'release_date': None,
+                'reporter': None,
+                'resource_type': 'Advisory',
+                'security_impact': 'None',
+                'security_sla': None,
+                'state': 'SHIPPED_LIVE',
+                'states': [],
+                'status_time': '2017-08-01T15:43:51+00:00',
+                'synopsis': 'cifs-utils bug fix update',
+                'triggered_freshmaker_event': [{
+                    'event_type_id': 8,
+                    'id': '1180',
+                    'message_id': 'ID:messaging-devops-broker01.test',
+                    'state': 2,
+                    'state_name': 'COMPLETE',
+                    'state_reason': 'All container images have been rebuilt.',
+                    'url': '/api/1/events/1180'
+                }],
+                'type': 'RHBA',
+                'update_date': '2017-08-01T07:16:00+00:00',
+                'updated_at': '2017-08-01T15:43:51+00:00'
+            },
+            {
+                'event_type_id': 8,
+                'id': '1180',
+                'message_id': 'ID:messaging-devops-broker01.test',
+                'resource_type': 'FreshmakerEvent',
+                'state': 2,
+                'state_name': 'COMPLETE',
+                'state_reason': 'All container images have been rebuilt.',
+                'url': '/api/1/events/1180'
+            },
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '711',
+                'name': 'slf4j_2',
+                'original_nvr': None,
+                'release': '4.el7_4_as',
+                'resource_type': 'ContainerKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 1,
+                'version': '1.8.4'
+            }
+        ],
+        'meta': {
+            'related_nodes': {
+                'Advisory': 0,
+                'BugzillaBug': 0,
+                'ContainerKojiBuild': 1,
+                'DistGitCommit': 0,
+                'FreshmakerEvent': 0,
+                'KojiBuild': 0
+            }
+        }
+    }
+
+    rv = client.get('/api/v1/story/advisory/27825')
+    assert rv.status_code == 200
+    assert json.loads(rv.data.decode('utf-8')) == expected
