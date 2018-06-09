@@ -254,7 +254,7 @@ def get_corelated_nodes(results):
             query += 'RETURN COUNT({0}) AS count'.format(curr_label.lower())
             node_count = get_node_count(query)
 
-        # If there are related nodes, then there always be at least a value of one because it
+        # If there are related nodes, then there always will be at least a value of one because it
         # includes the node already in the story. This is why we subtract here.
         if node_count > 0:
             nodes_count_dict[curr_label] = node_count - 1
