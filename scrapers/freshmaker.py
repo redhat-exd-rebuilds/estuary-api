@@ -48,6 +48,7 @@ class FreshmakerScraper(BaseScraper):
                 except ValueError:
                     # Skip Freshmaker Events that don't have the search_key as the Advisory ID
                     continue
+                log.debug('Creating FreshmakerEvent {0}'.format(fm_event['id']))
                 event = FreshmakerEvent.create_or_update(dict(
                     id_=fm_event['id'],
                     event_type_id=fm_event['event_type_id'],
@@ -58,6 +59,7 @@ class FreshmakerScraper(BaseScraper):
                     url=fm_event['url']
                 ))[0]
 
+                log.debug('Creating Advisory {0}'.format(fm_event['search_key']))
                 advisory = Advisory.get_or_create(dict(
                     id_=fm_event['search_key']
                 ))[0]
@@ -83,6 +85,7 @@ class FreshmakerScraper(BaseScraper):
                         build_id = None
 
                     if build_id:
+                        log.debug('Creating ContainerKojiBuild {0}'.format(build_id))
                         build = ContainerKojiBuild.get_or_create(dict(
                             id_=build_id,
                             original_nvr=build_dict['original_nvr']
