@@ -189,3 +189,11 @@ class EstuaryStructuredNode(StructuredNode):
             results_list.append(temp)
 
         return results_list
+
+    def add_label(self, new_label):
+        """
+        Add a Neo4j label to an existing node.
+
+        :param str new_label: the new label to add to the node
+        """
+        self.cypher('MATCH (a) WHERE id(a)={0} SET a :{1}'.format('{self}', new_label))

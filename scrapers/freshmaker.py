@@ -3,10 +3,12 @@
 from __future__ import unicode_literals
 import xml.etree.ElementTree as ET
 
+import neomodel
+
 from scrapers.base import BaseScraper
 from estuary.models.freshmaker import FreshmakerEvent
 from estuary.models.errata import Advisory
-from estuary.models.koji import ContainerKojiBuild
+from estuary.models.koji import ContainerKojiBuild, KojiBuild
 from scrapers.utils import retry_session
 from estuary import log
 
@@ -84,13 +86,29 @@ class FreshmakerScraper(BaseScraper):
                     except AttributeError:
                         build_id = None
 
-                    if build_id:
-                        log.debug('Creating ContainerKojiBuild {0}'.format(build_id))
-                        build = ContainerKojiBuild.get_or_create(dict(
-                            id_=build_id,
-                            original_nvr=build_dict['original_nvr']
-                        ))[0]
-                        event.triggered_container_builds.connect(build)
+                    if not build_id:
+                        continue
+
+                    log.debug('Creating ContainerKojiBuild {0}'.format(build_id))
+                    build_params = {
+                        'id_': build_id,
+                        'original_nvr': build_dict['original_nvr']
+                    }
+                    try:
+                        # TODO: Add original_nvr to the existing build if it isn't set
+                        build = ContainerKojiBuild.get_or_create(build_params)[0]
+                    except neomodel.exceptions.ConstraintValidationFailed:
+                        # This must have errantly been created as a KojiBuild instead of a
+                        # ContainerKojiBuild, so let's fix that.
+                        build = KojiBuild.nodes.get_or_none(id_=build_id)
+                        if not build:
+                            # If there was a constraint validation failure and the build isn't just
+                            # the wrong label, then we can't recover.
+                            raise
+                        build.add_label(ContainerKojiBuild.__label__)
+                        build = ContainerKojiBuild.get_or_create(build_params)[0]
+
+                    event.triggered_container_builds.connect(build)
 
             if rv_json['meta'].get('next'):
                 fm_url = rv_json['meta']['next']
