@@ -148,7 +148,7 @@ class ErrataScraper(BaseScraper):
             LEFT JOIN Errata_public.users AS reporter_users
                 ON main.reporter_id = reporter_users.id
             WHERE main.updated_at >= '{0}' AND main.updated_at <= '{1}'
-            ORDER BY main.id;
+            ORDER BY main.updated_at DESC;
         """.format(since, until)
         log.info('Getting Errata advisories since {0} until {1}'.format(since, until))
         return self.teiid.query(sql)
@@ -166,8 +166,7 @@ class ErrataScraper(BaseScraper):
                 users.login_name AS username
             FROM Errata_public.state_indices as states
             LEFT JOIN Errata_public.users as users ON states.who_id = users.id
-            WHERE errata_id = {}
-            ORDER BY states.id;
+            WHERE errata_id = {};
         """.format(advisory_id)
         log.info('Getting states tied to the advisory with ID {0}'.format(advisory_id))
         return self.teiid.query(sql)

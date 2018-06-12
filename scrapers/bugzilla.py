@@ -57,6 +57,7 @@ class BugzillaScraper(BaseScraper):
             LEFT JOIN bugzilla.profiles AS qa ON bugs.qa_contact = qa.userid
             WHERE classifications.name = 'Red Hat' AND bugs.delta_ts >= '{0}'
                 AND bugs.delta_ts <= '{1}'
+            ORDER BY bugs.creation_ts DESC;
             """.format(start_date, end_date)
 
         return self.teiid.query(sql=sql_query)

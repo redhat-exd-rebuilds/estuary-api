@@ -127,7 +127,7 @@ class FreshmakerScraper(BaseScraper):
         sql_query = """
             SELECT result
             FROM brew.task
-            WHERE id = {}
+            WHERE id = {};
             """.format(task_id)
 
         try:

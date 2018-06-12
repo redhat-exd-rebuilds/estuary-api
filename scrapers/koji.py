@@ -72,7 +72,7 @@ class KojiScraper(BaseScraper):
             LEFT JOIN package ON build.pkg_id = package.id
             LEFT JOIN brew.users ON build.owner = brew.users.id
             WHERE events.time IS NOT NULL AND events.time >= '{0}' AND events.time <= '{1}'
-            ORDER BY build.id
+            ORDER BY build.start_time DESC;
             """.format(start_date, end_date)
 
         return self.teiid.query(sql=sql_query)
@@ -90,7 +90,7 @@ class KojiScraper(BaseScraper):
             SELECT arch, completion_time, create_time, id, "method", priority, request, start_time,
                    state, weight
             FROM brew.task
-            WHERE id = {}
+            WHERE id = {};
             """.format(task_id)
 
         return self.teiid.query(sql=sql_query)
@@ -109,7 +109,7 @@ class KojiScraper(BaseScraper):
             SELECT arch, completion_time, create_time, id, "method", priority, request, start_time,
                    state, weight
             FROM brew.task
-            WHERE parent = {}
+            WHERE parent = {};
             """.format(parent)
 
         return self.teiid.query(sql=sql_query)
@@ -127,7 +127,7 @@ class KojiScraper(BaseScraper):
             SELECT tag_listing.tag_id AS tag_id, tags.name AS tag_name
             FROM brew.tag_listing AS tag_listing
             LEFT JOIN brew.tag AS tags ON tag_listing.tag_id = tags.id
-            WHERE tag_listing.active = True AND tag_listing.build_id = {}
+            WHERE tag_listing.active = True AND tag_listing.build_id = {};
             """.format(build_id)
 
         return self.teiid.query(sql=sql_query)
