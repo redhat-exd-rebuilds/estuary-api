@@ -206,7 +206,7 @@ class DistGitScraper(BaseScraper):
             LEFT JOIN gitbz.git_pushes as p ON p.push_id = map.push_id
             LEFT JOIN gitbz.redhat_bugzilla_references as bz ON c.commit_id = bz.commit_id
             WHERE c.commit_date >= '{0}' AND c.commit_date <= '{1}'
-            ORDER BY c.commit_id ASC;
+            ORDER BY c.commit_date DESC;
         """.format(since, until)
         log.info('Getting dist-git commits since {0} until {1}'.format(since, until))
         return self.teiid.query(sql)
