@@ -5,9 +5,9 @@
 To setup a development environment:
 * Create and activate a [Python virtual environment](https://virtualenv.pypa.io/en/stable/)
     (Python 3 is preferred)
-* Install the API's dependencies with:
+* Install the API and its dependencies with:
   ```bash
-  $ pip install -r requirements.txt
+  $ python setup.py develop
   ```
 * (Optional): Install the scrapers' dependencies with:
   ```bash
