@@ -49,7 +49,7 @@ class ErrataScraper(BaseScraper):
             count += 1
             log.info('Processing advisory {0}/{1}'.format(count, len(advisories)))
             # The content_types column is a string with YAML in it, so convert it to a list
-            content_types = yaml.safe_load(advisories[0]['content_types'])
+            content_types = yaml.safe_load(advisory['content_types'])
             adv = Advisory.create_or_update({
                 'actual_ship_date': advisory['actual_ship_date'],
                 'advisory_name': advisory['advisory_name'],
