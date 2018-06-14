@@ -65,9 +65,6 @@ class Teiid(object):
             except (psycopg2.OperationalError, psycopg2.InternalError) as e:
                 if retry and attempts > retry:
                     raise
-                # Raise an exception if the query failed due to a syntax error
-                elif 'Parsing error' in e.pgerror:
-                    raise
                 else:
                     log.exception(e)
                     log.warning('The Teiid connection failed on attempt {0}. Sleeping for 60 '
@@ -122,6 +119,9 @@ class Teiid(object):
                 break
             except (psycopg2.OperationalError, psycopg2.InternalError) as e:
                 if retry and attempts > retry:
+                    raise
+                # Raise an exception if the query failed due to a syntax error
+                elif 'Parsing error' in e.pgerror:
                     raise
                 else:
                     log.exception(e)
