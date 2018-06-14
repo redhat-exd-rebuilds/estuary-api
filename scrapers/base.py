@@ -53,7 +53,7 @@ class BaseScraper(object):
         Check whether a Koji build is a container build.
 
         :param KojiBuild build_info: Build info from Teiid
-        :return: boolean value indicating whether the builf is a container build
+        :return: boolean value indicating whether the build is a container build
         :rtype: bool
         """
         package_name = build_info['package_name']
