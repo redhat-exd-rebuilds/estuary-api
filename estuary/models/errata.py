@@ -49,7 +49,7 @@ class AdvisoryState(EstuaryStructuredNode):
     creator = RelationshipTo('.user.User', 'CREATED_BY', cardinality=ZeroOrOne)
 
 
-class ContainerBuildAdvisory(Advisory):
+class ContainerAdvisory(Advisory):
     """Definition of an Errata advisory with container builds attached in Neo4j."""
 
     pass

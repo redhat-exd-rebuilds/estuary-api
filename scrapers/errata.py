@@ -7,7 +7,7 @@ import yaml
 from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
 from estuary import log
-from estuary.models.errata import Advisory, AdvisoryState, ContainerBuildAdvisory
+from estuary.models.errata import Advisory, AdvisoryState, ContainerAdvisory
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.koji import KojiBuild, ContainerKojiBuild
@@ -81,7 +81,7 @@ class ErrataScraper(BaseScraper):
 
                 if build and not container_adv:
                     if build.__label__ == 'ContainerKojiBuild':
-                        adv.add_label(ContainerBuildAdvisory.__label__)
+                        adv.add_label(ContainerAdvisory.__label__)
                         container_adv = True
 
                 # If this is set, that means it was once part of the advisory but not anymore.
@@ -108,9 +108,9 @@ class ErrataScraper(BaseScraper):
                             associated_build['id_']))
                         continue
 
-                    if (adv.__label__ != ContainerBuildAdvisory.__label__ and
+                    if (adv.__label__ != ContainerAdvisory.__label__ and
                             build.__label__ == ContainerKojiBuild.__label__):
-                        adv.add_label(ContainerBuildAdvisory.__label__)
+                        adv.add_label(ContainerAdvisory.__label__)
 
                     adv.attached_builds.connect(build)
 
