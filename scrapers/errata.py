@@ -104,7 +104,7 @@ class ErrataScraper(BaseScraper):
                     # This will happen only if we do not find the build we are looking for in Teiid
                     # which shouldn't usually happen under normal conditions
                     if not build:
-                        log.warn('Build ID {} was not found in Teiid!'.format(
+                        log.warn('The Koji build with ID {} was not found in Teiid!'.format(
                             associated_build['id_']))
                         continue
 
