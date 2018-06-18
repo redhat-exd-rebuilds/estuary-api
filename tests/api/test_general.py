@@ -135,8 +135,9 @@ def test_get_on_model_wo_uid(client, resource):
     rv = client.get('/api/v1/{0}/some_repo'.format(resource))
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
-                   'advisory, advisorystate, bugzillabug, containerkojibuild, distgitcommit, '
-                   'distgitpush, freshmakerevent, kojibuild, kojitag, kojitask, and user.'
+                   'advisory, advisorystate, bugzillabug, containeradvisory, containerkojibuild, '
+                   'distgitcommit, distgitpush, freshmakerevent, kojibuild, kojitag, kojitask,'
+                   ' and user.'
                    .format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
 
@@ -148,6 +149,7 @@ def test_get_resources(client):
     expected = {
         'advisory': 'id',
         'bugzillabug': 'id',
+        'containeradvisory': 'id',
         'containerkojibuild': 'id',
         'distgitcommit': 'hash',
         'freshmakerevent': 'id',

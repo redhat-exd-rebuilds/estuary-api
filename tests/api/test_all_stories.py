@@ -100,6 +100,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'related_nodes': {
                     'Advisory': 1,
                     'BugzillaBug': 0,
+                    'ContainerAdvisory': 0,
                     'ContainerKojiBuild': 0,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
@@ -216,6 +217,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'related_nodes': {
                     'Advisory': 0,
                     'BugzillaBug': 0,
+                    'ContainerAdvisory': 0,
                     'ContainerKojiBuild': 1,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
@@ -347,6 +349,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'related_nodes': {
                     'Advisory': 1,
                     'BugzillaBug': 0,
+                    'ContainerAdvisory': 0,
                     'ContainerKojiBuild': 0,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
@@ -476,6 +479,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'related_nodes': {
                     'Advisory': 1,
                     'BugzillaBug': 0,
+                    'ContainerAdvisory': 0,
                     'ContainerKojiBuild': 0,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
@@ -629,6 +633,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'related_nodes': {
                     'Advisory': 0,
                     'BugzillaBug': 0,
+                    'ContainerAdvisory': 0,
                     'ContainerKojiBuild': 1,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
@@ -782,6 +787,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'related_nodes': {
                     'Advisory': 0,
                     'BugzillaBug': 0,
+                    'ContainerAdvisory': 0,
                     'ContainerKojiBuild': 1,
                     'DistGitCommit': 1,
                     'FreshmakerEvent': 0,
@@ -927,7 +933,4 @@ def test_all_stories(client, resource, uid, expected):
 
     rv = client.get('/api/v1/allstories/{0}/{1}'.format(resource, uid))
     assert rv.status_code == 200
-    import pprint
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(json.loads(rv.data.decode('utf-8')))
     assert json.loads(rv.data.decode('utf-8')) == expected
