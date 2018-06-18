@@ -141,7 +141,7 @@ def get_resource_all_stories(resource, uid):
         results, _ = db.cypher_query(query)
 
         if not results:
-            return [results_list]
+            return results_list
 
         # Creating a list of lists where each list is a collection of node IDs
         # of the nodes present in that particular story path.
