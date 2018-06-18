@@ -80,6 +80,8 @@ def inflate_node(result):
 
     if 'ContainerKojiBuild' in result.labels:
         result_label = 'ContainerKojiBuild'
+    elif 'ContainerAdvisory' in result.labels:
+        result_label = 'ContainerAdvisory'
     elif len(result.labels) > 1:
         raise RuntimeError('inflate_node encounted a node with multiple labels: {0}. '
                            'Which one should be used?'.format(', '.join(result.labels)))
@@ -315,7 +317,7 @@ def story_flow(label):
     from estuary.models.koji import ContainerKojiBuild, KojiBuild
     from estuary.models.bugzilla import BugzillaBug
     from estuary.models.distgit import DistGitCommit
-    from estuary.models.errata import Advisory
+    from estuary.models.errata import Advisory, ContainerAdvisory
     from estuary.models.freshmaker import FreshmakerEvent
 
     if not label:
@@ -370,12 +372,22 @@ def story_flow(label):
         }
     elif label == ContainerKojiBuild.__label__:
         return {
-            'uid_name': KojiBuild.id_.db_property or KojiBuild.id.name,
-            'forward_relationship': None,
-            'forward_label': None,
+            'uid_name': ContainerKojiBuild.id_.db_property or ContainerKojiBuild.id.name,
+            'forward_relationship': '{0}<'.format(
+                ContainerKojiBuild.advisories.definition['relation_type']),
+            'forward_label': ContainerAdvisory.__label__,
             'backward_relationship': '{0}<'.format(
                 ContainerKojiBuild.triggered_by_freshmaker_event.definition['relation_type']),
             'backward_label': FreshmakerEvent.__label__
+        }
+    elif label == ContainerAdvisory.__label__:
+        return {
+            'uid_name': ContainerAdvisory.id_.db_property or ContainerAdvisory.id.name,
+            'forward_relationship': None,
+            'forward_label': None,
+            'backward_relationship': '{0}>'.format(
+                ContainerAdvisory.attached_builds.definition['relation_type']),
+            'backward_label': ContainerKojiBuild.__label__
         }
     else:
         raise ValueError('The label should belong to a Neo4j node class')
