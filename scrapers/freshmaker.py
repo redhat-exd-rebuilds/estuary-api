@@ -95,8 +95,7 @@ class FreshmakerScraper(BaseScraper):
                         'original_nvr': build_dict['original_nvr']
                     }
                     try:
-                        # TODO: Add original_nvr to the existing build if it isn't set
-                        build = ContainerKojiBuild.get_or_create(build_params)[0]
+                        build = ContainerKojiBuild.create_or_update(build_params)[0]
                     except neomodel.exceptions.ConstraintValidationFailed:
                         # This must have errantly been created as a KojiBuild instead of a
                         # ContainerKojiBuild, so let's fix that.
@@ -106,7 +105,7 @@ class FreshmakerScraper(BaseScraper):
                             # the wrong label, then we can't recover.
                             raise
                         build.add_label(ContainerKojiBuild.__label__)
-                        build = ContainerKojiBuild.get_or_create(build_params)[0]
+                        build = ContainerKojiBuild.create_or_update(build_params)[0]
 
                     event.triggered_container_builds.connect(build)
 
