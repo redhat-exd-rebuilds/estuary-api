@@ -80,10 +80,8 @@ def get_resource_story(resource, uid):
     if not item:
         raise NotFound('This item does not exist')
 
-    uid_name = item.unique_id_property
-    forward_query = create_story_query(item, uid_name, uid, limit=True)
-    backward_query = create_story_query(item, uid_name, uid, reverse=True,
-                                        limit=True)
+    forward_query = create_story_query(item, item.id, limit=True)
+    backward_query = create_story_query(item, item.id, reverse=True, limit=True)
 
     def _get_partial_story(query, resources_to_expand):
         results, _ = db.cypher_query(query)
@@ -131,9 +129,8 @@ def get_resource_all_stories(resource, uid):
     if not item:
         raise NotFound('This item does not exist')
 
-    uid_name = item.unique_id_property
-    forward_query = create_story_query(item, uid_name, uid)
-    backward_query = create_story_query(item, uid_name, uid, reverse=True)
+    forward_query = create_story_query(item, item.id)
+    backward_query = create_story_query(item, item.id, reverse=True)
 
     def _get_partial_stories(query, resources_to_expand):
 

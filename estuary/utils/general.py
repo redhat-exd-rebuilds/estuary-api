@@ -141,13 +141,12 @@ def create_node_subquery(node_label, uid_name=None, uid=None):
     return '({0}:{1})'.format(node_label.lower(), node_label)
 
 
-def create_story_query(item, uid_name, uid, reverse=False, limit=False):
+def create_story_query(item, node_id, reverse=False, limit=False):
     """
     Create a raw cypher query for story of an artifact.
 
     :param node item: a Neo4j node whose story is requested by the user
-    :param str uid_name: name of node's UniqueIdProperty
-    :param str uid: value of node's UniqueIdProperty
+    :param int node_id: the internal Neo4j ID of the node
     :param bool reverse: boolean value to specify the direction to proceed
     from current node corresponding to the story_flow
     :return: a string containing raw cypher query to retrieve the story of an artifact from Neo4j
@@ -176,12 +175,9 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
 
         if curr_node_label == item.__label__:
             query = """\
-                MATCH ({var}:{label} {{{uid_name}:"{uid}"}})
+                MATCH ({var}:{label}) WHERE id({var})= {node_id}
                 CALL apoc.path.expandConfig({var}, {{sequence:\'{label}
-                """.format(var=curr_node_label.lower(),
-                           label=curr_node_label,
-                           uid_name=uid_name.rstrip('_'),
-                           uid=uid)
+                """.format(var=curr_node_label.lower(), label=curr_node_label, node_id=node_id)
 
         query += ', {0}, {1}'.format(curr_node_info[rel_label], curr_node_info[node_label])
 
