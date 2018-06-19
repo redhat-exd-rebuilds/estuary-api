@@ -3,9 +3,9 @@
 from __future__ import unicode_literals
 import re
 from datetime import datetime
-from six import text_type
 
-from neomodel import UniqueIdProperty, db
+from six import text_type
+from neomodel import db
 
 from estuary import log
 from estuary.error import ValidationError
@@ -112,17 +112,17 @@ def get_neo4j_node(resource_name, uid):
 
     for model in all_models:
         if model.__label__.lower() == resource_name.lower():
-            for _, prop_def in model.__all_properties__:
-                if isinstance(prop_def, UniqueIdProperty):
-                    return model.nodes.get_or_none(**{prop_def.name: uid})
-
-    # Some models don't have unique ID's and those should be skipped
-    models_wo_uid = ('DistGitRepo', 'DistGitBranch')
-    model_names = [model.__name__.lower() for model in all_models
-                   if model.__name__ not in models_wo_uid]
-    error = ('The requested resource "{0}" is invalid. Choose from the following: '
-             '{1}, and {2}.'.format(resource_name, ', '.join(model_names[:-1]), model_names[-1]))
-    raise ValidationError(error)
+            try:
+                return model.find_or_none(uid)
+            except RuntimeError:
+                # There is no UniqueIdProperty on this model so raise an exception
+                models_wo_uid = ('DistGitRepo', 'DistGitBranch')
+                model_names = [model.__name__.lower() for model in all_models
+                               if model.__name__ not in models_wo_uid]
+                error = ('The requested resource "{0}" is invalid. Choose from the following: '
+                         '{1}, and {2}.'.format(resource_name, ', '.join(model_names[:-1]),
+                                                model_names[-1]))
+                raise ValidationError(error)
 
 
 def create_node_subquery(node_label, uid_name=None, uid=None):
@@ -141,13 +141,12 @@ def create_node_subquery(node_label, uid_name=None, uid=None):
     return '({0}:{1})'.format(node_label.lower(), node_label)
 
 
-def create_story_query(item, uid_name, uid, reverse=False, limit=False):
+def create_story_query(item, node_id, reverse=False, limit=False):
     """
     Create a raw cypher query for story of an artifact.
 
     :param node item: a Neo4j node whose story is requested by the user
-    :param str uid_name: name of node's UniqueIdProperty
-    :param str uid: value of node's UniqueIdProperty
+    :param int node_id: the internal Neo4j ID of the node
     :param bool reverse: boolean value to specify the direction to proceed
     from current node corresponding to the story_flow
     :return: a string containing raw cypher query to retrieve the story of an artifact from Neo4j
@@ -176,12 +175,9 @@ def create_story_query(item, uid_name, uid, reverse=False, limit=False):
 
         if curr_node_label == item.__label__:
             query = """\
-                MATCH ({var}:{label} {{{uid_name}:"{uid}"}})
+                MATCH ({var}:{label}) WHERE id({var})= {node_id}
                 CALL apoc.path.expandConfig({var}, {{sequence:\'{label}
-                """.format(var=curr_node_label.lower(),
-                           label=curr_node_label,
-                           uid_name=uid_name.rstrip('_'),
-                           uid=uid)
+                """.format(var=curr_node_label.lower(), label=curr_node_label, node_id=node_id)
 
         query += ', {0}, {1}'.format(curr_node_info[rel_label], curr_node_info[node_label])
 

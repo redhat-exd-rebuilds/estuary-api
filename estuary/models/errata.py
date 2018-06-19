@@ -2,11 +2,14 @@
 
 from __future__ import unicode_literals
 
+import re
+
 from neomodel import (
     UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty, ArrayProperty,
     DateTimeProperty, ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode
+from estuary.error import ValidationError
 
 
 class Advisory(EstuaryStructuredNode):
@@ -36,6 +39,29 @@ class Advisory(EstuaryStructuredNode):
     reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
     states = RelationshipFrom('AdvisoryState', 'STATE_OF')
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
+
+    @classmethod
+    def find_or_none(cls, identifier):
+        """
+        Find the node using the supplied identifier.
+
+        :param str identifier: the identifier to search the node by
+        :return: the node or None
+        :rtype: EstuaryStructuredNode or None
+        """
+        if re.match(r'^\d+$', identifier):
+            # The identifier is an ID
+            return cls.nodes.get_or_none(id_=identifier)
+        elif re.match(r'^RH[A-Z]{2}-\d{4}:\d+-\d+$', identifier):
+            # The identifier is a full advisory name
+            return cls.nodes.get_or_none(advisory_name=identifier)
+        elif re.match(r'^RH[A-Z]{2}-\d{4}:\d+$', identifier):
+            # The identifier is most of the advisory name, so return the latest iteration of this
+            # advisory
+            return cls.nodes.filter(advisory_name__regex='^{0}-\d+$'.format(identifier))\
+                .order_by('advisory_name').first_or_none()
+        else:
+            raise ValidationError('"{0}" is not a valid identifier'.format(identifier))
 
 
 class AdvisoryState(EstuaryStructuredNode):

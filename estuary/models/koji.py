@@ -2,11 +2,14 @@
 
 from __future__ import unicode_literals
 
+import re
+
 from neomodel import (
     StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty, FloatProperty,
     RelationshipTo, RelationshipFrom, ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode
+from estuary.error import ValidationError
 
 
 class KojiBuild(EstuaryStructuredNode):
@@ -27,6 +30,31 @@ class KojiBuild(EstuaryStructuredNode):
     tags = RelationshipFrom('KojiTag', 'CONTAINS')
     tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
     version = StringProperty()
+
+    @classmethod
+    def find_or_none(cls, identifier):
+        """
+        Find the node using the supplied identifier.
+
+        :param str identifier: the identifier to search the node by
+        :return: the node or None
+        :rtype: EstuaryStructuredNode or None
+        """
+        uid = identifier
+        if re.match(r'^\d+$', uid):
+            # The identifier is an ID
+            return cls.nodes.get_or_none(id_=uid)
+        elif uid.endswith('.src.rpm'):
+            # The identifer is likely an NVR with .src.rpm at the end, so strip that part of it
+            # so it can be treated like a normal NVR
+            uid = uid[:-8]
+
+        if len(uid.rsplit('-', 2)) == 3:
+            # The identifier looks like an NVR
+            nvr = uid.rsplit('-', 2)
+            return cls.nodes.get_or_none(name=nvr[0], version=nvr[1], release=nvr[2])
+
+        raise ValidationError('"{0}" is not a valid identifier'.format(identifier))
 
 
 class ContainerKojiBuild(KojiBuild):
