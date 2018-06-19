@@ -12,6 +12,8 @@ from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
     str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results)
+from estuary.error import ValidationError
+
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -218,3 +220,54 @@ def get_resource_all_stories(resource, uid):
         all_results.append(rv)
 
     return jsonify(all_results)
+
+
+@api_v1.route('/siblings/<resource>/<uid>')
+def get_siblings(resource, uid):
+    """
+    Get siblings of next/previous node that are also related to the node in question.
+
+    :param str resource: a resource name that maps to a neomodel class
+    :param str uid: the value of the UniqueIdProperty to query with
+    :return: a Flask JSON response
+    :rtype: flask.Response
+    :raises NotFound: if the item is not found
+    :raises ValidationError: if an invalid resource was requested
+    """
+    # If last is True, we fetch siblings of the next node, previous node otherwise
+    last = request.args.get('last', False)
+
+    item = get_neo4j_node(resource, uid)
+    if not item:
+        raise NotFound('This item does not exist')
+
+    item_story_flow = story_flow(item.__label__)
+    if not item_story_flow['backward_label'] or not item_story_flow['forward_label']:
+        raise ValidationError('Siblings cannot be determined on this kind of resource')
+
+    uid_name = item.unique_id_property
+    node_subquery = create_node_subquery(item.__label__, uid_name, uid)
+    if last:
+        next_node = item_story_flow['forward_label']
+        next_node_subquery = create_node_subquery(next_node)
+        query = 'MATCH {0}-[:{1}]-{2} RETURN {3}'.format(
+            node_subquery, item_story_flow['forward_relationship'][:-1],
+            next_node_subquery, next_node.lower())
+    else:
+        prev_node = item_story_flow['backward_label']
+        prev_node_subquery = create_node_subquery(prev_node)
+        query = 'MATCH {0}-[:{1}]-{2} RETURN {3}'.format(
+            node_subquery, item_story_flow['backward_relationship'][:-1],
+            prev_node_subquery, prev_node.lower())
+
+    results, _ = db.cypher_query(query)
+
+    # Inflating and formatting results from Neo4j
+    serialized_results = []
+    for result in results:
+        inflated_node = inflate_node(result[0])
+        serialized_node = inflated_node.serialized
+        serialized_node['resource_type'] = inflated_node.__label__
+        serialized_results.append(serialized_node)
+
+    return jsonify(serialized_results) or []
