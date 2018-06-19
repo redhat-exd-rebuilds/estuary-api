@@ -3,9 +3,9 @@
 from __future__ import unicode_literals
 import re
 from datetime import datetime
-from six import text_type
 
-from neomodel import UniqueIdProperty, db
+from six import text_type
+from neomodel import db
 
 from estuary import log
 from estuary.error import ValidationError
@@ -112,17 +112,17 @@ def get_neo4j_node(resource_name, uid):
 
     for model in all_models:
         if model.__label__.lower() == resource_name.lower():
-            for _, prop_def in model.__all_properties__:
-                if isinstance(prop_def, UniqueIdProperty):
-                    return model.nodes.get_or_none(**{prop_def.name: uid})
-
-    # Some models don't have unique ID's and those should be skipped
-    models_wo_uid = ('DistGitRepo', 'DistGitBranch')
-    model_names = [model.__name__.lower() for model in all_models
-                   if model.__name__ not in models_wo_uid]
-    error = ('The requested resource "{0}" is invalid. Choose from the following: '
-             '{1}, and {2}.'.format(resource_name, ', '.join(model_names[:-1]), model_names[-1]))
-    raise ValidationError(error)
+            try:
+                return model.find_or_none(uid)
+            except RuntimeError:
+                # There is no UniqueIdProperty on this model so raise an exception
+                models_wo_uid = ('DistGitRepo', 'DistGitBranch')
+                model_names = [model.__name__.lower() for model in all_models
+                               if model.__name__ not in models_wo_uid]
+                error = ('The requested resource "{0}" is invalid. Choose from the following: '
+                         '{1}, and {2}.'.format(resource_name, ', '.join(model_names[:-1]),
+                                                model_names[-1]))
+                raise ValidationError(error)
 
 
 def create_node_subquery(node_label, uid_name=None, uid=None):

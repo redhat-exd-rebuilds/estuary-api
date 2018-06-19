@@ -124,6 +124,22 @@ class EstuaryStructuredNode(StructuredNode):
 
         return serialized
 
+    @classmethod
+    def find_or_none(cls, identifier):
+        """
+        Find the node using the supplied identifier.
+
+        This method should be overridden if the node class accepts multiple types of identifiers.
+        :param str identifier: the identifier to search the node by
+        :return: the node or None
+        :rtype: EstuaryStructuredNode or None
+        """
+        for _, prop_def in cls.__all_properties__:
+            if isinstance(prop_def, UniqueIdProperty):
+                return cls.nodes.get_or_none(**{prop_def.name: identifier})
+
+        raise RuntimeError('{0} has no UniqueIdProperty'.format(cls.__label__))
+
     @staticmethod
     def conditional_connect(relationship, new_node):
         """

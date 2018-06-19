@@ -8,14 +8,14 @@ import pytest
 
 from estuary.models.koji import KojiBuild, ContainerKojiBuild
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.distgit import DistGitCommit
+from estuary.models.distgit import DistGitCommit, DistGitRepo, DistGitBranch
 from estuary.models.errata import Advisory
 from estuary.models.freshmaker import FreshmakerEvent
 from estuary.models.user import User
 
 
-@pytest.mark.parametrize('resource,uid,expected', [
-    ('bugzillabug', '12345', {
+@pytest.mark.parametrize('resource,uids,expected', [
+    ('bugzillabug', ['12345', '#12345', 'RHBZ#12345', 'rhbz#12345'], {
         'data': [
             {
                 'assignee': None,
@@ -131,7 +131,7 @@ from estuary.models.user import User
             }
         }
     }),
-    ('distgitcommit', '8a63adb248ba633e200067e1ad6dc61931727bad', {
+    ('distgitcommit', ['8a63adb248ba633e200067e1ad6dc61931727bad'], {
         'data': [
             {
                 'classification': 'Red Hat',
@@ -152,10 +152,12 @@ from estuary.models.user import User
             {
                 'author': None,
                 'author_date': '2017-04-26T11:44:38+00:00',
-                'branches': [
-
-                ],
-                'children':[
+                'branches': [{
+                    'name': 'some-branch',
+                    'repo_name': 'slf4j',
+                    'repo_namespace': 'rpms'
+                }],
+                'children': [
 
                 ],
                 'commit_date':'2017-04-26T11:44:38+00:00',
@@ -183,10 +185,11 @@ from estuary.models.user import User
                 'related_bugs':[
 
                 ],
-                'repos':[
-
-                ],
-                'resolved_bugs':[
+                'repos':[{
+                    'name': 'slf4j',
+                    'namespace': 'rpms'
+                }],
+                'resolved_bugs': [
                     {
                         'classification': 'Red Hat',
                         'creation_time': '2017-04-02T19:39:06+00:00',
@@ -294,7 +297,7 @@ from estuary.models.user import User
             }
         }
     }),
-    ('kojibuild', '2345', {
+    ('kojibuild', ['2345', 'slf4j-1.7.4-4.el7_4', 'slf4j-1.7.4-4.el7_4.src.rpm'], {
         'data': [
             {
                 'classification': 'Red Hat',
@@ -426,7 +429,7 @@ from estuary.models.user import User
             }
         }
     }),
-    ('advisory', '27825', {
+    ('advisory', ['27825', 'RHBA-2017:2251-02', 'RHBA-2017:2251'], {
         'data': [
             {
                 'classification': 'Red Hat',
@@ -556,7 +559,7 @@ from estuary.models.user import User
             }
         }
     }),
-    ('freshmakerevent', '1180', {
+    ('freshmakerevent', ['1180'], {
         'data': [
             {
                 'classification': 'Red Hat',
@@ -688,7 +691,7 @@ from estuary.models.user import User
             }
         }
     }),
-    ('containerkojibuild', '710', {
+    ('containerkojibuild', ['710'], {
         'data': [
             {
                 'classification': 'Red Hat',
@@ -805,13 +808,22 @@ from estuary.models.user import User
         }
     })
 ])
-def test_get_stories(client, resource, uid, expected):
+def test_get_stories(client, resource, uids, expected):
     """Test getting a resource story from Neo4j with its relationships."""
     commit = DistGitCommit.get_or_create({
         'author_date': datetime(2017, 4, 26, 11, 44, 38),
         'commit_date': datetime(2017, 4, 26, 11, 44, 38),
         'hash_': '8a63adb248ba633e200067e1ad6dc61931727bad',
         'log_message': 'Related: #12345 - fix xyz'
+    })[0]
+    branch = DistGitBranch.get_or_create({
+        'name': 'some-branch',
+        'repo_name': 'slf4j',
+        'repo_namespace': 'rpms'
+    })[0]
+    repo = DistGitRepo.get_or_create({
+        'name': 'slf4j',
+        'namespace': 'rpms'
     })[0]
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
@@ -892,6 +904,9 @@ def test_get_stories(client, resource, uid, expected):
         'version': '1.7.4'
     })[0]
 
+    repo.branches.connect(branch)
+    repo.commits.connect(commit)
+    branch.commits.connect(commit)
     commit.resolved_bugs.connect(bug_two)
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
@@ -900,9 +915,11 @@ def test_get_stories(client, resource, uid, expected):
     fm_event.triggered_by_advisory.connect(advisory)
     fm_event.triggered_container_builds.connect(cb)
 
-    rv = client.get('/api/v1/story/{0}/{1}'.format(resource, uid))
-    assert rv.status_code == 200
-    assert json.loads(rv.data.decode('utf-8')) == expected
+    for uid in uids:
+        url = '/api/v1/story/{0}/{1}'.format(resource, uid)
+        rv = client.get(url)
+        assert rv.status_code == 200, 'Failed getting the resource at: {0}'.format(url)
+        assert json.loads(rv.data.decode('utf-8')) == expected
 
 
 def test_get_artifact_story_not_available(client):

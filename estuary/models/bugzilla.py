@@ -2,11 +2,14 @@
 
 from __future__ import unicode_literals
 
+import re
+
 from neomodel import (
     UniqueIdProperty, RelationshipTo, RelationshipFrom, IntegerProperty, StringProperty,
     DateTimeProperty, ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode
+from estuary.error import ValidationError
 
 
 class BugzillaBug(EstuaryStructuredNode):
@@ -33,3 +36,24 @@ class BugzillaBug(EstuaryStructuredNode):
     status = StringProperty()
     target_milestone = StringProperty()
     votes = IntegerProperty()
+
+    @classmethod
+    def find_or_none(cls, identifier):
+        """
+        Find the node using the supplied identifier.
+
+        :param str identifier: the identifier to search the node by
+        :return: the node or None
+        :rtype: EstuaryStructuredNode or None
+        """
+        uid = identifier
+        if uid.lower().startswith('rhbz'):
+            uid = uid[4:]
+        if uid.startswith('#'):
+            uid = uid[1:]
+
+        # If we are left with something other than digits, then it is an invalid identifier
+        if not re.match(r'^\d+$', uid):
+            raise ValidationError('"{0}" is not a valid identifier'.format(identifier))
+
+        return cls.nodes.get_or_none(id_=uid)
