@@ -121,7 +121,8 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'story_related_nodes': [1, 0, 0, 0, 0, 0]
+            'story_related_nodes': [1, 0, 0, 0, 0, 0],
+            'requested_node_index': 0
         }
     }),
     ('distgitcommit', ['8a63adb248ba633e200067e1ad6dc61931727bad'], {
@@ -280,7 +281,8 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'story_related_nodes': [1, 0, 0, 0, 0, 0]
+            'story_related_nodes': [1, 0, 0, 0, 0, 0],
+            'requested_node_index': 1
         }
     }),
     ('kojibuild', ['2345', 'slf4j-1.7.4-4.el7_4', 'slf4j-1.7.4-4.el7_4.src.rpm'], {
@@ -405,7 +407,8 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'story_related_nodes': [1, 0, 0, 0, 0, 0]
+            'story_related_nodes': [1, 0, 0, 0, 0, 0],
+            'requested_node_index': 2
         }
     }),
     ('advisory', ['27825', 'RHBA-2017:2251-02', 'RHBA-2017:2251'], {
@@ -528,7 +531,8 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'story_related_nodes': [1, 0, 0, 0, 0, 0]
+            'story_related_nodes': [1, 0, 0, 0, 0, 0],
+            'requested_node_index': 3
         }
     }),
     ('freshmakerevent', ['1180'], {
@@ -653,7 +657,8 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'story_related_nodes': [1, 0, 0, 0, 0, 0]
+            'story_related_nodes': [1, 0, 0, 0, 0, 0],
+            'requested_node_index': 4
         }
     }),
     ('containerkojibuild', ['710'], {
@@ -762,7 +767,8 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'story_related_nodes': [1, 0, 0, 0, 0, 0]
+            'story_related_nodes': [1, 0, 0, 0, 0, 0],
+            'requested_node_index': 5
         }
     })
 ])
@@ -935,7 +941,8 @@ def test_get_artifact_story_not_available(client):
             }
         ],
         'meta': {
-            'story_related_nodes': [0]
+            'story_related_nodes': [0],
+            'requested_node_index': 0
         }
     }
 
@@ -1004,7 +1011,8 @@ def test_get_stories_just_artifact(client):
             'updated_at': '2017-08-01T15:43:51+00:00'
         }],
         'meta': {
-            'story_related_nodes': [0]
+            'story_related_nodes': [0],
+            'requested_node_index': 0
         }
     }
 
@@ -1130,7 +1138,8 @@ def test_get_story_partial_story(client):
             }
         ],
         'meta': {
-            'story_related_nodes': [0, 0, 1]
+            'story_related_nodes': [0, 0, 1],
+            'requested_node_index': 0
         }
     }
 

@@ -97,7 +97,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes': [0, 1, 0, 1]
+                'story_related_nodes': [0, 1, 0, 1],
+                'requested_node_index': 0
             }
         },
         {
@@ -206,7 +207,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes': [0, 1, 0, 0, 0, 1]
+                'story_related_nodes': [0, 1, 0, 0, 0, 1],
+                'requested_node_index': 0
             }
         }
     ]),
@@ -330,7 +332,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes': [0, 1, 0, 1]
+                'story_related_nodes': [0, 1, 0, 1],
+                'requested_node_index': 2
             }
         },
         {
@@ -452,7 +455,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes': [0, 1, 0, 1]
+                'story_related_nodes': [0, 1, 0, 1],
+                'requested_node_index': 2
             }
         },
         {
@@ -598,7 +602,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes': [0, 1, 0, 0, 0, 1]
+                'story_related_nodes': [0, 1, 0, 0, 0, 1],
+                'requested_node_index': 2
             }
         },
         {
@@ -744,7 +749,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes': [0, 1, 0, 0, 0, 1]
+                'story_related_nodes': [0, 1, 0, 0, 0, 1],
+                'requested_node_index': 2
             }
         }
     ])
