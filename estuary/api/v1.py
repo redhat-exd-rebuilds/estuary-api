@@ -11,7 +11,7 @@ from estuary.models import story_flow_list
 from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
-    str_to_bool, get_neo4j_node, _order_story_results, create_story_query, story_flow)
+    str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results)
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -83,34 +83,40 @@ def get_resource_story(resource, uid):
     forward_query = create_story_query(item, item.id, limit=True)
     backward_query = create_story_query(item, item.id, reverse=True, limit=True)
 
-    def _get_partial_story(query, resources_to_expand):
+    def _get_partial_story(query, reverse=False):
         results, _ = db.cypher_query(query)
 
         if not results:
-            return {}
+            return []
 
-        # Assuming that if Path is the first result, then that's all we want to process.
+        # Assuming that if Path is the first result, then that's all we want to process
         results = [list(results[0][0].nodes)]
+        # Reverse will be true when it is a backward query to preserve the story order
+        if reverse:
+            results = [results[0][::-1]]
 
-        return EstuaryStructuredNode.inflate_results(results, resources_to_expand)[0]
+        return EstuaryStructuredNode.inflate_results(results)[0]
 
-    results_unordered = {}
+    results = []
     if forward_query:
-        results_unordered = _get_partial_story(forward_query, [resource])
+        results = _get_partial_story(forward_query)
 
     if backward_query:
-        results_unordered.update(
-            _get_partial_story(backward_query, [resource]))
+        backward_query_results = _get_partial_story(backward_query, reverse=True)
+        if backward_query_results and results:
+            # Remove the first element of backward_query_results in order to avoid
+            # duplication of the requested resource when result of forward query are not None.
+            backward_query_results = backward_query_results[:-1]
+        results = backward_query_results + results
 
     # Adding the artifact itself if it's story is not available
-    if len(results_unordered) == 0:
-        results = {'data': [], 'meta': {}}
-        results['meta']['related_nodes'] = {key: 0 for key in story_flow_list}
-        results['data'].append(item.serialized_all)
-        results['data'][0]['resource_type'] = item.__label__
-        return jsonify(results)
+    if not results:
+        rv = {'data': [item.serialized_all], 'meta': {}}
+        rv['meta']['story_related_nodes'] = [0]
+        rv['data'][0]['resource_type'] = item.__label__
+        return jsonify(rv)
 
-    return jsonify(_order_story_results(results_unordered))
+    return jsonify(format_story_results(results, item))
 
 
 @api_v1.route('/allstories/<resource>/<uid>')
@@ -132,7 +138,7 @@ def get_resource_all_stories(resource, uid):
     forward_query = create_story_query(item, item.id)
     backward_query = create_story_query(item, item.id, reverse=True)
 
-    def _get_partial_stories(query, resources_to_expand):
+    def _get_partial_stories(query, reverse=False):
 
         results_list = []
         results, _ = db.cypher_query(query)
@@ -168,44 +174,45 @@ def get_resource_all_stories(resource, uid):
         # list as the for loops will eliminate them. So we add the last element
         # since we are sure it is unique.
         unique_paths.append(results[0][0])
-        unique_paths_nodes = [path.nodes for path in unique_paths]
+        if reverse:
+            unique_paths_nodes = [path.nodes[::-1] for path in unique_paths]
+        else:
+            unique_paths_nodes = [path.nodes for path in unique_paths]
 
-        return EstuaryStructuredNode.inflate_results(unique_paths_nodes, resources_to_expand)
+        return EstuaryStructuredNode.inflate_results(unique_paths_nodes)
 
     if forward_query:
-        results_unordered_forward = _get_partial_stories(forward_query, [resource])
+        results_forward = _get_partial_stories(forward_query)
     else:
-        results_unordered_forward = []
+        results_forward = []
 
     if backward_query:
-        results_unordered_backward = _get_partial_stories(backward_query, [resource])
+        results_backward = _get_partial_stories(backward_query, reverse=True)
     else:
-        results_unordered_backward = []
+        results_backward = []
 
     all_results = []
-    if not results_unordered_backward or not results_unordered_forward:
-        if results_unordered_forward:
-            results_unordered_unidir = results_unordered_forward
+    if not results_backward or not results_forward:
+        if results_forward:
+            results_unidir = results_forward
         else:
-            results_unordered_unidir = results_unordered_backward
+            results_unidir = results_backward
 
-        for result in results_unordered_unidir:
-            all_results.append(_order_story_results(result))
+        for result in results_unidir:
+            all_results.append(format_story_results(result, item))
 
     else:
         # Combining all the backward and forward paths to generate all the possible full paths
-        for result_forward in results_unordered_forward:
-            for result_backward in results_unordered_backward:
-                results_unordered = result_forward.copy()
-                results_unordered.update(result_backward)
-                all_results.append(_order_story_results(results_unordered))
+        for result_forward in results_forward:
+            for result_backward in results_backward:
+                results = result_backward + result_forward[1:]
+                all_results.append(format_story_results(results, item))
 
     # Adding the artifact itself if its story is not available
-    if len(all_results) == 0:
-        results = {'data': [], 'meta': {}}
-        results['meta']['related_nodes'] = {key: 0 for key in story_flow_list}
-        results['data'].append(item.serialized_all)
-        results['data'][0]['resource_type'] = item.__label__
-        all_results.append(results)
+    if not all_results:
+        rv = {'data': [item.serialized_all], 'meta': {}}
+        rv['meta']['story_related_nodes'] = [0]
+        rv['data'][0]['resource_type'] = item.__label__
+        all_results.append(rv)
 
     return jsonify(all_results)

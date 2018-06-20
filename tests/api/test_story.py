@@ -121,14 +121,7 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 1,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [1, 0, 0, 0, 0, 0]
         }
     }),
     ('distgitcommit', ['8a63adb248ba633e200067e1ad6dc61931727bad'], {
@@ -287,14 +280,7 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 1,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [1, 0, 0, 0, 0, 0]
         }
     }),
     ('kojibuild', ['2345', 'slf4j-1.7.4-4.el7_4', 'slf4j-1.7.4-4.el7_4.src.rpm'], {
@@ -419,14 +405,7 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 1,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [1, 0, 0, 0, 0, 0]
         }
     }),
     ('advisory', ['27825', 'RHBA-2017:2251-02', 'RHBA-2017:2251'], {
@@ -549,14 +528,7 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 1,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [1, 0, 0, 0, 0, 0]
         }
     }),
     ('freshmakerevent', ['1180'], {
@@ -681,14 +653,7 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 1,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [1, 0, 0, 0, 0, 0]
         }
     }),
     ('containerkojibuild', ['710'], {
@@ -797,14 +762,7 @@ from estuary.models.user import User
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 1,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [1, 0, 0, 0, 0, 0]
         }
     })
 ])
@@ -918,6 +876,8 @@ def test_get_stories(client, resource, uids, expected):
     for uid in uids:
         url = '/api/v1/story/{0}/{1}'.format(resource, uid)
         rv = client.get(url)
+        import pprint
+        pprint.pprint(json.loads(rv.data.decode('utf-8')))
         assert rv.status_code == 200, 'Failed getting the resource at: {0}'.format(url)
         assert json.loads(rv.data.decode('utf-8')) == expected
 
@@ -975,14 +935,7 @@ def test_get_artifact_story_not_available(client):
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 0,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [0]
         }
     }
 
@@ -1051,14 +1004,7 @@ def test_get_stories_just_artifact(client):
             'updated_at': '2017-08-01T15:43:51+00:00'
         }],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 0,
-                'ContainerKojiBuild': 0,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [0]
         }
     }
 
@@ -1184,14 +1130,7 @@ def test_get_story_partial_story(client):
             }
         ],
         'meta': {
-            'related_nodes': {
-                'Advisory': 0,
-                'BugzillaBug': 0,
-                'ContainerKojiBuild': 1,
-                'DistGitCommit': 0,
-                'FreshmakerEvent': 0,
-                'KojiBuild': 0
-            }
+            'story_related_nodes': [0, 0, 1]
         }
     }
 

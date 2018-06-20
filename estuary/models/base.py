@@ -175,7 +175,7 @@ class EstuaryStructuredNode(StructuredNode):
                 return prop_def.name
 
     @staticmethod
-    def inflate_results(results, resources_to_expand):
+    def inflate_results(results, resources_to_expand=None):
         """
         Inflate and serialize the results.
 
@@ -186,23 +186,12 @@ class EstuaryStructuredNode(StructuredNode):
         """
         results_list = []
         for raw_result in results:
-            temp = {}
+            nodes = []
             for node in raw_result:
                 if node:
                     inflated_node = inflate_node(node)
-                    node_label = inflated_node.__label__
-                    if node_label not in temp:
-                        temp[node_label] = []
-
-                    if node_label.lower() in resources_to_expand:
-                        serialized_node = inflated_node.serialized_all
-                    else:
-                        serialized_node = inflated_node.serialized
-
-                    serialized_node['resource_type'] = node_label
-                    if serialized_node not in temp[node_label]:
-                        temp[node_label].append(serialized_node)
-            results_list.append(temp)
+                    nodes.append(inflated_node)
+            results_list.append(nodes)
 
         return results_list
 
