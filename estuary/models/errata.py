@@ -16,7 +16,7 @@ class Advisory(EstuaryStructuredNode):
     """Definition of an Errata advisory in Neo4j."""
 
     actual_ship_date = DateTimeProperty()
-    advisory_name = StringProperty(unique=True)
+    advisory_name = StringProperty(unique=True, index=True)
     content_types = ArrayProperty()
     created_at = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
