@@ -113,6 +113,7 @@ def get_resource_story(resource, uid):
     if not results:
         rv = {'data': [item.serialized_all], 'meta': {}}
         rv['meta']['story_related_nodes'] = [0]
+        rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
         return jsonify(rv)
 
@@ -212,6 +213,7 @@ def get_resource_all_stories(resource, uid):
     if not all_results:
         rv = {'data': [item.serialized_all], 'meta': {}}
         rv['meta']['story_related_nodes'] = [0]
+        rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
         all_results.append(rv)
 

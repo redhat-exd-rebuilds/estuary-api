@@ -324,8 +324,9 @@ def format_story_results(results, requested_item):
     :rtype: dict
     """
     data = []
-    for node in results:
+    for i, node in enumerate(results):
         if node.id == requested_item.id:
+            requested_node_index = i
             serialized_node = node.serialized_all
         else:
             serialized_node = node.serialized
@@ -333,5 +334,8 @@ def format_story_results(results, requested_item):
         data.append(serialized_node)
     return {
         'data': data,
-        'meta': {'story_related_nodes': list(get_correlated_nodes(results))}
+        'meta': {
+            'story_related_nodes': list(get_correlated_nodes(results)),
+            'requested_node_index': requested_node_index
+        }
     }
