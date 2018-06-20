@@ -22,14 +22,14 @@ class KojiBuild(EstuaryStructuredNode):
     epoch = StringProperty()
     extra = StringProperty()
     id_ = UniqueIdProperty(db_property='id')
-    name = StringProperty()
+    name = StringProperty(index=True)
     owner = RelationshipTo('.user.User', 'OWNED_BY', cardinality=ZeroOrOne)
-    release = StringProperty()
+    release = StringProperty(index=True)
     start_time = DateTimeProperty()
     state = IntegerProperty()
     tags = RelationshipFrom('KojiTag', 'CONTAINS')
     tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
-    version = StringProperty()
+    version = StringProperty(index=True)
 
     @classmethod
     def find_or_none(cls, identifier):
