@@ -125,22 +125,6 @@ def get_neo4j_node(resource_name, uid):
                 raise ValidationError(error)
 
 
-def create_node_subquery(node_label, uid_name=None, uid=None):
-    """
-    Build part of a raw cypher query for a node label.
-
-    :param str node_label: a Neo4j node label
-    :kwarg str uid_name: name of node's UniqueIdProperty
-    :kwarg str uid: value of node's UniqueIdProperty
-    :return: the node represented in raw cypher
-    :rtype: str
-    """
-    if uid_name and uid:
-        return '({0}:{1} {{{2}:"{3}"}})'.format(node_label.lower(), node_label,
-                                                uid_name.rstrip('_'), uid)
-    return '({0}:{1})'.format(node_label.lower(), node_label)
-
-
 def create_story_query(item, node_id, reverse=False, limit=False):
     """
     Create a raw cypher query for story of an artifact.
@@ -196,107 +180,60 @@ def create_story_query(item, node_id, reverse=False, limit=False):
     return query
 
 
-def get_corelated_nodes(results):
+def get_correlated_nodes(results):
     """
-    Create a raw cypher query for story nodes and get a count of the nodes co-related to them.
+    Iterate through the results and yield correlated nodes.
 
-    :param dict results: a dictionary containing story nodes
-    :return: a dictionary containing counts of all co-related nodes from Neo4j
-    :rtype: dict
+    :param list results: contains inflated results from Neo4j
+    :return: yield the results count (int) received from Neo4j
+    :rtype: generator
     """
-    # To avoid circular imports
-    from estuary.models.bugzilla import BugzillaBug
-
-    nodes_count_dict = {}
-    curr_label = BugzillaBug.__label__
-    last = False
-    while not last:
-        node_count = 0
-        next_node_info = story_flow(curr_label)
-        forward_label = next_node_info['forward_label']
-        if curr_label not in results:
-            # Keep looping until we get to a point in the story flow that is applicable to the
-            # passed in results
-            curr_label = forward_label
-            continue
-
-        if forward_label in results:
-            query = 'MATCH '
-            # Only grab the first element since there will only be one
-            next_node = results[forward_label][0]
-            forward_rel = next_node_info['forward_relationship'][:-1]
-            uid_name = story_flow(forward_label)['uid_name']
-            node_subquery = create_node_subquery(curr_label)
-            next_node_subquery = create_node_subquery(forward_label, uid_name, next_node[uid_name])
-            query += '{0}-[:{1}]-{2}\n'.format(node_subquery, forward_rel, next_node_subquery)
-            query += 'RETURN COUNT({0}) AS count'.format(curr_label.lower())
-            node_count = get_node_count(query)
-
-        backward_label = next_node_info['backward_label']
-        # If this evaluates to true, then this is the end of the story for the node, so we get
-        # the backwards related nodes (e.g. all the ContainerBuild that were triggered by a
-        # Freshmaker event)
-        if (not forward_label or forward_label not in results) and backward_label:
-            last = True
-            if backward_label not in results:
-                continue
-            query = 'MATCH '
-            backward_node = results[backward_label][0]
-            backward_rel = next_node_info['backward_relationship'][:-1]
-            uid_name = story_flow(backward_label)['uid_name']
-            node_subquery = create_node_subquery(backward_label, uid_name, backward_node[uid_name])
-            next_node_subquery = create_node_subquery(curr_label)
-            query += '{0}-[:{1}]-{2}\n'.format(node_subquery, backward_rel, next_node_subquery)
-            query += 'RETURN COUNT({0}) AS count'.format(curr_label.lower())
-            node_count = get_node_count(query)
-
-        # If there are related nodes, then there always will be at least a value of one because it
-        # includes the node already in the story. This is why we subtract here.
-        if node_count > 0:
-            nodes_count_dict[curr_label] = node_count - 1
-
-        curr_label = forward_label
-
-    return nodes_count_dict
+    if len(results) < 2:
+        raise RuntimeError('This function can\'t be called with one or zero elements')
+    for index in range(len(results)):
+        # If it's the last node in the story, the siblings for it are determined
+        # depending on the correlated node prior to it in the story
+        if index == len(results) - 1:
+            yield get_correlated_node(results[index], results[index - 1], last=True)
+        else:
+            yield get_correlated_node(results[index], results[index + 1])
 
 
-def get_node_count(query):
+def get_correlated_node(curr_node, next_node, last=False):
     """
     Query Neo4j and return the count of results.
 
-    :param str query: raw cypher query
-    :return: a dictionary containing the results count received from Neo4j.
+    :param EstuaryStructuredNode curr_node: node for which the siblings count is to be calculated
+    :param EstuaryStructuredNode next_node: correlated node to curr_node in the story/path
+    :kwarg bool last: determines if it's the last node in the story/path
+    :return: siblings count of curr_node
     :rtype: int
     """
-    results_dict = {}
+    # To avoid circular imports
+    from estuary.models.koji import KojiBuild
+    from estuary.models.distgit import DistGitCommit
+
+    next_node_label = next_node.__label__
+    if curr_node.__label__ == DistGitCommit.__label__:
+        # Always consider the next node as a KojiBuild because if it's
+        # a ContainerKojiBuild after a DistGitCommit, it should be
+        # treated as a normal KojiBuild in the story flow
+        next_node_label = KojiBuild.__label__
+    item_story_flow = story_flow(next_node_label)
+    relationship = item_story_flow['backward_relationship'][:-1]
+    if last:
+        relationship = item_story_flow['forward_relationship'][:-1]
+    query = ('MATCH (next_node:{next_label})-[:{rel}]-(sibling:{curr_label})'
+             'WHERE id(next_node)= {next_node_id} RETURN COUNT(sibling) as count').format(
+        next_label=next_node_label, rel=relationship, curr_label=curr_node.__label__,
+        next_node_id=next_node.id)
     results, _ = db.cypher_query(query)
 
-    if not results:
-        return results_dict
-
-    return results[0][0]
-
-
-def _order_story_results(result):
-    """
-    Order results to follow the story flow sequence.
-
-    :param dict results: contains serialized results from Neo4j
-    :return: a dict containing results ordered in the story flow sequence
-    :rtype: dict
-    """
-    results = {'data': [], 'meta': {'related_nodes': {}}}
-    curr_label = 'BugzillaBug'
-    while curr_label:
-        results['meta']['related_nodes'][curr_label] = 0
-        if curr_label in result:
-            results['data'].append(result[curr_label][0])
-
-        curr_label = story_flow(curr_label)['forward_label']
-
-    results['meta']['related_nodes'].update(get_corelated_nodes(result))
-
-    return results
+    count = results[0][0]
+    if count == 0:
+        return count
+    # We reduce the count by one to not account for the node already being shown in the story
+    return count - 1
 
 
 def story_flow(label):
@@ -375,3 +312,26 @@ def story_flow(label):
         }
     else:
         raise ValueError('The label should belong to a Neo4j node class')
+
+
+def format_story_results(results, requested_item):
+    """
+    Format story results from Neo4j to the API format.
+
+    :param list results: nodes in a story/path
+    :param EstuaryStructuredNode requested_item: item requested by the user
+    :return: results in API format
+    :rtype: dict
+    """
+    data = []
+    for node in results:
+        if node.id == requested_item.id:
+            serialized_node = node.serialized_all
+        else:
+            serialized_node = node.serialized
+        serialized_node['resource_type'] = node.__label__
+        data.append(serialized_node)
+    return {
+        'data': data,
+        'meta': {'story_related_nodes': list(get_correlated_nodes(results))}
+    }
