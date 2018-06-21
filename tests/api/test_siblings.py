@@ -16,34 +16,105 @@ from estuary.models.freshmaker import FreshmakerEvent
 @pytest.mark.parametrize('resource,uid,last,expected', [
     ('advisory', '27825', False, [
         {
+            'advisories': [
+                {
+                    'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                    'advisory_name': 'RHBA-2017:2251-02',
+                    'content_types': [
+                        'docker'
+                    ],
+                    'created_at': '2017-04-03T14:47:23+00:00',
+                    'id': '27825',
+                    'issue_date': '2017-08-01T05:59:34+00:00',
+                    'product_name': 'Red Hat Enterprise Linux',
+                    'product_short_name': 'RHEL',
+                    'release_date': None,
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'SHIPPED_LIVE',
+                    'status_time': '2017-08-01T15:43:51+00:00',
+                    'synopsis': 'cifs-utils bug fix update',
+                    'type': 'RHBA',
+                    'update_date': '2017-08-01T07:16:00+00:00',
+                    'updated_at': '2017-08-01T15:43:51+00:00'
+                }
+            ],
+            'commit': None,
             'completion_time': '2017-04-02T19:39:06+00:00',
             'creation_time': '2017-04-02T19:39:06+00:00',
             'epoch': '0',
             'extra': None,
             'id': '3456',
             'name': 'slf3j',
+            'owner': None,
             'release': '4.el6_3',
             'resource_type': 'KojiBuild',
             'start_time': '2017-04-02T19:39:06+00:00',
             'state': 2,
+            'tags':[
+
+            ],
+            'tasks':[
+
+            ],
             'version': '1.7.1'
         },
         {
+            'advisories': [
+                {
+                    'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                    'advisory_name': 'RHBA-2017:2251-02',
+                    'content_types': [
+                        'docker'
+                    ],
+                    'created_at': '2017-04-03T14:47:23+00:00',
+                    'id': '27825',
+                    'issue_date': '2017-08-01T05:59:34+00:00',
+                    'product_name': 'Red Hat Enterprise Linux',
+                    'product_short_name': 'RHEL',
+                    'release_date': None,
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'SHIPPED_LIVE',
+                    'status_time': '2017-08-01T15:43:51+00:00',
+                    'synopsis': 'cifs-utils bug fix update',
+                    'type': 'RHBA',
+                    'update_date': '2017-08-01T07:16:00+00:00',
+                    'updated_at': '2017-08-01T15:43:51+00:00'
+                }
+            ],
+            'commit':{
+                'author_date': '2017-04-26T11:44:38+00:00',
+                'commit_date': '2017-04-26T11:44:38+00:00',
+                'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
+                'log_message': 'Related: #12345 - fix xyz'
+            },
             'completion_time': '2017-04-02T19:39:06+00:00',
             'creation_time': '2017-04-02T19:39:06+00:00',
             'epoch': '0',
             'extra': None,
             'id': '2345',
             'name': 'slf4j',
+            'owner': None,
             'release': '4.el7_4',
             'resource_type': 'KojiBuild',
             'start_time': '2017-04-02T19:39:06+00:00',
             'state': 1,
+            'tags': [
+
+            ],
+            'tasks':[
+
+            ],
             'version': '1.7.4'
         }
     ]),
     ('freshmakerevent', '1180', True, [
         {
+            'advisories': [
+
+            ],
+            'commit': None,
             'completion_time': '2018-04-02T19:39:06+00:00',
             'creation_time': '2018-04-02T19:39:06+00:00',
             'epoch': '0',
@@ -51,13 +122,33 @@ from estuary.models.freshmaker import FreshmakerEvent
             'id': '811',
             'name': 'some_build',
             'original_nvr': None,
+            'owner': None,
             'release': '4.el7_4_as',
             'resource_type': 'ContainerKojiBuild',
             'start_time': '2018-04-02T19:39:06+00:00',
-            'state': 2,
+            'state':2,
+            'tags':[
+
+            ],
+            'tasks':[
+
+            ],
+            'triggered_by_freshmaker_event':{
+                'event_type_id': 8,
+                'id': '1180',
+                'message_id': 'ID:messaging-devops-broker01.test',
+                'state': 2,
+                'state_name': 'COMPLETE',
+                'state_reason': 'All container images have been rebuilt.',
+                'url': '/api/1/events/1180'
+            },
             'version': '1.7.5'
         },
         {
+            'advisories': [
+
+            ],
+            'commit': None,
             'completion_time': '2017-04-02T19:39:06+00:00',
             'creation_time': '2017-04-02T19:39:06+00:00',
             'epoch': '0',
@@ -65,10 +156,26 @@ from estuary.models.freshmaker import FreshmakerEvent
             'id': '710',
             'name': 'slf4j_2',
             'original_nvr': None,
+            'owner': None,
             'release': '4.el7_4_as',
             'resource_type': 'ContainerKojiBuild',
             'start_time': '2017-04-02T19:39:06+00:00',
             'state': 1,
+            'tags':[
+
+            ],
+            'tasks':[
+
+            ],
+            'triggered_by_freshmaker_event':{
+                'event_type_id': 8,
+                'id': '1180',
+                'message_id': 'ID:messaging-devops-broker01.test',
+                'state': 2,
+                'state_name': 'COMPLETE',
+                'state_reason': 'All container images have been rebuilt.',
+                'url': '/api/1/events/1180'
+            },
             'version': '1.7.4'
         }
     ])
@@ -180,6 +287,8 @@ def test_node_siblings(client, resource, uid, last, expected):
     else:
         rv = client.get('/api/v1/siblings/{0}/{1}?last=True'.format(resource, uid))
     assert rv.status_code == 200
+    import pprint
+    pprint.pprint(json.loads(rv.data.decode('utf-8')))
     assert json.loads(rv.data.decode('utf-8')) == expected
 
 

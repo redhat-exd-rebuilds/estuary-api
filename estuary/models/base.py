@@ -175,12 +175,11 @@ class EstuaryStructuredNode(StructuredNode):
                 return prop_def.name
 
     @staticmethod
-    def inflate_results(results, resources_to_expand=None):
+    def inflate_results(results):
         """
-        Inflate and serialize the results.
+        Inflate the results.
 
         :param str results: results obtained from Neo4j
-        :param list resources_to_expand: resources to expand
         :return: a list of dictionaries containing serialized results received from Neo4j
         :rtype: list
         """
