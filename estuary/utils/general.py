@@ -180,7 +180,7 @@ def create_story_query(item, node_id, reverse=False, limit=False):
     return query
 
 
-def get_correlated_nodes(results):
+def get_correlated_nodes_count(results):
     """
     Iterate through the results and yield correlated nodes.
 
@@ -194,27 +194,30 @@ def get_correlated_nodes(results):
         # If it's the last node in the story, the siblings for it are determined
         # depending on the correlated node prior to it in the story
         if index == len(results) - 1:
-            yield get_correlated_node(results[index], results[index - 1], last=True)
+            yield get_correlated_nodes(results[index].__label__, results[index - 1],
+                                       last=True, count=True)
         else:
-            yield get_correlated_node(results[index], results[index + 1])
+            yield get_correlated_nodes(results[index].__label__, results[index + 1], count=True)
 
 
-def get_correlated_node(curr_node, next_node, last=False):
+def get_correlated_nodes(curr_node_label, next_node, last=False, count=False):
     """
     Query Neo4j and return the count of results.
 
-    :param EstuaryStructuredNode curr_node: node for which the siblings count is to be calculated
+    :param str curr_node_label: node label for which the siblings count is to be calculated
     :param EstuaryStructuredNode next_node: correlated node to curr_node in the story/path
     :kwarg bool last: determines if it's the last node in the story/path
-    :return: siblings count of curr_node
-    :rtype: int
+    :kwarg bool last: determines if only count of sibling nodes should be returned
+    or the nodes themselves
+    :return: siblings count of curr_node | sibling nodes
+    :rtype: int | EstuaryStructuredNode
     """
     # To avoid circular imports
     from estuary.models.koji import KojiBuild
     from estuary.models.distgit import DistGitCommit
 
     next_node_label = next_node.__label__
-    if curr_node.__label__ == DistGitCommit.__label__:
+    if curr_node_label == DistGitCommit.__label__:
         # Always consider the next node as a KojiBuild because if it's
         # a ContainerKojiBuild after a DistGitCommit, it should be
         # treated as a normal KojiBuild in the story flow
@@ -228,17 +231,24 @@ def get_correlated_node(curr_node, next_node, last=False):
     relationship = item_story_flow['backward_relationship'][:-1]
     if last:
         relationship = item_story_flow['forward_relationship'][:-1]
-    query = ('MATCH (next_node:{next_label})-[:{rel}]-(sibling:{curr_label})'
-             'WHERE id(next_node)= {next_node_id} RETURN COUNT(sibling) as count').format(
-        next_label=next_node_label, rel=relationship, curr_label=curr_node.__label__,
-        next_node_id=next_node.id)
-    results, _ = db.cypher_query(query)
 
-    count = results[0][0]
-    if count == 0:
-        return count
-    # We reduce the count by one to not account for the node already being shown in the story
-    return count - 1
+    query = ('MATCH (next_node:{next_label})-[:{rel}]-(sibling:{curr_label})'
+             'WHERE id(next_node)= {next_node_id}').format(
+        next_label=next_node_label, rel=relationship, curr_label=curr_node_label,
+        next_node_id=next_node.id)
+
+    if count:
+        query += ' RETURN COUNT(sibling) as count'
+        results, _ = db.cypher_query(query)
+        count = results[0][0]
+        if count == 0:
+            return count
+        # We reduce the count by one to not account for the node already being shown in the story
+        return count - 1
+    else:
+        query += ' RETURN sibling'
+        results, _ = db.cypher_query(query)
+        return results
 
 
 def story_flow(label):
@@ -340,7 +350,7 @@ def format_story_results(results, requested_item):
     return {
         'data': data,
         'meta': {
-            'story_related_nodes': list(get_correlated_nodes(results)),
+            'story_related_nodes': list(get_correlated_nodes_count(results)),
             'requested_node_index': requested_node_index
         }
     }

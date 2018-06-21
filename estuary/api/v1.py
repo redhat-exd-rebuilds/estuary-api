@@ -11,7 +11,11 @@ from estuary.models import story_flow_list
 from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
-    str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results)
+    str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results,
+    get_correlated_nodes, inflate_node
+)
+from estuary.error import ValidationError
+
 
 api_v1 = Blueprint('api_v1', __name__)
 
@@ -218,3 +222,42 @@ def get_resource_all_stories(resource, uid):
         all_results.append(rv)
 
     return jsonify(all_results)
+
+
+@api_v1.route('/siblings/<resource>/<uid>')
+def get_siblings(resource, uid):
+    """
+    Get siblings of next/previous node that are correlated to the node in question.
+
+    :param str resource: a resource name that maps to a neomodel class
+    :param str uid: the value of the UniqueIdProperty to query with
+    :return: a Flask JSON response
+    :rtype: flask.Response
+    :raises NotFound: if the item is not found
+    :raises ValidationError: if an invalid resource was requested
+    """
+    # If last is True, we fetch siblings of the next node, previous node otherwise
+    last = request.args.get('last', False)
+
+    item = get_neo4j_node(resource, uid)
+    if not item:
+        raise NotFound('This item does not exist')
+
+    item_story_flow = story_flow(item.__label__)
+    if not item_story_flow['backward_label'] or not item_story_flow['forward_label']:
+        raise ValidationError('Siblings cannot be determined on this kind of resource')
+
+    if last:
+        correlated_nodes = get_correlated_nodes(item_story_flow['forward_label'], item, last=True)
+    else:
+        correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
+
+    # Inflating and formatting results from Neo4j
+    serialized_results = []
+    for result in correlated_nodes:
+        inflated_node = inflate_node(result[0])
+        serialized_node = inflated_node.serialized_all
+        serialized_node['resource_type'] = inflated_node.__label__
+        serialized_results.append(serialized_node)
+
+    return jsonify(serialized_results)
