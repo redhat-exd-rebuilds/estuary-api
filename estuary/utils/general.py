@@ -219,6 +219,11 @@ def get_correlated_node(curr_node, next_node, last=False):
         # a ContainerKojiBuild after a DistGitCommit, it should be
         # treated as a normal KojiBuild in the story flow
         next_node_label = KojiBuild.__label__
+    elif last and next_node_label == 'ContainerKojiBuild':
+        # Always consider the next node as a KojiBuild because if it's
+        # a ContainerKojiBuild and the story ended on an Advisory it should be
+        # treated as a normal KojiBuild in the story flow
+        next_node_label = KojiBuild.__label__
     item_story_flow = story_flow(next_node_label)
     relationship = item_story_flow['backward_relationship'][:-1]
     if last:
