@@ -17,8 +17,6 @@ RUN dnf -y install \
     --setopt=tsflags=nodocs \
     python3-beautifulsoup4 \
     python3-flask \
-    # Until 1.6.0 is supported, we need to hardcode this entry
-    python3-neo4j-driver-1.5.3 \
     python3-neomodel \
     python3-psycopg2 \
     python3-PyYAML \

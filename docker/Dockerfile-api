@@ -9,8 +9,6 @@ RUN dnf -y install \
     bash \
     python3-flask \
     python3-gunicorn \
-    # Until 1.6.0 is supported, we need to hardcode this entry
-    python3-neo4j-driver-1.5.3 \
     python3-neomodel \
     python3-six \
     && dnf clean all
