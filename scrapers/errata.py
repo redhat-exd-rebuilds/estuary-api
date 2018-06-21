@@ -7,10 +7,10 @@ import yaml
 from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
 from estuary import log
-from estuary.models.errata import Advisory, AdvisoryState
+from estuary.models.errata import Advisory, AdvisoryState, ContainerAdvisory
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.koji import KojiBuild
+from estuary.models.koji import KojiBuild, ContainerKojiBuild
 
 
 class ErrataScraper(BaseScraper):
@@ -69,6 +69,51 @@ class ErrataScraper(BaseScraper):
                 'update_date': advisory['update_date'],
                 'updated_at': advisory['updated_at']
             })[0]
+            container_adv = False
+
+            for associated_build in self.get_associated_builds(advisory['id']):
+                # Even if a node has two labels in the database, Neo4j returns the node
+                # only with the specific label you asked for. Hence we check for labels
+                # ContainerKojiBuild and KojiBuild separately for the same node.
+                build = ContainerKojiBuild.nodes.get_or_none(id_=associated_build['id_'])
+                if not build:
+                    build = KojiBuild.nodes.get_or_none(id_=associated_build['id_'])
+
+                if build and not container_adv:
+                    if build.__label__ == 'ContainerKojiBuild':
+                        adv.add_label(ContainerAdvisory.__label__)
+                        container_adv = True
+
+                # If this is set, that means it was once part of the advisory but not anymore.
+                # This relationship needs to be deleted if it exists.
+                if associated_build['removed_index_id']:
+                    if build:
+                        adv.attached_builds.disconnect(build)
+                else:
+                    # Query Teiid and create the entry only if the build is not present in Neo4j
+                    if not build:
+                        attached_build = self.get_koji_build(associated_build['id_'])
+                        if attached_build:
+                            if self.is_container_build(attached_build):
+                                build = ContainerKojiBuild.get_or_create(
+                                    {'id_': associated_build['id_']})[0]
+                            else:
+                                build = KojiBuild.get_or_create(
+                                    {'id_': associated_build['id_']})[0]
+
+                    # This will happen only if we do not find the build we are looking for in Teiid
+                    # which shouldn't usually happen under normal conditions
+                    if not build:
+                        log.warn('The Koji build with ID {} was not found in Teiid!'.format(
+                            associated_build['id_']))
+                        continue
+
+                    if (adv.__label__ != ContainerAdvisory.__label__ and
+                            build.__label__ == ContainerKojiBuild.__label__):
+                        adv.add_label(ContainerAdvisory.__label__)
+
+                    adv.attached_builds.connect(build)
+
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
             adv.conditional_connect(adv.assigned_to, assigned_to)
             package_owner = User.get_or_create(
@@ -91,19 +136,6 @@ class ErrataScraper(BaseScraper):
             for attached_bug in self.get_attached_bugs(advisory['id']):
                 bug = BugzillaBug.get_or_create(attached_bug)[0]
                 adv.attached_bugs.connect(bug)
-
-            for associated_build in self.get_associated_builds(advisory['id']):
-                # If this is set, that means it was once part of the advisory but not anymore.
-                # This relationship needs to be deleted if it exists.
-                if associated_build['removed_index_id']:
-                    build = KojiBuild.nodes.get_or_none(id_=associated_build['id_'])
-                    if build:
-                        adv.attached_builds.disconnect(build)
-                else:
-                    # This key shouldn't be stored in Neo4j
-                    del associated_build['removed_index_id']
-                    build = KojiBuild.get_or_create(associated_build)[0]
-                    adv.attached_builds.connect(build)
 
     def get_advisories(self, since, until):
         """
@@ -206,3 +238,23 @@ class ErrataScraper(BaseScraper):
         """.format(advisory_id)
         log.info('Getting Bugzilla bugs tied to the advisory with ID {0}'.format(advisory_id))
         return self.teiid.query(sql)
+
+    def get_koji_build(self, build_id):
+        """
+        Query Teiid to find the Koji build attached to a specific advisory.
+
+        :param int build_id: the build ID
+        :return: a list of a dictionaries
+        :rtype: list
+        """
+        sql = """\
+            SELECT
+                build.extra,
+                package.name as package_name
+            FROM build
+            LEFT JOIN package ON build.pkg_id = package.id
+            WHERE build.id = {0};
+            """.format(build_id)
+
+        result = self.teiid.query(sql)
+        return result[0] if len(result) > 0 else None

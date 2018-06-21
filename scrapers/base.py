@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 from datetime import datetime, date, timedelta
+import json
 
 from neomodel import config as neomodel_config
 
@@ -46,3 +47,29 @@ class BaseScraper(object):
         :raises NotImplementedError: if the function is not overridden
         """
         raise NotImplementedError()
+
+    def is_container_build(self, build_info):
+        """
+        Check whether a Koji build is a container build.
+
+        :param KojiBuild build_info: build info from Teiid
+        :return: boolean value indicating whether the build is a container build
+        :rtype: bool
+        """
+        package_name = build_info['package_name']
+        try:
+            extra_json = json.loads(build_info['extra'])
+        except (ValueError, TypeError):
+            extra_json = {}
+
+        # Checking a heuristic for determining if a build is a container build since, currently
+        # there is no definitive way to do it.
+        if extra_json and (extra_json.get('container_koji_build_id') or
+                           extra_json.get('container_koji_task_id')):
+            return True
+        # Checking another heuristic for determining if a build is a container build since
+        # currently there is no definitive way to do it.
+        elif (package_name.endswith('-container') or package_name.endswith('-docker')):
+            return True
+        else:
+            return False

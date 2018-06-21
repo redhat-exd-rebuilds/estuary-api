@@ -9,7 +9,7 @@ import pytest
 from estuary.models.koji import KojiBuild, ContainerKojiBuild
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
-from estuary.models.errata import Advisory
+from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
 
 
@@ -322,16 +322,22 @@ def test_first_node_of_story(client):
 
 def test_last_node_of_story(client):
     """Tests getting the siblings for the last node of the story."""
-    ContainerKojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
-        'epoch': '0',
-        'id_': '710',
-        'name': 'slf4j_2',
-        'release': '4.el7_4_as',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
-        'state': 1,
-        'version': '1.7.4'
+    ContainerAdvisory.get_or_create({
+        'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
+        'advisory_name': 'RHBA-2017:2251-03',
+        'content_types': ['docker'],
+        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'id_': '12327',
+        'issue_date': datetime(2017, 8, 1, 5, 59, 34),
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'security_impact': 'None',
+        'state': 'SHIPPED_LIVE',
+        'status_time': datetime(2017, 8, 1, 15, 43, 51),
+        'synopsis': 'cifs-utils bug fix update',
+        'type_': 'RHBA',
+        'update_date': datetime(2017, 8, 1, 7, 16),
+        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]
 
     expected = {
@@ -339,6 +345,6 @@ def test_last_node_of_story(client):
         'status': 400
     }
 
-    rv = client.get('/api/v1/siblings/containerkojibuild/710')
+    rv = client.get('/api/v1/siblings/containeradvisory/12327')
     assert rv.status_code == 400
     assert json.loads(rv.data.decode('utf-8')) == expected

@@ -45,6 +45,8 @@ class EstuaryStructuredNode(StructuredNode):
         :rtype: dictionary
         :raises RuntimeError: if the label of a Neo4j node can't be mapped back to a neomodel class
         """
+        # Avoid circular imports
+        from estuary.models import models_inheritance
         # A set that will keep track of all properties on the node that weren't returned from Neo4j
         null_properties = set()
         # A mapping of Neo4j relationship names in the format of:
@@ -57,24 +59,25 @@ class EstuaryStructuredNode(StructuredNode):
         for property_name, relationship in self.__all_relationships__:
             node_label = relationship.definition['node_class'].__label__
             relationship_name = relationship.definition['relation_type']
-            if node_label not in relationship_map:
-                relationship_map[node_label] = {}
+            for label in models_inheritance[node_label]:
+                if label not in relationship_map:
+                    relationship_map[label] = {}
 
-            relationship_direction = relationship.definition['direction']
-            if relationship_direction == EITHER:
-                # The direction can be coming from either direction, so map both
-                properties = {
-                    INCOMING: (property_name, relationship.manager),
-                    OUTGOING: (property_name, relationship.manager),
-                }
-            else:
-                properties = {relationship_direction: (property_name, relationship.manager)}
+                relationship_direction = relationship.definition['direction']
+                if relationship_direction == EITHER:
+                    # The direction can be coming from either direction, so map both
+                    properties = {
+                        INCOMING: (property_name, relationship.manager),
+                        OUTGOING: (property_name, relationship.manager),
+                    }
+                else:
+                    properties = {relationship_direction: (property_name, relationship.manager)}
 
-            if relationship_name not in relationship_map[node_label]:
-                relationship_map[node_label][relationship_name] = properties
-            else:
-                relationship_map[node_label][relationship_name].update(properties)
-            null_properties.add(property_name)
+                if relationship_name not in relationship_map[label]:
+                    relationship_map[label][relationship_name] = properties
+                else:
+                    relationship_map[label][relationship_name].update(properties)
+                null_properties.add(property_name)
 
         # This variable will contain the current node as serialized + all relationships
         serialized = self.serialized
