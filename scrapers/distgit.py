@@ -62,7 +62,7 @@ class DistGitScraper(BaseScraper):
         :rtype: generator
         """
         list_iterator = iter(results)
-        chunk_size = 10000
+        chunk_size = 5000
         count = 0
         while True:
             chunk = list(islice(list_iterator, chunk_size))
