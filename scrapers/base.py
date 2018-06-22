@@ -16,7 +16,7 @@ class BaseScraper(object):
     teiid_port = 5432
     # Default start date and end date to fetch data
     default_since = (datetime.utcnow() - timedelta(days=365)).strftime('%Y-%m-%d')
-    default_until = str(date.today())
+    default_until = str(date.today() + timedelta(days=1))
 
     def __init__(self, teiid_user=None, teiid_password=None, kerberos=False, neo4j_user='neo4j',
                  neo4j_password='neo4j', neo4j_server='localhost'):
