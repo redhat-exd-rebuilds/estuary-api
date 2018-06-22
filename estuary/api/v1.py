@@ -81,6 +81,7 @@ def get_resource_story(resource, uid):
     :raises ValidationError: if an invalid resource was requested
     """
     fallback_resources = request.args.getlist('fallback')
+
     # Try all resources input by the user
     for _resource in [resource] + fallback_resources:
         item = get_neo4j_node(_resource, uid)
