@@ -892,3 +892,105 @@ def test_all_stories(client, resource, uid, expected):
     rv = client.get('/api/v1/allstories/{0}/{1}'.format(resource, uid))
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+def test_get_stories_fallback(client):
+    """Test getting all the stories for a resource and falling back to a different label."""
+    build = KojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '2345',
+        'name': 'slf4j',
+        'release': '4.el7_4',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'state': 1,
+        'version': '1.7.4'
+    })[0]
+    advisory = Advisory.get_or_create({
+        'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
+        'advisory_name': 'RHBA-2017:2251-02',
+        'content_types': ['docker'],
+        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'id_': '27825',
+        'issue_date': datetime(2017, 8, 1, 5, 59, 34),
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'security_impact': 'None',
+        'state': 'SHIPPED_LIVE',
+        'status_time': datetime(2017, 8, 1, 15, 43, 51),
+        'synopsis': 'cifs-utils bug fix update',
+        'type_': 'RHBA',
+        'update_date': datetime(2017, 8, 1, 7, 16),
+        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+    })[0]
+
+    build.advisories.connect(advisory)
+    expected = [{
+        'data': [
+            {
+                'advisories': [{
+                    'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                    'advisory_name': 'RHBA-2017:2251-02',
+                    'content_types': ['docker'],
+                    'created_at': '2017-04-03T14:47:23+00:00',
+                    'id': '27825',
+                    'issue_date': '2017-08-01T05:59:34+00:00',
+                    'product_name': 'Red Hat Enterprise Linux',
+                    'product_short_name': 'RHEL',
+                    'release_date': None,
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'SHIPPED_LIVE',
+                    'status_time': '2017-08-01T15:43:51+00:00',
+                    'synopsis': 'cifs-utils bug fix update',
+                    'type': 'RHBA',
+                    'update_date': '2017-08-01T07:16:00+00:00',
+                    'updated_at': '2017-08-01T15:43:51+00:00'
+                }],
+                'commit': None,
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '2345',
+                'name': 'slf4j',
+                'owner': None,
+                'release': '4.el7_4',
+                'resource_type': 'KojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 1,
+                'tags': [],
+                'tasks': [],
+                'version': '1.7.4'
+            },
+            {
+                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'advisory_name': 'RHBA-2017:2251-02',
+                'content_types': ['docker'],
+                'created_at': '2017-04-03T14:47:23+00:00',
+                'id': '27825',
+                'issue_date': '2017-08-01T05:59:34+00:00',
+                'product_name': 'Red Hat Enterprise Linux',
+                'product_short_name': 'RHEL',
+                'release_date': None,
+                'resource_type': 'Advisory',
+                'security_impact': 'None',
+                'security_sla': None,
+                'state': 'SHIPPED_LIVE',
+                'status_time': '2017-08-01T15:43:51+00:00',
+                'synopsis': 'cifs-utils bug fix update',
+                'type': 'RHBA',
+                'update_date': '2017-08-01T07:16:00+00:00',
+                'updated_at': '2017-08-01T15:43:51+00:00'
+            }
+        ],
+        'meta': {
+            'requested_node_index': 0,
+            'story_related_nodes': [0, 0]
+        }
+    }]
+
+    rv = client.get('/api/v1/allstories/containerkojibuild/2345?fallback=kojibuild')
+    assert rv.status_code == 200
+    assert json.loads(rv.data.decode('utf-8')) == expected

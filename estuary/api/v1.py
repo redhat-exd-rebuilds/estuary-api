@@ -80,7 +80,14 @@ def get_resource_story(resource, uid):
     :raises NotFound: if the item is not found
     :raises ValidationError: if an invalid resource was requested
     """
-    item = get_neo4j_node(resource, uid)
+    fallback_resources = request.args.getlist('fallback')
+    # Try all resources input by the user
+    for _resource in [resource] + fallback_resources:
+        item = get_neo4j_node(_resource, uid)
+        # If a resource is found, we don't need to try the other resources
+        if item:
+            break
+
     if not item:
         raise NotFound('This item does not exist')
 
@@ -136,9 +143,13 @@ def get_resource_all_stories(resource, uid):
     :raises NotFound: if the item is not found
     :raises ValidationError: if an invalid resource was requested
     """
-    item = get_neo4j_node(resource, uid)
-    if not item:
-        raise NotFound('This item does not exist')
+    fallback_resources = request.args.getlist('fallback')
+    # Try all resources input by the user
+    for _resource in [resource] + fallback_resources:
+        item = get_neo4j_node(_resource, uid)
+        # If a resource is found, we don't need to try the other resources
+        if item:
+            break
 
     forward_query = create_story_query(item, item.id)
     backward_query = create_story_query(item, item.id, reverse=True)
