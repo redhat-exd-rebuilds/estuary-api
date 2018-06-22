@@ -196,7 +196,7 @@ def get_correlated_nodes_count(results):
         # If it's the last node in the story, the siblings for it are determined
         # depending on the correlated node prior to it in the story
         if index == len(results) - 1:
-            yield get_correlated_nodes(results[index].__label__, results[index - 1],
+            yield get_correlated_nodes(results[index].__label__, results[index-1],
                                        last=True, count=True)
         else:
             yield get_correlated_nodes(results[index].__label__, results[index + 1], count=True)
@@ -214,21 +214,8 @@ def get_correlated_nodes(curr_node_label, next_node, last=False, count=False):
     :return: siblings count of curr_node | sibling nodes
     :rtype: int | EstuaryStructuredNode
     """
-    # To avoid circular imports
-    from estuary.models.koji import KojiBuild
-    from estuary.models.distgit import DistGitCommit
 
     next_node_label = next_node.__label__
-    if curr_node_label == DistGitCommit.__label__:
-        # Always consider the next node as a KojiBuild because if it's
-        # a ContainerKojiBuild after a DistGitCommit, it should be
-        # treated as a normal KojiBuild in the story flow
-        next_node_label = KojiBuild.__label__
-    elif last and next_node_label == 'ContainerKojiBuild':
-        # Always consider the next node as a KojiBuild because if it's
-        # a ContainerKojiBuild and the story ended on an Advisory it should be
-        # treated as a normal KojiBuild in the story flow
-        next_node_label = KojiBuild.__label__
     item_story_flow = story_flow(next_node_label)
     relationship = item_story_flow['backward_relationship'][:-1]
     if last:
