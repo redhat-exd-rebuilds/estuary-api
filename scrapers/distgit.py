@@ -49,7 +49,9 @@ class DistGitScraper(BaseScraper):
             self._update_neo4j, neomodel_config.DATABASE_URL, len(results))
         # Create a multi-processing pool to process chunks of results
         pool = Pool(2)
-        pool.map(_update_neo4j_partial, self._get_result_chunks(results))
+        # Overwrite results with the formatted results so we don't have to store both in RAM
+        results = list(self._get_result_chunks(results))
+        pool.map(_update_neo4j_partial, results)
         log.info('Initial load of dist-git commits complete!')
 
     @staticmethod
