@@ -2,16 +2,15 @@
 
 from __future__ import unicode_literals
 import re
-from multiprocessing import Pool
+from multiprocessing import Process
 from multiprocessing.dummy import Pool as ThreadPool
 from os import getenv
 from itertools import islice
-from functools import partial
 
 from builtins import bytes
 from bs4 import BeautifulSoup
 from requests import ConnectionError
-from neomodel import config as neomodel_config
+from neomodel import config as neomodel_config, db
 
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
@@ -43,15 +42,32 @@ class DistGitScraper(BaseScraper):
         else:
             end_date = timestamp_to_date(until)
         results = self.get_distgit_data(start_date, end_date)
-        log.info('Successfully fetched {0} results from Teiid'.format(len(results)))
-        # Upload the results to Neo4j
-        _update_neo4j_partial = partial(
-            self._update_neo4j, neomodel_config.DATABASE_URL, len(results))
-        # Create a multi-processing pool to process chunks of results
-        pool = Pool(2)
+        total_results = len(results)
+        log.info('Successfully fetched {0} results from Teiid'.format(total_results))
         # Overwrite results with the formatted results so we don't have to store both in RAM
         results = list(self._get_result_chunks(results))
-        pool.map(_update_neo4j_partial, results)
+        # Upload the results to Neo4j using multi-processing to process chunks of results. We don't
+        # use pool so that way the process doesn't get reused and the RAM is returned to the OS.
+        # This will aid in a work-around for a memory leak from one of the libraries used that
+        # couldn't be tracked down.
+        procs = []
+        concurrent_procs = 2
+        for i, result in enumerate(results):
+            # Only check if we've reached the process limit after it's technically possible
+            if i >= concurrent_procs:
+                active_procs = [_proc for _proc in procs if _proc.is_alive()]
+                if len(active_procs) >= concurrent_procs:
+                    log.debug('There are already {0} processes running. Will wait until one of '
+                              'them completes.'.format(len(active_procs)))
+                    active_procs[0].join()
+            proc = Process(target=self._update_neo4j,
+                           args=(neomodel_config.DATABASE_URL, total_results, result))
+            proc.start()
+            procs.append(proc)
+
+        for proc in procs:
+            # Wait for all the processes to finish
+            proc.join()
         log.info('Initial load of dist-git commits complete!')
 
     @staticmethod
@@ -167,6 +183,8 @@ class DistGitScraper(BaseScraper):
                 commit.reverted_bugs.connect(bug)
             # This is no longer needed so it can be cleared to save RAM
             del repo_info
+        # Close the DB connection after this is done processing
+        db.driver.close()
 
     def get_distgit_data(self, since, until):
         """
