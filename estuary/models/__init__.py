@@ -2,14 +2,14 @@
 
 from estuary.models.koji import ContainerKojiBuild, KojiBuild, KojiTask, KojiTag
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.distgit import DistGitRepo, DistGitPush, DistGitBranch, DistGitCommit
+from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitCommit
 from estuary.models.errata import Advisory, AdvisoryState, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
 from estuary.models.user import User
 
 all_models = (Advisory, AdvisoryState, BugzillaBug, ContainerAdvisory, ContainerKojiBuild,
-              DistGitBranch, DistGitCommit, DistGitPush, DistGitRepo, FreshmakerEvent,
-              KojiBuild, KojiTag, KojiTask, User)
+              DistGitBranch, DistGitCommit, DistGitRepo, FreshmakerEvent, KojiBuild,
+              KojiTag, KojiTask, User)
 names_to_model = {model.__label__: model for model in all_models}
 story_flow_list = ['BugzillaBug', 'DistGitCommit', 'KojiBuild',
                    'Advisory', 'FreshmakerEvent', 'ContainerKojiBuild',

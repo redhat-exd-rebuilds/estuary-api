@@ -8,7 +8,7 @@ import pytest
 
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.distgit import DistGitCommit, DistGitPush, DistGitBranch, DistGitRepo
+from estuary.models.distgit import DistGitCommit, DistGitBranch, DistGitRepo
 from estuary.models.errata import Advisory, AdvisoryState
 from estuary.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
 from estuary.models.freshmaker import FreshmakerEvent
@@ -116,11 +116,6 @@ from estuary.models.freshmaker import FreshmakerEvent
             }
         ],
         'commit_date': '2017-04-26T11:44:38+00:00',
-        'committer': {
-            'email': 'jsmith@domain.local',
-            'name': None,
-            'username': 'jsmith'
-        },
         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
         'koji_builds': [
 
@@ -132,13 +127,6 @@ from estuary.models.freshmaker import FreshmakerEvent
             'hash': '1263adb248ba633e205067e1ad6dc61931727c2d',
             'log_message': 'Related: #12345 - fix xz'
         },
-        'pushes': [
-            {
-                'id': '56789',
-                'push_date': '2017-08-01T15:43:51+00:00',
-                'push_ip': '28.03.19.94'
-            }
-        ],
         'related_bugs': [
             {
                 'classification': 'Red Hat',
@@ -500,11 +488,6 @@ def test_get_resources(client, resource, uid, expected):
         'repo_name': 'some_repo_name',
         'repo_namespace': 'some_repo_namespace'
     })[0]
-    push = DistGitPush.get_or_create({
-        'id_': '56789',
-        'push_date': datetime(2017, 8, 1, 15, 43, 51),
-        'push_ip': '28.03.19.94'
-    })[0]
     build = KojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -586,7 +569,6 @@ def test_get_resources(client, resource, uid, expected):
 
     if resource == 'distgitcommit':
         commit.author.connect(tbrady)
-        commit.committer.connect(jsmith)
         commit.parent.connect(commit_two)
         commit_three.parent.connect(commit)
         commit.related_bugs.connect(bug)
@@ -594,7 +576,6 @@ def test_get_resources(client, resource, uid, expected):
         commit.reverted_bugs.connect(bug_two)
         repo.commits.connect(commit)
         branch.commits.connect(commit)
-        push.commits.connect(commit)
         commit.resolved_bugs.connect(bug)
         commit.resolved_bugs.connect(bug_two)
 

@@ -175,7 +175,6 @@ from estuary.models.user import User
 
                 ],
                 'commit_date': '2017-04-26T11:44:38+00:00',
-                'committer': None,
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'koji_builds': [
                     {
@@ -193,9 +192,6 @@ from estuary.models.user import User
                 ],
                 'log_message': 'Related: #12345 - fix xyz',
                 'parent': None,
-                'pushes': [
-
-                ],
                 'related_bugs': [
 
                 ],

@@ -10,7 +10,7 @@ import pytest
 from estuary import version
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.distgit import DistGitPush, DistGitCommit
+from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory, AdvisoryState
 from estuary.models.freshmaker import FreshmakerEvent
 from estuary.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
@@ -37,11 +37,6 @@ def test_about(client):
         'votes': 0,
         'id_': '12345',
         'status': 'CLOSED'
-    }),
-    (DistGitPush, 'distgitpush', '12345', {
-        'push_ip': '10.0.0.1',
-        'push_date': datetime(2018, 3, 14, 5, 53, 19),
-        'id_': '12345'
     }),
     (DistGitCommit, 'distgitcommit', 'f4dfc64c10a90492303e4f14ad3549a1a2b13575', {
         'commit_date': datetime(2018, 3, 14, 5, 52, 19),
@@ -136,8 +131,7 @@ def test_get_on_model_wo_uid(client, resource):
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
                    'advisory, advisorystate, bugzillabug, containeradvisory, containerkojibuild, '
-                   'distgitcommit, distgitpush, freshmakerevent, kojibuild, kojitag, kojitask,'
-                   ' and user.'
+                   'distgitcommit, freshmakerevent, kojibuild, kojitag, kojitask, and user.'
                    .format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
 
