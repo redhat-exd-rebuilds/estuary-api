@@ -17,7 +17,6 @@ class DistGitRepo(EstuaryStructuredNode):
     branches = RelationshipTo('DistGitBranch', 'CONTAINS')
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
     contributors = RelationshipTo('.user.User', 'CONTRIBUTED_BY')
-    pushes = RelationshipTo('DistGitPush', 'CONTAINS')
 
 
 class DistGitBranch(EstuaryStructuredNode):
@@ -28,20 +27,7 @@ class DistGitBranch(EstuaryStructuredNode):
     repo_namespace = StringProperty(required=True)
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
     contributors = RelationshipTo('.user.User', 'CONTRIBUTED_BY')
-    pushes = RelationshipTo('DistGitPush', 'CONTAINS')
     repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
-
-
-class DistGitPush(EstuaryStructuredNode):
-    """Definition of a dist-git push in Neo4j."""
-
-    id_ = UniqueIdProperty(db_property='id')
-    push_date = DateTimeProperty(required=True)
-    push_ip = StringProperty()
-    branch = RelationshipFrom('DistGitBranch', 'CONTAINS', cardinality=ZeroOrOne)
-    commits = RelationshipTo('DistGitCommit', 'PUSHED')
-    pusher = RelationshipTo('.user.User', 'PUSHED_BY', cardinality=ZeroOrOne)
-    repo = RelationshipFrom('DistGitRepo', 'CONTAINS', cardinality=ZeroOrOne)
 
 
 class DistGitCommit(EstuaryStructuredNode):
@@ -56,10 +42,8 @@ class DistGitCommit(EstuaryStructuredNode):
     # Cardinality is enforced on the `parent` property, so the `children` property should be
     # treated as read-only
     children = RelationshipFrom('.distgit.DistGitCommit', 'PARENT')
-    committer = RelationshipTo('.user.User', 'COMMITTED_BY', cardinality=ZeroOrOne)
     koji_builds = RelationshipFrom('.koji.KojiBuild', 'BUILT_FROM')
     parent = RelationshipTo('.distgit.DistGitCommit', 'PARENT', cardinality=ZeroOrOne)
-    pushes = RelationshipFrom('DistGitPush', 'PUSHED')
     related_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED')
     repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
     resolved_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RESOLVED')

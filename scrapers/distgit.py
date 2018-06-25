@@ -16,7 +16,7 @@ from neomodel import config as neomodel_config
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
 from estuary.utils.general import timestamp_to_date
-from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitPush, DistGitCommit
+from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitCommit
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.user import User
 from estuary import log
@@ -32,7 +32,7 @@ class DistGitScraper(BaseScraper):
         :param str since: a datetime to start scraping data from
         :param str until: a datetime to scrape data until
         """
-        log.info('Starting initial load of dist-git commits and pushes')
+        log.info('Starting initial load of dist-git commits')
         if since is None:
             start_date = self.default_since
         else:
@@ -50,7 +50,7 @@ class DistGitScraper(BaseScraper):
         # Create a multi-processing pool to process chunks of results
         pool = Pool(2)
         pool.map(_update_neo4j_partial, self._get_result_chunks(results))
-        log.info('Initial load of dist-git commits and pushes complete!')
+        log.info('Initial load of dist-git commits complete!')
 
     @staticmethod
     def _get_result_chunks(results):
@@ -99,23 +99,23 @@ class DistGitScraper(BaseScraper):
                 # Because of the joins in the SQL query, we end up with several rows with the same
                 # commit hash and we only want to query cgit once per commit
                 unique_commits = set([(c['module'], c['sha']) for c in results[counter:until]])
-                log.debug('Getting the author and committer email addresses from cgit in parallel '
+                log.debug('Getting the author email addresses from cgit in parallel '
                           'for results {0} to {1}'.format(counter, until))
                 repos_info = {r['commit']: r for r in pool.map(
                     DistGitScraper._get_repo_info, unique_commits)}
                 # This is no longer needed so it can be cleared to save RAM
                 del unique_commits
             counter += 1
-            log.info('Processing commit and push entry {0}/{1}'.format(
+            log.info('Processing commit entry {0}/{1}'.format(
                 previous_total + counter, total_results))
             repo_info = repos_info[result['sha']]
             if not repo_info.get('namespace'):
-                log.info('Skipping nodes creation with commit ID {0} and push ID {1}'.format(
-                    result['commit_id'], result['push_id']))
+                log.info('Skipping nodes creation with commit ID {0}'.format(
+                    result['commit_id']))
                 continue
 
-            log.debug('Creating nodes associated with commit ID {0} and push ID {1}'.format(
-                result['commit_id'], result['push_id']))
+            log.debug('Creating nodes associated with commit ID {0}'.format(
+                result['commit_id']))
             repo = DistGitRepo.get_or_create({
                 'namespace': repo_info['namespace'],
                 'name': result['module']
@@ -133,47 +133,25 @@ class DistGitScraper(BaseScraper):
                 # In case we get unicode characters in Python 2
                 'log_message': bytes(result['log_message'], 'utf-8').decode()
             })[0]
-            push = DistGitPush.get_or_create({
-                'id_': result['push_id'],
-                'push_date': result['push_date'],
-                'push_ip': result['push_ip']
-            })[0]
             bug = BugzillaBug.get_or_create({'id_': result['bugzilla_id']})[0]
 
-            log.debug('Creating the user nodes associated with commit ID {0} and push ID {1}'
-                      .format(result['commit_id'], result['push_id']))
+            log.debug('Creating the user nodes associated with commit ID {0}'
+                      .format(result['commit_id']))
             author = User.create_or_update({
                 'username': repo_info['author_username'],
                 'email': repo_info['author_email']
             })[0]
-            committer = User.create_or_update({
-                'username': repo_info['committer_username'],
-                'email': repo_info['committer_email']
-            })[0]
-            pusher = User.get_or_create({
-                'username': result['pusher']
-            })[0]
 
-            log.debug('Creating the relationships associated with commit ID {0} and push ID {1}'
-                      .format(result['commit_id'], result['push_id']))
+            log.debug('Creating the relationships associated with commit ID {0}'
+                      .format(result['commit_id']))
             repo.contributors.connect(author)
-            repo.contributors.connect(committer)
-            repo.contributors.connect(pusher)
             repo.commits.connect(commit)
-            repo.pushes.connect(push)
             repo.branches.connect(branch)
 
             branch.contributors.connect(author)
-            branch.contributors.connect(committer)
-            branch.contributors.connect(pusher)
             branch.commits.connect(commit)
-            branch.pushes.connect(push)
-
-            push.conditional_connect(push.pusher, pusher)
-            push.commits.connect(commit)
 
             commit.conditional_connect(commit.author, author)
-            commit.conditional_connect(commit.committer, committer)
 
             if repo_info['parent']:
                 parent_commit = DistGitCommit.get_or_create({'hash_': repo_info['parent']})[0]
@@ -190,7 +168,7 @@ class DistGitScraper(BaseScraper):
 
     def get_distgit_data(self, since, until):
         """
-        Query Teiid for the dist-git commit, push, and Bugzilla information.
+        Query Teiid for the dist-git commit and Bugzilla information.
 
         :param datetime.datetime since: determines when to start the query
         :param datetime.datetime until: determines until when to scrape data
@@ -198,9 +176,8 @@ class DistGitScraper(BaseScraper):
         :rtype: list
         """
         sql = """\
-            SELECT c.commit_id, c.author, c.author_date, c.committer, c.commit_date, c.log_message,
-                c.sha, bz.bugzilla_id, bz.type as bugzilla_type, p.push_date, p.push_ip, p.module,
-                p.ref, p.push_id, p.pusher
+            SELECT c.commit_id, c.author, c.author_date, c.commit_date, c.log_message,
+                c.sha, bz.bugzilla_id, bz.type as bugzilla_type, p.module, p.ref
             FROM gitbz.git_commits as c
             LEFT JOIN gitbz.git_push_commit_map as map ON c.commit_id = map.commit_id
             LEFT JOIN gitbz.git_pushes as p ON p.push_id = map.push_id
@@ -214,11 +191,11 @@ class DistGitScraper(BaseScraper):
     @staticmethod
     def _get_repo_info(repo_and_commit):
         """
-        Query cgit for the namespace, parent commit, username and email of the author and committer.
+        Query cgit for the namespace, parent commit, username and email of the author.
 
         :param tuple repo_and_commit: contains the repo and commit to query for
         :return: a JSON string of a dictionary with the keys namespace, author_username,
-        author_email, committer_username, committer_email, and the commit
+        author_email, and the commit
         :rtype: str
         """
         repo, commit = repo_and_commit
@@ -264,9 +241,9 @@ class DistGitScraper(BaseScraper):
         # Workaround for BS4 in EL7 since `soup.find('th', string=person)` doesn't work in
         # that environment
         th_tags = soup.find_all('th')
-        data_found = {'author': False, 'committer': False, 'parent': False}
+        data_found = {'author': False, 'parent': False}
         for th_tag in th_tags:
-            if th_tag.string in ('author', 'committer'):
+            if th_tag.string in ('author'):
                 data_found[th_tag.string] = True
                 username_key = '{0}_username'.format(th_tag.string)
                 email_key = '{0}_email'.format(th_tag.string)
@@ -287,7 +264,7 @@ class DistGitScraper(BaseScraper):
     @staticmethod
     def _parse_username_email_from_cgit(th_tag, commit, namespace, repo):
         """
-        Parse the username and email address from a cgit "th" element of author or committer.
+        Parse the username and email address from a cgit "th" element of author.
 
         :param th_tag: a BeautifulSoup4 element object
         :param str commit: the commit being processed
