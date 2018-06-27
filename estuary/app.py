@@ -6,7 +6,7 @@ import os
 
 from flask import Flask, current_app
 from werkzeug.exceptions import default_exceptions
-from neomodel import config as neomodel_config
+from neomodel import config as neomodel_config, db
 from neo4j.exceptions import ServiceUnavailable, AuthError
 
 from estuary.logger import init_logging
@@ -54,6 +54,12 @@ def insert_headers(response):
     return response
 
 
+def close_db(error):
+    """Close the Neo4j connection at the end of the request."""
+    if db.driver and not db.driver.closed():
+        db.driver.close()
+
+
 def create_app(config_obj=None):
     """
     Create a Flask application object.
@@ -83,5 +89,6 @@ def create_app(config_obj=None):
     app.register_blueprint(api_v1, url_prefix='/api/v1')
 
     app.after_request(insert_headers)
+    app.teardown_appcontext(close_db)
 
     return app
