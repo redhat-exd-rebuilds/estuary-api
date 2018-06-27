@@ -214,21 +214,7 @@ def get_correlated_nodes(curr_node_label, next_node, last=False, count=False):
     :return: siblings count of curr_node | sibling nodes
     :rtype: int | EstuaryStructuredNode
     """
-    # To avoid circular imports
-    from estuary.models.koji import KojiBuild
-    from estuary.models.distgit import DistGitCommit
-
     next_node_label = next_node.__label__
-    if curr_node_label == DistGitCommit.__label__:
-        # Always consider the next node as a KojiBuild because if it's
-        # a ContainerKojiBuild after a DistGitCommit, it should be
-        # treated as a normal KojiBuild in the story flow
-        next_node_label = KojiBuild.__label__
-    elif last and next_node_label == 'ContainerKojiBuild':
-        # Always consider the next node as a KojiBuild because if it's
-        # a ContainerKojiBuild and the story ended on an Advisory it should be
-        # treated as a normal KojiBuild in the story flow
-        next_node_label = KojiBuild.__label__
     item_story_flow = story_flow(next_node_label)
     relationship = item_story_flow['backward_relationship'][:-1]
     if last:
@@ -366,3 +352,31 @@ def format_story_results(results, requested_item):
             'requested_node_index': requested_node_index
         }
     }
+
+
+def set_story_labels(requested_node_label, results, reverse=False):
+    """
+    Replace Neo4j labels with appropriate labels of the story flow.
+
+    :param string requested_node_label: label of the node requested by the user
+    :param list results: nodes in a story/path
+    :kwarg bool reverse: determines if the results are in reverse order of the story flow
+    :return: results with story/path labels
+    :rtype: list
+    """
+    # Avoid circular imports
+    from estuary.models import story_flow_list
+
+    if not results:
+        return results
+
+    idx = 0
+    if reverse:
+        idx = len(results) - 1
+    delta = -1 if reverse else 1
+    node_idx = story_flow_list.index(requested_node_label)
+    while (0 <= idx < len(results)):
+        results[idx].__label__ = story_flow_list[node_idx]
+        idx += delta
+        node_idx += delta
+    return results

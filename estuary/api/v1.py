@@ -12,7 +12,7 @@ from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
     str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results,
-    get_correlated_nodes, inflate_node
+    get_correlated_nodes, inflate_node, set_story_labels
 )
 from estuary.error import ValidationError
 
@@ -110,10 +110,11 @@ def get_resource_story(resource, uid):
 
     results = []
     if forward_query:
-        results = _get_partial_story(forward_query)
+        results = set_story_labels(item.__label__, _get_partial_story(forward_query))
 
     if backward_query:
-        backward_query_results = _get_partial_story(backward_query, reverse=True)
+        backward_query_results = set_story_labels(
+            item.__label__, _get_partial_story(backward_query, reverse=True), reverse=True)
         if backward_query_results and results:
             # Remove the first element of backward_query_results in order to avoid
             # duplication of the requested resource when result of forward query are not None.
@@ -210,9 +211,11 @@ def get_resource_all_stories(resource, uid):
     all_results = []
     if not results_backward or not results_forward:
         if results_forward:
-            results_unidir = results_forward
+            results_unidir = [set_story_labels(
+                item.__label__, result) for result in results_forward]
         else:
-            results_unidir = results_backward
+            results_unidir = [set_story_labels(
+                item.__label__, result, reverse=True) for result in results_backward]
 
         for result in results_unidir:
             all_results.append(format_story_results(result, item))
@@ -221,7 +224,8 @@ def get_resource_all_stories(resource, uid):
         # Combining all the backward and forward paths to generate all the possible full paths
         for result_forward in results_forward:
             for result_backward in results_backward:
-                results = result_backward + result_forward[1:]
+                results = set_story_labels(item.__label__, result_backward, reverse=True) + \
+                    set_story_labels(item.__label__, result_forward)[1:]
                 all_results.append(format_story_results(results, item))
 
     # Adding the artifact itself if its story is not available
