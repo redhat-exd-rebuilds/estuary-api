@@ -231,7 +231,7 @@ class DistGitScraper(BaseScraper):
         namespaces = ('rpms', 'containers', 'modules', 'tests')
         cgit_url = getenv('ESTUARY_CGIT_URL', 'http://pkgs.devel.redhat.com/cgit/')
         for namespace in namespaces:
-            url = '{0}{1}/{2}/commit/?id={3}'.format(cgit_url, namespace, repo, commit)
+            url = '{0}{1}/{2}/commit/?id={3}&dt=2'.format(cgit_url, namespace, repo, commit)
             log.debug('Trying the URL "{0}"'.format(url))
             try:
                 cgit_result = session.get(url, timeout=15)
