@@ -271,7 +271,7 @@ def get_siblings(resource, uid):
     serialized_results = []
     for result in correlated_nodes:
         inflated_node = inflate_node(result[0])
-        serialized_node = inflated_node.serialized_all
+        serialized_node = inflated_node.serialized
         serialized_node['resource_type'] = inflated_node.__label__
         serialized_results.append(serialized_node)
 
