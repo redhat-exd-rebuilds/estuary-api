@@ -109,11 +109,86 @@ from estuary.models.freshmaker import FreshmakerEvent
             'version': '1.7.4'
         }
     ]),
-    ('freshmakerevent', '1180', True, [
+    ('freshmakerevent', '1180', False, [{
+        'actual_ship_date': '2017-08-01T15:43:51+00:00',
+        'advisory_name': 'RHBA-2017:2251-02',
+        'assigned_to': None,
+        'attached_bugs': [],
+        'attached_builds': [
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '3456',
+                'name': 'slf3j',
+                'release': '4.el6_3',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 2,
+                'version': '1.7.1'},
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '2345',
+                'name': 'slf4j',
+                'release': '4.el7_4',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 1,
+                'version': '1.7.4'
+            }
+        ],
+        'content_types': ['docker'],
+        'created_at': '2017-04-03T14:47:23+00:00',
+        'id': '27825',
+        'issue_date': '2017-08-01T05:59:34+00:00',
+        'package_owner': None,
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'release_date': None,
+        'reporter': None,
+        'resource_type': 'Advisory',
+        'security_impact': 'None',
+        'security_sla': None,
+        'state': 'SHIPPED_LIVE',
+        'states': [],
+        'status_time': '2017-08-01T15:43:51+00:00',
+        'synopsis': 'cifs-utils bug fix update',
+        'triggered_freshmaker_event': [{
+            'event_type_id': 8,
+            'id': '1180',
+            'message_id': 'ID:messaging-devops-broker01.test',
+            'state': 2,
+            'state_name': 'COMPLETE',
+            'state_reason': 'All container images have been rebuilt.',
+            'url': '/api/1/events/1180'
+        }],
+        'type': 'RHBA',
+        'update_date': '2017-08-01T07:16:00+00:00',
+        'updated_at': '2017-08-01T15:43:51+00:00'
+    }]),
+    ('containeradvisory', '12327', False, [
         {
-            'advisories': [
-
-            ],
+            'advisories': [{
+                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'advisory_name': 'RHBA-2017:2251-03',
+                'content_types': ['docker'],
+                'created_at': '2017-04-03T14:47:23+00:00',
+                'id': '12327',
+                'issue_date': '2017-08-01T05:59:34+00:00',
+                'product_name': 'Red Hat Enterprise Linux',
+                'product_short_name': 'RHEL',
+                'release_date': None,
+                'security_impact': 'None',
+                'security_sla': None,
+                'state': 'SHIPPED_LIVE',
+                'status_time': '2017-08-01T15:43:51+00:00',
+                'synopsis': 'cifs-utils bug fix update',
+                'type': 'RHBA',
+                'update_date': '2017-08-01T07:16:00+00:00',
+                'updated_at': '2017-08-01T15:43:51+00:00'
+            }],
             'commit': None,
             'completion_time': '2018-04-02T19:39:06+00:00',
             'creation_time': '2018-04-02T19:39:06+00:00',
@@ -126,14 +201,10 @@ from estuary.models.freshmaker import FreshmakerEvent
             'release': '4.el7_4_as',
             'resource_type': 'ContainerKojiBuild',
             'start_time': '2018-04-02T19:39:06+00:00',
-            'state':2,
-            'tags':[
-
-            ],
-            'tasks':[
-
-            ],
-            'triggered_by_freshmaker_event':{
+            'state': 2,
+            'tags': [],
+            'tasks': [],
+            'triggered_by_freshmaker_event': {
                 'event_type_id': 8,
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
@@ -145,9 +216,25 @@ from estuary.models.freshmaker import FreshmakerEvent
             'version': '1.7.5'
         },
         {
-            'advisories': [
-
-            ],
+            'advisories': [{
+                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'advisory_name': 'RHBA-2017:2251-03',
+                'content_types': ['docker'],
+                'created_at': '2017-04-03T14:47:23+00:00',
+                'id': '12327',
+                'issue_date': '2017-08-01T05:59:34+00:00',
+                'product_name': 'Red Hat Enterprise Linux',
+                'product_short_name': 'RHEL',
+                'release_date': None,
+                'security_impact': 'None',
+                'security_sla': None,
+                'state': 'SHIPPED_LIVE',
+                'status_time': '2017-08-01T15:43:51+00:00',
+                'synopsis': 'cifs-utils bug fix update',
+                'type': 'RHBA',
+                'update_date': '2017-08-01T07:16:00+00:00',
+                'updated_at': '2017-08-01T15:43:51+00:00'
+            }],
             'commit': None,
             'completion_time': '2017-04-02T19:39:06+00:00',
             'creation_time': '2017-04-02T19:39:06+00:00',
@@ -161,13 +248,9 @@ from estuary.models.freshmaker import FreshmakerEvent
             'resource_type': 'ContainerKojiBuild',
             'start_time': '2017-04-02T19:39:06+00:00',
             'state': 1,
-            'tags':[
-
-            ],
-            'tasks':[
-
-            ],
-            'triggered_by_freshmaker_event':{
+            'tags': [],
+            'tasks': [],
+            'triggered_by_freshmaker_event': {
                 'event_type_id': 8,
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
@@ -178,7 +261,60 @@ from estuary.models.freshmaker import FreshmakerEvent
             },
             'version': '1.7.4'
         }
-    ])
+    ]),
+    ('containerkojibuild', '710', True, [{
+        'actual_ship_date': '2017-08-01T15:43:51+00:00',
+        'advisory_name': 'RHBA-2017:2251-03',
+        'assigned_to': None,
+        'attached_bugs': [],
+        'attached_builds': [
+            {
+                'completion_time': '2018-04-02T19:39:06+00:00',
+                'creation_time': '2018-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '811',
+                'name': 'some_build',
+                'original_nvr': None,
+                'release': '4.el7_4_as',
+                'start_time': '2018-04-02T19:39:06+00:00',
+                'state': 2,
+                'version': '1.7.5'},
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'epoch': '0',
+                'extra': None,
+                'id': '710',
+                'name': 'slf4j_2',
+                'original_nvr': None,
+                'release': '4.el7_4_as',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 1,
+                'version': '1.7.4'
+            }
+        ],
+        'content_types': ['docker'],
+        'created_at': '2017-04-03T14:47:23+00:00',
+        'id': '12327',
+        'issue_date': '2017-08-01T05:59:34+00:00',
+        'package_owner': None,
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'release_date': None,
+        'reporter': None,
+        'resource_type': 'ContainerAdvisory',
+        'security_impact': 'None',
+        'security_sla': None,
+        'state': 'SHIPPED_LIVE',
+        'states': [],
+        'status_time': '2017-08-01T15:43:51+00:00',
+        'synopsis': 'cifs-utils bug fix update',
+        'triggered_freshmaker_event': [],
+        'type': 'RHBA',
+        'update_date': '2017-08-01T07:16:00+00:00',
+        'updated_at': '2017-08-01T15:43:51+00:00'
+    }])
 ])
 def test_node_siblings(client, resource, uid, last, expected):
     """Tests getting the siblings of an artifact's adjacent node in the story path."""
@@ -273,6 +409,23 @@ def test_node_siblings(client, resource, uid, last, expected):
         'state': 2,
         'version': '1.7.5'
     })[0]
+    ca = ContainerAdvisory.get_or_create({
+        'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
+        'advisory_name': 'RHBA-2017:2251-03',
+        'content_types': ['docker'],
+        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'id_': '12327',
+        'issue_date': datetime(2017, 8, 1, 5, 59, 34),
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'security_impact': 'None',
+        'state': 'SHIPPED_LIVE',
+        'status_time': datetime(2017, 8, 1, 15, 43, 51),
+        'synopsis': 'cifs-utils bug fix update',
+        'type_': 'RHBA',
+        'update_date': datetime(2017, 8, 1, 7, 16),
+        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+    })[0]
 
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
@@ -281,14 +434,14 @@ def test_node_siblings(client, resource, uid, last, expected):
     fm_event.triggered_by_advisory.connect(advisory)
     fm_event.triggered_container_builds.connect(cb)
     fm_event.triggered_container_builds.connect(cb_two)
+    ca.attached_builds.connect(cb)
+    ca.attached_builds.connect(cb_two)
 
     if not last:
         rv = client.get('/api/v1/siblings/{0}/{1}'.format(resource, uid))
     else:
         rv = client.get('/api/v1/siblings/{0}/{1}?last=True'.format(resource, uid))
     assert rv.status_code == 200
-    import pprint
-    pprint.pprint(json.loads(rv.data.decode('utf-8')))
     assert json.loads(rv.data.decode('utf-8')) == expected
 
 
@@ -345,6 +498,6 @@ def test_last_node_of_story(client):
         'status': 400
     }
 
-    rv = client.get('/api/v1/siblings/containeradvisory/12327')
+    rv = client.get('/api/v1/siblings/containeradvisory/12327?last=true')
     assert rv.status_code == 400
     assert json.loads(rv.data.decode('utf-8')) == expected
