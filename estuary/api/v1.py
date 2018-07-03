@@ -124,7 +124,8 @@ def get_resource_story(resource, uid):
     # Adding the artifact itself if it's story is not available
     if not results:
         rv = {'data': [item.serialized_all], 'meta': {}}
-        rv['meta']['story_related_nodes'] = [0]
+        rv['meta']['story_related_nodes_forward'] = [0]
+        rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
         return jsonify(rv)
@@ -231,7 +232,8 @@ def get_resource_all_stories(resource, uid):
     # Adding the artifact itself if its story is not available
     if not all_results:
         rv = {'data': [item.serialized_all], 'meta': {}}
-        rv['meta']['story_related_nodes'] = [0]
+        rv['meta']['story_related_nodes_forward'] = [0]
+        rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
         all_results.append(rv)
