@@ -251,21 +251,19 @@ def get_siblings(resource, uid):
     :raises NotFound: if the item is not found
     :raises ValidationError: if an invalid resource was requested
     """
-    # If last is True, we fetch siblings of the next node, previous node otherwise
-    last = request.args.get('last', False)
-
     item = get_neo4j_node(resource, uid)
     if not item:
         raise NotFound('This item does not exist')
 
     item_story_flow = story_flow(item.__label__)
-    if not item_story_flow['backward_label'] or not item_story_flow['forward_label']:
-        raise ValidationError('Siblings cannot be determined on this kind of resource')
-
-    if last:
+    # If last is True, we fetch siblings of the next node, previous node otherwise
+    last = str_to_bool(request.args.get('last'))
+    if last and item_story_flow['forward_label']:
         correlated_nodes = get_correlated_nodes(item_story_flow['forward_label'], item, last=True)
-    else:
+    elif not last and item_story_flow['backward_label']:
         correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
+    else:
+        raise ValidationError('Siblings cannot be determined on this kind of resource')
 
     # Inflating and formatting results from Neo4j
     serialized_results = []

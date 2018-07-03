@@ -2,16 +2,15 @@
 
 from __future__ import unicode_literals
 import re
-from multiprocessing import Pool
+from multiprocessing import Process
 from multiprocessing.dummy import Pool as ThreadPool
 from os import getenv
 from itertools import islice
-from functools import partial
 
 from builtins import bytes
 from bs4 import BeautifulSoup
 from requests import ConnectionError
-from neomodel import config as neomodel_config
+from neomodel import config as neomodel_config, db
 
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
@@ -43,15 +42,32 @@ class DistGitScraper(BaseScraper):
         else:
             end_date = timestamp_to_date(until)
         results = self.get_distgit_data(start_date, end_date)
-        log.info('Successfully fetched {0} results from Teiid'.format(len(results)))
-        # Upload the results to Neo4j
-        _update_neo4j_partial = partial(
-            self._update_neo4j, neomodel_config.DATABASE_URL, len(results))
-        # Create a multi-processing pool to process chunks of results
-        pool = Pool(2)
+        total_results = len(results)
+        log.info('Successfully fetched {0} results from Teiid'.format(total_results))
         # Overwrite results with the formatted results so we don't have to store both in RAM
         results = list(self._get_result_chunks(results))
-        pool.map(_update_neo4j_partial, results)
+        # Upload the results to Neo4j using multi-processing to process chunks of results. We don't
+        # use pool so that way the process doesn't get reused and the RAM is returned to the OS.
+        # This will aid in a work-around for a memory leak from one of the libraries used that
+        # couldn't be tracked down.
+        procs = []
+        concurrent_procs = 2
+        for i, result in enumerate(results):
+            # Only check if we've reached the process limit after it's technically possible
+            if i >= concurrent_procs:
+                active_procs = [_proc for _proc in procs if _proc.is_alive()]
+                if len(active_procs) >= concurrent_procs:
+                    log.debug('There are already {0} processes running. Will wait until one of '
+                              'them completes.'.format(len(active_procs)))
+                    active_procs[0].join()
+            proc = Process(target=self._update_neo4j,
+                           args=(neomodel_config.DATABASE_URL, total_results, result))
+            proc.start()
+            procs.append(proc)
+
+        for proc in procs:
+            # Wait for all the processes to finish
+            proc.join()
         log.info('Initial load of dist-git commits complete!')
 
     @staticmethod
@@ -85,88 +101,92 @@ class DistGitScraper(BaseScraper):
         :param tuple counter_and_results: a tuple where the first index is the current counter and
         the second index is a list of dictionaries representing results from Teiid
         """
-        previous_total = counter_and_results[0]
-        results = counter_and_results[1]
-        # Since _update_neo4j will be run in a separate process, we must configure the database
-        # URL every time the method is run.
-        neomodel_config.DATABASE_URL = neo4j_url
-        # Create a thread pool with 4 threads to speed up queries to cgit
-        pool = ThreadPool(4)
-        counter = 0
-        for result in results:
-            if counter % 200 == 0:
-                until = counter + 200
-                if until > len(results):
-                    until = len(results)
-                # Because of the joins in the SQL query, we end up with several rows with the same
-                # commit hash and we only want to query cgit once per commit
-                unique_commits = set([(c['module'], c['sha']) for c in results[counter:until]])
-                log.debug('Getting the author email addresses from cgit in parallel '
-                          'for results {0} to {1}'.format(counter, until))
-                repos_info = {r['commit']: r for r in pool.map(
-                    DistGitScraper._get_repo_info, unique_commits)}
-                # This is no longer needed so it can be cleared to save RAM
-                del unique_commits
-            counter += 1
-            log.info('Processing commit entry {0}/{1}'.format(
-                previous_total + counter, total_results))
-            repo_info = repos_info[result['sha']]
-            if not repo_info.get('namespace'):
-                log.info('Skipping nodes creation with commit ID {0}'.format(
+        try:
+            previous_total = counter_and_results[0]
+            results = counter_and_results[1]
+            # Since _update_neo4j will be run in a separate process, we must configure the database
+            # URL every time the method is run.
+            neomodel_config.DATABASE_URL = neo4j_url
+            # Create a thread pool with 4 threads to speed up queries to cgit
+            pool = ThreadPool(4)
+            counter = 0
+            for result in results:
+                if counter % 200 == 0:
+                    until = counter + 200
+                    if until > len(results):
+                        until = len(results)
+                    # Because of the joins in the SQL query, we end up with several rows with the
+                    # same commit hash and we only want to query cgit once per commit
+                    unique_commits = set([(c['module'], c['sha']) for c in results[counter:until]])
+                    log.debug('Getting the author email addresses from cgit in parallel '
+                              'for results {0} to {1}'.format(counter, until))
+                    repos_info = {r['commit']: r for r in pool.map(
+                        DistGitScraper._get_repo_info, unique_commits)}
+                    # This is no longer needed so it can be cleared to save RAM
+                    del unique_commits
+                counter += 1
+                log.info('Processing commit entry {0}/{1}'.format(
+                    previous_total + counter, total_results))
+                repo_info = repos_info[result['sha']]
+                if not repo_info.get('namespace'):
+                    log.info('Skipping nodes creation with commit ID {0}'.format(
+                        result['commit_id']))
+                    continue
+
+                log.debug('Creating nodes associated with commit ID {0}'.format(
                     result['commit_id']))
-                continue
+                repo = DistGitRepo.get_or_create({
+                    'namespace': repo_info['namespace'],
+                    'name': result['module']
+                })[0]
+                branch_name = result['ref'].rsplit('/', 1)[1]
+                branch = DistGitBranch.get_or_create({
+                    'name': branch_name,
+                    'repo_namespace': repo_info['namespace'],
+                    'repo_name': result['module']
+                })[0]
+                commit = DistGitCommit.create_or_update({
+                    'author_date': result['author_date'],
+                    'commit_date': result['commit_date'],
+                    'hash_': result['sha'],
+                    # In case we get unicode characters in Python 2
+                    'log_message': bytes(result['log_message'], 'utf-8').decode()
+                })[0]
+                bug = BugzillaBug.get_or_create({'id_': result['bugzilla_id']})[0]
 
-            log.debug('Creating nodes associated with commit ID {0}'.format(
-                result['commit_id']))
-            repo = DistGitRepo.get_or_create({
-                'namespace': repo_info['namespace'],
-                'name': result['module']
-            })[0]
-            branch_name = result['ref'].rsplit('/', 1)[1]
-            branch = DistGitBranch.get_or_create({
-                'name': branch_name,
-                'repo_namespace': repo_info['namespace'],
-                'repo_name': result['module']
-            })[0]
-            commit = DistGitCommit.create_or_update({
-                'author_date': result['author_date'],
-                'commit_date': result['commit_date'],
-                'hash_': result['sha'],
-                # In case we get unicode characters in Python 2
-                'log_message': bytes(result['log_message'], 'utf-8').decode()
-            })[0]
-            bug = BugzillaBug.get_or_create({'id_': result['bugzilla_id']})[0]
+                log.debug('Creating the user nodes associated with commit ID {0}'
+                          .format(result['commit_id']))
+                author = User.create_or_update({
+                    'username': repo_info['author_username'],
+                    'email': repo_info['author_email']
+                })[0]
 
-            log.debug('Creating the user nodes associated with commit ID {0}'
-                      .format(result['commit_id']))
-            author = User.create_or_update({
-                'username': repo_info['author_username'],
-                'email': repo_info['author_email']
-            })[0]
+                log.debug('Creating the relationships associated with commit ID {0}'
+                          .format(result['commit_id']))
+                repo.contributors.connect(author)
+                repo.commits.connect(commit)
+                repo.branches.connect(branch)
 
-            log.debug('Creating the relationships associated with commit ID {0}'
-                      .format(result['commit_id']))
-            repo.contributors.connect(author)
-            repo.commits.connect(commit)
-            repo.branches.connect(branch)
+                branch.contributors.connect(author)
+                branch.commits.connect(commit)
 
-            branch.contributors.connect(author)
-            branch.commits.connect(commit)
+                commit.conditional_connect(commit.author, author)
 
-            commit.conditional_connect(commit.author, author)
+                if repo_info['parent']:
+                    parent_commit = DistGitCommit.get_or_create({'hash_': repo_info['parent']})[0]
+                    commit.conditional_connect(commit.parent, parent_commit)
 
-            if repo_info['parent']:
-                parent_commit = DistGitCommit.get_or_create({'hash_': repo_info['parent']})[0]
-                commit.conditional_connect(commit.parent, parent_commit)
-
-            if result['bugzilla_type'] == 'related':
-                commit.related_bugs.connect(bug)
-            elif result['bugzilla_type'] == 'resolves':
-                commit.resolved_bugs.connect(bug)
-            elif result['bugzilla_type'] == 'reverted':
-                commit.reverted_bugs.connect(bug)
-            # This is no longer needed so it can be cleared to save RAM
-            del repo_info
+                if result['bugzilla_type'] == 'related':
+                    commit.related_bugs.connect(bug)
+                elif result['bugzilla_type'] == 'resolves':
+                    commit.resolved_bugs.connect(bug)
+                elif result['bugzilla_type'] == 'reverted':
+                    commit.reverted_bugs.connect(bug)
+                # This is no longer needed so it can be cleared to save RAM
+                del repo_info
+        finally:
+            # Close the DB connection after this is done processing
+            db.driver.close()
 
     def get_distgit_data(self, since, until):
         """
@@ -211,7 +231,7 @@ class DistGitScraper(BaseScraper):
         namespaces = ('rpms', 'containers', 'modules', 'tests')
         cgit_url = getenv('ESTUARY_CGIT_URL', 'http://pkgs.devel.redhat.com/cgit/')
         for namespace in namespaces:
-            url = '{0}{1}/{2}/commit/?id={3}'.format(cgit_url, namespace, repo, commit)
+            url = '{0}{1}/{2}/commit/?id={3}&dt=2'.format(cgit_url, namespace, repo, commit)
             log.debug('Trying the URL "{0}"'.format(url))
             try:
                 cgit_result = session.get(url, timeout=15)
