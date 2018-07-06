@@ -97,7 +97,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes': [0, 1, 0, 1],
+                'story_related_nodes_backward': [0, 0, 0, 1],
+                'story_related_nodes_forward': [0, 1, 0, 0],
                 'requested_node_index': 0
             }
         },
@@ -207,7 +208,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes': [0, 1, 0, 0, 0, 1],
+                'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
+                'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
                 'requested_node_index': 0
             }
         }
@@ -332,7 +334,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes': [0, 1, 0, 1],
+                'story_related_nodes_forward': [0, 1, 0, 0],
+                'story_related_nodes_backward': [0, 0, 0, 1],
                 'requested_node_index': 2
             }
         },
@@ -455,7 +458,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes': [0, 1, 0, 1],
+                'story_related_nodes_forward': [0, 1, 0, 0],
+                'story_related_nodes_backward': [0, 0, 0, 1],
                 'requested_node_index': 2
             }
         },
@@ -602,7 +606,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes': [0, 1, 0, 0, 0, 1],
+                'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
+                'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
                 'requested_node_index': 2
             }
         },
@@ -749,7 +754,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes': [0, 1, 0, 0, 0, 1],
+                'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
+                'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
                 'requested_node_index': 2
             }
         }
@@ -987,7 +993,8 @@ def test_get_stories_fallback(client):
         ],
         'meta': {
             'requested_node_index': 0,
-            'story_related_nodes': [0, 0]
+            'story_related_nodes_forward': [0, 0],
+            'story_related_nodes_backward': [0, 0]
         }
     }]
 

@@ -124,7 +124,8 @@ def get_resource_story(resource, uid):
     # Adding the artifact itself if it's story is not available
     if not results:
         rv = {'data': [item.serialized_all], 'meta': {}}
-        rv['meta']['story_related_nodes'] = [0]
+        rv['meta']['story_related_nodes_forward'] = [0]
+        rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
         return jsonify(rv)
@@ -231,7 +232,8 @@ def get_resource_all_stories(resource, uid):
     # Adding the artifact itself if its story is not available
     if not all_results:
         rv = {'data': [item.serialized_all], 'meta': {}}
-        rv['meta']['story_related_nodes'] = [0]
+        rv['meta']['story_related_nodes_forward'] = [0]
+        rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
         all_results.append(rv)
@@ -256,11 +258,12 @@ def get_siblings(resource, uid):
         raise NotFound('This item does not exist')
 
     item_story_flow = story_flow(item.__label__)
-    # If last is True, we fetch siblings of the next node, previous node otherwise
-    last = str_to_bool(request.args.get('last'))
-    if last and item_story_flow['forward_label']:
-        correlated_nodes = get_correlated_nodes(item_story_flow['forward_label'], item, last=True)
-    elif not last and item_story_flow['backward_label']:
+    # If reverse is True, we fetch siblings of the next node, previous node otherwise
+    reverse = str_to_bool(request.args.get('reverse'))
+    if reverse and item_story_flow['forward_label']:
+        correlated_nodes = get_correlated_nodes(
+            item_story_flow['forward_label'], item, reverse=True)
+    elif not reverse and item_story_flow['backward_label']:
         correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
