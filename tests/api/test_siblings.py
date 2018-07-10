@@ -34,7 +34,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51+00:00',
                     'synopsis': 'cifs-utils bug fix update',
-                    'type': 'RHBA',
                     'update_date': '2017-08-01T07:16:00+00:00',
                     'updated_at': '2017-08-01T15:43:51+00:00'
                 }
@@ -78,7 +77,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51+00:00',
                     'synopsis': 'cifs-utils bug fix update',
-                    'type': 'RHBA',
                     'update_date': '2017-08-01T07:16:00+00:00',
                     'updated_at': '2017-08-01T15:43:51+00:00'
                 }
@@ -163,7 +161,6 @@ from estuary.models.freshmaker import FreshmakerEvent
             'state_reason': 'All container images have been rebuilt.',
             'url': '/api/1/events/1180'
         }],
-        'type': 'RHBA',
         'update_date': '2017-08-01T07:16:00+00:00',
         'updated_at': '2017-08-01T15:43:51+00:00'
     }]),
@@ -184,7 +181,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'type': 'RHBA',
                 'update_date': '2017-08-01T07:16:00+00:00',
                 'updated_at': '2017-08-01T15:43:51+00:00'
             }],
@@ -230,7 +226,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'type': 'RHBA',
                 'update_date': '2017-08-01T07:16:00+00:00',
                 'updated_at': '2017-08-01T15:43:51+00:00'
             }],
@@ -309,7 +304,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'status_time': '2017-08-01T15:43:51+00:00',
         'synopsis': 'cifs-utils bug fix update',
         'triggered_freshmaker_event': [],
-        'type': 'RHBA',
         'update_date': '2017-08-01T07:16:00+00:00',
         'updated_at': '2017-08-01T15:43:51+00:00'
     }])
@@ -372,7 +366,6 @@ def test_node_siblings(client, resource, uid, reverse, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
         'update_date': datetime(2017, 8, 1, 7, 16),
         'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]
@@ -420,7 +413,6 @@ def test_node_siblings(client, resource, uid, reverse, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
         'update_date': datetime(2017, 8, 1, 7, 16),
         'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]
@@ -486,7 +478,6 @@ def test_reverse_flag(client):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
         'update_date': datetime(2017, 8, 1, 7, 16),
         'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]

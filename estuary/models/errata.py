@@ -29,7 +29,6 @@ class Advisory(EstuaryStructuredNode):
     state = StringProperty()
     status_time = DateTimeProperty()
     synopsis = StringProperty()
-    type_ = StringProperty(db_property='type')
     update_date = DateTimeProperty()
     updated_at = DateTimeProperty()
     assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)

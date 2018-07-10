@@ -39,7 +39,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state':'SHIPPED_LIVE',
                 'status_time':'2017-08-01T15:43:51+00:00',
                 'synopsis':'cifs-utils bug fix update',
-                'type':'RHBA',
                 'update_date':'2017-08-01T07:16:00+00:00',
                 'updated_at':'2017-08-01T15:43:51+00:00'
             }
@@ -326,7 +325,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'triggered_freshmaker_event': [
 
         ],
-        'type':'RHBA',
         'update_date':'2017-08-01T07:16:00+00:00',
         'updated_at':'2017-08-01T15:43:51+00:00'
     }),
@@ -354,7 +352,6 @@ from estuary.models.freshmaker import FreshmakerEvent
             'state':'SHIPPED_LIVE',
             'status_time':'2017-08-01T15:43:51+00:00',
             'synopsis':'cifs-utils bug fix update',
-            'type':'RHBA',
             'update_date':'2017-08-01T07:16:00+00:00',
             'updated_at':'2017-08-01T15:43:51+00:00'
         },
@@ -519,7 +516,6 @@ def test_get_resources(client, resource, uid, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
         'update_date': datetime(2017, 8, 1, 7, 16),
         'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]

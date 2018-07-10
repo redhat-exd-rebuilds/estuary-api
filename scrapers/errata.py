@@ -65,7 +65,6 @@ class ErrataScraper(BaseScraper):
                 'state': advisory['state'],
                 'status_time': advisory['status_time'],
                 'synopsis': advisory['synopsis'],
-                'type_': advisory['type'],
                 'update_date': advisory['update_date'],
                 'updated_at': advisory['updated_at']
             })[0]

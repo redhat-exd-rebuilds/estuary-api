@@ -91,7 +91,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'DROPPED_NO_SHIP',
                     'status_time':'2018-03-14T07:53:25+00:00',
                     'synopsis':'This is a synopsis of a test advisory.',
-                    'type':None,
                     'update_date':'2018-03-14T07:53:25+00:00',
                     'updated_at':'2018-03-14T07:53:25+00:00'
                 }
@@ -178,7 +177,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'SHIPPED_LIVE',
                     'status_time':'2017-08-01T15:43:51+00:00',
                     'synopsis':'cifs-utils bug fix update',
-                    'type':'RHBA',
                     'update_date':'2017-08-01T07:16:00+00:00',
                     'updated_at':'2017-08-01T15:43:51+00:00'
                 },
@@ -259,7 +257,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'DROPPED_NO_SHIP',
                             'status_time':'2018-03-14T07:53:25+00:00',
                             'synopsis':'This is a synopsis of a test advisory.',
-                            'type':None,
                             'update_date':'2018-03-14T07:53:25+00:00',
                             'updated_at':'2018-03-14T07:53:25+00:00'
                         },
@@ -280,7 +277,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'SHIPPED_LIVE',
                             'status_time':'2017-08-01T15:43:51+00:00',
                             'synopsis':'cifs-utils bug fix update',
-                            'type':'RHBA',
                             'update_date':'2017-08-01T07:16:00+00:00',
                             'updated_at':'2017-08-01T15:43:51+00:00'
                         }
@@ -328,7 +324,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'DROPPED_NO_SHIP',
                     'status_time':'2018-03-14T07:53:25+00:00',
                     'synopsis':'This is a synopsis of a test advisory.',
-                    'type':None,
                     'update_date':'2018-03-14T07:53:25+00:00',
                     'updated_at':'2018-03-14T07:53:25+00:00'
                 }
@@ -383,7 +378,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'DROPPED_NO_SHIP',
                             'status_time':'2018-03-14T07:53:25+00:00',
                             'synopsis':'This is a synopsis of a test advisory.',
-                            'type':None,
                             'update_date':'2018-03-14T07:53:25+00:00',
                             'updated_at':'2018-03-14T07:53:25+00:00'
                         },
@@ -404,7 +398,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'SHIPPED_LIVE',
                             'status_time':'2017-08-01T15:43:51+00:00',
                             'synopsis':'cifs-utils bug fix update',
-                            'type':'RHBA',
                             'update_date':'2017-08-01T07:16:00+00:00',
                             'updated_at':'2017-08-01T15:43:51+00:00'
                         }
@@ -452,7 +445,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'DROPPED_NO_SHIP',
                     'status_time':'2018-03-14T07:53:25+00:00',
                     'synopsis':'This is a synopsis of a test advisory.',
-                    'type':None,
                     'update_date':'2018-03-14T07:53:25+00:00',
                     'updated_at':'2018-03-14T07:53:25+00:00'
                 }
@@ -507,7 +499,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'DROPPED_NO_SHIP',
                             'status_time':'2018-03-14T07:53:25+00:00',
                             'synopsis':'This is a synopsis of a test advisory.',
-                            'type':None,
                             'update_date':'2018-03-14T07:53:25+00:00',
                             'updated_at':'2018-03-14T07:53:25+00:00'
                         },
@@ -528,7 +519,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'SHIPPED_LIVE',
                             'status_time':'2017-08-01T15:43:51+00:00',
                             'synopsis':'cifs-utils bug fix update',
-                            'type':'RHBA',
                             'update_date':'2017-08-01T07:16:00+00:00',
                             'updated_at':'2017-08-01T15:43:51+00:00'
                         }
@@ -576,7 +566,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'SHIPPED_LIVE',
                     'status_time':'2017-08-01T15:43:51+00:00',
                     'synopsis':'cifs-utils bug fix update',
-                    'type':'RHBA',
                     'update_date':'2017-08-01T07:16:00+00:00',
                     'updated_at':'2017-08-01T15:43:51+00:00'
                 },
@@ -655,7 +644,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'DROPPED_NO_SHIP',
                             'status_time':'2018-03-14T07:53:25+00:00',
                             'synopsis':'This is a synopsis of a test advisory.',
-                            'type':None,
                             'update_date':'2018-03-14T07:53:25+00:00',
                             'updated_at':'2018-03-14T07:53:25+00:00'
                         },
@@ -676,7 +664,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                             'state':'SHIPPED_LIVE',
                             'status_time':'2017-08-01T15:43:51+00:00',
                             'synopsis':'cifs-utils bug fix update',
-                            'type':'RHBA',
                             'update_date':'2017-08-01T07:16:00+00:00',
                             'updated_at':'2017-08-01T15:43:51+00:00'
                         }
@@ -724,7 +711,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'SHIPPED_LIVE',
                     'status_time':'2017-08-01T15:43:51+00:00',
                     'synopsis':'cifs-utils bug fix update',
-                    'type':'RHBA',
                     'update_date':'2017-08-01T07:16:00+00:00',
                     'updated_at':'2017-08-01T15:43:51+00:00'
                 },
@@ -830,7 +816,6 @@ def test_all_stories(client, resource, uid, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
         'update_date': datetime(2017, 8, 1, 7, 16),
         'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]
@@ -838,7 +823,6 @@ def test_all_stories(client, resource, uid, expected):
         'security_impact': 'None',
         'created_at': datetime(2018, 3, 14, 5, 53, 25),
         'synopsis': 'This is a synopsis of a test advisory.',
-        'type': 'RHBA',
         'product_name': 'Release End2End Test',
         'update_date': datetime(2018, 3, 14, 7, 53, 25),
         'advisory_name': 'RHBA-2017:27760-01',
@@ -926,7 +910,6 @@ def test_get_stories_fallback(client):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
         'update_date': datetime(2017, 8, 1, 7, 16),
         'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]
@@ -950,7 +933,6 @@ def test_get_stories_fallback(client):
                     'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51+00:00',
                     'synopsis': 'cifs-utils bug fix update',
-                    'type': 'RHBA',
                     'update_date': '2017-08-01T07:16:00+00:00',
                     'updated_at': '2017-08-01T15:43:51+00:00'
                 }],
@@ -986,7 +968,6 @@ def test_get_stories_fallback(client):
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'type': 'RHBA',
                 'update_date': '2017-08-01T07:16:00+00:00',
                 'updated_at': '2017-08-01T15:43:51+00:00'
             }

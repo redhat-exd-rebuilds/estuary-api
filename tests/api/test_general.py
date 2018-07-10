@@ -48,7 +48,6 @@ def test_about(client):
         'security_impact': 'None',
         'created_at': datetime(2018, 3, 14, 5, 53, 25),
         'synopsis': 'This is a synopsis of a test advisory.',
-        'type': 'RHBA',
         'product_name': 'Release End2End Test',
         'update_date': datetime(2018, 3, 14, 7, 53, 25),
         'advisory_name': 'RHBA-2017:27760-01',
