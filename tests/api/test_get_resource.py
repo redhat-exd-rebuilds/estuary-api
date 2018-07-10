@@ -303,11 +303,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'created_at':'2017-04-03T14:47:23+00:00',
         'id':'27825',
         'issue_date':'2017-08-01T05:59:34+00:00',
-        'package_owner':{
-            'email': 'tom.brady@domain.local',
-            'name': None,
-            'username': 'tbrady'
-        },
         'product_name': 'Red Hat Enterprise Linux',
         'product_short_name': 'RHEL',
         'release_date': None,
@@ -565,7 +560,6 @@ def test_get_resources(client, resource, uid, expected):
 
     if resource == 'advisory':
         advisory.assigned_to.connect(mprahl)
-        advisory.package_owner.connect(tbrady)
         advisory.reporter.connect(jsmith)
         advisory.attached_builds.connect(build)
         advisory.attached_bugs.connect(bug)

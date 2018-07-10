@@ -33,7 +33,6 @@ class Advisory(EstuaryStructuredNode):
     assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
     attached_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'ATTACHED')
     attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED')
-    package_owner = RelationshipTo('.user.User', 'PACKAGE_OWNED_BY', cardinality=ZeroOrOne)
     reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
 

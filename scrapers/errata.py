@@ -114,9 +114,6 @@ class ErrataScraper(BaseScraper):
 
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
             adv.conditional_connect(adv.assigned_to, assigned_to)
-            package_owner = User.get_or_create(
-                {'username': advisory['package_owner'].split('@')[0]})[0]
-            adv.conditional_connect(adv.package_owner, package_owner)
             reporter = User.get_or_create({'username': advisory['reporter'].split('@')[0]})[0]
             adv.conditional_connect(adv.reporter, reporter)
 
@@ -143,7 +140,6 @@ class ErrataScraper(BaseScraper):
                 main.created_at,
                 main.id AS id,
                 main.issue_date,
-                package_users.login_name AS package_owner,
                 products.name as product_name,
                 products.short_name as product_short_name,
                 main.release_date,
@@ -161,8 +157,6 @@ class ErrataScraper(BaseScraper):
                 ON main.product_id = products.id
             LEFT JOIN Errata_public.users AS assigned_users
                 ON main.assigned_to_id = assigned_users.id
-            LEFT JOIN Errata_public.users AS package_users
-                ON main.package_owner_id = package_users.id
             LEFT JOIN Errata_public.users AS reporter_users
                 ON main.reporter_id = reporter_users.id
             WHERE main.update_date >= '{0}' AND main.update_date <= '{1}'
