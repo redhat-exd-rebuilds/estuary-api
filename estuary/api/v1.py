@@ -274,3 +274,34 @@ def get_siblings(resource, uid):
         serialized_results.append(serialized_node)
 
     return jsonify(serialized_results)
+
+
+@api_v1.route('/relationships/<resource>/<uid>/<relationship>')
+def get_artifact_relationships(resource, uid, relationship):
+    """
+    Get one-to-many relationships of a particular artifact.
+
+    :param str resource: a resource name that maps to a neomodel class
+    :param str uid: the value of the UniqueIdProperty to query with
+    :param str relationship: relationship to expand
+    :return: a Flask JSON response
+    :rtype: flask.Response
+    :raises NotFound: if the item is not found
+    :raises ValidationError: if an invalid resource/relationship was requested
+    """
+    item = get_neo4j_node(resource, uid)
+    if not item:
+        raise NotFound('This item does not exist')
+
+    if relationship not in [rel[0] for rel in item.__all_relationships__]:
+        raise ValidationError(
+            'Please provide a valid relationship name for {0} with uid {1}'.format(resource, uid))
+
+    related_nodes = getattr(item, relationship).match()
+    results = {'data': [], 'meta': {}}
+    for node in related_nodes:
+        serialized_node = node.serialized_all
+        serialized_node['resource_type'] = node.__label__
+        results['data'].append(serialized_node)
+
+    return jsonify(results)
