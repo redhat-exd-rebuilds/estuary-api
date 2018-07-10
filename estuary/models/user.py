@@ -15,7 +15,6 @@ class User(EstuaryStructuredNode):
     advisories_assigned = RelationshipFrom('.errata.Advisory', 'ASSIGNED_TO')
     advisories_package_owner = RelationshipFrom('.errata.Advisory', 'PACKAGE_OWNED_BY')
     advisories_reported = RelationshipFrom('.errata.Advisory', 'REPORTED_BY')
-    advisories_state_creator = RelationshipFrom('.errata.AdvisoryState', 'CREATED_BY')
     bugs_assigned = RelationshipFrom('.bugzilla.BugzillaBug', 'ASSIGNED_TO')
     bugs_qa_contact_for = RelationshipFrom('.bugzilla.BugzillaBug', 'QA_BY')
     bugs_reported = RelationshipFrom('.bugzilla.BugzillaBug', 'REPORTED_BY')

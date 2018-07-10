@@ -3,11 +3,11 @@
 from estuary.models.koji import ContainerKojiBuild, KojiBuild, KojiTask, KojiTag
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitCommit
-from estuary.models.errata import Advisory, AdvisoryState, ContainerAdvisory
+from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
 from estuary.models.user import User
 
-all_models = (Advisory, AdvisoryState, BugzillaBug, ContainerAdvisory, ContainerKojiBuild,
+all_models = (Advisory, BugzillaBug, ContainerAdvisory, ContainerKojiBuild,
               DistGitBranch, DistGitCommit, DistGitRepo, FreshmakerEvent, KojiBuild,
               KojiTag, KojiTask, User)
 names_to_model = {model.__label__: model for model in all_models}

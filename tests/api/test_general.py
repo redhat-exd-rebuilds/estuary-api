@@ -11,7 +11,7 @@ from estuary import version
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
-from estuary.models.errata import Advisory, AdvisoryState
+from estuary.models.errata import Advisory
 from estuary.models.freshmaker import FreshmakerEvent
 from estuary.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
 
@@ -59,12 +59,6 @@ def test_about(client):
         'status_time': datetime(2018, 3, 14, 7, 53, 25),
         'state': 'DROPPED_NO_SHIP',
         'id_': '12345'
-    }),
-    (AdvisoryState, 'advisorystate', '12345', {
-        'id_': '12345',
-        'name': 'NEW_FILES',
-        'created_at': datetime(2018, 3, 14, 5, 53, 25),
-        'updated_at': datetime(2018, 3, 14, 5, 53, 25),
     }),
     (FreshmakerEvent, 'freshmakerevent', '12345', {
         'id_': '12345',
@@ -130,8 +124,8 @@ def test_get_on_model_wo_uid(client, resource):
     rv = client.get('/api/v1/{0}/some_repo'.format(resource))
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
-                   'advisory, advisorystate, bugzillabug, containeradvisory, containerkojibuild, '
-                   'distgitcommit, freshmakerevent, kojibuild, kojitag, kojitask, and user.'
+                   'advisory, bugzillabug, containeradvisory, containerkojibuild, distgitcommit, '
+                   'freshmakerevent, kojibuild, kojitag, kojitask, and user.'
                    .format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
 

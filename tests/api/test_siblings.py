@@ -152,7 +152,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'security_impact': 'None',
         'security_sla': None,
         'state': 'SHIPPED_LIVE',
-        'states': [],
         'status_time': '2017-08-01T15:43:51+00:00',
         'synopsis': 'cifs-utils bug fix update',
         'triggered_freshmaker_event': [{
@@ -307,7 +306,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'security_impact': 'None',
         'security_sla': None,
         'state': 'SHIPPED_LIVE',
-        'states': [],
         'status_time': '2017-08-01T15:43:51+00:00',
         'synopsis': 'cifs-utils bug fix update',
         'triggered_freshmaker_event': [],

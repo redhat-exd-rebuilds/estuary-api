@@ -37,7 +37,6 @@ class Advisory(EstuaryStructuredNode):
     attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED')
     package_owner = RelationshipTo('.user.User', 'PACKAGE_OWNED_BY', cardinality=ZeroOrOne)
     reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
-    states = RelationshipFrom('AdvisoryState', 'STATE_OF')
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
 
     @classmethod
@@ -62,17 +61,6 @@ class Advisory(EstuaryStructuredNode):
                 .order_by('advisory_name').first_or_none()
         else:
             raise ValidationError('"{0}" is not a valid identifier'.format(identifier))
-
-
-class AdvisoryState(EstuaryStructuredNode):
-    """A representation of the states of an Errata advisory in Neo4j."""
-
-    id_ = UniqueIdProperty(db_property='id')
-    created_at = DateTimeProperty()
-    updated_at = DateTimeProperty()
-    name = StringProperty(required=True)
-    advisory = RelationshipTo('Advisory', 'STATE_OF', cardinality=ZeroOrOne)
-    creator = RelationshipTo('.user.User', 'CREATED_BY', cardinality=ZeroOrOne)
 
 
 class ContainerAdvisory(Advisory):

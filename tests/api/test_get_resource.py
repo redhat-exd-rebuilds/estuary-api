@@ -9,7 +9,7 @@ import pytest
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit, DistGitBranch, DistGitRepo
-from estuary.models.errata import Advisory, AdvisoryState
+from estuary.models.errata import Advisory
 from estuary.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
 from estuary.models.freshmaker import FreshmakerEvent
 
@@ -321,14 +321,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'security_impact': 'None',
         'security_sla': None,
         'state': 'SHIPPED_LIVE',
-        'states': [
-            {
-                'created_at': '2017-04-02T19:45:06+00:00',
-                'id': '7890',
-                'name': 'some_name',
-                'updated_at': '2017-04-02T19:45:06+00:00'
-            }
-        ],
         'status_time': '2017-08-01T15:43:51+00:00',
         'synopsis': 'cifs-utils bug fix update',
         'triggered_freshmaker_event': [
@@ -531,12 +523,6 @@ def test_get_resources(client, resource, uid, expected):
         'update_date': datetime(2017, 8, 1, 7, 16),
         'updated_at': datetime(2017, 8, 1, 15, 43, 51)
     })[0]
-    adv_state = AdvisoryState.get_or_create({
-        'id_': '7890',
-        'created_at': datetime(2017, 4, 2, 19, 45, 6),
-        'updated_at': datetime(2017, 4, 2, 19, 45, 6),
-        'name': 'some_name'
-    })[0]
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
         'id_': '1180',
@@ -590,7 +576,6 @@ def test_get_resources(client, resource, uid, expected):
         advisory.package_owner.connect(tbrady)
         advisory.reporter.connect(jsmith)
         advisory.attached_builds.connect(build)
-        adv_state.advisory.connect(advisory)
         advisory.attached_bugs.connect(bug)
 
     if resource == 'freshmakerevent':

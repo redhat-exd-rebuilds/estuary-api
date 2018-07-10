@@ -544,9 +544,6 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'states': [
-
-                ],
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
                 'triggered_freshmaker_event': [
@@ -1036,9 +1033,6 @@ from estuary.models.user import User
                 'security_impact':'None',
                 'security_sla':None,
                 'state':'SHIPPED_LIVE',
-                'states':[
-
-                ],
                 'status_time':'2017-08-01T15:43:51+00:00',
                 'synopsis':'cifs-utils bug fix update',
                 'triggered_freshmaker_event':[
@@ -1303,7 +1297,6 @@ def test_get_stories_just_artifact(client):
             'security_impact': 'None',
             'security_sla': None,
             'state': 'SHIPPED_LIVE',
-            'states': [],
             'status_time': '2017-08-01T15:43:51+00:00',
             'synopsis': 'cifs-utils bug fix update',
             'triggered_freshmaker_event': [],
@@ -1398,7 +1391,6 @@ def test_get_story_partial_story(client):
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'states': [],
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
                 'triggered_freshmaker_event': [{
