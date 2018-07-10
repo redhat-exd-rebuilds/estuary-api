@@ -66,7 +66,6 @@ class ErrataScraper(BaseScraper):
                 'status_time': advisory['status_time'],
                 'synopsis': advisory['synopsis'],
                 'update_date': advisory['update_date'],
-                'updated_at': advisory['updated_at']
             })[0]
             container_adv = False
 
@@ -154,8 +153,7 @@ class ErrataScraper(BaseScraper):
                 main.status_updated_at AS status_time,
                 main.synopsis,
                 main.errata_type AS type,
-                main.update_date,
-                main.updated_at
+                main.update_date
             FROM Errata_public.errata_main AS main
             LEFT JOIN Errata_public.state_indices as states
                 ON main.current_state_index_id = states.id
@@ -167,8 +165,8 @@ class ErrataScraper(BaseScraper):
                 ON main.package_owner_id = package_users.id
             LEFT JOIN Errata_public.users AS reporter_users
                 ON main.reporter_id = reporter_users.id
-            WHERE main.updated_at >= '{0}' AND main.updated_at <= '{1}'
-            ORDER BY main.updated_at DESC;
+            WHERE main.update_date >= '{0}' AND main.update_date <= '{1}'
+            ORDER BY main.update_date DESC;
         """.format(since, until)
         log.info('Getting Errata advisories since {0} until {1}'.format(since, until))
         return self.teiid.query(sql)

@@ -91,8 +91,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -134,8 +133,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }
         ],
         'meta': {
@@ -266,8 +264,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -309,8 +306,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }
         ],
         'meta': {
@@ -363,8 +359,7 @@ from estuary.models.user import User
                         'state': 'SHIPPED_LIVE',
                         'status_time': '2017-08-01T15:43:51+00:00',
                         'synopsis': 'cifs-utils bug fix update',
-                        'update_date': '2017-08-01T07:16:00+00:00',
-                        'updated_at': '2017-08-01T15:43:51+00:00'
+                        'update_date': '2017-08-01T07:16:00+00:00'
                     }
                 ],
                 'commit':{
@@ -410,8 +405,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -453,8 +447,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }
         ],
         'meta': {
@@ -550,8 +543,7 @@ from estuary.models.user import User
                         'url': '/api/1/events/1180'
                     }
                 ],
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -593,8 +585,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }
         ],
         'meta': {
@@ -659,8 +650,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -687,8 +677,7 @@ from estuary.models.user import User
                     'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51+00:00',
                     'synopsis': 'cifs-utils bug fix update',
-                    'update_date': '2017-08-01T07:16:00+00:00',
-                    'updated_at': '2017-08-01T15:43:51+00:00'
+                    'update_date': '2017-08-01T07:16:00+00:00'
                 },
                 'triggered_container_builds': [
                     {
@@ -737,8 +726,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }
         ],
         'meta': {
@@ -803,8 +791,7 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time':'2017-08-01T15:43:51+00:00',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00',
-                'updated_at':'2017-08-01T15:43:51+00:00'
+                'update_date':'2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -835,8 +822,7 @@ from estuary.models.user import User
                         'state':'SHIPPED_LIVE',
                         'status_time':'2017-08-01T15:43:51+00:00',
                         'synopsis':'cifs-utils bug fix update',
-                        'update_date':'2017-08-01T07:16:00+00:00',
-                        'updated_at':'2017-08-01T15:43:51+00:00'
+                        'update_date':'2017-08-01T07:16:00+00:00'
                     }
                 ],
                 'commit':None,
@@ -887,8 +873,7 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time':'2017-08-01T15:43:51+00:00',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00',
-                'updated_at':'2017-08-01T15:43:51+00:00'
+                'update_date':'2017-08-01T07:16:00+00:00'
             }
         ],
         'meta':{
@@ -953,8 +938,7 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time':'2017-08-01T15:43:51+00:00',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00',
-                'updated_at':'2017-08-01T15:43:51+00:00'
+                'update_date':'2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -1022,8 +1006,7 @@ from estuary.models.user import User
                 'triggered_freshmaker_event':[
 
                 ],
-                'update_date':'2017-08-01T07:16:00+00:00',
-                'updated_at':'2017-08-01T15:43:51+00:00'
+                'update_date':'2017-08-01T07:16:00+00:00'
             }
         ],
         'meta':{
@@ -1063,8 +1046,7 @@ def test_get_stories(client, resource, uids, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     bug = BugzillaBug.get_or_create({
         'classification': 'Red Hat',
@@ -1140,8 +1122,7 @@ def test_get_stories(client, resource, uids, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
 
     repo.branches.connect(branch)
@@ -1254,8 +1235,7 @@ def test_get_stories_just_artifact(client):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     expected = {
         'data': [{
@@ -1280,8 +1260,7 @@ def test_get_stories_just_artifact(client):
             'status_time': '2017-08-01T15:43:51+00:00',
             'synopsis': 'cifs-utils bug fix update',
             'triggered_freshmaker_event': [],
-            'update_date': '2017-08-01T07:16:00+00:00',
-            'updated_at': '2017-08-01T15:43:51+00:00'
+            'update_date': '2017-08-01T07:16:00+00:00'
         }],
         'meta': {
             'story_related_nodes_forward': [0],
@@ -1310,8 +1289,7 @@ def test_get_story_partial_story(client):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
@@ -1380,8 +1358,7 @@ def test_get_story_partial_story(client):
                     'state_reason': 'All container images have been rebuilt.',
                     'url': '/api/1/events/1180'
                 }],
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             },
             {
                 'event_type_id': 8,
@@ -1446,8 +1423,7 @@ def test_get_story_fallback(client):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
 
     build.advisories.connect(advisory)
@@ -1469,8 +1445,7 @@ def test_get_story_fallback(client):
                     'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51+00:00',
                     'synopsis': 'cifs-utils bug fix update',
-                    'update_date': '2017-08-01T07:16:00+00:00',
-                    'updated_at': '2017-08-01T15:43:51+00:00'
+                    'update_date': '2017-08-01T07:16:00+00:00'
                 }],
                 'commit': None,
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -1504,8 +1479,7 @@ def test_get_story_fallback(client):
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }
         ],
         'meta': {

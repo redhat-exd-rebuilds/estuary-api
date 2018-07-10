@@ -39,8 +39,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state':'SHIPPED_LIVE',
                 'status_time':'2017-08-01T15:43:51+00:00',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00',
-                'updated_at':'2017-08-01T15:43:51+00:00'
+                'update_date':'2017-08-01T07:16:00+00:00'
             }
         ],
         'classification':'Red Hat',
@@ -325,8 +324,7 @@ from estuary.models.freshmaker import FreshmakerEvent
         'triggered_freshmaker_event': [
 
         ],
-        'update_date':'2017-08-01T07:16:00+00:00',
-        'updated_at':'2017-08-01T15:43:51+00:00'
+        'update_date':'2017-08-01T07:16:00+00:00'
     }),
     ('freshmakerevent', '1180', {
         'event_type_id': 8,
@@ -352,8 +350,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             'state':'SHIPPED_LIVE',
             'status_time':'2017-08-01T15:43:51+00:00',
             'synopsis':'cifs-utils bug fix update',
-            'update_date':'2017-08-01T07:16:00+00:00',
-            'updated_at':'2017-08-01T15:43:51+00:00'
+            'update_date':'2017-08-01T07:16:00+00:00'
         },
         'triggered_container_builds': [{
             'completion_time': '2017-04-02T19:39:06+00:00',
@@ -516,8 +513,7 @@ def test_get_resources(client, resource, uid, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
