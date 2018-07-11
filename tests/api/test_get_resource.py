@@ -9,7 +9,7 @@ import pytest
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit, DistGitBranch, DistGitRepo
-from estuary.models.errata import Advisory, AdvisoryState
+from estuary.models.errata import Advisory
 from estuary.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
 from estuary.models.freshmaker import FreshmakerEvent
 
@@ -39,9 +39,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state':'SHIPPED_LIVE',
                 'status_time':'2017-08-01T15:43:51+00:00',
                 'synopsis':'cifs-utils bug fix update',
-                'type':'RHBA',
-                'update_date':'2017-08-01T07:16:00+00:00',
-                'updated_at':'2017-08-01T15:43:51+00:00'
+                'update_date':'2017-08-01T07:16:00+00:00'
             }
         ],
         'classification':'Red Hat',
@@ -305,11 +303,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'created_at':'2017-04-03T14:47:23+00:00',
         'id':'27825',
         'issue_date':'2017-08-01T05:59:34+00:00',
-        'package_owner':{
-            'email': 'tom.brady@domain.local',
-            'name': None,
-            'username': 'tbrady'
-        },
         'product_name': 'Red Hat Enterprise Linux',
         'product_short_name': 'RHEL',
         'release_date': None,
@@ -321,22 +314,12 @@ from estuary.models.freshmaker import FreshmakerEvent
         'security_impact': 'None',
         'security_sla': None,
         'state': 'SHIPPED_LIVE',
-        'states': [
-            {
-                'created_at': '2017-04-02T19:45:06+00:00',
-                'id': '7890',
-                'name': 'some_name',
-                'updated_at': '2017-04-02T19:45:06+00:00'
-            }
-        ],
         'status_time': '2017-08-01T15:43:51+00:00',
         'synopsis': 'cifs-utils bug fix update',
         'triggered_freshmaker_event': [
 
         ],
-        'type':'RHBA',
-        'update_date':'2017-08-01T07:16:00+00:00',
-        'updated_at':'2017-08-01T15:43:51+00:00'
+        'update_date':'2017-08-01T07:16:00+00:00'
     }),
     ('freshmakerevent', '1180', {
         'event_type_id': 8,
@@ -362,9 +345,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             'state':'SHIPPED_LIVE',
             'status_time':'2017-08-01T15:43:51+00:00',
             'synopsis':'cifs-utils bug fix update',
-            'type':'RHBA',
-            'update_date':'2017-08-01T07:16:00+00:00',
-            'updated_at':'2017-08-01T15:43:51+00:00'
+            'update_date':'2017-08-01T07:16:00+00:00'
         },
         'triggered_container_builds': [{
             'completion_time': '2017-04-02T19:39:06+00:00',
@@ -527,15 +508,7 @@ def test_get_resources(client, resource, uid, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
-    })[0]
-    adv_state = AdvisoryState.get_or_create({
-        'id_': '7890',
-        'created_at': datetime(2017, 4, 2, 19, 45, 6),
-        'updated_at': datetime(2017, 4, 2, 19, 45, 6),
-        'name': 'some_name'
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
@@ -587,10 +560,8 @@ def test_get_resources(client, resource, uid, expected):
 
     if resource == 'advisory':
         advisory.assigned_to.connect(mprahl)
-        advisory.package_owner.connect(tbrady)
         advisory.reporter.connect(jsmith)
         advisory.attached_builds.connect(build)
-        adv_state.advisory.connect(advisory)
         advisory.attached_bugs.connect(bug)
 
     if resource == 'freshmakerevent':

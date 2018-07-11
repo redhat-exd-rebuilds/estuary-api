@@ -34,9 +34,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51+00:00',
                     'synopsis': 'cifs-utils bug fix update',
-                    'type': 'RHBA',
-                    'update_date': '2017-08-01T07:16:00+00:00',
-                    'updated_at': '2017-08-01T15:43:51+00:00'
+                    'update_date': '2017-08-01T07:16:00+00:00'
                 }
             ],
             'commit': None,
@@ -78,9 +76,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51+00:00',
                     'synopsis': 'cifs-utils bug fix update',
-                    'type': 'RHBA',
-                    'update_date': '2017-08-01T07:16:00+00:00',
-                    'updated_at': '2017-08-01T15:43:51+00:00'
+                    'update_date': '2017-08-01T07:16:00+00:00'
                 }
             ],
             'commit':{
@@ -143,7 +139,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'created_at': '2017-04-03T14:47:23+00:00',
         'id': '27825',
         'issue_date': '2017-08-01T05:59:34+00:00',
-        'package_owner': None,
         'product_name': 'Red Hat Enterprise Linux',
         'product_short_name': 'RHEL',
         'release_date': None,
@@ -152,7 +147,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'security_impact': 'None',
         'security_sla': None,
         'state': 'SHIPPED_LIVE',
-        'states': [],
         'status_time': '2017-08-01T15:43:51+00:00',
         'synopsis': 'cifs-utils bug fix update',
         'triggered_freshmaker_event': [{
@@ -164,9 +158,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             'state_reason': 'All container images have been rebuilt.',
             'url': '/api/1/events/1180'
         }],
-        'type': 'RHBA',
-        'update_date': '2017-08-01T07:16:00+00:00',
-        'updated_at': '2017-08-01T15:43:51+00:00'
+        'update_date': '2017-08-01T07:16:00+00:00'
     }]),
     ('containeradvisory', '12327', False, [
         {
@@ -185,9 +177,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'type': 'RHBA',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }],
             'commit': None,
             'completion_time': '2018-04-02T19:39:06+00:00',
@@ -231,9 +221,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51+00:00',
                 'synopsis': 'cifs-utils bug fix update',
-                'type': 'RHBA',
-                'update_date': '2017-08-01T07:16:00+00:00',
-                'updated_at': '2017-08-01T15:43:51+00:00'
+                'update_date': '2017-08-01T07:16:00+00:00'
             }],
             'commit': None,
             'completion_time': '2017-04-02T19:39:06+00:00',
@@ -298,7 +286,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'created_at': '2017-04-03T14:47:23+00:00',
         'id': '12327',
         'issue_date': '2017-08-01T05:59:34+00:00',
-        'package_owner': None,
         'product_name': 'Red Hat Enterprise Linux',
         'product_short_name': 'RHEL',
         'release_date': None,
@@ -307,13 +294,10 @@ from estuary.models.freshmaker import FreshmakerEvent
         'security_impact': 'None',
         'security_sla': None,
         'state': 'SHIPPED_LIVE',
-        'states': [],
         'status_time': '2017-08-01T15:43:51+00:00',
         'synopsis': 'cifs-utils bug fix update',
         'triggered_freshmaker_event': [],
-        'type': 'RHBA',
-        'update_date': '2017-08-01T07:16:00+00:00',
-        'updated_at': '2017-08-01T15:43:51+00:00'
+        'update_date': '2017-08-01T07:16:00+00:00'
     }])
 ])
 def test_node_siblings(client, resource, uid, reverse, expected):
@@ -374,9 +358,7 @@ def test_node_siblings(client, resource, uid, reverse, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
@@ -422,9 +404,7 @@ def test_node_siblings(client, resource, uid, reverse, expected):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
 
     commit.resolved_bugs.connect(bug)
@@ -488,9 +468,7 @@ def test_reverse_flag(client):
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
         'synopsis': 'cifs-utils bug fix update',
-        'type_': 'RHBA',
-        'update_date': datetime(2017, 8, 1, 7, 16),
-        'updated_at': datetime(2017, 8, 1, 15, 43, 51)
+        'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
 
     expected = {

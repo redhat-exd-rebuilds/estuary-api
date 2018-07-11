@@ -7,7 +7,7 @@ import yaml
 from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
 from estuary import log
-from estuary.models.errata import Advisory, AdvisoryState, ContainerAdvisory
+from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.koji import KojiBuild, ContainerKojiBuild
@@ -65,9 +65,7 @@ class ErrataScraper(BaseScraper):
                 'state': advisory['state'],
                 'status_time': advisory['status_time'],
                 'synopsis': advisory['synopsis'],
-                'type_': advisory['type'],
                 'update_date': advisory['update_date'],
-                'updated_at': advisory['updated_at']
             })[0]
             container_adv = False
 
@@ -116,22 +114,8 @@ class ErrataScraper(BaseScraper):
 
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
             adv.conditional_connect(adv.assigned_to, assigned_to)
-            package_owner = User.get_or_create(
-                {'username': advisory['package_owner'].split('@')[0]})[0]
-            adv.conditional_connect(adv.package_owner, package_owner)
             reporter = User.get_or_create({'username': advisory['reporter'].split('@')[0]})[0]
             adv.conditional_connect(adv.reporter, reporter)
-
-            for state in self.get_advisory_states(advisory['id']):
-                adv_state = AdvisoryState.create_or_update({
-                    'id_': state['id'],
-                    'name': state['name'],
-                    'created_at': state['created_at'],
-                    'updated_at': state['updated_at']
-                })[0]
-                adv_state.conditional_connect(adv_state.advisory, adv)
-                state_creator = User.get_or_create({'username': state['username'].split('@')[0]})[0]
-                adv_state.conditional_connect(adv_state.creator, state_creator)
 
             for attached_bug in self.get_attached_bugs(advisory['id']):
                 bug = BugzillaBug.get_or_create(attached_bug)[0]
@@ -156,7 +140,6 @@ class ErrataScraper(BaseScraper):
                 main.created_at,
                 main.id AS id,
                 main.issue_date,
-                package_users.login_name AS package_owner,
                 products.name as product_name,
                 products.short_name as product_short_name,
                 main.release_date,
@@ -166,8 +149,7 @@ class ErrataScraper(BaseScraper):
                 main.status_updated_at AS status_time,
                 main.synopsis,
                 main.errata_type AS type,
-                main.update_date,
-                main.updated_at
+                main.update_date
             FROM Errata_public.errata_main AS main
             LEFT JOIN Errata_public.state_indices as states
                 ON main.current_state_index_id = states.id
@@ -175,32 +157,12 @@ class ErrataScraper(BaseScraper):
                 ON main.product_id = products.id
             LEFT JOIN Errata_public.users AS assigned_users
                 ON main.assigned_to_id = assigned_users.id
-            LEFT JOIN Errata_public.users AS package_users
-                ON main.package_owner_id = package_users.id
             LEFT JOIN Errata_public.users AS reporter_users
                 ON main.reporter_id = reporter_users.id
-            WHERE main.updated_at >= '{0}' AND main.updated_at <= '{1}'
-            ORDER BY main.updated_at DESC;
+            WHERE main.update_date >= '{0}' AND main.update_date <= '{1}'
+            ORDER BY main.update_date DESC;
         """.format(since, until)
         log.info('Getting Errata advisories since {0} until {1}'.format(since, until))
-        return self.teiid.query(sql)
-
-    def get_advisory_states(self, advisory_id):
-        """
-        Query Teiid to find the states of a specific advisory.
-
-        :param int advisory_id: the advisory ID
-        :return: a list of a dictionaries
-        :rtype: list
-        """
-        sql = """\
-            SELECT states.created_at, states.id, states.current as name, states.updated_at,
-                users.login_name AS username
-            FROM Errata_public.state_indices as states
-            LEFT JOIN Errata_public.users as users ON states.who_id = users.id
-            WHERE errata_id = {};
-        """.format(advisory_id)
-        log.info('Getting states tied to the advisory with ID {0}'.format(advisory_id))
         return self.teiid.query(sql)
 
     def get_associated_builds(self, advisory_id):
