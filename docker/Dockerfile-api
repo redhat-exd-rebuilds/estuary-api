@@ -15,7 +15,9 @@ RUN dnf -y install \
 # This will allow a non-root user to install a custom root CA at run-time
 RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
-# Install using pip so we can use the --no-deps options to ensure nothing comes from PyPi
-RUN pip3 install . --no-deps
+# Install using develop so we can use the --no-deps options to ensure nothing comes from PyPi.
+# Normally we'd use something like `pip3 install . --no-deps` but certain neomodel scripts must
+# import estuary dynamically, and for whatever reason, that fails when this is installed using pip.
+RUN python3 setup.py develop --no-deps --prefix /usr
 USER 1001
 CMD ["/usr/bin/bash", "-c", "docker/install-ca.sh && exec gunicorn-3 --bind 0.0.0.0:8080 --access-logfile=- --enable-stdio-inheritance estuary.wsgi:app"]
