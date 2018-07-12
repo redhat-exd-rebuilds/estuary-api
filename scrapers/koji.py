@@ -71,9 +71,9 @@ class KojiScraper(BaseScraper):
             LEFT JOIN events ON build.create_event = events.id
             LEFT JOIN package ON build.pkg_id = package.id
             LEFT JOIN brew.users ON build.owner = brew.users.id
-            WHERE events.time IS NOT NULL AND events.time >= '{0}' AND events.time <= '{1}'
+            WHERE build.id = '716789'
             ORDER BY build.start_time DESC;
-            """.format(start_date, end_date)
+            """
 
         return self.teiid.query(sql=sql_query)
 
@@ -215,12 +215,14 @@ class KojiScraper(BaseScraper):
                 continue
             # Getting task related to the current build
             task_dict = self.get_task(task_id)[0]
-            xml_root = ET.fromstring(task_dict['request'])
             commit_hash = None
-            for child in xml_root.iter('string'):
-                if child.text and child.text.startswith('git'):
-                    commit_hash = child.text.rsplit('#', 1)[1]
-                    break
+            # Only look for the commit hash if the build is an RPM or container
+            if task_dict['method'] in ('build', 'buildContainer'):
+                xml_root = ET.fromstring(task_dict['request'])
+                for child in xml_root.iter('string'):
+                    if child.text and child.text.startswith('git'):
+                        commit_hash = child.text.rsplit('#', 1)[1]
+                        break
 
             if not task_dict:
                 # Continue if no corresponding task found
