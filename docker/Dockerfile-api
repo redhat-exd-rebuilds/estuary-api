@@ -15,6 +15,7 @@ RUN dnf -y install \
 # This will allow a non-root user to install a custom root CA at run-time
 RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
-RUN python3 setup.py install --prefix /usr
+# Install using pip so we can use the --no-deps options to ensure nothing comes from PyPi
+RUN pip3 install . --no-deps
 USER 1001
 CMD ["/usr/bin/bash", "-c", "docker/install-ca.sh && exec gunicorn-3 --bind 0.0.0.0:8080 --access-logfile=- --enable-stdio-inheritance estuary.wsgi:app"]
