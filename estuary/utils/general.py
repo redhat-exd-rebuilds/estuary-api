@@ -395,3 +395,33 @@ def set_story_labels(requested_node_label, results, reverse=False):
         idx += delta
         node_idx += delta
     return results
+
+
+def create_header(item_type, item_id, item_story_flow, reverse):
+    """
+    Generate a header for the siblings chart.
+
+    :param string item_type: the name of the type of current item
+    :param string item_id: the id of the current item
+    :param dict item_story_flow: has forward and backward relationships of current item
+    :param bool reverse: determines if the results are in the reverse order of the story flow
+    :return: returns the appropriate siblings chart header
+    :rtype: string
+    """
+    def _plural_label(label):
+        if label.endswith('y'):
+            label = label[:-1] + 'ies'
+        else:
+            label = label + 's'
+        return label
+
+    if reverse:
+        fwd_label = _plural_label(item_story_flow['forward_label'])
+        fwd_relationship = item_story_flow['forward_relationship'][:-1].lower().replace('_', ' ')
+        result = '{0} {1} {2} {3}'.format(fwd_label, fwd_relationship, item_type, item_id)
+        return result
+    else:
+        back_label = _plural_label(item_story_flow['backward_label'])
+        back_relationship = item_story_flow['backward_relationship'][:-1].lower().replace('_', ' ')
+        result = '{0} {1} {2} {3}'.format(back_label, back_relationship, item_type, item_id)
+        return result
