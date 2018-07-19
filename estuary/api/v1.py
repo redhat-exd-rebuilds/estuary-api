@@ -258,13 +258,13 @@ def get_siblings(resource, uid):
         raise NotFound('This item does not exist')
 
     item_story_flow = story_flow(item.__label__)
-    # If reverse is True, we fetch siblings of the next node, previous node otherwise
-    reverse = str_to_bool(request.args.get('reverse'))
-    if reverse and item_story_flow['forward_label']:
+    # If backward is True, we fetch siblings of the previous node, next node otherwise
+    backward = str_to_bool(request.args.get('backward_rel'))
+    if backward and item_story_flow['backward_label']:
+        correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
+    elif not backward and item_story_flow['forward_label']:
         correlated_nodes = get_correlated_nodes(
             item_story_flow['forward_label'], item, reverse=True)
-    elif not reverse and item_story_flow['backward_label']:
-        correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
 
