@@ -187,7 +187,7 @@ def get_sibling_nodes_count(results, reverse=False):
     Iterate through the results and yield correlated nodes.
 
     :param list results: contains inflated results from Neo4j
-    :kwarg bool reverse: determines if we are traversing the story/path backwards
+    :kwarg bool reverse: determines the direction the story is traversed in (i.e. forward/backward)
     :return: yield the results count (int) received from Neo4j
     :rtype: generator
     """
