@@ -253,18 +253,21 @@ def get_siblings(resource, uid):
     :raises NotFound: if the item is not found
     :raises ValidationError: if an invalid resource was requested
     """
-    item = get_neo4j_node(resource, uid)
-    if not item:
+    # This is the node that is part of a story which has the relationship to the desired
+    # sibling nodes
+    story_node = get_neo4j_node(resource, uid)
+    if not story_node:
         raise NotFound('This item does not exist')
 
-    item_story_flow = story_flow(item.__label__)
+    story_node_story_flow = story_flow(story_node.__label__)
     # If backward is True, we fetch siblings of the previous node, next node otherwise
     backward = str_to_bool(request.args.get('backward_rel'))
-    if backward and item_story_flow['backward_label']:
-        correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
-    elif not backward and item_story_flow['forward_label']:
-        correlated_nodes = get_correlated_nodes(
-            item_story_flow['forward_label'], item, reverse=True)
+    if backward and story_node_story_flow['backward_label']:
+        desired_siblings_label = story_node_story_flow['backward_label']
+        correlated_nodes = get_correlated_nodes(desired_siblings_label, story_node)
+    elif not backward and story_node_story_flow['forward_label']:
+        desired_siblings_label = story_node_story_flow['forward_label']
+        correlated_nodes = get_correlated_nodes(desired_siblings_label, story_node, reverse=True)
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
 
