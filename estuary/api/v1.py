@@ -264,16 +264,15 @@ def get_siblings(resource, uid):
     backward = str_to_bool(request.args.get('backward_rel'))
     if backward and story_node_story_flow['backward_label']:
         desired_siblings_label = story_node_story_flow['backward_label']
-        correlated_nodes = get_sibling_nodes(desired_siblings_label, story_node)
     elif not backward and story_node_story_flow['forward_label']:
         desired_siblings_label = story_node_story_flow['forward_label']
-        correlated_nodes = get_sibling_nodes(desired_siblings_label, story_node, reverse=True)
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
 
+    sibling_nodes = get_sibling_nodes(desired_siblings_label, story_node)
     # Inflating and formatting results from Neo4j
     serialized_results = []
-    for result in correlated_nodes:
+    for result in sibling_nodes:
         inflated_node = inflate_node(result[0])
         serialized_node = inflated_node.serialized_all
         serialized_node['resource_type'] = inflated_node.__label__
