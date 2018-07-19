@@ -182,7 +182,7 @@ def create_story_query(item, node_id, reverse=False, limit=False):
     return query
 
 
-def get_correlated_nodes_count(results, reverse=False):
+def get_sibling_nodes_count(results, reverse=False):
     """
     Iterate through the results and yield correlated nodes.
 
@@ -198,12 +198,12 @@ def get_correlated_nodes_count(results, reverse=False):
     correlated_nodes = []
     if not reverse:
         for index in range(len_story - 1):
-            correlated_nodes.append(get_correlated_nodes(
+            correlated_nodes.append(get_sibling_nodes(
                 results[index].__label__, results[index + 1], count=True))
     else:
         # Iterate over results backwards for convenience -- will be reversed to correct order later
         for index in range(len_story - 1, 0, -1):
-            correlated_nodes.append(get_correlated_nodes(
+            correlated_nodes.append(get_sibling_nodes(
                 results[index].__label__, results[index - 1], reverse=True, count=True))
 
     # When traversing the story, the last node is skipped because there is no next node for it, so
@@ -214,7 +214,7 @@ def get_correlated_nodes_count(results, reverse=False):
     return correlated_nodes
 
 
-def get_correlated_nodes(curr_node_label, next_node, reverse=False, count=False):
+def get_sibling_nodes(curr_node_label, next_node, reverse=False, count=False):
     """
     Query Neo4j and return the count of results.
 
@@ -361,9 +361,9 @@ def format_story_results(results, requested_item):
     return {
         'data': data,
         'meta': {
-            'story_related_nodes_forward': list(get_correlated_nodes_count(results)),
+            'story_related_nodes_forward': list(get_sibling_nodes_count(results)),
             'story_related_nodes_backward': list(
-                get_correlated_nodes_count(results, reverse=True)),
+                get_sibling_nodes_count(results, reverse=True)),
             'requested_node_index': requested_node_index
         }
     }

@@ -12,7 +12,7 @@ from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
     str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results,
-    get_correlated_nodes, inflate_node, set_story_labels
+    get_sibling_nodes, inflate_node, set_story_labels
 )
 from estuary.error import ValidationError
 
@@ -264,10 +264,10 @@ def get_siblings(resource, uid):
     backward = str_to_bool(request.args.get('backward_rel'))
     if backward and story_node_story_flow['backward_label']:
         desired_siblings_label = story_node_story_flow['backward_label']
-        correlated_nodes = get_correlated_nodes(desired_siblings_label, story_node)
+        correlated_nodes = get_sibling_nodes(desired_siblings_label, story_node)
     elif not backward and story_node_story_flow['forward_label']:
         desired_siblings_label = story_node_story_flow['forward_label']
-        correlated_nodes = get_correlated_nodes(desired_siblings_label, story_node, reverse=True)
+        correlated_nodes = get_sibling_nodes(desired_siblings_label, story_node, reverse=True)
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
 
