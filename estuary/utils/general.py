@@ -127,13 +127,13 @@ def get_neo4j_node(resource_name, uid):
                 raise ValidationError(error)
 
 
-def create_story_query(item, node_id, reverse=False, limit=False):
+def create_story_query(item, node_id, forward=False, limit=False):
     """
     Create a raw cypher query for story of an artifact.
 
     :param node item: a Neo4j node whose story is requested by the user
     :param int node_id: the internal Neo4j ID of the node
-    :param bool reverse: boolean value to specify the direction to proceed
+    :param bool forward: boolean value to specify the direction to proceed
     from current node corresponding to the story_flow
     :return: a string containing raw cypher query to retrieve the story of an artifact from Neo4j
     :rtype: str
@@ -143,7 +143,7 @@ def create_story_query(item, node_id, reverse=False, limit=False):
 
     query = ''
 
-    if reverse is True:
+    if forward is True:
         rel_label = 'backward_relationship'
         node_label = 'backward_label'
     else:
@@ -182,12 +182,12 @@ def create_story_query(item, node_id, reverse=False, limit=False):
     return query
 
 
-def get_correlated_nodes_count(results, reverse=False):
+def get_correlated_nodes_count(results, forward=False):
     """
     Iterate through the results and yield correlated nodes.
 
     :param list results: contains inflated results from Neo4j
-    :kwarg bool reverse: determines if we are traversing the story/path backwards
+    :kwarg bool forward: determines if we are traversing the story/path backwards
     :return: yield the results count (int) received from Neo4j
     :rtype: generator
     """
@@ -196,7 +196,7 @@ def get_correlated_nodes_count(results, reverse=False):
         raise RuntimeError('This function can\'t be called with one or zero elements')
 
     correlated_nodes = []
-    if not reverse:
+    if not forward:
         for index in range(len_story - 1):
             correlated_nodes.append(get_correlated_nodes(
                 results[index].__label__, results[index + 1], count=True))
@@ -204,23 +204,23 @@ def get_correlated_nodes_count(results, reverse=False):
         # Iterate over results backwards for convenience -- will be reversed to correct order later
         for index in range(len_story - 1, 0, -1):
             correlated_nodes.append(get_correlated_nodes(
-                results[index].__label__, results[index - 1], reverse=True, count=True))
+                results[index].__label__, results[index - 1], forward=True, count=True))
 
     # When traversing the story, the last node is skipped because there is no next node for it, so
     # we must add a value of 0 as a placeholder
     correlated_nodes.append(0)
-    if reverse:
+    if forward:
         return correlated_nodes[::-1]
     return correlated_nodes
 
 
-def get_correlated_nodes(curr_node_label, next_node, reverse=False, count=False):
+def get_correlated_nodes(curr_node_label, next_node, forward=False, count=False):
     """
     Query Neo4j and return the count of results.
 
     :param str curr_node_label: node label for which the siblings count is to be calculated
     :param EstuaryStructuredNode next_node: correlated node to curr_node in the story/path
-    :kwarg bool reverse: determines if we are traversing the story/path backwards
+    :kwarg bool forward: determines if we are traversing the story/path backwards
     :kwarg bool count: determines if only count of sibling nodes should be returned
     or the nodes themselves
     :return: siblings count of curr_node | sibling nodes
@@ -228,7 +228,7 @@ def get_correlated_nodes(curr_node_label, next_node, reverse=False, count=False)
     """
     next_node_label = next_node.__label__
     item_story_flow = story_flow(next_node_label)
-    if reverse:
+    if forward:
         relationship = item_story_flow['forward_relationship'][:-1]
     else:
         relationship = item_story_flow['backward_relationship'][:-1]
@@ -363,19 +363,19 @@ def format_story_results(results, requested_item):
         'meta': {
             'story_related_nodes_forward': list(get_correlated_nodes_count(results)),
             'story_related_nodes_backward': list(
-                get_correlated_nodes_count(results, reverse=True)),
+                get_correlated_nodes_count(results, forward=True)),
             'requested_node_index': requested_node_index
         }
     }
 
 
-def set_story_labels(requested_node_label, results, reverse=False):
+def set_story_labels(requested_node_label, results, forward=False):
     """
     Replace Neo4j labels with appropriate labels of the story flow.
 
     :param string requested_node_label: label of the node requested by the user
     :param list results: nodes in a story/path
-    :kwarg bool reverse: determines if the results are in reverse order of the story flow
+    :kwarg bool forward: determines if the results are in forward order of the story flow
     :return: results with story/path labels
     :rtype: list
     """
@@ -386,9 +386,9 @@ def set_story_labels(requested_node_label, results, reverse=False):
         return results
 
     idx = 0
-    if reverse:
+    if forward:
         idx = len(results) - 1
-    delta = -1 if reverse else 1
+    delta = -1 if forward else 1
     node_idx = story_flow_list.index(requested_node_label)
     while (0 <= idx < len(results)):
         results[idx].__label__ = story_flow_list[node_idx]

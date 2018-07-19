@@ -92,9 +92,9 @@ def get_resource_story(resource, uid):
         raise NotFound('This item does not exist')
 
     forward_query = create_story_query(item, item.id, limit=True)
-    backward_query = create_story_query(item, item.id, reverse=True, limit=True)
+    backward_query = create_story_query(item, item.id, forward=True, limit=True)
 
-    def _get_partial_story(query, reverse=False):
+    def _get_partial_story(query, forward=False):
         results, _ = db.cypher_query(query)
 
         if not results:
@@ -102,8 +102,8 @@ def get_resource_story(resource, uid):
 
         # Assuming that if Path is the first result, then that's all we want to process
         results = [list(results[0][0].nodes)]
-        # Reverse will be true when it is a backward query to preserve the story order
-        if reverse:
+        # forward will be true when it is a backward query to preserve the story order
+        if forward:
             results = [results[0][::-1]]
 
         return EstuaryStructuredNode.inflate_results(results)[0]
@@ -114,7 +114,7 @@ def get_resource_story(resource, uid):
 
     if backward_query:
         backward_query_results = set_story_labels(
-            item.__label__, _get_partial_story(backward_query, reverse=True), reverse=True)
+            item.__label__, _get_partial_story(backward_query, forward=True), forward=True)
         if backward_query_results and results:
             # Remove the first element of backward_query_results in order to avoid
             # duplication of the requested resource when result of forward query are not None.
@@ -154,9 +154,9 @@ def get_resource_all_stories(resource, uid):
             break
 
     forward_query = create_story_query(item, item.id)
-    backward_query = create_story_query(item, item.id, reverse=True)
+    backward_query = create_story_query(item, item.id, forward=True)
 
-    def _get_partial_stories(query, reverse=False):
+    def _get_partial_stories(query, forward=False):
 
         results_list = []
         results, _ = db.cypher_query(query)
@@ -192,7 +192,7 @@ def get_resource_all_stories(resource, uid):
         # list as the for loops will eliminate them. So we add the last element
         # since we are sure it is unique.
         unique_paths.append(results[0][0])
-        if reverse:
+        if forward:
             unique_paths_nodes = [path.nodes[::-1] for path in unique_paths]
         else:
             unique_paths_nodes = [path.nodes for path in unique_paths]
@@ -205,7 +205,7 @@ def get_resource_all_stories(resource, uid):
         results_forward = []
 
     if backward_query:
-        results_backward = _get_partial_stories(backward_query, reverse=True)
+        results_backward = _get_partial_stories(backward_query, forward=True)
     else:
         results_backward = []
 
@@ -216,7 +216,7 @@ def get_resource_all_stories(resource, uid):
                 item.__label__, result) for result in results_forward]
         else:
             results_unidir = [set_story_labels(
-                item.__label__, result, reverse=True) for result in results_backward]
+                item.__label__, result, forward=True) for result in results_backward]
 
         for result in results_unidir:
             all_results.append(format_story_results(result, item))
@@ -225,7 +225,7 @@ def get_resource_all_stories(resource, uid):
         # Combining all the backward and forward paths to generate all the possible full paths
         for result_forward in results_forward:
             for result_backward in results_backward:
-                results = set_story_labels(item.__label__, result_backward, reverse=True) + \
+                results = set_story_labels(item.__label__, result_backward, forward=True) + \
                     set_story_labels(item.__label__, result_forward)[1:]
                 all_results.append(format_story_results(results, item))
 
@@ -256,14 +256,13 @@ def get_siblings(resource, uid):
     item = get_neo4j_node(resource, uid)
     if not item:
         raise NotFound('This item does not exist')
-
     item_story_flow = story_flow(item.__label__)
-    # If reverse is True, we fetch siblings of the next node, previous node otherwise
-    reverse = str_to_bool(request.args.get('reverse'))
-    if reverse and item_story_flow['forward_label']:
+    # If forward is True, we fetch siblings of the next node, previous node otherwise
+    forward = str_to_bool(request.args.get('forward'))
+    if forward and item_story_flow['forward_label']:
         correlated_nodes = get_correlated_nodes(
-            item_story_flow['forward_label'], item, reverse=True)
-    elif not reverse and item_story_flow['backward_label']:
+            item_story_flow['forward_label'], item, forward=True)
+    elif not forward and item_story_flow['backward_label']:
         correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
