@@ -9,10 +9,11 @@ from neomodel import db
 from estuary import version
 from estuary.models import story_flow_list
 from estuary.models.base import EstuaryStructuredNode
+from estuary.models.distgit import DistGitCommit
 
 from estuary.utils.general import (
     str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results,
-    get_correlated_nodes, inflate_node, set_story_labels
+    get_correlated_nodes, inflate_node, set_story_labels, create_header
 )
 from estuary.error import ValidationError
 
@@ -256,7 +257,8 @@ def get_siblings(resource, uid):
     item = get_neo4j_node(resource, uid)
     if not item:
         raise NotFound('This item does not exist')
-
+    # Reverse means down --maybe dirn instead
+    # Not reverse means up
     item_story_flow = story_flow(item.__label__)
     # If reverse is True, we fetch siblings of the next node, previous node otherwise
     reverse = str_to_bool(request.args.get('reverse'))
@@ -276,7 +278,19 @@ def get_siblings(resource, uid):
         serialized_node['resource_type'] = inflated_node.__label__
         serialized_results.append(serialized_node)
 
-    return jsonify(serialized_results)
+    if item.__label__ == DistGitCommit.__label__:
+        header = create_header(item.__label__, item.hash_, item_story_flow, reverse)
+    else:
+        header = create_header(item.__label__, item.id_, item_story_flow, reverse)
+
+    result = {
+        'data': serialized_results,
+        'meta': {
+            'siblings_table_header': header
+        }
+    }
+
+    return jsonify(result)
 
 
 @api_v1.route('/relationships/<resource>/<uid>/<relationship>')
