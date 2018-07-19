@@ -13,7 +13,7 @@ from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
 
 
-@pytest.mark.parametrize('resource,uid,reverse,expected', [
+@pytest.mark.parametrize('resource,uid,forward,expected', [
     ('advisory', '27825', False, [
         {
             'advisories': [
@@ -300,7 +300,7 @@ from estuary.models.freshmaker import FreshmakerEvent
         'update_date': '2017-08-01T07:16:00+00:00'
     }])
 ])
-def test_node_siblings(client, resource, uid, reverse, expected):
+def test_node_siblings(client, resource, uid, forward, expected):
     """Tests getting the siblings of an artifact's adjacent node in the story path."""
     bug = BugzillaBug.get_or_create({
         'classification': 'Red Hat',
@@ -417,10 +417,10 @@ def test_node_siblings(client, resource, uid, reverse, expected):
     ca.attached_builds.connect(cb)
     ca.attached_builds.connect(cb_two)
 
-    if not reverse:
+    if not forward:
         rv = client.get('/api/v1/siblings/{0}/{1}'.format(resource, uid))
     else:
-        rv = client.get('/api/v1/siblings/{0}/{1}?reverse=True'.format(resource, uid))
+        rv = client.get('/api/v1/siblings/{0}/{1}?forward=True'.format(resource, uid))
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
 
@@ -453,8 +453,8 @@ def test_first_node_of_story(client):
     assert json.loads(rv.data.decode('utf-8')) == expected
 
 
-def test_reverse_flag(client):
-    """Tests getting the siblings for when the reverse flag is true."""
+def test_forward_flag(client):
+    """Tests getting the siblings for when the forward flag is true."""
     ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
@@ -476,6 +476,6 @@ def test_reverse_flag(client):
         'status': 400
     }
 
-    rv = client.get('/api/v1/siblings/containeradvisory/12327?reverse=true')
+    rv = client.get('/api/v1/siblings/containeradvisory/12327?forward=true')
     assert rv.status_code == 400
     assert json.loads(rv.data.decode('utf-8')) == expected
