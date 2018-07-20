@@ -13,8 +13,8 @@ from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
 
 
-@pytest.mark.parametrize('resource,uid,reverse,expected', [
-    ('advisory', '27825', False, [
+@pytest.mark.parametrize('resource,uid,backward_rel,expected', [
+    ('advisory', '27825', True, [
         {
             'advisories': [
                 {
@@ -105,7 +105,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             'version': '1.7.4'
         }
     ]),
-    ('freshmakerevent', '1180', False, [{
+    ('freshmakerevent', '1180', True, [{
         'actual_ship_date': '2017-08-01T15:43:51+00:00',
         'advisory_name': 'RHBA-2017:2251-02',
         'assigned_to': None,
@@ -160,7 +160,7 @@ from estuary.models.freshmaker import FreshmakerEvent
         }],
         'update_date': '2017-08-01T07:16:00+00:00'
     }]),
-    ('containeradvisory', '12327', False, [
+    ('containeradvisory', '12327', True, [
         {
             'advisories': [{
                 'actual_ship_date': '2017-08-01T15:43:51+00:00',
@@ -250,7 +250,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             'version': '1.7.4'
         }
     ]),
-    ('containerkojibuild', '710', True, [{
+    ('containerkojibuild', '710', False, [{
         'actual_ship_date': '2017-08-01T15:43:51+00:00',
         'advisory_name': 'RHBA-2017:2251-03',
         'assigned_to': None,
@@ -300,7 +300,7 @@ from estuary.models.freshmaker import FreshmakerEvent
         'update_date': '2017-08-01T07:16:00+00:00'
     }])
 ])
-def test_node_siblings(client, resource, uid, reverse, expected):
+def test_node_siblings(client, resource, uid, backward_rel, expected):
     """Tests getting the siblings of an artifact's adjacent node in the story path."""
     bug = BugzillaBug.get_or_create({
         'classification': 'Red Hat',
@@ -417,16 +417,16 @@ def test_node_siblings(client, resource, uid, reverse, expected):
     ca.attached_builds.connect(cb)
     ca.attached_builds.connect(cb_two)
 
-    if not reverse:
-        rv = client.get('/api/v1/siblings/{0}/{1}'.format(resource, uid))
-    else:
-        rv = client.get('/api/v1/siblings/{0}/{1}?reverse=True'.format(resource, uid))
+    url = '/api/v1/siblings/{0}/{1}'.format(resource, uid)
+    if backward_rel:
+        url = '{0}?backward_rel=true'.format(url)
+    rv = client.get(url)
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
 
 
 def test_first_node_of_story(client):
-    """Tests getting the siblings for the first node of the story."""
+    """Tests getting the siblings for the first node of the story with backward_rel=true."""
     BugzillaBug.get_or_create({
         'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 6, 43, 58),
@@ -448,13 +448,13 @@ def test_first_node_of_story(client):
         'status': 400
     }
 
-    rv = client.get('/api/v1/siblings/bugzillabug/5555')
+    rv = client.get('/api/v1/siblings/bugzillabug/5555?backward_rel=true')
     assert rv.status_code == 400
     assert json.loads(rv.data.decode('utf-8')) == expected
 
 
 def test_reverse_flag(client):
-    """Tests getting the siblings for when the reverse flag is true."""
+    """Tests getting the siblings for when backward_rel=false and passing in a ContainerAdvisory."""
     ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
@@ -476,6 +476,6 @@ def test_reverse_flag(client):
         'status': 400
     }
 
-    rv = client.get('/api/v1/siblings/containeradvisory/12327?reverse=true')
+    rv = client.get('/api/v1/siblings/containeradvisory/12327')
     assert rv.status_code == 400
     assert json.loads(rv.data.decode('utf-8')) == expected

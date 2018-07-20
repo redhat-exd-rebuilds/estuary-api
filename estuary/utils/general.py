@@ -182,12 +182,12 @@ def create_story_query(item, node_id, reverse=False, limit=False):
     return query
 
 
-def get_correlated_nodes_count(results, reverse=False):
+def get_sibling_nodes_count(results, reverse=False):
     """
     Iterate through the results and yield correlated nodes.
 
     :param list results: contains inflated results from Neo4j
-    :kwarg bool reverse: determines if we are traversing the story/path backwards
+    :kwarg bool reverse: determines the direction the story is traversed in (i.e. forward/backward)
     :return: yield the results count (int) received from Neo4j
     :rtype: generator
     """
@@ -198,13 +198,13 @@ def get_correlated_nodes_count(results, reverse=False):
     correlated_nodes = []
     if not reverse:
         for index in range(len_story - 1):
-            correlated_nodes.append(get_correlated_nodes(
+            correlated_nodes.append(get_sibling_nodes(
                 results[index].__label__, results[index + 1], count=True))
     else:
         # Iterate over results backwards for convenience -- will be reversed to correct order later
         for index in range(len_story - 1, 0, -1):
-            correlated_nodes.append(get_correlated_nodes(
-                results[index].__label__, results[index - 1], reverse=True, count=True))
+            correlated_nodes.append(get_sibling_nodes(
+                results[index].__label__, results[index - 1], count=True))
 
     # When traversing the story, the last node is skipped because there is no next node for it, so
     # we must add a value of 0 as a placeholder
@@ -214,29 +214,33 @@ def get_correlated_nodes_count(results, reverse=False):
     return correlated_nodes
 
 
-def get_correlated_nodes(curr_node_label, next_node, reverse=False, count=False):
+def get_sibling_nodes(siblings_node_label, story_node, count=False):
     """
-    Query Neo4j and return the count of results.
+    Return sibling nodes with the label siblings_node_label that are related to story_node.
 
-    :param str curr_node_label: node label for which the siblings count is to be calculated
-    :param EstuaryStructuredNode next_node: correlated node to curr_node in the story/path
-    :kwarg bool reverse: determines if we are traversing the story/path backwards
+    :param str siblings_node_label: node label for which the siblings count is to be calculated
+    :param EstuaryStructuredNode story_node: node in the story that has the desired relationships
+    with the siblings (specified with siblings_node_label)
     :kwarg bool count: determines if only count of sibling nodes should be returned
     or the nodes themselves
     :return: siblings count of curr_node | sibling nodes
     :rtype: int | EstuaryStructuredNode
     """
-    next_node_label = next_node.__label__
-    item_story_flow = story_flow(next_node_label)
-    if reverse:
+    item_story_flow = story_flow(story_node.__label__)
+    # Based on the desired siblings label, we can determine which story_node relationship to query
+    # for
+    if item_story_flow['forward_label'] == siblings_node_label:
         relationship = item_story_flow['forward_relationship'][:-1]
-    else:
+    elif item_story_flow['backward_label'] == siblings_node_label:
         relationship = item_story_flow['backward_relationship'][:-1]
+    else:
+        RuntimeError('The node with label "{0}" does not have a relationship with nodes of label '
+                     '"{1}"'.format(story_node.__label__, siblings_node_label))
 
     query = ('MATCH (next_node:{next_label})-[:{rel}]-(sibling:{curr_label})'
              'WHERE id(next_node)= {next_node_id}').format(
-        next_label=next_node_label, rel=relationship, curr_label=curr_node_label,
-        next_node_id=next_node.id)
+        next_label=story_node.__label__, rel=relationship, curr_label=siblings_node_label,
+        next_node_id=story_node.id)
 
     if count:
         query += ' RETURN COUNT(sibling) as count'
@@ -361,9 +365,9 @@ def format_story_results(results, requested_item):
     return {
         'data': data,
         'meta': {
-            'story_related_nodes_forward': list(get_correlated_nodes_count(results)),
+            'story_related_nodes_forward': list(get_sibling_nodes_count(results)),
             'story_related_nodes_backward': list(
-                get_correlated_nodes_count(results, reverse=True)),
+                get_sibling_nodes_count(results, reverse=True)),
             'requested_node_index': requested_node_index
         }
     }
