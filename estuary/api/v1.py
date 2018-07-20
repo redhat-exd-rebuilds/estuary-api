@@ -260,7 +260,10 @@ def get_siblings(resource, uid):
         raise NotFound('This item does not exist')
 
     story_node_story_flow = story_flow(story_node.__label__)
-    # If backward is True, we fetch siblings of the previous node, next node otherwise
+    # If backward_rel is true, we fetch siblings of the previous node, next node otherwise.
+    # For example, if you pass in an advisory and want to know the Freshmaker events triggered from
+    # that advisory, backward_rel would be false. If you want to know the Koji builds attached to
+    # that advisory, then backward_rel would true.
     backward = str_to_bool(request.args.get('backward_rel'))
     if backward and story_node_story_flow['backward_label']:
         desired_siblings_label = story_node_story_flow['backward_label']
