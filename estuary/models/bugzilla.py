@@ -15,6 +15,7 @@ from estuary.error import ValidationError
 class BugzillaBug(EstuaryStructuredNode):
     """Definition of a Bugzilla bug in Neo4j."""
 
+    _label_display = 'Bugzilla bug'
     assignee = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
     attached_advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
     classification = StringProperty()

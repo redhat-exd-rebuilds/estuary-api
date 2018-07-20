@@ -33,6 +33,7 @@ class DistGitBranch(EstuaryStructuredNode):
 class DistGitCommit(EstuaryStructuredNode):
     """Definition of a dist-git commit in Neo4j."""
 
+    _label_display = 'commit'
     author_date = DateTimeProperty()
     commit_date = DateTimeProperty()
     hash_ = UniqueIdProperty(db_property='hash')

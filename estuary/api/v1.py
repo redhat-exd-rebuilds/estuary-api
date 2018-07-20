@@ -12,7 +12,7 @@ from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
     str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results,
-    get_sibling_nodes, inflate_node, set_story_labels
+    get_sibling_nodes, inflate_node, set_story_labels, get_siblings_description
 )
 from estuary.error import ValidationError
 
@@ -281,7 +281,18 @@ def get_siblings(resource, uid):
         serialized_node['resource_type'] = inflated_node.__label__
         serialized_results.append(serialized_node)
 
-    return jsonify(serialized_results)
+    uid_name = story_node.unique_id_property
+    description = get_siblings_description(
+        getattr(story_node, uid_name), story_node_story_flow, backward)
+
+    result = {
+        'data': serialized_results,
+        'meta': {
+            'description': description
+        }
+    }
+
+    return jsonify(result)
 
 
 @api_v1.route('/relationships/<resource>/<uid>/<relationship>')

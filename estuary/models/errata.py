@@ -15,6 +15,7 @@ from estuary.error import ValidationError
 class Advisory(EstuaryStructuredNode):
     """Definition of an Errata advisory in Neo4j."""
 
+    _label_display = 'advisory'
     actual_ship_date = DateTimeProperty()
     advisory_name = StringProperty(unique=True, index=True)
     content_types = ArrayProperty()
@@ -63,4 +64,5 @@ class Advisory(EstuaryStructuredNode):
 class ContainerAdvisory(Advisory):
     """Definition of an Errata advisory with container builds attached in Neo4j."""
 
+    _label_display = 'container advisory'
     pass
