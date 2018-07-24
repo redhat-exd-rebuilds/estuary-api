@@ -277,68 +277,103 @@ def story_flow(label):
     if label == BugzillaBug.__label__:
         return {
             'uid_name': BugzillaBug.id_.db_property or BugzillaBug.id.name,
+            'display_label': BugzillaBug._label_display,
             'forward_relationship': '{0}<'.format(
                 BugzillaBug.resolved_by_commits.definition['relation_type']),
+            'forward_relationship_display': 'that resolved',
             'forward_label': DistGitCommit.__label__,
+            'forward_label_display': DistGitCommit._label_display,
             'backward_relationship': None,
-            'backward_label': None
+            'backward_relationship_display': None,
+            'backward_label': None,
+            'backward_label_display': None
         }
     elif label == DistGitCommit.__label__:
         return {
             'uid_name': DistGitCommit.hash_.db_property or DistGitCommit.hash.name,
+            'display_label': DistGitCommit._label_display,
             'forward_relationship': '{0}<'.format(
                 DistGitCommit.koji_builds.definition['relation_type']),
+            'forward_relationship_display': 'built by',
             'forward_label': KojiBuild.__label__,
+            'forward_label_display': KojiBuild._label_display,
             'backward_relationship': '{0}>'.format(
                 DistGitCommit.resolved_bugs.definition['relation_type']),
-            'backward_label': BugzillaBug.__label__
+            'backward_relationship_display': 'resolved by',
+            'backward_label': BugzillaBug.__label__,
+            'backward_label_display': BugzillaBug._label_display
         }
     elif label == KojiBuild.__label__:
         return {
             'uid_name': KojiBuild.id_.db_property or KojiBuild.id.name,
+            'display_label': KojiBuild._label_display,
             'forward_relationship': '{0}<'.format(KojiBuild.advisories.definition['relation_type']),
+            'forward_relationship_display': 'attached to',
             'forward_label': Advisory.__label__,
+            'forward_label_display': Advisory._label_display,
             'backward_relationship': '{0}>'.format(KojiBuild.commit.definition['relation_type']),
-            'backward_label': DistGitCommit.__label__
+            'backward_relationship_display': 'that built',
+            'backward_label': DistGitCommit.__label__,
+            'backward_label_display': DistGitCommit._label_display
         }
     elif label == Advisory.__label__:
         return {
             'uid_name': Advisory.id_.db_property or Advisory.id.name,
+            'display_label': Advisory._label_display,
             'forward_relationship': '{0}<'.format(
                 Advisory.triggered_freshmaker_event.definition['relation_type']),
+            'forward_relationship_display': 'triggered by',
             'forward_label': FreshmakerEvent.__label__,
+            'forward_label_display': FreshmakerEvent._label_display,
             'backward_relationship': '{0}>'.format(
                 Advisory.attached_builds.definition['relation_type']),
-            'backward_label': KojiBuild.__label__
+            'backward_relationship_display': 'attached to',
+            'backward_label': KojiBuild.__label__,
+            'backward_label_display': KojiBuild._label_display
         }
     elif label == FreshmakerEvent.__label__:
         return {
             'uid_name': FreshmakerEvent.id_.db_property or FreshmakerEvent.id.name,
+            'display_label': FreshmakerEvent._label_display,
             'forward_relationship': '{0}>'.format(
                 FreshmakerEvent.triggered_container_builds.definition['relation_type']),
+            'forward_relationship_display': 'triggered by',
             'forward_label': ContainerKojiBuild.__label__,
+            'forward_label_display': ContainerKojiBuild._label_display,
             'backward_relationship': '{0}>'.format(FreshmakerEvent.triggered_by_advisory
                                                    .definition['relation_type']),
-            'backward_label': Advisory.__label__
+            'backward_relationship_display': 'that triggered',
+            'backward_label': Advisory.__label__,
+            'backward_label_display': Advisory._label_display
         }
     elif label == ContainerKojiBuild.__label__:
         return {
             'uid_name': ContainerKojiBuild.id_.db_property or ContainerKojiBuild.id.name,
+            'display_label': ContainerKojiBuild._label_display,
             'forward_relationship': '{0}<'.format(
                 ContainerKojiBuild.advisories.definition['relation_type']),
+            'forward_relationship_display': 'attached to',
             'forward_label': ContainerAdvisory.__label__,
+            'forward_label_display': ContainerAdvisory._label_display,
             'backward_relationship': '{0}<'.format(
                 ContainerKojiBuild.triggered_by_freshmaker_event.definition['relation_type']),
-            'backward_label': FreshmakerEvent.__label__
+            'backward_relationship_display': 'that triggered',
+            'backward_label': FreshmakerEvent.__label__,
+            'backward_label_display': FreshmakerEvent._label_display
         }
     elif label == ContainerAdvisory.__label__:
         return {
             'uid_name': ContainerAdvisory.id_.db_property or ContainerAdvisory.id.name,
+            'display_label': ContainerAdvisory._label_display,
             'forward_relationship': None,
+            'forward_relationship_display': None,
             'forward_label': None,
+            'forward_label_display': None,
             'backward_relationship': '{0}>'.format(
                 ContainerAdvisory.attached_builds.definition['relation_type']),
-            'backward_label': ContainerKojiBuild.__label__
+            'backward_relationship_display': 'attached to',
+            'backward_label': ContainerKojiBuild.__label__,
+            'backward_label_display': ContainerKojiBuild._label_display
         }
     else:
         raise ValueError('The label should belong to a Neo4j node class')
@@ -399,3 +434,40 @@ def set_story_labels(requested_node_label, results, reverse=False):
         idx += delta
         node_idx += delta
     return results
+
+
+def get_siblings_description(story_node_id, story_node_story_flow, backward):
+    """
+    Generate a description of the siblings.
+
+    :param string story_node_id: the id of the current story node that the siblings are related to
+    :param dict story_node_story_flow: has forward and backward relationships of the story node
+    :param bool backward: determines the relationship direction the story node has with the
+    siblings in the story
+    :return: returns the appropriate siblings title
+    :rtype: string
+    """
+    def _get_plural_label(label):
+        if label.endswith('y'):
+            label = label[:-1] + 'ies'
+        else:
+            label = label + 's'
+        return label
+
+    if backward:
+        rel_direction = 'backward'
+    else:
+        rel_direction = 'forward'
+
+    rel_label = story_node_story_flow['{0}_label_display'.format(rel_direction)]
+
+    if rel_label:
+        rel_label = _get_plural_label(rel_label)
+        relationship = \
+            story_node_story_flow['{0}_relationship_display'.format(rel_direction)]
+        result = '{0} {1} {2} {3}'.format(
+            rel_label, relationship, story_node_story_flow['display_label'], story_node_id)
+        return result[0].upper() + result[1:]
+    else:
+        raise RuntimeError('A node with the label {0} does not have a {1} relationship'.format(
+            story_node_story_flow['display_label'], rel_direction))

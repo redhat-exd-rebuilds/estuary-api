@@ -5,7 +5,8 @@ from datetime import datetime, date
 
 import pytest
 
-from estuary.utils.general import timestamp_to_datetime, timestamp_to_date
+from estuary.utils.general import (
+    timestamp_to_datetime, timestamp_to_date, get_siblings_description, story_flow)
 
 
 @pytest.mark.parametrize('input_dt,expected_dt', [
@@ -54,3 +55,25 @@ def test_timestamp_to_datetime_invalid(input_dt):
     with pytest.raises(ValueError)as exc_info:
         timestamp_to_datetime(input_dt)
     assert 'The timestamp "{0}" is an invalid format'.format(input_dt) == str(exc_info.value)
+
+
+@pytest.mark.parametrize('uid,label,backward,expected', [
+    ('123456', 'BugzillaBug', False, 'Commits that resolved Bugzilla bug 123456'),
+    ('123456', 'DistGitCommit', False, 'Builds built by commit 123456'),
+    ('123456', 'DistGitCommit', True, 'Bugzilla bugs resolved by commit 123456'),
+    ('123456', 'KojiBuild', False, 'Advisories attached to build 123456'),
+    ('123456', 'KojiBuild', True, 'Commits that built build 123456'),
+    ('123456', 'Advisory', False, 'Freshmaker events triggered by advisory 123456'),
+    ('123456', 'Advisory', True, 'Builds attached to advisory 123456'),
+    ('123456', 'FreshmakerEvent', False, 'Container builds triggered by Freshmaker event 123456'),
+    ('123456', 'FreshmakerEvent', True, 'Advisories that triggered Freshmaker event 123456'),
+    ('123456', 'ContainerKojiBuild', False, 'Container advisories attached to container build'
+        ' 123456'),
+    ('123456', 'ContainerKojiBuild', True, 'Freshmaker events that triggered container build'
+        ' 123456'),
+    ('123456', 'ContainerAdvisory', True, 'Container builds attached to container advisory 123456')
+])
+def test_get_siblings_description(uid, label, backward, expected):
+    """Test the get_siblings_description function."""
+    rv = get_siblings_description(uid, story_flow(label), backward)
+    assert rv == expected

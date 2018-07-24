@@ -15,6 +15,7 @@ from estuary.error import ValidationError
 class KojiBuild(EstuaryStructuredNode):
     """Definition of a Koji build in Neo4j."""
 
+    _label_display = 'build'
     advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
     commit = RelationshipTo('.distgit.DistGitCommit', 'BUILT_FROM', cardinality=ZeroOrOne)
     completion_time = DateTimeProperty()
@@ -60,6 +61,7 @@ class KojiBuild(EstuaryStructuredNode):
 class ContainerKojiBuild(KojiBuild):
     """A Neo4j definition of a build that represents a container build in Koji."""
 
+    _label_display = 'container build'
     original_nvr = StringProperty()
     triggered_by_freshmaker_event = RelationshipFrom(
         '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
