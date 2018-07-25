@@ -15,7 +15,6 @@ from estuary.error import ValidationError
 class BugzillaBug(EstuaryStructuredNode):
     """Definition of a Bugzilla bug in Neo4j."""
 
-    _label_display = 'Bugzilla bug'
     assignee = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
     attached_advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
     classification = StringProperty()
@@ -37,6 +36,11 @@ class BugzillaBug(EstuaryStructuredNode):
     status = StringProperty()
     target_milestone = StringProperty()
     votes = IntegerProperty()
+
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return 'RHBZ#{0}'.format(self.id_)
 
     @classmethod
     def find_or_none(cls, identifier):

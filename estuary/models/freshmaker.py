@@ -12,7 +12,6 @@ from estuary.models.base import EstuaryStructuredNode
 class FreshmakerEvent(EstuaryStructuredNode):
     """Definition of a Freshmaker event in Neo4j."""
 
-    _label_display = 'Freshmaker event'
     event_type_id = IntegerProperty(requried=True)
     id_ = UniqueIdProperty(db_property='id')
     message_id = StringProperty(unique=True, required=True)
@@ -23,3 +22,8 @@ class FreshmakerEvent(EstuaryStructuredNode):
         '.errata.Advisory', 'TRIGGERED_BY', cardinality=ZeroOrOne)
     triggered_container_builds = RelationshipTo('.koji.ContainerKojiBuild', 'TRIGGERED')
     url = StringProperty(unique=True, required=True)
+
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return 'Freshmaker event {0}'.format(self.id_)

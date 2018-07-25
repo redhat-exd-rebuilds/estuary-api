@@ -107,7 +107,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             }
         ],
         'meta': {
-            'description': 'Builds attached to advisory 27825'
+            'description': 'Builds attached to RHBA-2017:2251-02'
         }
     }),
     ('freshmakerevent', '1180', True, {
@@ -264,7 +264,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             }
         ],
         'meta': {
-            'description': 'Container builds attached to container advisory 12327'
+            'description': 'Container builds attached to RHBA-2017:2251-03'
         }
     }),
     ('containerkojibuild', '710', False, {
@@ -320,7 +320,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             }
         ],
         'meta': {
-            'description': 'Container advisories attached to container build 710'
+            'description': 'Container advisories that contain slf4j_2-1.7.4-4.el7_4_as'
         }
     })
 ])
