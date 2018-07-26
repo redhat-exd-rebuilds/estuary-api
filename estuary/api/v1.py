@@ -281,9 +281,8 @@ def get_siblings(resource, uid):
         serialized_node['resource_type'] = inflated_node.__label__
         serialized_results.append(serialized_node)
 
-    uid_name = story_node.unique_id_property
     description = get_siblings_description(
-        getattr(story_node, uid_name), story_node_story_flow, backward)
+        story_node.display_name, story_node_story_flow, backward)
 
     result = {
         'data': serialized_results,

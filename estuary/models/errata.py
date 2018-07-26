@@ -15,7 +15,6 @@ from estuary.error import ValidationError
 class Advisory(EstuaryStructuredNode):
     """Definition of an Errata advisory in Neo4j."""
 
-    _label_display = 'advisory'
     actual_ship_date = DateTimeProperty()
     advisory_name = StringProperty(unique=True, index=True)
     content_types = ArrayProperty()
@@ -36,6 +35,11 @@ class Advisory(EstuaryStructuredNode):
     attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED')
     reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
+
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return self.advisory_name
 
     @classmethod
     def find_or_none(cls, identifier):
@@ -64,5 +68,4 @@ class Advisory(EstuaryStructuredNode):
 class ContainerAdvisory(Advisory):
     """Definition of an Errata advisory with container builds attached in Neo4j."""
 
-    _label_display = 'container advisory'
     pass
