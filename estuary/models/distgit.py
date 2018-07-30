@@ -50,6 +50,6 @@ class DistGitCommit(EstuaryStructuredNode):
     reverted_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'REVERTED')
 
     @property
-    def display_label(self):
+    def display_name(self):
         """Get intuitive (human readable) display name for the node."""
         return 'commit #{0}'.format(self.hash_)
