@@ -12,7 +12,7 @@ from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
     str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results,
-    get_correlated_nodes, inflate_node, set_story_labels
+    get_sibling_nodes, inflate_node, set_story_labels, get_siblings_description
 )
 from estuary.error import ValidationError
 
@@ -253,30 +253,45 @@ def get_siblings(resource, uid):
     :raises NotFound: if the item is not found
     :raises ValidationError: if an invalid resource was requested
     """
-    item = get_neo4j_node(resource, uid)
-    if not item:
+    # This is the node that is part of a story which has the relationship to the desired
+    # sibling nodes
+    story_node = get_neo4j_node(resource, uid)
+    if not story_node:
         raise NotFound('This item does not exist')
 
-    item_story_flow = story_flow(item.__label__)
-    # If reverse is True, we fetch siblings of the next node, previous node otherwise
-    reverse = str_to_bool(request.args.get('reverse'))
-    if reverse and item_story_flow['forward_label']:
-        correlated_nodes = get_correlated_nodes(
-            item_story_flow['forward_label'], item, reverse=True)
-    elif not reverse and item_story_flow['backward_label']:
-        correlated_nodes = get_correlated_nodes(item_story_flow['backward_label'], item)
+    story_node_story_flow = story_flow(story_node.__label__)
+    # If backward_rel is true, we fetch siblings of the previous node, next node otherwise.
+    # For example, if you pass in an advisory and want to know the Freshmaker events triggered from
+    # that advisory, backward_rel would be false. If you want to know the Koji builds attached to
+    # that advisory, then backward_rel would true.
+    backward = str_to_bool(request.args.get('backward_rel'))
+    if backward and story_node_story_flow['backward_label']:
+        desired_siblings_label = story_node_story_flow['backward_label']
+    elif not backward and story_node_story_flow['forward_label']:
+        desired_siblings_label = story_node_story_flow['forward_label']
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
 
+    sibling_nodes = get_sibling_nodes(desired_siblings_label, story_node)
     # Inflating and formatting results from Neo4j
     serialized_results = []
-    for result in correlated_nodes:
+    for result in sibling_nodes:
         inflated_node = inflate_node(result[0])
         serialized_node = inflated_node.serialized_all
         serialized_node['resource_type'] = inflated_node.__label__
         serialized_results.append(serialized_node)
 
-    return jsonify(serialized_results)
+    description = get_siblings_description(
+        story_node.display_name, story_node_story_flow, backward)
+
+    result = {
+        'data': serialized_results,
+        'meta': {
+            'description': description
+        }
+    }
+
+    return jsonify(result)
 
 
 @api_v1.route('/relationships/<resource>/<uid>/<relationship>')

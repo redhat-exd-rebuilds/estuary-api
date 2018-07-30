@@ -31,6 +31,11 @@ class KojiBuild(EstuaryStructuredNode):
     tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
     version = StringProperty(index=True)
 
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return '{0}-{1}-{2}'.format(self.name, self.version, self.release)
+
     @classmethod
     def find_or_none(cls, identifier):
         """

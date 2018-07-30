@@ -182,12 +182,12 @@ def create_story_query(item, node_id, reverse=False, limit=False):
     return query
 
 
-def get_correlated_nodes_count(results, reverse=False):
+def get_sibling_nodes_count(results, reverse=False):
     """
     Iterate through the results and yield correlated nodes.
 
     :param list results: contains inflated results from Neo4j
-    :kwarg bool reverse: determines if we are traversing the story/path backwards
+    :kwarg bool reverse: determines the direction the story is traversed in (i.e. forward/backward)
     :return: yield the results count (int) received from Neo4j
     :rtype: generator
     """
@@ -198,13 +198,13 @@ def get_correlated_nodes_count(results, reverse=False):
     correlated_nodes = []
     if not reverse:
         for index in range(len_story - 1):
-            correlated_nodes.append(get_correlated_nodes(
+            correlated_nodes.append(get_sibling_nodes(
                 results[index].__label__, results[index + 1], count=True))
     else:
         # Iterate over results backwards for convenience -- will be reversed to correct order later
         for index in range(len_story - 1, 0, -1):
-            correlated_nodes.append(get_correlated_nodes(
-                results[index].__label__, results[index - 1], reverse=True, count=True))
+            correlated_nodes.append(get_sibling_nodes(
+                results[index].__label__, results[index - 1], count=True))
 
     # When traversing the story, the last node is skipped because there is no next node for it, so
     # we must add a value of 0 as a placeholder
@@ -214,29 +214,33 @@ def get_correlated_nodes_count(results, reverse=False):
     return correlated_nodes
 
 
-def get_correlated_nodes(curr_node_label, next_node, reverse=False, count=False):
+def get_sibling_nodes(siblings_node_label, story_node, count=False):
     """
-    Query Neo4j and return the count of results.
+    Return sibling nodes with the label siblings_node_label that are related to story_node.
 
-    :param str curr_node_label: node label for which the siblings count is to be calculated
-    :param EstuaryStructuredNode next_node: correlated node to curr_node in the story/path
-    :kwarg bool reverse: determines if we are traversing the story/path backwards
+    :param str siblings_node_label: node label for which the siblings count is to be calculated
+    :param EstuaryStructuredNode story_node: node in the story that has the desired relationships
+    with the siblings (specified with siblings_node_label)
     :kwarg bool count: determines if only count of sibling nodes should be returned
     or the nodes themselves
     :return: siblings count of curr_node | sibling nodes
     :rtype: int | EstuaryStructuredNode
     """
-    next_node_label = next_node.__label__
-    item_story_flow = story_flow(next_node_label)
-    if reverse:
+    item_story_flow = story_flow(story_node.__label__)
+    # Based on the desired siblings label, we can determine which story_node relationship to query
+    # for
+    if item_story_flow['forward_label'] == siblings_node_label:
         relationship = item_story_flow['forward_relationship'][:-1]
-    else:
+    elif item_story_flow['backward_label'] == siblings_node_label:
         relationship = item_story_flow['backward_relationship'][:-1]
+    else:
+        RuntimeError('The node with label "{0}" does not have a relationship with nodes of label '
+                     '"{1}"'.format(story_node.__label__, siblings_node_label))
 
     query = ('MATCH (next_node:{next_label})-[:{rel}]-(sibling:{curr_label})'
              'WHERE id(next_node)= {next_node_id}').format(
-        next_label=next_node_label, rel=relationship, curr_label=curr_node_label,
-        next_node_id=next_node.id)
+        next_label=story_node.__label__, rel=relationship, curr_label=siblings_node_label,
+        next_node_id=story_node.id)
 
     if count:
         query += ' RETURN COUNT(sibling) as count'
@@ -275,66 +279,94 @@ def story_flow(label):
             'uid_name': BugzillaBug.id_.db_property or BugzillaBug.id.name,
             'forward_relationship': '{0}<'.format(
                 BugzillaBug.resolved_by_commits.definition['relation_type']),
+            'forward_relationship_display': 'that resolved',
             'forward_label': DistGitCommit.__label__,
+            'forward_label_display': 'commit',
             'backward_relationship': None,
-            'backward_label': None
+            'backward_relationship_display': None,
+            'backward_label': None,
+            'backward_label_display': None
         }
     elif label == DistGitCommit.__label__:
         return {
             'uid_name': DistGitCommit.hash_.db_property or DistGitCommit.hash.name,
             'forward_relationship': '{0}<'.format(
                 DistGitCommit.koji_builds.definition['relation_type']),
+            'forward_relationship_display': 'built by',
             'forward_label': KojiBuild.__label__,
+            'forward_label_display': 'build',
             'backward_relationship': '{0}>'.format(
                 DistGitCommit.resolved_bugs.definition['relation_type']),
-            'backward_label': BugzillaBug.__label__
+            'backward_relationship_display': 'resolved by',
+            'backward_label': BugzillaBug.__label__,
+            'backward_label_display': 'Bugzilla bug'
         }
     elif label == KojiBuild.__label__:
         return {
             'uid_name': KojiBuild.id_.db_property or KojiBuild.id.name,
             'forward_relationship': '{0}<'.format(KojiBuild.advisories.definition['relation_type']),
+            'forward_relationship_display': 'that contain',
             'forward_label': Advisory.__label__,
+            'forward_label_display': 'advisory',
             'backward_relationship': '{0}>'.format(KojiBuild.commit.definition['relation_type']),
-            'backward_label': DistGitCommit.__label__
+            'backward_relationship_display': 'that built',
+            'backward_label': DistGitCommit.__label__,
+            'backward_label_display': 'commit'
         }
     elif label == Advisory.__label__:
         return {
             'uid_name': Advisory.id_.db_property or Advisory.id.name,
             'forward_relationship': '{0}<'.format(
                 Advisory.triggered_freshmaker_event.definition['relation_type']),
+            'forward_relationship_display': 'triggered by',
             'forward_label': FreshmakerEvent.__label__,
+            'forward_label_display': 'Freshmaker event',
             'backward_relationship': '{0}>'.format(
                 Advisory.attached_builds.definition['relation_type']),
-            'backward_label': KojiBuild.__label__
+            'backward_relationship_display': 'attached to',
+            'backward_label': KojiBuild.__label__,
+            'backward_label_display': 'build'
         }
     elif label == FreshmakerEvent.__label__:
         return {
             'uid_name': FreshmakerEvent.id_.db_property or FreshmakerEvent.id.name,
             'forward_relationship': '{0}>'.format(
                 FreshmakerEvent.triggered_container_builds.definition['relation_type']),
+            'forward_relationship_display': 'triggered by',
             'forward_label': ContainerKojiBuild.__label__,
+            'forward_label_display': 'container build',
             'backward_relationship': '{0}>'.format(FreshmakerEvent.triggered_by_advisory
                                                    .definition['relation_type']),
-            'backward_label': Advisory.__label__
+            'backward_relationship_display': 'that triggered',
+            'backward_label': Advisory.__label__,
+            'backward_label_display': 'advisory'
         }
     elif label == ContainerKojiBuild.__label__:
         return {
             'uid_name': ContainerKojiBuild.id_.db_property or ContainerKojiBuild.id.name,
             'forward_relationship': '{0}<'.format(
                 ContainerKojiBuild.advisories.definition['relation_type']),
+            'forward_relationship_display': 'that contain',
             'forward_label': ContainerAdvisory.__label__,
+            'forward_label_display': 'container advisory',
             'backward_relationship': '{0}<'.format(
                 ContainerKojiBuild.triggered_by_freshmaker_event.definition['relation_type']),
-            'backward_label': FreshmakerEvent.__label__
+            'backward_relationship_display': 'that triggered',
+            'backward_label': FreshmakerEvent.__label__,
+            'backward_label_display': 'Freshmaker event'
         }
     elif label == ContainerAdvisory.__label__:
         return {
             'uid_name': ContainerAdvisory.id_.db_property or ContainerAdvisory.id.name,
             'forward_relationship': None,
+            'forward_relationship_display': None,
             'forward_label': None,
+            'forward_label_display': None,
             'backward_relationship': '{0}>'.format(
                 ContainerAdvisory.attached_builds.definition['relation_type']),
-            'backward_label': ContainerKojiBuild.__label__
+            'backward_relationship_display': 'attached to',
+            'backward_label': ContainerKojiBuild.__label__,
+            'backward_label_display': 'container build'
         }
     else:
         raise ValueError('The label should belong to a Neo4j node class')
@@ -361,9 +393,9 @@ def format_story_results(results, requested_item):
     return {
         'data': data,
         'meta': {
-            'story_related_nodes_forward': list(get_correlated_nodes_count(results)),
+            'story_related_nodes_forward': list(get_sibling_nodes_count(results)),
             'story_related_nodes_backward': list(
-                get_correlated_nodes_count(results, reverse=True)),
+                get_sibling_nodes_count(results, reverse=True)),
             'requested_node_index': requested_node_index
         }
     }
@@ -395,3 +427,39 @@ def set_story_labels(requested_node_label, results, reverse=False):
         idx += delta
         node_idx += delta
     return results
+
+
+def get_siblings_description(story_node_display_name, story_node_story_flow, backward):
+    """
+    Generate a description of the siblings.
+
+    :param string story_node_display_name: the preformatted name to be displayed for the story node
+    :param dict story_node_story_flow: has forward and backward relationships of the story node
+    :param bool backward: determines the relationship direction the story node has with the
+    siblings in the story
+    :return: returns the appropriate siblings title
+    :rtype: string
+    """
+    def _get_plural_label(label):
+        if label.endswith('y'):
+            label = label[:-1] + 'ies'
+        else:
+            label = label + 's'
+        return label
+
+    if backward:
+        rel_direction = 'backward'
+    else:
+        rel_direction = 'forward'
+
+    rel_label = story_node_story_flow['{0}_label_display'.format(rel_direction)]
+
+    if rel_label:
+        rel_label = _get_plural_label(rel_label)
+        relationship = \
+            story_node_story_flow['{0}_relationship_display'.format(rel_direction)]
+        result = '{0} {1} {2}'.format(rel_label, relationship, story_node_display_name)
+        return result[0].upper() + result[1:]
+    else:
+        raise RuntimeError('A node with the label {0} does not have a {1} relationship'.format(
+            story_node_story_flow['display_label'], rel_direction))

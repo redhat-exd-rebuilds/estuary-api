@@ -37,6 +37,11 @@ class BugzillaBug(EstuaryStructuredNode):
     target_milestone = StringProperty()
     votes = IntegerProperty()
 
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return 'RHBZ#{0}'.format(self.id_)
+
     @classmethod
     def find_or_none(cls, identifier):
         """

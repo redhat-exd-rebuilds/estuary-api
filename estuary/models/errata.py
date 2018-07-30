@@ -36,6 +36,11 @@ class Advisory(EstuaryStructuredNode):
     reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
 
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return self.advisory_name
+
     @classmethod
     def find_or_none(cls, identifier):
         """
