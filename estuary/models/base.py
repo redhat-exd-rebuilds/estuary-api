@@ -17,7 +17,7 @@ class EstuaryStructuredNode(StructuredNode):
     @property
     def display_name(self):
         """Get intuitive (human readable) display name for the node."""
-        raise NotImplemented('The display_label method is not defined')
+        raise NotImplemented('The display_name method is not defined')
 
     @property
     def serialized(self):
