@@ -28,6 +28,7 @@ from estuary.models.koji import ContainerKojiBuild
                 'owner': None,
                 'release': '4.el7_6_a',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'some_other_build-1.7.6-4.el7_6_a',
                 'start_time': '2018-04-02T19:39:06+00:00',
                 'state':1,
                 'tags':[
@@ -62,6 +63,7 @@ from estuary.models.koji import ContainerKojiBuild
                 'owner': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'some_build-1.7.5-4.el7_4_as',
                 'start_time': '2018-04-02T19:39:06+00:00',
                 'state':2,
                 'tags':[
@@ -96,6 +98,7 @@ from estuary.models.koji import ContainerKojiBuild
                 'owner': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state':1,
                 'tags':[

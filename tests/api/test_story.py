@@ -44,6 +44,7 @@ from estuary.models.user import User
                     }
                 ],
                 'resource_type': 'BugzillaBug',
+                'display_name': 'RHBZ#12345',
                 'reverted_by_commits': [
 
                 ],
@@ -58,7 +59,8 @@ from estuary.models.user import User
                 'commit_date': '2017-04-26T11:44:38+00:00',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
-                'resource_type': 'DistGitCommit'
+                'resource_type': 'DistGitCommit',
+                'display_name': 'commit #8a63adb',
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -69,6 +71,7 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -86,6 +89,7 @@ from estuary.models.user import User
                 'product_short_name': 'RHEL',
                 'release_date': None,
                 'resource_type': 'Advisory',
+                'display_name':'RHBA-2017:2251-02',
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
@@ -98,6 +102,7 @@ from estuary.models.user import User
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
+                'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
@@ -113,6 +118,7 @@ from estuary.models.user import User
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -122,6 +128,7 @@ from estuary.models.user import User
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34+00:00',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -154,6 +161,7 @@ from estuary.models.user import User
                 'product_version': '7.5',
                 'resolution': '',
                 'resource_type': 'BugzillaBug',
+                'display_name': 'RHBZ#12345',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -229,6 +237,7 @@ from estuary.models.user import User
                     }
                 ],
                 'resource_type': 'DistGitCommit',
+                'display_name': 'commit #8a63adb',
                 'reverted_bugs': [
 
                 ]
@@ -242,6 +251,7 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -259,6 +269,7 @@ from estuary.models.user import User
                 'product_short_name': 'RHEL',
                 'release_date': None,
                 'resource_type': 'Advisory',
+                'display_name':'RHBA-2017:2251-02',
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
@@ -271,6 +282,7 @@ from estuary.models.user import User
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
+                'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
@@ -286,6 +298,7 @@ from estuary.models.user import User
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -295,6 +308,7 @@ from estuary.models.user import User
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34+00:00',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -327,6 +341,7 @@ from estuary.models.user import User
                 'product_version': '7.5',
                 'resolution': '',
                 'resource_type': 'BugzillaBug',
+                'display_name': 'RHBZ#12345',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -338,7 +353,8 @@ from estuary.models.user import User
                 'commit_date': '2017-04-26T11:44:38+00:00',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
-                'resource_type': 'DistGitCommit'
+                'resource_type': 'DistGitCommit',
+                'display_name': 'commit #8a63adb',
             },
             {
                 'advisories': [
@@ -377,6 +393,7 @@ from estuary.models.user import User
                 'owner': None,
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'tags': [
@@ -400,6 +417,7 @@ from estuary.models.user import User
                 'product_short_name': 'RHEL',
                 'release_date': None,
                 'resource_type': 'Advisory',
+                'display_name':'RHBA-2017:2251-02',
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
@@ -412,6 +430,7 @@ from estuary.models.user import User
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
+                'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
@@ -427,6 +446,7 @@ from estuary.models.user import User
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -436,6 +456,7 @@ from estuary.models.user import User
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34+00:00',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -468,6 +489,7 @@ from estuary.models.user import User
                 'product_version': '7.5',
                 'resolution': '',
                 'resource_type': 'BugzillaBug',
+                'display_name': 'RHBZ#12345',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -479,7 +501,8 @@ from estuary.models.user import User
                 'commit_date': '2017-04-26T11:44:38+00:00',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
-                'resource_type': 'DistGitCommit'
+                'resource_type': 'DistGitCommit',
+                'display_name': 'commit #8a63adb',
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -490,6 +513,7 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -519,6 +543,7 @@ from estuary.models.user import User
                     'docker'
                 ],
                 'created_at': '2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34+00:00',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -549,6 +574,7 @@ from estuary.models.user import User
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
+                'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
@@ -564,6 +590,7 @@ from estuary.models.user import User
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -573,6 +600,7 @@ from estuary.models.user import User
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34+00:00',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -605,6 +633,7 @@ from estuary.models.user import User
                 'product_version': '7.5',
                 'resolution': '',
                 'resource_type': 'BugzillaBug',
+                'display_name': 'RHBZ#12345',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -616,7 +645,8 @@ from estuary.models.user import User
                 'commit_date': '2017-04-26T11:44:38+00:00',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
-                'resource_type': 'DistGitCommit'
+                'resource_type': 'DistGitCommit',
+                'display_name': 'commit #8a63adb',
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -627,6 +657,7 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -638,6 +669,7 @@ from estuary.models.user import User
                     'docker'
                 ],
                 'created_at': '2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34+00:00',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -656,6 +688,7 @@ from estuary.models.user import User
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
+                'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
@@ -705,6 +738,7 @@ from estuary.models.user import User
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.7.4'
@@ -712,6 +746,7 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51+00:00',
                 'advisory_name': 'RHBA-2017:2251-03',
+                'display_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23+00:00',
                 'id': '12327',
@@ -739,6 +774,7 @@ from estuary.models.user import User
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'RHBZ#12345',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47+00:00',
                 'priority': 'high',
@@ -755,6 +791,7 @@ from estuary.models.user import User
             {
                 'author_date': '2017-04-26T11:44:38+00:00',
                 'commit_date': '2017-04-26T11:44:38+00:00',
+                'display_name': 'commit #8a63adb',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit'
@@ -762,6 +799,7 @@ from estuary.models.user import User
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
                 'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -779,6 +817,7 @@ from estuary.models.user import User
                     'docker'
                 ],
                 'created_at':'2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
                 'issue_date':'2017-08-01T05:59:34+00:00',
                 'product_name':'Red Hat Enterprise Linux',
@@ -793,6 +832,7 @@ from estuary.models.user import User
                 'update_date':'2017-08-01T07:16:00+00:00'
             },
             {
+                'display_name': 'Freshmaker event 1180',
                 'event_type_id': 8,
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
@@ -827,6 +867,7 @@ from estuary.models.user import User
                 'commit':None,
                 'completion_time':'2017-04-02T19:39:06+00:00',
                 'creation_time':'2017-04-02T19:39:06+00:00',
+                'display_name':'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch':'0',
                 'extra':None,
                 'id':'710',
@@ -861,6 +902,7 @@ from estuary.models.user import User
                     'docker'
                 ],
                 'created_at':'2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
                 'issue_date':'2017-08-01T05:59:34+00:00',
                 'product_name':'Red Hat Enterprise Linux',
@@ -886,6 +928,7 @@ from estuary.models.user import User
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'RHBZ#12345',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47+00:00',
                 'priority': 'high',
@@ -902,13 +945,15 @@ from estuary.models.user import User
             {
                 'author_date': '2017-04-26T11:44:38+00:00',
                 'commit_date': '2017-04-26T11:44:38+00:00',
+                'display_name': 'commit #8a63adb',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
-                'resource_type': 'DistGitCommit'
+                'resource_type': 'DistGitCommit',
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
                 'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -926,6 +971,7 @@ from estuary.models.user import User
                     'docker'
                 ],
                 'created_at':'2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
                 'issue_date':'2017-08-01T05:59:34+00:00',
                 'product_name':'Red Hat Enterprise Linux',
@@ -940,6 +986,7 @@ from estuary.models.user import User
                 'update_date':'2017-08-01T07:16:00+00:00'
             },
             {
+                'display_name': 'Freshmaker event 1180',
                 'event_type_id': 8,
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
@@ -952,6 +999,7 @@ from estuary.models.user import User
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
                 'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -989,6 +1037,7 @@ from estuary.models.user import User
                     'docker'
                 ],
                 'created_at':'2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
                 'issue_date':'2017-08-01T05:59:34+00:00',
                 'product_name':'Red Hat Enterprise Linux',
@@ -1184,6 +1233,7 @@ def test_get_artifact_story_not_available(client):
 
                 ],
                 'resource_type': 'BugzillaBug',
+                'display_name': 'RHBZ#5555',
                 'reverted_by_commits': [
 
                 ],
@@ -1251,6 +1301,7 @@ def test_get_stories_just_artifact(client):
             'release_date': None,
             'reporter': None,
             'resource_type': 'Advisory',
+            'display_name': 'RHBA-2017:2251-02',
             'security_impact': 'None',
             'security_sla': None,
             'state': 'SHIPPED_LIVE',
@@ -1340,6 +1391,7 @@ def test_get_story_partial_story(client):
                 'release_date': None,
                 'reporter': None,
                 'resource_type': 'Advisory',
+                'display_name': u'RHBA-2017:2251-02',
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
@@ -1361,6 +1413,7 @@ def test_get_story_partial_story(client):
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
+                'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
@@ -1376,6 +1429,7 @@ def test_get_story_partial_story(client):
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
+                'display_name': 'slf4j_2-1.8.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'version': '1.8.4'
@@ -1453,6 +1507,7 @@ def test_get_story_fallback(client):
                 'owner': None,
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'tags': [],
@@ -1470,6 +1525,7 @@ def test_get_story_fallback(client):
                 'product_short_name': 'RHEL',
                 'release_date': None,
                 'resource_type': 'Advisory',
+                'display_name': 'RHBA-2017:2251-02',
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',

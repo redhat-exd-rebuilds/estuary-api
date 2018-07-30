@@ -24,6 +24,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     ],
                     'classification':'Red Hat',
                     'creation_time':'2017-04-02T19:39:06+00:00',
+                    'display_name':'RHBZ#12345',
                     'id':'12345',
                     'modified_time':'2018-02-07T19:30:47+00:00',
                     'priority':'high',
@@ -56,6 +57,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'author_date': '2017-04-26T11:44:38+00:00',
                     'commit_date': '2017-04-26T11:44:38+00:00',
+                    'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
                     'resource_type': 'DistGitCommit'
@@ -63,6 +65,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'completion_time': '2017-04-02T19:39:06+00:00',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
@@ -80,6 +83,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'docker'
                     ],
                     'created_at':'2018-03-14T05:53:25+00:00',
+                    'display_name':'RHBA-2017:27760-01',
                     'id':'123456',
                     'issue_date':'2018-03-14T05:53:25+00:00',
                     'product_name':'Release End2End Test',
@@ -109,6 +113,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     ],
                     'classification':'Red Hat',
                     'creation_time':'2017-04-02T19:39:06+00:00',
+                    'display_name':'RHBZ#12345',
                     'id':'12345',
                     'modified_time':'2018-02-07T19:30:47+00:00',
                     'priority':'high',
@@ -141,6 +146,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'author_date': '2017-04-26T11:44:38+00:00',
                     'commit_date': '2017-04-26T11:44:38+00:00',
+                    'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
                     'resource_type': 'DistGitCommit'
@@ -148,6 +154,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'completion_time': '2017-04-02T19:39:06+00:00',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
@@ -165,6 +172,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'docker'
                     ],
                     'created_at':'2017-04-03T14:47:23+00:00',
+                    'display_name':'RHBA-2017:2251-02',
                     'id':'27825',
                     'issue_date':'2017-08-01T05:59:34+00:00',
                     'product_name':'Red Hat Enterprise Linux',
@@ -179,6 +187,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'update_date':'2017-08-01T07:16:00+00:00'
                 },
                 {
+                    'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
                     'id': '1180',
                     'message_id': 'ID:messaging-devops-broker01.test',
@@ -191,6 +200,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'completion_time': '2018-04-02T19:39:06+00:00',
                     'creation_time': '2018-04-02T19:39:06+00:00',
+                    'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
                     'extra': None,
                     'id': '811',
@@ -216,6 +226,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'classification': 'Red Hat',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'RHBZ#12345',
                     'id': '12345',
                     'modified_time': '2018-02-07T19:30:47+00:00',
                     'priority': 'high',
@@ -232,6 +243,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'author_date': '2017-04-26T11:44:38+00:00',
                     'commit_date': '2017-04-26T11:44:38+00:00',
+                    'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
                     'resource_type': 'DistGitCommit'
@@ -285,6 +297,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     },
                     'completion_time': '2017-04-02T19:39:06+00:00',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
@@ -309,6 +322,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'docker'
                     ],
                     'created_at':'2018-03-14T05:53:25+00:00',
+                    'display_name':'RHBA-2017:27760-01',
                     'id':'123456',
                     'issue_date':'2018-03-14T05:53:25+00:00',
                     'product_name':'Release End2End Test',
@@ -334,6 +348,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'classification': 'Red Hat',
                     'creation_time': '2017-04-01T17:41:04+00:00',
+                    'display_name': 'RHBZ#1245',
                     'id': '1245',
                     'modified_time': '2018-03-14T05:53:19+00:00',
                     'priority': 'unspecified',
@@ -350,6 +365,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'author_date': '2018-03-14T05:53:25+00:00',
                     'commit_date': '2018-03-14T05:52:19+00:00',
+                    'display_name': 'commit #f4dfc64',
                     'hash': 'f4dfc64c10a90492303e4f14ad3549a1a2b13575',
                     'log_message': 'Repo creation',
                     'resource_type': 'DistGitCommit'
@@ -403,6 +419,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     },
                     'completion_time': '2017-04-02T19:39:06+00:00',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
@@ -427,6 +444,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'docker'
                     ],
                     'created_at':'2018-03-14T05:53:25+00:00',
+                    'display_name':'RHBA-2017:27760-01',
                     'id':'123456',
                     'issue_date':'2018-03-14T05:53:25+00:00',
                     'product_name':'Release End2End Test',
@@ -452,6 +470,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'classification': 'Red Hat',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'RHBZ#12345',
                     'id': '12345',
                     'modified_time': '2018-02-07T19:30:47+00:00',
                     'priority': 'high',
@@ -468,6 +487,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'author_date': '2017-04-26T11:44:38+00:00',
                     'commit_date': '2017-04-26T11:44:38+00:00',
+                    'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
                     'resource_type': 'DistGitCommit'
@@ -521,6 +541,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     },
                     'completion_time': '2017-04-02T19:39:06+00:00',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
@@ -545,6 +566,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'docker'
                     ],
                     'created_at':'2017-04-03T14:47:23+00:00',
+                    'display_name':'RHBA-2017:2251-02',
                     'id':'27825',
                     'issue_date':'2017-08-01T05:59:34+00:00',
                     'product_name':'Red Hat Enterprise Linux',
@@ -559,6 +581,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'update_date':'2017-08-01T07:16:00+00:00'
                 },
                 {
+                    'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
                     'id': '1180',
                     'message_id': 'ID:messaging-devops-broker01.test',
@@ -571,6 +594,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'completion_time': '2018-04-02T19:39:06+00:00',
                     'creation_time': '2018-04-02T19:39:06+00:00',
+                    'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
                     'extra': None,
                     'id': '811',
@@ -594,6 +618,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'classification': 'Red Hat',
                     'creation_time': '2017-04-01T17:41:04+00:00',
+                    'display_name': 'RHBZ#1245',
                     'id': '1245',
                     'modified_time': '2018-03-14T05:53:19+00:00',
                     'priority': 'unspecified',
@@ -610,6 +635,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'author_date': '2018-03-14T05:53:25+00:00',
                     'commit_date': '2018-03-14T05:52:19+00:00',
+                    'display_name': 'commit #f4dfc64',
                     'hash': 'f4dfc64c10a90492303e4f14ad3549a1a2b13575',
                     'log_message': 'Repo creation',
                     'resource_type': 'DistGitCommit'
@@ -663,6 +689,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     },
                     'completion_time': '2017-04-02T19:39:06+00:00',
                     'creation_time': '2017-04-02T19:39:06+00:00',
+                    'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
@@ -687,6 +714,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'docker'
                     ],
                     'created_at':'2017-04-03T14:47:23+00:00',
+                    'display_name':'RHBA-2017:2251-02',
                     'id':'27825',
                     'issue_date':'2017-08-01T05:59:34+00:00',
                     'product_name':'Red Hat Enterprise Linux',
@@ -701,6 +729,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'update_date':'2017-08-01T07:16:00+00:00'
                 },
                 {
+                    'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
                     'id': '1180',
                     'message_id': 'ID:messaging-devops-broker01.test',
@@ -713,6 +742,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'completion_time': '2018-04-02T19:39:06+00:00',
                     'creation_time': '2018-04-02T19:39:06+00:00',
+                    'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
                     'extra': None,
                     'id': '811',
@@ -928,6 +958,7 @@ def test_get_stories_fallback(client):
                 'owner': None,
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
+                'display_name': u'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'tags': [],
@@ -945,6 +976,7 @@ def test_get_stories_fallback(client):
                 'product_short_name': 'RHEL',
                 'release_date': None,
                 'resource_type': 'Advisory',
+                'display_name': 'RHBA-2017:2251-02',
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',

@@ -128,6 +128,7 @@ def get_resource_story(resource, uid):
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
+        rv['data'][0]['display_name'] = item.display_name
         return jsonify(rv)
 
     return jsonify(format_story_results(results, item))
@@ -236,6 +237,7 @@ def get_resource_all_stories(resource, uid):
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['data'][0]['resource_type'] = item.__label__
+        rv['data'][0]['display_name'] = item.display_name
         all_results.append(rv)
 
     return jsonify(all_results)
@@ -279,6 +281,7 @@ def get_siblings(resource, uid):
         inflated_node = inflate_node(result[0])
         serialized_node = inflated_node.serialized_all
         serialized_node['resource_type'] = inflated_node.__label__
+        serialized_node['display_name'] = inflated_node.display_name
         serialized_results.append(serialized_node)
 
     description = get_siblings_description(
@@ -320,6 +323,7 @@ def get_artifact_relationships(resource, uid, relationship):
     for node in related_nodes:
         serialized_node = node.serialized_all
         serialized_node['resource_type'] = node.__label__
+        serialized_node['display_name'] = node.display_name
         results['data'].append(serialized_node)
 
     return jsonify(results)
