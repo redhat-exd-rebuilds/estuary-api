@@ -389,6 +389,7 @@ def format_story_results(results, requested_item):
         else:
             serialized_node = node.serialized
         serialized_node['resource_type'] = node.__label__
+        serialized_node['display_name'] = node.display_name
         data.append(serialized_node)
     return {
         'data': data,
