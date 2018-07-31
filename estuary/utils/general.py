@@ -462,5 +462,5 @@ def get_siblings_description(story_node_display_name, story_node_story_flow, bac
         result = '{0} {1} {2}'.format(rel_label, relationship, story_node_display_name)
         return result[0].upper() + result[1:]
     else:
-        raise RuntimeError('A node with the label {0} does not have a {1} relationship'.format(
-            story_node_story_flow['display_label'], rel_direction))
+        raise RuntimeError('{0} does not have a {1} relationship'.format(
+            story_node_display_name, rel_direction))
