@@ -358,8 +358,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             'release': '4.el7_4_as',
             'start_time': '2017-04-02T19:39:06+00:00',
             'state': 1,
-            'version': '1.7.4'}],
-        'url': '/api/1/events/1180'
+            'version': '1.7.4'}]
     }),
     ('containerkojibuild', '710', {
         'advisories': [
@@ -516,8 +515,7 @@ def test_get_resources(client, resource, uid, expected):
         'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
-        'state_reason': 'All container images have been rebuilt',
-        'url': '/api/1/events/1180'
+        'state_reason': 'All container images have been rebuilt'
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),

@@ -21,7 +21,6 @@ class FreshmakerEvent(EstuaryStructuredNode):
     triggered_by_advisory = RelationshipTo(
         '.errata.Advisory', 'TRIGGERED_BY', cardinality=ZeroOrOne)
     triggered_container_builds = RelationshipTo('.koji.ContainerKojiBuild', 'TRIGGERED')
-    url = StringProperty()
 
     @property
     def display_name(self):
