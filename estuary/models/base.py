@@ -208,4 +208,12 @@ class EstuaryStructuredNode(StructuredNode):
 
         :param str new_label: the new label to add to the node
         """
-        self.cypher('MATCH (a) WHERE id(a)={0} SET a :{1}'.format('{self}', new_label))
+        self.cypher('MATCH (a) WHERE id(a)={{self}} SET a :{0}'.format(new_label))
+
+    def remove_label(self, label):
+        """
+        Remove a Neo4j label from an existing node.
+
+        :param str label: the label to be removed from the node
+        """
+        self.cypher('MATCH (a) WHERE id(a)={{self}} REMOVE a :{0}'.format(label))
