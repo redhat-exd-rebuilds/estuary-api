@@ -7,7 +7,6 @@ from werkzeug.exceptions import NotFound
 from neomodel import db
 
 from estuary import version
-from estuary.models import story_flow_list
 from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import (
@@ -55,17 +54,6 @@ def get_resource(resource, uid):
         return jsonify(item.serialized_all)
     else:
         return jsonify(item.serialized)
-
-
-@api_v1.route('/story')
-def get_available_resources():
-    """
-    List the available resources and their unique ID property.
-
-    :return: a Flask JSON response
-    :rtype: flask.Response
-    """
-    return jsonify({label.lower(): story_flow(label)['uid_name'] for label in story_flow_list})
 
 
 @api_v1.route('/story/<resource>/<uid>')
