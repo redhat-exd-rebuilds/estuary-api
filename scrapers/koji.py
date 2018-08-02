@@ -71,9 +71,9 @@ class KojiScraper(BaseScraper):
             LEFT JOIN events ON build.create_event = events.id
             LEFT JOIN package ON build.pkg_id = package.id
             LEFT JOIN brew.users ON build.owner = brew.users.id
-            WHERE build.id = '716789'
+            WHERE events.time IS NOT NULL AND events.time >= '{0}' AND events.time <= '{1}'
             ORDER BY build.start_time DESC;
-            """
+            """.format(start_date, end_date)
 
         return self.teiid.query(sql=sql_query)
 
