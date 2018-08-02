@@ -165,8 +165,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'message_id': 'ID:messaging-devops-broker01.test',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.',
-                    'url': '/api/1/events/1180'
+                    'state_reason': 'All container images have been rebuilt.'
                 }],
                 'update_date': '2017-08-01T07:16:00+00:00'
             }
@@ -217,8 +216,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'message_id': 'ID:messaging-devops-broker01.test',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.',
-                    'url': '/api/1/events/1180'
+                    'state_reason': 'All container images have been rebuilt.'
                 },
                 'version': '1.7.5'
             },
@@ -262,8 +260,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'message_id': 'ID:messaging-devops-broker01.test',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.',
-                    'url': '/api/1/events/1180'
+                    'state_reason': 'All container images have been rebuilt.'
                 },
                 'version': '1.7.4'
             }
@@ -396,8 +393,7 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
         'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
-        'state_reason': 'All container images have been rebuilt.',
-        'url': '/api/1/events/1180'
+        'state_reason': 'All container images have been rebuilt.'
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),

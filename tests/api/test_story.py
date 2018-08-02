@@ -105,8 +105,7 @@ from estuary.models.user import User
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
-                'state_reason': 'All container images have been rebuilt.',
-                'url': '/api/1/events/1180'
+                'state_reason': 'All container images have been rebuilt.'
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -285,8 +284,7 @@ from estuary.models.user import User
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
-                'state_reason': 'All container images have been rebuilt.',
-                'url': '/api/1/events/1180'
+                'state_reason': 'All container images have been rebuilt.'
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -433,8 +431,7 @@ from estuary.models.user import User
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
-                'state_reason': 'All container images have been rebuilt.',
-                'url': '/api/1/events/1180'
+                'state_reason': 'All container images have been rebuilt.'
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -563,8 +560,7 @@ from estuary.models.user import User
                         'message_id': 'ID:messaging-devops-broker01.test',
                         'state': 2,
                         'state_name': 'COMPLETE',
-                        'state_reason': 'All container images have been rebuilt.',
-                        'url': '/api/1/events/1180'
+                        'state_reason': 'All container images have been rebuilt.'
                     }
                 ],
                 'update_date': '2017-08-01T07:16:00+00:00'
@@ -577,8 +573,7 @@ from estuary.models.user import User
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
-                'state_reason': 'All container images have been rebuilt.',
-                'url': '/api/1/events/1180'
+                'state_reason': 'All container images have been rebuilt.'
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -725,8 +720,7 @@ from estuary.models.user import User
                         'state': 1,
                         'version': '1.7.4'
                     }
-                ],
-                'url': '/api/1/events/1180'
+                ]
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -839,8 +833,7 @@ from estuary.models.user import User
                 'resource_type': 'FreshmakerEvent',
                 'state': 2,
                 'state_name': 'COMPLETE',
-                'state_reason': 'All container images have been rebuilt.',
-                'url': '/api/1/events/1180'
+                'state_reason': 'All container images have been rebuilt.'
             },
             {
                 'advisories': [
@@ -890,8 +883,7 @@ from estuary.models.user import User
                     'message_id': 'ID:messaging-devops-broker01.test',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.',
-                    'url': '/api/1/events/1180'
+                    'state_reason': 'All container images have been rebuilt.'
                 },
                 'version': '1.7.4'
             },
@@ -993,8 +985,7 @@ from estuary.models.user import User
                 'resource_type': 'FreshmakerEvent',
                 'state': 2,
                 'state_name': 'COMPLETE',
-                'state_reason': 'All container images have been rebuilt.',
-                'url': '/api/1/events/1180'
+                'state_reason': 'All container images have been rebuilt.'
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',
@@ -1142,8 +1133,7 @@ def test_get_stories(client, resource, uids, expected):
         'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
-        'state_reason': 'All container images have been rebuilt.',
-        'url': '/api/1/events/1180'
+        'state_reason': 'All container images have been rebuilt.'
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -1345,8 +1335,7 @@ def test_get_story_partial_story(client):
         'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
-        'state_reason': 'All container images have been rebuilt.',
-        'url': '/api/1/events/1180'
+        'state_reason': 'All container images have been rebuilt.'
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -1403,8 +1392,7 @@ def test_get_story_partial_story(client):
                     'message_id': 'ID:messaging-devops-broker01.test',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.',
-                    'url': '/api/1/events/1180'
+                    'state_reason': 'All container images have been rebuilt.'
                 }],
                 'update_date': '2017-08-01T07:16:00+00:00'
             },
@@ -1416,8 +1404,7 @@ def test_get_story_partial_story(client):
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
                 'state_name': 'COMPLETE',
-                'state_reason': 'All container images have been rebuilt.',
-                'url': '/api/1/events/1180'
+                'state_reason': 'All container images have been rebuilt.'
             },
             {
                 'completion_time': '2017-04-02T19:39:06+00:00',

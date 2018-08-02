@@ -64,7 +64,6 @@ def test_about(client):
         'state_name': 'SKIPPED',
         'message_id': 'Some ID',
         'state': 4,
-        'url': '/api/1/events/12345',
         'event_type_id': 8
     }),
     (ContainerKojiBuild, 'containerkojibuild', '710', {
