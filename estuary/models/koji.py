@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import re
 
 from neomodel import (
-    StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty, FloatProperty,
+    StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty,
     RelationshipTo, RelationshipFrom, ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode
@@ -28,7 +28,6 @@ class KojiBuild(EstuaryStructuredNode):
     start_time = DateTimeProperty()
     state = IntegerProperty()
     tags = RelationshipFrom('KojiTag', 'CONTAINS')
-    tasks = RelationshipFrom('KojiTask', 'TRIGGERED')
     version = StringProperty(index=True)
 
     @property
@@ -68,26 +67,6 @@ class ContainerKojiBuild(KojiBuild):
     original_nvr = StringProperty()
     triggered_by_freshmaker_event = RelationshipFrom(
         '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
-
-
-class KojiTask(EstuaryStructuredNode):
-    """Definition of a Koji task in Neo4j."""
-
-    arch = StringProperty(required=True)
-    builds = RelationshipTo('KojiBuild', 'TRIGGERED')
-    # Cardinality is enforced on the `parent` property, so the `children` property should be
-    # treated as read-only
-    children = RelationshipFrom('KojiTask', 'PARENT')
-    completion_time = DateTimeProperty()
-    create_time = DateTimeProperty(required=True)
-    id_ = UniqueIdProperty(db_property='id')
-    method = StringProperty(required=True)
-    owner = RelationshipTo('.user.User', 'OWNED_BY')
-    parent = RelationshipTo('KojiTask', 'PARENT', cardinality=ZeroOrOne)
-    priority = IntegerProperty()
-    start_time = DateTimeProperty()
-    state = IntegerProperty()
-    weight = FloatProperty()
 
 
 class KojiTag(EstuaryStructuredNode):

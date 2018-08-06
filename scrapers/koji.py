@@ -7,7 +7,7 @@ import json
 import neomodel
 
 from scrapers.base import BaseScraper
-from estuary.models.koji import ContainerKojiBuild, KojiBuild, KojiTask, KojiTag
+from estuary.models.koji import ContainerKojiBuild, KojiBuild, KojiTag
 from estuary.models.user import User
 from estuary.models.distgit import DistGitCommit
 import estuary.utils.general as utils
@@ -92,25 +92,6 @@ class KojiScraper(BaseScraper):
             FROM brew.task
             WHERE id = {};
             """.format(task_id)
-
-        return self.teiid.query(sql=sql_query)
-
-    def get_task_children(self, parent):
-        """
-        Query Teiid for all child tasks of a Koji task.
-
-        :param int parent: the parent Koji task ID
-        :return: a list of dictionaries
-        :rtype: list
-        """
-        # SQL query to fetch all child tasks related to a
-        # parent task
-        sql_query = """
-            SELECT arch, completion_time, create_time, id, "method", priority, request, start_time,
-                   state, weight
-            FROM brew.task
-            WHERE parent = {};
-            """.format(parent)
 
         return self.teiid.query(sql=sql_query)
 
@@ -214,7 +195,11 @@ class KojiScraper(BaseScraper):
                 # Continue if the task_id is None
                 continue
             # Getting task related to the current build
-            task_dict = self.get_task(task_id)[0]
+            try:
+                task_dict = self.get_task(task_id)[0]
+            except IndexError:
+                continue
+
             commit_hash = None
             # Only look for the commit hash if the build is an RPM or container
             if task_dict['method'] in ('build', 'buildContainer'):
@@ -224,45 +209,6 @@ class KojiScraper(BaseScraper):
                         commit_hash = child.text.rsplit('#', 1)[1]
                         break
 
-            if not task_dict:
-                # Continue if no corresponding task found
-                continue
-
-            task = KojiTask.create_or_update(dict(
-                id_=task_dict['id'],
-                weight=task_dict['weight'],
-                create_time=task_dict['create_time'],
-                start_time=task_dict['start_time'],
-                completion_time=task_dict['completion_time'],
-                state=task_dict['state'],
-                priority=task_dict['priority'],
-                arch=task_dict['arch'],
-                method=task_dict['method']
-            ))[0]
-
-            # Defining Relationships
-            task.builds.connect(build)
-            task.conditional_connect(task.owner, user)
             if commit_hash:
                 commit = DistGitCommit.get_or_create(dict(hash_=commit_hash))[0]
                 build.conditional_connect(build.commit, commit)
-
-            child_tasks = self.get_task_children(task_dict['id'])
-
-            if not child_tasks:
-                # Continue if no corresponding child task found
-                continue
-
-            for child_task_dict in child_tasks:
-                child_task = KojiTask.create_or_update(dict(
-                    id_=child_task_dict['id'],
-                    weight=child_task_dict['weight'],
-                    create_time=child_task_dict['create_time'],
-                    start_time=child_task_dict['start_time'],
-                    completion_time=child_task_dict['completion_time'],
-                    state=child_task_dict['state'],
-                    priority=child_task_dict['priority'],
-                    arch=child_task_dict['arch'],
-                    method=child_task_dict['method']
-                ))[0]
-                child_task.conditional_connect(child_task.parent, task)

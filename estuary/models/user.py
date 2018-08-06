@@ -22,6 +22,5 @@ class User(EstuaryStructuredNode):
     distgit_repos = RelationshipFrom('.distgit.DistGitRepo', 'CONTRIBUTED_BY')
     email = StringProperty()
     koji_builds = RelationshipFrom('.koji.KojiBuild', 'OWNED_BY')
-    koji_tasks = RelationshipFrom('.koji.KojiTask', 'OWNED_BY')
     name = StringProperty()
     username = UniqueIdProperty()

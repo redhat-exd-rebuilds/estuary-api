@@ -309,9 +309,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'tags': [
 
                     ],
-                    'tasks':[
-
-                    ],
                     'version':'1.7.4'
                 },
                 {
@@ -431,9 +428,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'tags': [
 
                     ],
-                    'tasks':[
-
-                    ],
                     'version':'1.7.4'
                 },
                 {
@@ -551,9 +545,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'start_time': '2017-04-02T19:39:06+00:00',
                     'state': 1,
                     'tags': [
-
-                    ],
-                    'tasks':[
 
                     ],
                     'version':'1.7.4'
@@ -698,9 +689,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'start_time': '2017-04-02T19:39:06+00:00',
                     'state': 1,
                     'tags': [
-
-                    ],
-                    'tasks':[
 
                     ],
                     'version':'1.7.4'
@@ -958,7 +946,6 @@ def test_get_stories_fallback(client):
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'tags': [],
-                'tasks': [],
                 'version': '1.7.4'
             },
             {

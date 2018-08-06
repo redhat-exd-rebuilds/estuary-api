@@ -397,9 +397,6 @@ from estuary.models.user import User
                 'tags': [
 
                 ],
-                'tasks': [
-
-                ],
                 'version': '1.7.4'
             },
             {
@@ -872,9 +869,6 @@ from estuary.models.user import User
                 'start_time':'2017-04-02T19:39:06+00:00',
                 'state':1,
                 'tags':[
-
-                ],
-                'tasks':[
 
                 ],
                 'triggered_by_freshmaker_event':{
@@ -1498,7 +1492,6 @@ def test_get_story_fallback(client):
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'tags': [],
-                'tasks': [],
                 'version': '1.7.4'
             },
             {
