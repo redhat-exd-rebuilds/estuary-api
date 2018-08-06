@@ -71,10 +71,10 @@ class ContainerKojiBuild(KojiBuild):
 
 
 class ModuleKojiBuild(KojiBuild):
-    """ A Neo4j definition of a build that represents a module build in Koji. """
+    """A Neo4j definition of a build that represents a module build in Koji."""
 
-    components = RelationshipTo('KojiBuild', 'ATTACHED')
-    content_koji_tag = RelationshipFrom('KojiTag', 'CONTAINS')
+    components = RelationshipTo('KojiBuild', 'CONTAINS')
+    content_koji_tag = RelationshipFrom('KojiTag', 'CONTAINS', cardinality=ZeroOrOne)
     context = StringProperty()
     mbs_id = IntegerProperty()
     module_name = StringProperty()
@@ -87,5 +87,5 @@ class KojiTag(EstuaryStructuredNode):
 
     builds = RelationshipTo('KojiBuild', 'CONTAINS')
     id_ = UniqueIdProperty(db_property='id')
-    module_builds = RelationshipTo('ModuleKojiBuild', 'CONTAINS')
+    module_builds = RelationshipTo('ModuleKojiBuild', 'CONTAINS', cardinality=ZeroOrOne)
     name = StringProperty()
