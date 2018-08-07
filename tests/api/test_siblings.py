@@ -54,9 +54,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'tags':[
 
                 ],
-                'tasks':[
-
-                ],
                 'version': '1.7.1'
             },
             {
@@ -100,9 +97,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'tags': [
-
-                ],
-                'tasks':[
 
                 ],
                 'version': '1.7.4'
@@ -209,7 +203,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'start_time': '2018-04-02T19:39:06+00:00',
                 'state': 2,
                 'tags': [],
-                'tasks': [],
                 'triggered_by_freshmaker_event': {
                     'event_type_id': 8,
                     'id': '1180',
@@ -253,7 +246,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'start_time': '2017-04-02T19:39:06+00:00',
                 'state': 1,
                 'tags': [],
-                'tasks': [],
                 'triggered_by_freshmaker_event': {
                     'event_type_id': 8,
                     'id': '1180',

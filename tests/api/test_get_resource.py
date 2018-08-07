@@ -10,7 +10,7 @@ from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit, DistGitBranch, DistGitRepo
 from estuary.models.errata import Advisory
-from estuary.models.koji import KojiBuild, KojiTask, KojiTag, ContainerKojiBuild
+from estuary.models.koji import KojiBuild, KojiTag, ContainerKojiBuild
 from estuary.models.freshmaker import FreshmakerEvent
 
 
@@ -243,19 +243,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'name': 'some_active_tag'
             }
         ],
-        'tasks': [
-            {
-                'arch': 'no_arch',
-                'completion_time': '2017-04-02T19:45:06+00:00',
-                'create_time': '2017-04-02T19:30:06+00:00',
-                'id': '2701',
-                'method': 'some_method',
-                'priority': 2,
-                'start_time': '2017-04-02T19:39:06+00:00',
-                'state': 3,
-                'weight': 123.45
-            }
-        ],
         'version': '1.7.4'
     }),
     ('advisory', '27825', {
@@ -377,7 +364,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         'start_time':'2017-04-02T19:39:06+00:00',
         'state':1,
         'tags':[],
-        'tasks':[],
         'triggered_by_freshmaker_event':None,
         'version':'1.7.4'
     })
@@ -479,17 +465,6 @@ def test_get_resources(client, resource, uid, expected):
         'state': 1,
         'version': '1.7.4'
     })[0]
-    task = KojiTask.get_or_create({
-        'id_': '2701',
-        'method': 'some_method',
-        'priority': 2,
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
-        'create_time': datetime(2017, 4, 2, 19, 30, 6),
-        'completion_time': datetime(2017, 4, 2, 19, 45, 6),
-        'state': 3,
-        'weight': 123.45,
-        'arch': 'no_arch'
-    })[0]
     tag = KojiTag.get_or_create({
         'id_': '2702',
         'name': 'some_active_tag'
@@ -553,7 +528,6 @@ def test_get_resources(client, resource, uid, expected):
     if resource == 'kojibuild':
         build.owner.connect(mprahl)
         build.commit.connect(commit_two)
-        task.builds.connect(build)
         tag.builds.connect(build)
 
     if resource == 'advisory':
