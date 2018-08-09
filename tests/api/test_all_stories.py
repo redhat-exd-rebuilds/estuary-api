@@ -300,13 +300,16 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
-                    'name': 'slf4j',
-                    'owner': None,
-                    'release': '4.el7_4',
-                    'resource_type': 'KojiBuild',
-                    'start_time': '2017-04-02T19:39:06+00:00',
-                    'state': 1,
-                    'tags': [
+                    'module_builds': [
+
+                    ],
+                    'name':'slf4j',
+                    'owner':None,
+                    'release':'4.el7_4',
+                    'resource_type':'KojiBuild',
+                    'start_time':'2017-04-02T19:39:06+00:00',
+                    'state':1,
+                    'tags':[
 
                     ],
                     'version':'1.7.4'
@@ -334,9 +337,9 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes_forward': [0, 1, 0, 0],
+                'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1],
-                'requested_node_index': 2
+                'story_related_nodes_forward':[0, 1, 0, 0]
             }
         },
         {
@@ -419,13 +422,16 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
-                    'name': 'slf4j',
-                    'owner': None,
-                    'release': '4.el7_4',
-                    'resource_type': 'KojiBuild',
-                    'start_time': '2017-04-02T19:39:06+00:00',
-                    'state': 1,
-                    'tags': [
+                    'module_builds': [
+
+                    ],
+                    'name':'slf4j',
+                    'owner':None,
+                    'release':'4.el7_4',
+                    'resource_type':'KojiBuild',
+                    'start_time':'2017-04-02T19:39:06+00:00',
+                    'state':1,
+                    'tags':[
 
                     ],
                     'version':'1.7.4'
@@ -453,9 +459,9 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta':{
-                'story_related_nodes_forward': [0, 1, 0, 0],
+                'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1],
-                'requested_node_index': 2
+                'story_related_nodes_forward':[0, 1, 0, 0]
             }
         },
         {
@@ -538,13 +544,16 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
-                    'name': 'slf4j',
-                    'owner': None,
-                    'release': '4.el7_4',
-                    'resource_type': 'KojiBuild',
-                    'start_time': '2017-04-02T19:39:06+00:00',
-                    'state': 1,
-                    'tags': [
+                    'module_builds': [
+
+                    ],
+                    'name':'slf4j',
+                    'owner':None,
+                    'release':'4.el7_4',
+                    'resource_type':'KojiBuild',
+                    'start_time':'2017-04-02T19:39:06+00:00',
+                    'state':1,
+                    'tags':[
 
                     ],
                     'version':'1.7.4'
@@ -597,9 +606,9 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
+                'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
-                'requested_node_index': 2
+                'story_related_nodes_forward':[0, 1, 0, 0, 0, 0]
             }
         },
         {
@@ -682,13 +691,16 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'epoch': '0',
                     'extra': None,
                     'id': '2345',
-                    'name': 'slf4j',
-                    'owner': None,
-                    'release': '4.el7_4',
-                    'resource_type': 'KojiBuild',
-                    'start_time': '2017-04-02T19:39:06+00:00',
-                    'state': 1,
-                    'tags': [
+                    'module_builds': [
+
+                    ],
+                    'name':'slf4j',
+                    'owner':None,
+                    'release':'4.el7_4',
+                    'resource_type':'KojiBuild',
+                    'start_time':'2017-04-02T19:39:06+00:00',
+                    'state':1,
+                    'tags':[
 
                     ],
                     'version':'1.7.4'
@@ -741,9 +753,9 @@ from estuary.models.freshmaker import FreshmakerEvent
                 }
             ],
             'meta': {
-                'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
+                'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
-                'requested_node_index': 2
+                'story_related_nodes_forward':[0, 1, 0, 0, 0, 0]
             }
         }
     ])
@@ -938,6 +950,7 @@ def test_get_stories_fallback(client):
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
+                'module_builds': [],
                 'name': 'slf4j',
                 'owner': None,
                 'release': '4.el7_4',

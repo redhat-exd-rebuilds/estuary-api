@@ -228,6 +228,7 @@ from estuary.models.freshmaker import FreshmakerEvent
         'epoch': '0',
         'extra': None,
         'id': '2345',
+        'module_builds': [],
         'name': 'slf4j',
         'owner': {
             'email': 'matt.prahl@domain.local',
@@ -358,6 +359,7 @@ from estuary.models.freshmaker import FreshmakerEvent
         'extra':None,
         'id':'710',
         'name':'slf4j_2',
+        'module_builds': [],
         'original_nvr': None,
         'owner':None,
         'release':'4.el7_4_as',

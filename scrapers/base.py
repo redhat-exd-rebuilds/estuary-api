@@ -72,3 +72,21 @@ class BaseScraper(object):
             return True
         else:
             return False
+
+    def is_module_build(self, build_info):
+        """
+        Check whether a Koji build is a module build.
+
+        :param KojiBuild build_info: build info from Teiid
+        :return: boolean value indicating whether the build is a module build
+        :rtype: bool
+        """
+        try:
+            extra_json = json.loads(build_info['extra'])
+        except (ValueError, TypeError):
+            return False
+
+        if extra_json.get('typeinfo', {}).get('module'):
+            return True
+
+        return False

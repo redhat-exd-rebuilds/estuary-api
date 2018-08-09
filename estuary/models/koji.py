@@ -22,6 +22,7 @@ class KojiBuild(EstuaryStructuredNode):
     epoch = StringProperty()
     extra = StringProperty()
     id_ = UniqueIdProperty(db_property='id')
+    module_builds = RelationshipFrom('ModuleKojiBuild', 'ATTACHED')
     name = StringProperty(index=True)
     owner = RelationshipTo('.user.User', 'OWNED_BY', cardinality=ZeroOrOne)
     release = StringProperty(index=True)
@@ -69,9 +70,22 @@ class ContainerKojiBuild(KojiBuild):
         '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 
 
+class ModuleKojiBuild(KojiBuild):
+    """A Neo4j definition of a build that represents a module build in Koji."""
+
+    components = RelationshipTo('KojiBuild', 'CONTAINS')
+    content_koji_tag = RelationshipFrom('KojiTag', 'CONTAINS', cardinality=ZeroOrOne)
+    context = StringProperty()
+    mbs_id = IntegerProperty()
+    module_name = StringProperty()
+    module_stream = StringProperty()
+    module_version = StringProperty()
+
+
 class KojiTag(EstuaryStructuredNode):
     """Definition of a Koji tag in Neo4j."""
 
     builds = RelationshipTo('KojiBuild', 'CONTAINS')
     id_ = UniqueIdProperty(db_property='id')
+    module_builds = RelationshipTo('ModuleKojiBuild', 'CONTAINS', cardinality=ZeroOrOne)
     name = StringProperty()

@@ -71,6 +71,7 @@ def test_about(client):
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'epoch': '0',
         'id_': '710',
+        'module_builds': [],
         'name': 'slf4j_2',
         'release': '4.el7_4_as',
         'start_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -83,6 +84,7 @@ def test_about(client):
         'completion_time': datetime(2018, 3, 14, 5, 53, 25),
         'release': '1.el7',
         'name': 'python-requests',
+        'module_builds': [],
         'state': 1,
         'id_': '12345',
         'version': '1.13'
@@ -111,5 +113,6 @@ def test_get_on_model_wo_uid(client, resource):
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
                    'advisory, bugzillabug, containeradvisory, containerkojibuild, distgitcommit, '
-                   'freshmakerevent, kojibuild, kojitag, and user.'.format(resource))
+                   'freshmakerevent, kojibuild, kojitag, modulekojibuild, and user.'
+                   .format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
