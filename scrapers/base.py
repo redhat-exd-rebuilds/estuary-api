@@ -62,14 +62,13 @@ class BaseScraper(object):
         except (ValueError, TypeError):
             extra_json = {}
 
-        # Checking a heuristic for determining if a build is a container build since, currently
+        # Checking heuristics for determining if a build is a container build, since currently
         # there is no definitive way to do it.
         if extra_json and (extra_json.get('container_koji_build_id') or
                            extra_json.get('container_koji_task_id')):
             return True
-        # Checking another heuristic for determining if a build is a container build since
-        # currently there is no definitive way to do it.
-        elif (package_name.endswith('-container') or package_name.endswith('-docker')):
+        elif extra_json.get('image') and\
+                (package_name.endswith('-container') or package_name.endswith('-docker')):
             return True
         else:
             return False
