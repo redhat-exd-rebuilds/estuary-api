@@ -15,6 +15,7 @@ class Config(object):
     SECRET_KEY = 'replace-me-with-something-random'
     NEO4J_URI = 'bolt://neo4j:neo4j@localhost:7687'
     CORS_URL = '*'
+    STORY_MANAGER_SEQUENCE = ['ModuleStoryManager', 'ContainerStoryManager']
 
 
 class ProdConfig(Config):
