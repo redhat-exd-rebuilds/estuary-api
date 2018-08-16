@@ -11,9 +11,6 @@ all_models = (Advisory, BugzillaBug, ContainerAdvisory, ContainerKojiBuild,
               DistGitBranch, DistGitCommit, DistGitRepo, FreshmakerEvent, KojiBuild,
               KojiTag, ModuleKojiBuild, User)
 names_to_model = {model.__label__: model for model in all_models}
-story_flow_list = ['BugzillaBug', 'DistGitCommit', 'KojiBuild',
-                   'Advisory', 'FreshmakerEvent', 'ContainerKojiBuild',
-                   'ContainerAdvisory']
 
 
 def _get_models_inheritance():

@@ -2,18 +2,15 @@
 
 from __future__ import unicode_literals
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from werkzeug.exceptions import NotFound
-from neomodel import db
 
 from estuary import version
 from estuary.models.base import EstuaryStructuredNode
 
-from estuary.utils.general import (
-    str_to_bool, get_neo4j_node, create_story_query, story_flow, format_story_results,
-    get_sibling_nodes, inflate_node, set_story_labels, get_siblings_description
-)
+from estuary.utils.general import str_to_bool, get_neo4j_node, inflate_node
 from estuary.error import ValidationError
+from estuary.utils.story import BaseStoryManager, ContainerStoryManager
 
 
 api_v1 = Blueprint('api_v1', __name__)
@@ -79,11 +76,10 @@ def get_resource_story(resource, uid):
     if not item:
         raise NotFound('This item does not exist')
 
-    forward_query = create_story_query(item, item.id, limit=True)
-    backward_query = create_story_query(item, item.id, reverse=True, limit=True)
+    story_manager = BaseStoryManager.get_story_manager(
+        item, current_app.config, limit=True)
 
-    def _get_partial_story(query, reverse=False):
-        results, _ = db.cypher_query(query)
+    def _get_partial_story(results, reverse=False):
 
         if not results:
             return []
@@ -97,12 +93,14 @@ def get_resource_story(resource, uid):
         return EstuaryStructuredNode.inflate_results(results)[0]
 
     results = []
-    if forward_query:
-        results = set_story_labels(item.__label__, _get_partial_story(forward_query))
+    if story_manager.forward_story:
+        results = story_manager.set_story_labels(item.__label__, _get_partial_story(
+            story_manager.forward_story))
 
-    if backward_query:
-        backward_query_results = set_story_labels(
-            item.__label__, _get_partial_story(backward_query, reverse=True), reverse=True)
+    if story_manager.backward_story:
+        backward_query_results = story_manager.set_story_labels(
+            item.__label__, _get_partial_story(
+                story_manager.backward_story, reverse=True), reverse=True)
         if backward_query_results and results:
             # Remove the first element of backward_query_results in order to avoid
             # duplication of the requested resource when result of forward query are not None.
@@ -119,7 +117,7 @@ def get_resource_story(resource, uid):
         rv['data'][0]['display_name'] = item.display_name
         return jsonify(rv)
 
-    return jsonify(format_story_results(results, item))
+    return jsonify(story_manager.format_story_results(results, item))
 
 
 @api_v1.route('/allstories/<resource>/<uid>')
@@ -142,13 +140,11 @@ def get_resource_all_stories(resource, uid):
         if item:
             break
 
-    forward_query = create_story_query(item, item.id)
-    backward_query = create_story_query(item, item.id, reverse=True)
+    story_manager = BaseStoryManager.get_story_manager(item, current_app.config)
 
-    def _get_partial_stories(query, reverse=False):
+    def _get_partial_stories(results, reverse=False):
 
         results_list = []
-        results, _ = db.cypher_query(query)
 
         if not results:
             return results_list
@@ -188,35 +184,36 @@ def get_resource_all_stories(resource, uid):
 
         return EstuaryStructuredNode.inflate_results(unique_paths_nodes)
 
-    if forward_query:
-        results_forward = _get_partial_stories(forward_query)
+    if story_manager.forward_story:
+        results_forward = _get_partial_stories(story_manager.forward_story)
     else:
         results_forward = []
 
-    if backward_query:
-        results_backward = _get_partial_stories(backward_query, reverse=True)
+    if story_manager.backward_story:
+        results_backward = _get_partial_stories(story_manager.backward_story, reverse=True)
     else:
         results_backward = []
 
     all_results = []
     if not results_backward or not results_forward:
         if results_forward:
-            results_unidir = [set_story_labels(
+            results_unidir = [story_manager.set_story_labels(
                 item.__label__, result) for result in results_forward]
         else:
-            results_unidir = [set_story_labels(
+            results_unidir = [story_manager.set_story_labels(
                 item.__label__, result, reverse=True) for result in results_backward]
 
         for result in results_unidir:
-            all_results.append(format_story_results(result, item))
+            all_results.append(story_manager.format_story_results(result, item))
 
     else:
         # Combining all the backward and forward paths to generate all the possible full paths
         for result_forward in results_forward:
             for result_backward in results_backward:
-                results = set_story_labels(item.__label__, result_backward, reverse=True) + \
-                    set_story_labels(item.__label__, result_forward)[1:]
-                all_results.append(format_story_results(results, item))
+                results = story_manager.set_story_labels(
+                    item.__label__, result_backward, reverse=True) + \
+                    story_manager.set_story_labels(item.__label__, result_forward)[1:]
+                all_results.append(story_manager.format_story_results(results, item))
 
     # Adding the artifact itself if its story is not available
     if not all_results:
@@ -249,7 +246,9 @@ def get_siblings(resource, uid):
     if not story_node:
         raise NotFound('This item does not exist')
 
-    story_node_story_flow = story_flow(story_node.__label__)
+    # Defaulting to Container Story until we modify this endpoint to suit the module changes
+    story_manager = ContainerStoryManager()
+    story_node_story_flow = story_manager.story_flow(story_node.__label__)
     # If backward_rel is true, we fetch siblings of the previous node, next node otherwise.
     # For example, if you pass in an advisory and want to know the Freshmaker events triggered from
     # that advisory, backward_rel would be false. If you want to know the Koji builds attached to
@@ -262,7 +261,7 @@ def get_siblings(resource, uid):
     else:
         raise ValidationError('Siblings cannot be determined on this kind of resource')
 
-    sibling_nodes = get_sibling_nodes(desired_siblings_label, story_node)
+    sibling_nodes = story_manager.get_sibling_nodes(desired_siblings_label, story_node)
     # Inflating and formatting results from Neo4j
     serialized_results = []
     for result in sibling_nodes:
@@ -272,7 +271,7 @@ def get_siblings(resource, uid):
         serialized_node['display_name'] = inflated_node.display_name
         serialized_results.append(serialized_node)
 
-    description = get_siblings_description(
+    description = story_manager.get_siblings_description(
         story_node.display_name, story_node_story_flow, backward)
 
     result = {
