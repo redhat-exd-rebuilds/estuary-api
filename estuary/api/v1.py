@@ -10,7 +10,7 @@ from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import str_to_bool, get_neo4j_node, inflate_node
 from estuary.error import ValidationError
-from estuary.utils.story import BaseStoryManager, ContainerStoryManager
+import estuary.utils.story
 
 
 api_v1 = Blueprint('api_v1', __name__)
@@ -76,7 +76,7 @@ def get_resource_story(resource, uid):
     if not item:
         raise NotFound('This item does not exist')
 
-    story_manager = BaseStoryManager.get_story_manager(
+    story_manager = estuary.utils.story.BaseStoryManager.get_story_manager(
         item, current_app.config, limit=True)
 
     def _get_partial_story(results, reverse=False):
@@ -113,6 +113,7 @@ def get_resource_story(resource, uid):
         rv['meta']['story_related_nodes_forward'] = [0]
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
+        rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
         return jsonify(rv)
@@ -140,7 +141,7 @@ def get_resource_all_stories(resource, uid):
         if item:
             break
 
-    story_manager = BaseStoryManager.get_story_manager(item, current_app.config)
+    story_manager = estuary.utils.story.BaseStoryManager.get_story_manager(item, current_app.config)
 
     def _get_partial_stories(results, reverse=False):
 
@@ -221,6 +222,7 @@ def get_resource_all_stories(resource, uid):
         rv['meta']['story_related_nodes_forward'] = [0]
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
+        rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
         all_results.append(rv)
@@ -240,14 +242,22 @@ def get_siblings(resource, uid):
     :raises NotFound: if the item is not found
     :raises ValidationError: if an invalid resource was requested
     """
+    story_type_mapper = {'container': 'ContainerStoryManager', 'module': 'ModuleStoryManager'}
+    story_type = request.args.get('story_type', 'container').lower()
+
+    story_manager_class = story_type_mapper.get(story_type)
+    if story_manager_class:
+        story_manager = getattr(estuary.utils.story, story_manager_class)()
+    else:
+        raise ValidationError('Supplied story type is invalid. Select from: {0}'
+                              .format(', '.join(current_app.config['STORY_MANAGER_SEQUENCE'])))
+
     # This is the node that is part of a story which has the relationship to the desired
     # sibling nodes
     story_node = get_neo4j_node(resource, uid)
     if not story_node:
         raise NotFound('This item does not exist')
 
-    # Defaulting to Container Story until we modify this endpoint to suit the module changes
-    story_manager = ContainerStoryManager()
     story_node_story_flow = story_manager.story_flow(story_node.__label__)
     # If backward_rel is true, we fetch siblings of the previous node, next node otherwise.
     # For example, if you pass in an advisory and want to know the Freshmaker events triggered from

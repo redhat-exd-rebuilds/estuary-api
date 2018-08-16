@@ -6,7 +6,7 @@ from datetime import datetime
 
 import pytest
 
-from estuary.models.koji import KojiBuild, ContainerKojiBuild
+from estuary.models.koji import KojiBuild, ContainerKojiBuild, ModuleKojiBuild
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit, DistGitRepo, DistGitBranch
 from estuary.models.errata import Advisory, ContainerAdvisory
@@ -145,7 +145,8 @@ from estuary.models.user import User
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
-            'requested_node_index': 0
+            'requested_node_index': 0,
+            'story_type': 'container'
         }
     }),
     ('distgitcommit', ['8a63adb248ba633e200067e1ad6dc61931727bad'], {
@@ -324,7 +325,8 @@ from estuary.models.user import User
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
-            'requested_node_index': 1
+            'requested_node_index': 1,
+            'story_type': 'container'
         }
     }),
     ('kojibuild', ['2345', 'slf4j-1.7.4-4.el7_4', 'slf4j-1.7.4-4.el7_4.src.rpm'], {
@@ -469,7 +471,8 @@ from estuary.models.user import User
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
-            'requested_node_index': 2
+            'requested_node_index': 2,
+            'story_type': 'container'
         }
     }),
     ('advisory', ['27825', 'RHBA-2017:2251-02', 'RHBA-2017:2251'], {
@@ -611,7 +614,8 @@ from estuary.models.user import User
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
-            'requested_node_index': 3
+            'requested_node_index': 3,
+            'story_type': 'container'
         }
     }),
     ('freshmakerevent', ['1180'], {
@@ -758,7 +762,8 @@ from estuary.models.user import User
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
-            'requested_node_index': 4
+            'requested_node_index': 4,
+            'story_type': 'container'
         }
     }),
     ('containerkojibuild', ['710'], {
@@ -908,7 +913,8 @@ from estuary.models.user import User
         'meta':{
             'requested_node_index': 5,
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
-            'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0]
+            'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
+            'story_type': 'container'
         }
     }),
     ('containeradvisory', ['12327'], {
@@ -1046,7 +1052,8 @@ from estuary.models.user import User
         'meta':{
             'requested_node_index': 6,
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
-            'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0]
+            'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
+            'story_type': 'container'
         }
     })
 ])
@@ -1173,8 +1180,293 @@ def test_get_stories(client, resource, uids, expected):
     for uid in uids:
         url = '/api/v1/story/{0}/{1}'.format(resource, uid)
         rv = client.get(url)
-        assert rv.status_code == 200, 'Failed getting the resource at: {0}'.format(url)
+        assert rv.status_code == 200
         assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+@pytest.mark.parametrize('resource,uid,expected', [
+    ('freshmakerevent', 1180, {
+        'data': [
+            {
+                'classification': 'Red Hat',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'RHBZ#12345',
+                'id': '12345',
+                'modified_time': '2018-02-07T19:30:47+00:00',
+                'priority': 'high',
+                'product_name': 'Red Hat Enterprise Linux',
+                'product_version': '7.5',
+                'resolution': '',
+                'resource_type': 'BugzillaBug',
+                'severity': 'low',
+                'short_description': 'Some description',
+                'status': 'VERIFIED',
+                'target_milestone': 'rc',
+                'votes': 0
+            },
+            {
+                'author_date': '2017-04-26T11:44:38+00:00',
+                'commit_date': '2017-04-26T11:44:38+00:00',
+                'display_name': 'commit #8a63adb',
+                'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
+                'log_message': 'Related: #12345 - fix xyz',
+                'resource_type': 'DistGitCommit'
+            },
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
+                'epoch': '0',
+                'extra': None,
+                'id': '2345',
+                'name': 'slf4j',
+                'release': '4.el7_4',
+                'resource_type': 'KojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 1,
+                'version': '1.7.4'
+            },
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'context': 'a2037af3',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': '389-ds-None-20180805121332.a2037af3',
+                'epoch': '0',
+                'extra': None,
+                'id': '2345',
+                'mbs_id': 1338,
+                'module_name': '389-ds',
+                'module_stream': '1.4',
+                'module_version': '20180805121332',
+                'name': '389-ds',
+                'release': '20180805121332.a2037af3',
+                'resource_type': 'ModuleKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': None,
+                'version': None
+            },
+            {
+                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'advisory_name': 'RHBA-2017:2251-02',
+                'content_types': [
+                    'docker'
+                ],
+                'created_at':'2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-02',
+                'id':'27825',
+                'issue_date':'2017-08-01T05:59:34+00:00',
+                'product_name':'Red Hat Enterprise Linux',
+                'product_short_name':'RHEL',
+                'release_date': None,
+                'resource_type':'Advisory',
+                'security_impact':'None',
+                'security_sla': None,
+                'state':'SHIPPED_LIVE',
+                'status_time':'2017-08-01T15:43:51+00:00',
+                'synopsis':'cifs-utils bug fix update',
+                'update_date':'2017-08-01T07:16:00+00:00'
+            },
+            {
+                'display_name': 'Freshmaker event 1180',
+                'event_type_id': 8,
+                'id': '1180',
+                'message_id': 'ID:messaging-devops-broker01.test',
+                'resource_type': 'FreshmakerEvent',
+                'state': 2,
+                'state_name': 'COMPLETE',
+                'state_reason': 'All container images have been rebuilt.',
+                'triggered_by_advisory': {
+                    'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                    'advisory_name': 'RHBA-2017:2251-02',
+                    'content_types': [
+                        'docker'
+                    ],
+                    'created_at':'2017-04-03T14:47:23+00:00',
+                    'id':'27825',
+                    'issue_date':'2017-08-01T05:59:34+00:00',
+                    'product_name':'Red Hat Enterprise Linux',
+                    'product_short_name':'RHEL',
+                    'release_date': None,
+                    'security_impact':'None',
+                    'security_sla': None,
+                    'state':'SHIPPED_LIVE',
+                    'status_time':'2017-08-01T15:43:51+00:00',
+                    'synopsis':'cifs-utils bug fix update',
+                    'update_date':'2017-08-01T07:16:00+00:00'
+                },
+                'triggered_container_builds':[
+                    {
+                        'completion_time': '2017-04-02T19:39:06+00:00',
+                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'epoch': '0',
+                        'extra': None,
+                        'id': '710',
+                        'name': 'slf4j_2',
+                        'original_nvr': None,
+                        'release': '4.el7_4_as',
+                        'start_time': '2017-04-02T19:39:06+00:00',
+                        'state': 1,
+                        'version': '1.7.4'
+                    }
+                ]
+            },
+            {
+                'completion_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06+00:00',
+                'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
+                'epoch': '0',
+                'extra': None,
+                'id': '710',
+                'name': 'slf4j_2',
+                'original_nvr': None,
+                'release': '4.el7_4_as',
+                'resource_type': 'ContainerKojiBuild',
+                'start_time': '2017-04-02T19:39:06+00:00',
+                'state': 1,
+                'version': '1.7.4'
+            },
+            {
+                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'advisory_name': 'RHBA-2017:2251-03',
+                'content_types': [
+                    'docker'
+                ],
+                'created_at':'2017-04-03T14:47:23+00:00',
+                'display_name':'RHBA-2017:2251-03',
+                'id':'12327',
+                'issue_date':'2017-08-01T05:59:34+00:00',
+                'product_name':'Red Hat Enterprise Linux',
+                'product_short_name':'RHEL',
+                'release_date': None,
+                'resource_type':'ContainerAdvisory',
+                'security_impact':'None',
+                'security_sla': None,
+                'state':'SHIPPED_LIVE',
+                'status_time':'2017-08-01T15:43:51+00:00',
+                'synopsis':'cifs-utils bug fix update',
+                'update_date':'2017-08-01T07:16:00+00:00'
+            }
+        ],
+        'meta': {
+            'requested_node_index': 5,
+            'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0, 0],
+            'story_related_nodes_forward': [0, 0, 0, 0, 0, 0, 0, 0],
+            'story_type': 'module'
+        }
+    })
+])
+def test_module_story_flow(client, resource, uid, expected):
+    """Test getting a resource story from Neo4j with its relationships."""
+    commit = DistGitCommit.get_or_create({
+        'author_date': datetime(2017, 4, 26, 11, 44, 38),
+        'commit_date': datetime(2017, 4, 26, 11, 44, 38),
+        'hash_': '8a63adb248ba633e200067e1ad6dc61931727bad',
+        'log_message': 'Related: #12345 - fix xyz'
+    })[0]
+    advisory = Advisory.get_or_create({
+        'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
+        'advisory_name': 'RHBA-2017:2251-02',
+        'content_types': ['docker'],
+        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'id_': '27825',
+        'issue_date': datetime(2017, 8, 1, 5, 59, 34),
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'security_impact': 'None',
+        'state': 'SHIPPED_LIVE',
+        'status_time': datetime(2017, 8, 1, 15, 43, 51),
+        'synopsis': 'cifs-utils bug fix update',
+        'update_date': datetime(2017, 8, 1, 7, 16)
+    })[0]
+    bug = BugzillaBug.get_or_create({
+        'classification': 'Red Hat',
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'id_': '12345',
+        'modified_time': datetime(2018, 2, 7, 19, 30, 47),
+        'priority': 'high',
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_version': '7.5',
+        'resolution': '',
+        'severity': 'low',
+        'short_description': 'Some description',
+        'status': 'VERIFIED',
+        'target_milestone': 'rc',
+        'votes': 0
+    })[0]
+    build = KojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '2345',
+        'name': 'slf4j',
+        'release': '4.el7_4',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'state': 1,
+        'version': '1.7.4'
+    })[0]
+    module_build = ModuleKojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '2345',
+        'name': '389-ds',
+        'context': 'a2037af3',
+        'release': '20180805121332.a2037af3',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'mbs_id': 1338,
+        'module_name': '389-ds',
+        'module_version': '20180805121332',
+        'module_stream': '1.4'
+    })[0]
+    fm_event = FreshmakerEvent.get_or_create({
+        'event_type_id': 8,
+        'id_': '1180',
+        'message_id': 'ID:messaging-devops-broker01.test',
+        'state': 2,
+        'state_name': 'COMPLETE',
+        'state_reason': 'All container images have been rebuilt.'
+    })[0]
+    cb = ContainerKojiBuild.get_or_create({
+        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
+        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'epoch': '0',
+        'id_': '710',
+        'name': 'slf4j_2',
+        'release': '4.el7_4_as',
+        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'state': 1,
+        'version': '1.7.4'
+    })[0]
+    containeradvisory = ContainerAdvisory.get_or_create({
+        'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
+        'advisory_name': 'RHBA-2017:2251-03',
+        'content_types': ['docker'],
+        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'id_': '12327',
+        'issue_date': datetime(2017, 8, 1, 5, 59, 34),
+        'product_name': 'Red Hat Enterprise Linux',
+        'product_short_name': 'RHEL',
+        'security_impact': 'None',
+        'state': 'SHIPPED_LIVE',
+        'status_time': datetime(2017, 8, 1, 15, 43, 51),
+        'synopsis': 'cifs-utils bug fix update',
+        'update_date': datetime(2017, 8, 1, 7, 16)
+    })[0]
+
+    commit.resolved_bugs.connect(bug)
+    commit.koji_builds.connect(build)
+    build.advisories.connect(advisory)
+    advisory.attached_builds.connect(build)
+    fm_event.triggered_by_advisory.connect(advisory)
+    fm_event.triggered_container_builds.connect(cb)
+    containeradvisory.attached_builds.connect(cb)
+    module_build.components.connect(build)
+    module_build.advisories.connect(advisory)
+
+    url = '/api/v1/story/{0}/{1}'.format(resource, uid)
+    rv = client.get(url)
+    assert rv.status_code == 200
+    assert json.loads(rv.data.decode('utf-8')) == expected
 
 
 def test_get_artifact_story_not_available(client):
@@ -1227,13 +1519,14 @@ def test_get_artifact_story_not_available(client):
                 'short_description': 'Fail to delete OSP tenant by CFME',
                 'status': 'CLOSED',
                 'target_milestone': 'GA',
-                'votes':0
+                'votes': 0
             }
         ],
         'meta': {
             'story_related_nodes_forward': [0],
             'story_related_nodes_backward': [0],
-            'requested_node_index': 0
+            'requested_node_index': 0,
+            'story_type': 'container'
         }
     }
 
@@ -1299,7 +1592,8 @@ def test_get_stories_just_artifact(client):
         'meta': {
             'story_related_nodes_forward': [0],
             'story_related_nodes_backward': [0],
-            'requested_node_index': 0
+            'requested_node_index': 0,
+            'story_type': 'container'
         }
     }
 
@@ -1421,7 +1715,8 @@ def test_get_story_partial_story(client):
         'meta': {
             'story_related_nodes_forward': [0, 0, 0],
             'story_related_nodes_backward': [0, 0, 1],
-            'requested_node_index': 0
+            'requested_node_index': 0,
+            'story_type': 'container'
         }
     }
 
@@ -1520,7 +1815,8 @@ def test_get_story_fallback(client):
         'meta': {
             'requested_node_index': 0,
             'story_related_nodes_backward': [0, 0],
-            'story_related_nodes_forward': [0, 0]
+            'story_related_nodes_forward': [0, 0],
+            'story_type': 'container'
         }
     }
 
