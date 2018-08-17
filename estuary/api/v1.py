@@ -305,8 +305,15 @@ def get_artifact_relationships(resource, uid, relationship):
         raise ValidationError(
             'Please provide a valid relationship name for {0} with uid {1}'.format(resource, uid))
 
+    rel_display_name = relationship.replace('_', ' ')
+    results = {
+        'data': [],
+        'meta': {
+            'description': '{0}\'s {1}'.format(item.display_name, rel_display_name)
+        }
+    }
+
     related_nodes = getattr(item, relationship).match()
-    results = {'data': [], 'meta': {}}
     for node in related_nodes:
         serialized_node = node.serialized_all
         serialized_node['resource_type'] = node.__label__
