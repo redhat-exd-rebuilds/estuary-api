@@ -29,7 +29,7 @@ class BaseStoryManager(object):
         :return: instance of one of the story manager classes
         :rtype: ModuleStoryManager/ContainerStoryManager
         """
-        for class_name in config.get('STORY_MANAGER_SEQUENCE', ['ContainerStoryManager']):
+        for class_name in config['STORY_MANAGER_SEQUENCE']:
             story_manager_cls = getattr(sys.modules[__name__], class_name, None)
             if not story_manager_cls:
                 raise RuntimeError('Story manager class of {0} could not be found'
@@ -210,7 +210,8 @@ class BaseStoryManager(object):
                 'story_related_nodes_forward': list(self.get_sibling_nodes_count(results)),
                 'story_related_nodes_backward': list(
                     self.get_sibling_nodes_count(results, reverse=True)),
-                'requested_node_index': requested_node_index
+                'requested_node_index': requested_node_index,
+                'story_type': self.__class__.__name__[:-12].lower()
             }
         }
 
