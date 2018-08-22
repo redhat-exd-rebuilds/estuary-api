@@ -319,7 +319,7 @@ def get_artifact_relationships(resource, uid, relationship):
     results = {
         'data': [],
         'meta': {
-            'description': '{0}\'s {1}'.format(item.display_name, rel_display_name)
+            'description': '{0} of {1}'.format(rel_display_name, item.display_name)
         }
     }
 
