@@ -24,3 +24,8 @@ class User(EstuaryStructuredNode):
     koji_builds = RelationshipFrom('.koji.KojiBuild', 'OWNED_BY')
     name = StringProperty()
     username = UniqueIdProperty()
+
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return '{0}'.format(self.username)

@@ -18,6 +18,11 @@ class DistGitRepo(EstuaryStructuredNode):
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
     contributors = RelationshipTo('.user.User', 'CONTRIBUTED_BY')
 
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return '{0}/{1}'.format(self.namespace, self.name)
+
 
 class DistGitBranch(EstuaryStructuredNode):
     """Definition of a dist-git branch in Neo4j."""
@@ -28,6 +33,11 @@ class DistGitBranch(EstuaryStructuredNode):
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
     contributors = RelationshipTo('.user.User', 'CONTRIBUTED_BY')
     repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
+
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return '{0} branch in {1}/{2}'.format(self.name, self.repo_namespace, self.repo_name)
 
 
 class DistGitCommit(EstuaryStructuredNode):

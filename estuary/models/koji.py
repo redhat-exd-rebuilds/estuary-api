@@ -89,3 +89,8 @@ class KojiTag(EstuaryStructuredNode):
     id_ = UniqueIdProperty(db_property='id')
     module_builds = RelationshipTo('ModuleKojiBuild', 'CONTAINS', cardinality=ZeroOrOne)
     name = StringProperty()
+
+    @property
+    def display_name(self):
+        """Get intuitive (human readable) display name for the node."""
+        return '{0}'.format(self.name)
