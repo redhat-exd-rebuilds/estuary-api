@@ -111,7 +111,7 @@ from estuary.models.koji import ContainerKojiBuild
             }
         ],
         'meta': {
-            'description': 'Freshmaker event 1180\'s triggered container builds'
+            'description': 'triggered container builds of Freshmaker event 1180'
         }
     })
 ])
