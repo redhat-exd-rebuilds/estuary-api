@@ -73,7 +73,7 @@ class ContainerKojiBuild(KojiBuild):
 class ModuleKojiBuild(KojiBuild):
     """A Neo4j definition of a build that represents a module build in Koji."""
 
-    components = RelationshipTo('KojiBuild', 'CONTAINS')
+    components = RelationshipTo('KojiBuild', 'ATTACHED')
     content_koji_tag = RelationshipFrom('KojiTag', 'CONTAINS', cardinality=ZeroOrOne)
     context = StringProperty()
     mbs_id = IntegerProperty()
