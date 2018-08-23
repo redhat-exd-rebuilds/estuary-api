@@ -254,8 +254,9 @@ class KojiScraper(BaseScraper):
                         ))[0]
                         build.components.connect(module_component)
 
-                    builds = self.get_build_info([item['build_id'] for item in module_components])
-                    self.update_neo4j(builds)
+                    component_builds = self.get_build_info(
+                        [item['build_id'] for item in module_components])
+                    self.update_neo4j(component_builds)
 
             tags = self.get_build_tags(build_dict['id'])
             current_tag_ids = set()
