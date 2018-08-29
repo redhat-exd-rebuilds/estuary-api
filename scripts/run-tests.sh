@@ -2,7 +2,7 @@
 # This script runs the test suite using Docker and Docker Compose
 
 for dir in estuary tests; do
-    find ${dir} -type f \( -name '*.pyc' -or -name '*.pyc' \) -exec rm -f {} \;
+    find ${dir} -type f \( -name '*.pyc' -or -name '*.pyo' \) -exec rm -f {} \;
 done
 
 if [ ! -f /tmp/neo4j-plugins/apoc-3.3.0.2-all.jar ]; then
