@@ -1,7 +1,7 @@
 # Inspired from https://github.com/neo4j-contrib/neomodel/blob/master/tests-with-docker-compose.sh
 version: '3'
 services:
-  tests:
+  estuary_api_tests:
     build:
       context: .
       dockerfile: Dockerfile-tests
