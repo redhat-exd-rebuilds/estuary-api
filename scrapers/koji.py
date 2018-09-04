@@ -246,7 +246,7 @@ class KojiScraper(BaseScraper):
                         id_=module_components[0]['tag_id'],
                         name=module_build_tag_name
                     ))[0]
-                    module_build_tag.module_builds.connect(build)
+                    module_build_tag.conditional_connect(module_build_tag.module_builds, build)
 
                     for item in module_components:
                         module_component = KojiBuild.get_or_create(dict(
