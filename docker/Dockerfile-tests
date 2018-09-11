@@ -1,5 +1,6 @@
 FROM fedora:28
 
+# TODO: Replace the Koji URL once the following is stable https://bodhi.fedoraproject.org/updates/FEDORA-2018-c929a49b1b
 RUN dnf -y install \
   --setopt=deltarpm=0 \
   --setopt=install_weak_deps=false \
@@ -10,6 +11,10 @@ RUN dnf -y install \
   python3-flake8 \
   python2-flask \
   python3-flask \
+  https://kojipkgs.fedoraproject.org/packages/python-flask-oidc/1.4.0/1.fc28/noarch/python2-flask-oidc-1.4.0-1.fc28.noarch.rpm \
+  https://kojipkgs.fedoraproject.org/packages/python-flask-oidc/1.4.0/1.fc28/noarch/python3-flask-oidc-1.4.0-1.fc28.noarch.rpm \
+  python2-mock \
+  python3-mock \
   python2-neomodel \
   python3-neomodel \
   python2-pytest \
