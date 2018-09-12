@@ -8,7 +8,7 @@ from werkzeug.exceptions import NotFound
 from estuary import version
 from estuary.models.base import EstuaryStructuredNode
 
-from estuary.utils.general import str_to_bool, get_neo4j_node, inflate_node
+from estuary.utils.general import str_to_bool, get_neo4j_node, inflate_node, login_required
 from estuary.error import ValidationError
 import estuary.utils.story
 
@@ -23,10 +23,14 @@ def about():
 
     :rtype: flask.Response
     """
-    return jsonify({'version': version})
+    return jsonify({
+        'auth_required': current_app.config['ENABLE_AUTH'],
+        'version': version
+    })
 
 
 @api_v1.route('/<resource>/<uid>')
+@login_required
 def get_resource(resource, uid):
     """
     Get a resource from Neo4j.
@@ -54,6 +58,7 @@ def get_resource(resource, uid):
 
 
 @api_v1.route('/story/<resource>/<uid>')
+@login_required
 def get_resource_story(resource, uid):
     """
     Get the story of a resource from Neo4j.
@@ -122,6 +127,7 @@ def get_resource_story(resource, uid):
 
 
 @api_v1.route('/allstories/<resource>/<uid>')
+@login_required
 def get_resource_all_stories(resource, uid):
     """
     Get all unique stories of an artifact from Neo4j.
@@ -231,6 +237,7 @@ def get_resource_all_stories(resource, uid):
 
 
 @api_v1.route('/siblings/<resource>/<uid>')
+@login_required
 def get_siblings(resource, uid):
     """
     Get siblings of next/previous node that are correlated to the node in question.
@@ -295,6 +302,7 @@ def get_siblings(resource, uid):
 
 
 @api_v1.route('/relationships/<resource>/<uid>/<relationship>')
+@login_required
 def get_artifact_relationships(resource, uid, relationship):
     """
     Get one-to-many relationships of a particular artifact.

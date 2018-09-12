@@ -19,7 +19,10 @@ from estuary.models.koji import KojiBuild, KojiTag, ContainerKojiBuild
 def test_about(client):
     """Test the /api/v1/about route."""
     rv = client.get('/api/v1/about')
-    assert json.loads(rv.data.decode('utf-8')) == {'version': version}
+    assert json.loads(rv.data.decode('utf-8')) == {
+        'auth_required': False,
+        'version': version
+    }
 
 
 @pytest.mark.parametrize('model,resource,uid,test_input', [

@@ -36,6 +36,12 @@ def load_config(app):
         app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
     if os.environ.get('NEO4J_URI'):
         app.config['NEO4J_URI'] = os.environ['NEO4J_URI']
+    if os.environ.get('OIDC_INTROSPECT_URL'):
+        app.config['OIDC_INTROSPECT_URL'] = os.environ['OIDC_INTROSPECT_URL']
+    if os.environ.get('OIDC_CLIENT_ID'):
+        app.config['OIDC_CLIENT_ID'] = os.environ['OIDC_CLIENT_ID']
+    if os.environ.get('OIDC_CLIENT_SECRET'):
+        app.config['OIDC_CLIENT_SECRET'] = os.environ['OIDC_CLIENT_SECRET']
 
 
 def insert_headers(response):
@@ -49,7 +55,7 @@ def insert_headers(response):
     cors_url = current_app.config.get('CORS_URL')
     if cors_url:
         response.headers['Access-Control-Allow-Origin'] = cors_url
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
         response.headers['Access-Control-Allow-Method'] = 'GET, OPTIONS'
     return response
 
@@ -68,10 +74,24 @@ def create_app(config_obj=None):
         load_config(app)
 
     if app.config['PRODUCTION'] and app.secret_key == 'replace-me-with-something-random':
-        raise Warning('You need to change the app.secret_key value for production')
+        raise RuntimeError('You need to change the app.secret_key value for production')
+    elif app.config['ENABLE_AUTH']:
+        base_error = 'The "{0}" configuration must be set if authentication is enabled'
+        if not app.config['OIDC_INTROSPECT_URL']:
+            raise RuntimeError(base_error.format('OIDC_INTROSPECT_URL'))
+        elif not app.config['OIDC_CLIENT_ID']:
+            raise RuntimeError(base_error.format('OIDC_CLIENT_ID'))
+        elif not app.config['OIDC_CLIENT_SECRET']:
+            raise RuntimeError(base_error.format('OIDC_CLIENT_SECRET'))
 
     # Set the Neo4j connection URI based on the Flask config
     neomodel_config.DATABASE_URL = app.config.get('NEO4J_URI')
+
+    if app.config['ENABLE_AUTH']:
+        # Import this here so that flask_oidc isn't required to run the app if authentication is
+        # disabled
+        from estuary.auth import EstuaryOIDC
+        app.oidc = EstuaryOIDC(app)
 
     init_logging(app)
 

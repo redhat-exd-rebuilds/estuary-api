@@ -3,8 +3,11 @@
 from __future__ import unicode_literals
 import re
 from datetime import datetime
+from functools import wraps
 
 from six import text_type
+from flask import current_app, request
+from werkzeug.exceptions import Unauthorized
 
 from estuary import log
 from estuary.error import ValidationError
@@ -126,3 +129,31 @@ def get_neo4j_node(resource_name, uid):
                          '{1}, and {2}.'.format(resource_name, ', '.join(model_names[:-1]),
                                                 model_names[-1]))
                 raise ValidationError(error)
+
+
+def login_required(f):
+    """
+    Decorate a Flask route to validate a token if authentication is enabled.
+
+    :param function f: the function to wrap
+    :return: the wrapper function
+    :rtype: function
+    """
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if current_app.config['ENABLE_AUTH']:
+            if 'Authorization' not in request.headers:
+                raise Unauthorized('An "Authorization" header wasn\'t provided')
+            token = request.headers['Authorization'].strip()
+            prefix = 'Bearer '
+            if not token.startswith(prefix):
+                raise Unauthorized(
+                    'The "Authorization" header must start with "{0}"'.format(prefix.rstrip()))
+            token = token[len(prefix):]
+
+            required_scopes = ['openid']
+            validity = current_app.oidc.validate_token(token, required_scopes)
+            if validity is not True:
+                raise Unauthorized(validity)
+        return f(*args, **kwargs)
+    return wrapper

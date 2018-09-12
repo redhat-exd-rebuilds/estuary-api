@@ -2,12 +2,14 @@ FROM fedora:28
 LABEL maintainer="Factory 2.0"
 
 WORKDIR /src
+# TODO: Replace the Koji URL once the following is stable https://bodhi.fedoraproject.org/updates/FEDORA-2018-c929a49b1b
 RUN dnf -y install \
     --setopt=deltarpm=0 \
     --setopt=install_weak_deps=false \
     --setopt=tsflags=nodocs \
     bash \
     python3-flask \
+    https://kojipkgs.fedoraproject.org/packages/python-flask-oidc/1.4.0/1.fc28/noarch/python3-flask-oidc-1.4.0-1.fc28.noarch.rpm \
     python3-gunicorn \
     python3-neomodel \
     python3-six \
