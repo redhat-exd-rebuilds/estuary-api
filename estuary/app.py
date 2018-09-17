@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 import os
+import warnings
 
 from flask import Flask, current_app
 from werkzeug.exceptions import default_exceptions
@@ -36,6 +37,13 @@ def load_config(app):
         app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
     if os.environ.get('NEO4J_URI'):
         app.config['NEO4J_URI'] = os.environ['NEO4J_URI']
+    if os.environ.get('ENABLE_AUTH', '').lower() == 'true':
+        app.config['ENABLE_AUTH'] = True
+    elif os.environ.get('ENABLE_AUTH', '').lower() == 'false':
+        app.config['ENABLE_AUTH'] = False
+    elif os.environ.get('ENABLE_AUTH'):
+        warnings.warn(
+            'The value of the environment variable "ENABLE_AUTH" is invalid and will be ignored')
     if os.environ.get('OIDC_INTROSPECT_URL'):
         app.config['OIDC_INTROSPECT_URL'] = os.environ['OIDC_INTROSPECT_URL']
     if os.environ.get('OIDC_CLIENT_ID'):
