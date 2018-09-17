@@ -55,9 +55,28 @@ def test_get_story_auth_invalid_token(mock_oidc):
 
 
 @mock.patch('estuary.auth.EstuaryOIDC', autospec=True)
+def test_get_story_auth_not_employee(mock_oidc):
+    """Test accessing a protected route with a valid token of a non-employee."""
+    mock_oidc.return_value.validate_token.return_value = True
+    mock_oidc.return_value._get_token_info.return_value = \
+        {'active': True, 'employeeType': 'Contractor'}
+    client = create_app('estuary.config.TestAuthConfig').test_client()
+    mock_oidc.assert_called_once()
+    rv = client.get('/api/v1/story/kojibuild/2345', headers={'Authorization': 'Bearer 123456'})
+    expected = {
+        'message': 'You must be an employee to access this service',
+        'status': 401
+    }
+    assert rv.status_code == 401
+    assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+@mock.patch('estuary.auth.EstuaryOIDC', autospec=True)
 def test_get_story_auth(mock_oidc):
     """Test getting the story when authentication is required."""
     mock_oidc.return_value.validate_token.return_value = True
+    mock_oidc.return_value._get_token_info.return_value = \
+        {'active': True, 'employeeType': 'Employee'}
     client = create_app('estuary.config.TestAuthConfig').test_client()
     mock_oidc.assert_called_once()
 

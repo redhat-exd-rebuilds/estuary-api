@@ -8,6 +8,28 @@ from flask_oidc import OpenIDConnect
 class EstuaryOIDC(OpenIDConnect):
     """Customized version of flask_oidc.OpenIDConnect."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize the EstuaryOIDC class."""
+        # Contains a cache of the token information returned by the introspection API endpoint
+        self._token_info = {}
+        OpenIDConnect.__init__(self, *args, **kwargs)
+
+    def _get_token_info(self, token):
+        """
+        Request the token information from the introspection API endpoint.
+
+        This wraps the original method to provide a form of caching to avoid calling the
+        introspection API endpoint twice if other code needs the decoded JWT.
+
+        :param str token: the access token to get information about
+        :return: the token information
+        :rtype: dict
+        """
+        if not self._token_info.get(token):
+            self._token_info[token] = OpenIDConnect._get_token_info(self, token)
+
+        return self._token_info[token]
+
     def load_secrets(self, app):
         """
         Get the configuration required to introspect tokens using flask_oidc.

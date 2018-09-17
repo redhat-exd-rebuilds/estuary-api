@@ -151,9 +151,15 @@ def login_required(f):
                     'The "Authorization" header must start with "{0}"'.format(prefix.rstrip()))
             token = token[len(prefix):]
 
-            required_scopes = ['openid']
+            # Keycloak doesn't return the scopes from its introspection API endpoint. Other
+            # validation is used instead.
+            required_scopes = []
             validity = current_app.oidc.validate_token(token, required_scopes)
             if validity is not True:
                 raise Unauthorized(validity)
+
+            token_info = current_app.oidc._get_token_info(token)
+            if token_info.get('employeeType') != 'Employee':
+                raise Unauthorized('You must be an employee to access this service')
         return f(*args, **kwargs)
     return wrapper
