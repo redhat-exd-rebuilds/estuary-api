@@ -11,8 +11,8 @@ RUN dnf -y install \
   python3-flake8 \
   python2-flask \
   python3-flask \
-  https://kojipkgs.fedoraproject.org/packages/python-flask-oidc/1.4.0/1.fc28/noarch/python2-flask-oidc-1.4.0-1.fc28.noarch.rpm \
-  https://kojipkgs.fedoraproject.org/packages/python-flask-oidc/1.4.0/1.fc28/noarch/python3-flask-oidc-1.4.0-1.fc28.noarch.rpm \
+  python2-flask-oidc \
+  python3-flask-oidc \
   python2-mock \
   python3-mock \
   python2-neomodel \
