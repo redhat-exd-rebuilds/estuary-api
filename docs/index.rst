@@ -8,8 +8,10 @@ Welcome to Estuary API's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
+   models
+   api
+   utils
 
 
 Indices and tables
