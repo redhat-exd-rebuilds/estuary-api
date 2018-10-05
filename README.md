@@ -76,3 +76,6 @@ Get a resource from Neo4j.
 :raises NotFound: if the item is not found
 :raises ValidationError: if an invalid resource was requested
 ```
+
+## Code Documentation
+To document new files, please check [here](https://github.com/release-engineering/estuary-api/tree/master/docs).
