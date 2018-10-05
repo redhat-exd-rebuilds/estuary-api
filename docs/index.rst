@@ -12,6 +12,7 @@ Welcome to Estuary API's documentation!
    models
    api
    utils
+   scrapers
 
 
 Indices and tables
