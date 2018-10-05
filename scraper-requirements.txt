@@ -1,6 +1,6 @@
 -r requirements.txt
 beautifulsoup4
-futures
+future
 psycopg2
 psycopg2-binary
 pyyaml
