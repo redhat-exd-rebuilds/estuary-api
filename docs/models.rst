@@ -1,3 +1,5 @@
+:github_url: https://github.com/release-engineering/estuary-api/tree/master/estuary/models
+
 =======
 Models
 =======
