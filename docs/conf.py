@@ -6,24 +6,29 @@
 # full list see the documentation:
 # http://www.sphinx-doc.org/en/master/config
 
+from __future__ import unicode_literals
+
+import os
+import sys
+import pkg_resources
+
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-import os
-import sys
+
 sys.path.append(os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
+try:
+    version = pkg_resources.get_distribution('estuary').version
+except pkg_resources.DistributionNotFound:
+    version = 'unknown'
 project = u'Estuary API'
 copyright = u'2018, Matt Prahl, Yash Nanavati, Sarah Rieger'
 author = u'Matt Prahl, Yash Nanavati, Sarah Rieger'
-
-# The short X.Y version
-version = u'0.1'
 # The full version, including alpha/beta/rc tags
 release = u''
 
