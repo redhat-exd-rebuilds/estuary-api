@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 import os
 import sys
 import pkg_resources
+from datetime import datetime
 
 # -- Path setup --------------------------------------------------------------
 
@@ -22,12 +23,15 @@ sys.path.append(os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
+# Get current year for copyright
+year = datetime.today().strftime('%Y')
+
 try:
     version = pkg_resources.get_distribution('estuary').version
 except pkg_resources.DistributionNotFound:
     version = 'unknown'
 project = u'Estuary API'
-copyright = u'2018, Matt Prahl, Yash Nanavati, Sarah Rieger'
+copyright = year + u', Matt Prahl, Yash Nanavati, Sarah Rieger'
 author = u'Matt Prahl, Yash Nanavati, Sarah Rieger'
 # The full version, including alpha/beta/rc tags
 release = u''
