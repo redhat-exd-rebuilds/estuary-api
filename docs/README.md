@@ -1,12 +1,19 @@
 # Estuary API Documentation
 
+
+## Installing Sphinx
+
+The documentation runs on Sphinx.  To install it, run the following command **in a virtualenv**:
+```
+$ pip install -U sphinx
+```
+
 ## Build the Docs
 
-To build and run the docs, run the following commands **in the docs directory**:
+To build and run the docs, run the following commands:
 ```
-$ make clean
-$ make html
-$ google-chrome _build/html/index.html
+$ sphinx-build -E docs docs/_build
+$ google-chrome docs/_build/index.html
 ```
 
 ## Expanding the Docs
