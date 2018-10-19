@@ -156,7 +156,7 @@ class EstuaryStructuredNode(StructuredNode):
         :param neomodel.RelationshipManager relationship: a relationship to connect on
         :param neomodel.StructuredNode new_node: the node to create the relationship with
         :raises NotImplementedError: if this method is called with a relationship of cardinality of
-        one
+            one
         """
         if new_node not in relationship:
             if len(relationship) == 0:

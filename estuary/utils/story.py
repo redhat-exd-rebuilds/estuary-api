@@ -50,7 +50,7 @@ class BaseStoryManager(object):
 
         :param node item: a Neo4j node whose story is requested by the user
         :kwarg bool reverse: specifies the direction to proceed from current node
-        corresponding to the story_flow
+            corresponding to the story_flow
         :kwarg bool limit: specifies if LIMIT keyword should be added to the created cypher query
         :return: story paths for a particular artifact
         :rtype: list
@@ -117,7 +117,7 @@ class BaseStoryManager(object):
 
         :param list results: contains inflated results from Neo4j
         :kwarg bool reverse: determines the direction the story is traversed in
-        (i.e. forward/backward)
+            (i.e. forward/backward)
         :return: yield the results count (int) received from Neo4j
         :rtype: generator
         """
@@ -150,9 +150,9 @@ class BaseStoryManager(object):
 
         :param str siblings_node_label: node label for which the siblings count is to be calculated
         :param EstuaryStructuredNode story_node: node in the story that has the desired
-        relationships with the siblings (specified with siblings_node_label)
+            relationships with the siblings (specified with siblings_node_label)
         :kwarg bool count: determines if only count of sibling nodes should be returned
-        or the nodes themselves
+            or the nodes themselves
         :return: siblings count of curr_node | sibling nodes
         :rtype: int | EstuaryStructuredNode
         """
@@ -245,10 +245,10 @@ class BaseStoryManager(object):
         Generate a description of the siblings.
 
         :param string story_node_display_name: the preformatted name to be displayed for the story
-        node
+            node
         :param dict story_node_story_flow: has forward and backward relationships of the story node
         :param bool backward: determines the relationship direction the story node has with the
-        siblings in the story
+            siblings in the story
         :return: returns the appropriate siblings title
         :rtype: string
         """

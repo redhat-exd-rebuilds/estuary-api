@@ -111,7 +111,7 @@ def get_neo4j_node(resource_name, uid):
     :param str uid: a string of the unique identifier defined in the neomodel model
     :return: a neomodel model object
     :raises ValidationError: if the requested resource doesn't exist or doesn't have a
-    UniqueIdProperty
+        UniqueIdProperty
     """
     # To prevent a ciruclar import, we must import this here
     from estuary.models import all_models

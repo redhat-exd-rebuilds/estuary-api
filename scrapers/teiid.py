@@ -36,10 +36,9 @@ class Teiid(object):
         Return an existing psycopg2 connection and establish it if needed.
 
         :param str db_name: the database name to get a connection to
-        :kwarg bool force_new: forces a new database connection even if one
-        already exists
-        :kwarg int retry: the number of times to retry a failed connection. If this
-        is not set, then the Teiid connection attempt will be repeated until it is successful.
+        :kwarg bool force_new: forces a new database connection even if one already exists
+        :kwarg int retry: the number of times to retry a failed connection. If this is not set,
+            then the Teiid connection attempt will be repeated until it is successful.
         :return: a connection to Teiid
         :rtype: psycopg2 connection
         """
@@ -85,10 +84,10 @@ class Teiid(object):
 
         :param str sql: the SQL query to send to the database
         :kwarg str db: the database name to query on
-        :kwarg int retry: the number of times to retry a failed query. If this
-        is not set, then the Teiid query will be repeated until it is successful.
-        :return: a list of rows from Teiid. Each row is a dictionary
-        with the column headers as the keys.
+        :kwarg int retry: the number of times to retry a failed query. If this is not set, then the
+            Teiid query will be repeated until it is successful.
+        :return: a list of rows from Teiid. Each row is a dictionary with the column headers as
+            the keys.
         :rtype: list
         """
         con = self.get_connection(db)
