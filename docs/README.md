@@ -3,9 +3,9 @@
 
 ## Installing Sphinx
 
-The documentation runs on Sphinx.  To install it, run the following command **in a virtualenv**:
+The documentation is built with Sphinx.  To install it along with the documentation's other dependencies, run the following command **in a virtualenv**:
 ```
-$ pip install -U sphinx
+$ pip install -r docs-requirements.txt
 ```
 
 ## Build the Docs
