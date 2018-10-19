@@ -9,12 +9,11 @@ Welcome to Estuary API's documentation!
 =======================================
 
 .. toctree::
-   :maxdepth: 2
+   :caption: Contents
+   :maxdepth: 3
 
-   models
-   api
-   utils
-   scrapers
+   gettingstarted
+   module_documentation/index
 
 
 Indices and tables

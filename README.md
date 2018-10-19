@@ -1,4 +1,10 @@
-# Estuary API and Scrapers
+# Getting Started
+
+## Overview
+
+Estuary visualizes the story an artifact takes in the Red Hat build to release pipeline,
+with a focus on the automation of container rebuilds due to CVEs. This repository contains
+the API and scrapers for the [Estuary front end](https://github.com/release-engineering/estuary).
 
 ## Development
 
