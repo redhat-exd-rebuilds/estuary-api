@@ -51,10 +51,13 @@ class FreshmakerScraper(BaseScraper):
                     # Skip Freshmaker Events that don't have the search_key as the Advisory ID
                     continue
                 log.debug('Creating FreshmakerEvent {0}'.format(fm_event['id']))
+                msg_id = fm_event['message_id']
+                if 'manual_rebuild' in msg_id:
+                    continue
                 event = FreshmakerEvent.create_or_update(dict(
                     id_=fm_event['id'],
                     event_type_id=fm_event['event_type_id'],
-                    message_id=fm_event['message_id'],
+                    message_id=msg_id,
                     state=fm_event['state'],
                     state_name=fm_event['state_name'],
                     state_reason=fm_event['state_reason'],
