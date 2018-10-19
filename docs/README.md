@@ -30,10 +30,10 @@ Models
 .. automodule:: path.to.section
    :members:
 ```
-* In the `docs/index.rst` file, in the toctree, add the name of the section (in this example, models)
+* In the `docs/module_documentation/index.rst` file, in the toctree, add the name of the section (in this example, models)
 
 To document a new model file:
-* In `docs/models.rst`, add the following code:
+* In `docs/module_documentation/models.rst`, add the following code:
 ```
 Model Name
 ==========
