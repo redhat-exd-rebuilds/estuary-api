@@ -21,7 +21,6 @@ RUN dnf -y install \
   python3-pytest \
   python2-pytest-cov \
   python3-pytest-cov \
-  python3-tox \
   && dnf clean all
 RUN pip install flake8-docstrings
 

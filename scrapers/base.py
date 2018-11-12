@@ -64,8 +64,8 @@ class BaseScraper(object):
 
         # Checking heuristics for determining if a build is a container build, since currently
         # there is no definitive way to do it.
-        if extra_json and (extra_json.get('container_koji_build_id') or
-                           extra_json.get('container_koji_task_id')):
+        if extra_json and (extra_json.get('container_koji_build_id')
+                           or extra_json.get('container_koji_task_id')):
             return True
         elif extra_json.get('image') and\
                 (package_name.endswith('-container') or package_name.endswith('-docker')):

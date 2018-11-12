@@ -106,8 +106,8 @@ class ErrataScraper(BaseScraper):
                             associated_build['id_']))
                         continue
 
-                    if (adv.__label__ != ContainerAdvisory.__label__ and
-                            build.__label__ == ContainerKojiBuild.__label__):
+                    if adv.__label__ != ContainerAdvisory.__label__ \
+                            and build.__label__ == ContainerKojiBuild.__label__:
                         adv.add_label(ContainerAdvisory.__label__)
 
                     adv.attached_builds.connect(build)
