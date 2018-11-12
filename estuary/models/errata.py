@@ -59,7 +59,7 @@ class Advisory(EstuaryStructuredNode):
         elif re.match(r'^RH[A-Z]{2}-\d{4}:\d+$', identifier):
             # The identifier is most of the advisory name, so return the latest iteration of this
             # advisory
-            return cls.nodes.filter(advisory_name__regex='^{0}-\d+$'.format(identifier))\
+            return cls.nodes.filter(advisory_name__regex=r'^{0}-\d+$'.format(identifier))\
                 .order_by('advisory_name').first_or_none()
         else:
             raise ValidationError('"{0}" is not a valid identifier'.format(identifier))
