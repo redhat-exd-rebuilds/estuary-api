@@ -144,22 +144,22 @@ class KojiScraper(BaseScraper):
 
         sql_query = """
                 SELECT
-                events.time as creation_time,
-                build.completion_time,
-                build.epoch,
-                build.extra,
-                build.id,
+                brew.events.time as creation_time,
+                brew.build.completion_time,
+                brew.build.epoch,
+                brew.build.extra,
+                brew.build.id,
                 brew.users.name as owner_name,
                 brew.users.krb_principal as owner_username,
-                package.name as package_name,
-                build.release,
-                build.start_time,
-                build.state,
-                build.task_id,
-                build.version
-            FROM build
-            LEFT JOIN events ON build.create_event = events.id
-            LEFT JOIN package ON build.pkg_id = package.id
+                brew.package.name as package_name,
+                brew.build.release,
+                brew.build.start_time,
+                brew.build.state,
+                brew.build.task_id,
+                brew.build.version
+            FROM brew.build
+            LEFT JOIN brew.events ON brew.build.create_event = brew.events.id
+            LEFT JOIN brew.package ON brew.build.pkg_id = brew.package.id
             LEFT JOIN brew.users ON build.owner = brew.users.id
         """
 

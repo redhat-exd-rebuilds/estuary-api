@@ -211,10 +211,10 @@ class ErrataScraper(BaseScraper):
         """
         sql = """\
             SELECT
-                build.extra,
-                package.name as package_name
-            FROM build
-            LEFT JOIN package ON build.pkg_id = package.id
+                brew.build.extra,
+                brew.package.name as package_name
+            FROM brew.build
+            LEFT JOIN brew.package ON brew.build.pkg_id = brew.package.id
             WHERE build.id = {0};
             """.format(build_id)
 
