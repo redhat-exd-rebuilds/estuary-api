@@ -7,7 +7,7 @@ done
 
 if [ ! -f /tmp/neo4j-plugins/apoc-3.3.0.2-all.jar ]; then
     mkdir -p /tmp/neo4j-plugins
-    curl -L https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.3.0.2/apoc-3.3.0.2-all.jar -o /tmp/neo4j-plugins/apoc-3.3.0.2-all.jar
+    curl -L https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.4.0.2/apoc-3.4.0.2-all.jar -o /tmp/neo4j-plugins/apoc-3.4.0.2-all.jar
 fi
 
 docker-compose -f docker/docker-compose-tests.yml up -d neo4j

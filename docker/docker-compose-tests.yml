@@ -14,7 +14,7 @@ services:
   neo4j:
     # We need enterprise for the time being because this release of APOC plugins only supports
     # enterprise. This can be changed when APOC gets a new version.
-    image: neo4j:3.3-enterprise
+    image: neo4j:3.4-enterprise
     volumes:
       - /tmp/neo4j-plugins/:/plugins:Z
     environment:
