@@ -243,21 +243,23 @@ class KojiScraper(BaseScraper):
                 module_build_tag_name = module_extra_info.get('content_koji_tag')
                 if module_build_tag_name:
                     module_components = self.get_tag_info(module_build_tag_name)
-                    module_build_tag = KojiTag.create_or_update(dict(
-                        id_=module_components[0]['tag_id'],
-                        name=module_build_tag_name
-                    ))[0]
-                    module_build_tag.conditional_connect(module_build_tag.module_builds, build)
-
-                    for item in module_components:
-                        module_component = KojiBuild.get_or_create(dict(
-                            id_=item['build_id']
+                    # Some modules don't have components
+                    if module_components:
+                        module_build_tag = KojiTag.create_or_update(dict(
+                            id_=module_components[0]['tag_id'],
+                            name=module_build_tag_name
                         ))[0]
-                        build.components.connect(module_component)
+                        module_build_tag.conditional_connect(module_build_tag.module_builds, build)
 
-                    component_builds = self.get_build_info(
-                        [item['build_id'] for item in module_components])
-                    self.update_neo4j(component_builds)
+                        for item in module_components:
+                            module_component = KojiBuild.get_or_create(dict(
+                                id_=item['build_id']
+                            ))[0]
+                            build.components.connect(module_component)
+
+                        component_builds = self.get_build_info(
+                            [item['build_id'] for item in module_components])
+                        self.update_neo4j(component_builds)
 
             tags = self.get_build_tags(build_dict['id'])
             current_tag_ids = set()
