@@ -5,6 +5,7 @@ import json
 from datetime import datetime
 
 import mock
+import pytest
 
 from estuary.models.koji import KojiBuild
 from estuary.app import create_app
@@ -71,12 +72,13 @@ def test_get_story_auth_not_employee(mock_oidc):
     assert json.loads(rv.data.decode('utf-8')) == expected
 
 
+@pytest.mark.parametrize('employee_type', ('Employee', 'International Local Hire'))
 @mock.patch('estuary.auth.EstuaryOIDC', autospec=True)
-def test_get_story_auth(mock_oidc):
+def test_get_story_auth(mock_oidc, employee_type):
     """Test getting the story when authentication is required."""
     mock_oidc.return_value.validate_token.return_value = True
     mock_oidc.return_value._get_token_info.return_value = \
-        {'active': True, 'employeeType': 'Employee'}
+        {'active': True, 'employeeType': employee_type}
     client = create_app('estuary.config.TestAuthConfig').test_client()
     mock_oidc.assert_called_once()
 
