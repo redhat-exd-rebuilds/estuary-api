@@ -60,7 +60,7 @@ def test_get_story_auth_not_employee(mock_oidc):
     """Test accessing a protected route with a valid token of a non-employee."""
     mock_oidc.return_value.validate_token.return_value = True
     mock_oidc.return_value._get_token_info.return_value = \
-        {'active': True, 'employeeType': 'Contractor'}
+        {'active': True, 'employeeType': 'Contractor', 'username': 'not-a-svc-account'}
     client = create_app('estuary.config.TestAuthConfig').test_client()
     mock_oidc.assert_called_once()
     rv = client.get('/api/v1/story/kojibuild/2345', headers={'Authorization': 'Bearer 123456'})
@@ -78,7 +78,7 @@ def test_get_story_auth(mock_oidc, employee_type):
     """Test getting the story when authentication is required."""
     mock_oidc.return_value.validate_token.return_value = True
     mock_oidc.return_value._get_token_info.return_value = \
-        {'active': True, 'employeeType': employee_type}
+        {'active': True, 'employeeType': employee_type, 'username': 'not-a-svc-account'}
     client = create_app('estuary.config.TestAuthConfig').test_client()
     mock_oidc.assert_called_once()
 
@@ -127,6 +127,21 @@ def test_get_story_auth(mock_oidc, employee_type):
     rv = client.get('/api/v1/story/kojibuild/2345', headers={'Authorization': 'Bearer 123456'})
     assert rv.status_code == 200
     assert json.loads(rv.data.decode('utf-8')) == expected
+
+
+@mock.patch('estuary.auth.EstuaryOIDC', autospec=True)
+def test_get_story_auth_monitoring_user(mock_oidc):
+    """Test getting the story using a monitoring service account."""
+    mock_oidc.return_value.validate_token.return_value = True
+    mock_oidc.return_value._get_token_info.return_value = \
+        {'active': True, 'username': 'estuary-monitoring-svc-accnt'}
+    client = create_app('estuary.config.TestAuthConfig').test_client()
+    mock_oidc.assert_called_once()
+
+    KojiBuild.get_or_create({'id_': '2345'})
+
+    rv = client.get('/api/v1/story/kojibuild/2345', headers={'Authorization': 'Bearer 123456'})
+    assert rv.status_code == 200
 
 
 def test_load_secrets():

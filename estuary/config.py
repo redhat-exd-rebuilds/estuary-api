@@ -20,6 +20,9 @@ class Config(object):
     NEO4J_URI = 'bolt://neo4j:neo4j@localhost:7687'
     CORS_URL = '*'
     STORY_MANAGER_SEQUENCE = ['ModuleStoryManager', 'ContainerStoryManager']
+    # These are service accounts that don't have "employeeType" set as "Employee" but still need
+    # access
+    MONITORING_USERS = []
     ENABLE_AUTH = False
     OIDC_INTROSPECT_URL = None
     OIDC_CLIENT_ID = None
@@ -52,3 +55,4 @@ class TestAuthConfig(TestConfig):
     OIDC_CLIENT_ID = 'estuary'
     OIDC_CLIENT_SECRET = 'some_secret'
     ENABLE_AUTH = True
+    MONITORING_USERS = ['estuary-monitoring-svc-accnt']

@@ -159,8 +159,14 @@ def login_required(f):
                 raise Unauthorized(validity)
 
             token_info = current_app.oidc._get_token_info(token)
-            if (token_info.get('employeeType') != 'Employee'
-                    and token_info.get('employeeType') != 'International Local Hire'):
+            # Users that are allowed to access Estuary and won't have the "employeeType" set
+            # to "Employee"
+            monitoring_users = current_app.config['MONITORING_USERS']
+            username = token_info.get('username')
+            employee_type = token_info.get('employeeType')
+            allowed_employee_types = ('Employee', 'International Local Hire')
+            if not (monitoring_users and username and username in monitoring_users) and \
+                    employee_type not in allowed_employee_types:
                 raise Unauthorized('You must be an employee to access this service')
         return f(*args, **kwargs)
     return wrapper
