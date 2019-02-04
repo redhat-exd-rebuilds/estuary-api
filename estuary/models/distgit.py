@@ -44,7 +44,7 @@ class DistGitCommit(EstuaryStructuredNode):
     """Definition of a dist-git commit in Neo4j."""
 
     author_date = DateTimeProperty()
-    commit_date = DateTimeProperty()
+    commit_date = DateTimeProperty(index=True)
     hash_ = UniqueIdProperty(db_property='hash')
     log_message = StringProperty()
     author = RelationshipTo('.user.User', 'AUTHORED_BY', cardinality=ZeroOrOne)
