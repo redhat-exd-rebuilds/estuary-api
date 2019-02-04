@@ -29,7 +29,7 @@ class Advisory(EstuaryStructuredNode):
     state = StringProperty()
     status_time = DateTimeProperty()
     synopsis = StringProperty()
-    update_date = DateTimeProperty()
+    update_date = DateTimeProperty(index=True)
     assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
     attached_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'ATTACHED')
     attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED')
