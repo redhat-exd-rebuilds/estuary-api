@@ -20,7 +20,7 @@ class BugzillaBug(EstuaryStructuredNode):
     classification = StringProperty()
     creation_time = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
-    modified_time = DateTimeProperty()
+    modified_time = DateTimeProperty(index=True)
     priority = StringProperty()
     # Called product_name in case we want to use product as a relationship later on
     product_name = StringProperty()

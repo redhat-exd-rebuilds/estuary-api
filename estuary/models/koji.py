@@ -17,7 +17,7 @@ class KojiBuild(EstuaryStructuredNode):
 
     advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
     commit = RelationshipTo('.distgit.DistGitCommit', 'BUILT_FROM', cardinality=ZeroOrOne)
-    completion_time = DateTimeProperty()
+    completion_time = DateTimeProperty(index=True)
     creation_time = DateTimeProperty()
     epoch = StringProperty()
     extra = StringProperty()
