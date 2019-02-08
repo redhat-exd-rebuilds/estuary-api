@@ -17,12 +17,14 @@ RUN dnf -y install \
   python3-mock \
   python2-neomodel \
   python3-neomodel \
+  python3-prometheus_client \
   python2-pytest \
   python3-pytest \
   python2-pytest-cov \
   python3-pytest-cov \
   && dnf clean all
-RUN pip install flake8-docstrings
+# We must install prometheus_client for Python 2 since it is no longer packaged for Fedora
+RUN pip install flake8-docstrings prometheus_client
 
 VOLUME /src
 WORKDIR /src
