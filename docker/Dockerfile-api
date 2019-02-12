@@ -11,6 +11,7 @@ RUN dnf -y install \
     python3-flask-oidc \
     python3-gunicorn \
     python3-neomodel \
+    python3-prometheus_client \
     python3-six \
     && dnf clean all
 # This will allow a non-root user to install a custom root CA at run-time

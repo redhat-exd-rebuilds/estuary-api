@@ -10,6 +10,7 @@ from werkzeug.exceptions import default_exceptions
 from neomodel import config as neomodel_config
 from neo4j.exceptions import ServiceUnavailable, AuthError
 
+from estuary import log
 from estuary.logger import init_logging
 from estuary.error import json_error, ValidationError
 from estuary.api.v1 import api_v1
@@ -109,6 +110,15 @@ def create_app(config_obj=None):
     app.register_error_handler(ServiceUnavailable, json_error)
     app.register_error_handler(AuthError, json_error)
     app.register_blueprint(api_v1, url_prefix='/api/v1')
+    try:
+        from estuary.api.monitoring import monitoring_api, configure_monitoring
+        app.register_blueprint(monitoring_api, url_prefix='/monitoring')
+        configure_monitoring(app)
+    except ImportError as e:
+        # If prometheus_client isn't installed, then don't register the monitoring blueprint
+        log.warning('The promethus_client is not installed, so metrics will be disabled')
+        if 'prometheus_client' not in str(e):
+            raise
 
     app.after_request(insert_headers)
 
