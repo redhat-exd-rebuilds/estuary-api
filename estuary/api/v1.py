@@ -9,6 +9,7 @@ from estuary import version
 from estuary.models.base import EstuaryStructuredNode
 
 from estuary.utils.general import str_to_bool, get_neo4j_node, inflate_node, login_required
+from estuary.utils.recents import get_recent_nodes
 from estuary.error import ValidationError
 import estuary.utils.story
 
@@ -339,3 +340,16 @@ def get_artifact_relationships(resource, uid, relationship):
         results['data'].append(serialized_node)
 
     return jsonify(results)
+
+
+@api_v1.route('/recents')
+@login_required
+def get_recent_stories():
+    """Get stories that were most recently updated, by their artifact type."""
+    nodes = get_recent_nodes()
+    result = {
+        'data': nodes,
+        'metadata': {}
+    }
+
+    return jsonify(result)
