@@ -18,7 +18,8 @@ class Config(object):
     SHOW_DB_URI = False
     SECRET_KEY = 'replace-me-with-something-random'
     NEO4J_URI = 'bolt://neo4j:neo4j@localhost:7687'
-    CORS_URL = '*'
+    # By default, only allow the front-end on localhost to make cross-origin requests
+    CORS_ORIGINS = ['http://localhost:4200']
     STORY_MANAGER_SEQUENCE = ['ModuleStoryManager', 'ContainerStoryManager']
     ENABLE_AUTH = False
     OIDC_INTROSPECT_URL = None

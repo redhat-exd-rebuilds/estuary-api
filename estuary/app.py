@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import os
 import warnings
 
-from flask import Flask, current_app
+from flask import Flask, current_app, request
 from werkzeug.exceptions import default_exceptions
 from neomodel import config as neomodel_config
 from neo4j.exceptions import ServiceUnavailable, AuthError
@@ -51,6 +51,8 @@ def load_config(app):
         app.config['OIDC_CLIENT_ID'] = os.environ['OIDC_CLIENT_ID']
     if os.environ.get('OIDC_CLIENT_SECRET'):
         app.config['OIDC_CLIENT_SECRET'] = os.environ['OIDC_CLIENT_SECRET']
+    if os.environ.get('CORS_ORIGINS'):
+        app.config['CORS_ORIGINS'] = os.environ['CORS_ORIGINS'].split(',')
 
 
 def insert_headers(response):
@@ -61,9 +63,10 @@ def insert_headers(response):
     :return: modified Flask response
     :rtype: flask.Response
     """
-    cors_url = current_app.config.get('CORS_URL')
-    if cors_url:
-        response.headers['Access-Control-Allow-Origin'] = cors_url
+    cors_origins = current_app.config.get('CORS_ORIGINS', [])
+    origin = request.headers.get('Origin')
+    if origin and origin in cors_origins:
+        response.headers['Access-Control-Allow-Origin'] = origin
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
         response.headers['Access-Control-Allow-Method'] = 'GET, OPTIONS'
     return response
