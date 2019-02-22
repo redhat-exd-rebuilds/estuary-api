@@ -43,7 +43,7 @@ class FreshmakerScraper(BaseScraper):
         fm_url = self.freshmaker_url
         while True:
             log.debug('Querying {0}'.format(fm_url))
-            rv_json = session.get(fm_url, timeout=15).json()
+            rv_json = session.get(fm_url, timeout=60).json()
             for fm_event in rv_json['items']:
                 try:
                     int(fm_event['search_key'])
