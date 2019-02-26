@@ -25,6 +25,7 @@ class Config(object):
     OIDC_INTROSPECT_URL = None
     OIDC_CLIENT_ID = None
     OIDC_CLIENT_SECRET = None
+    EMPLOYEE_TYPES = []
 
 
 class ProdConfig(Config):
@@ -53,3 +54,4 @@ class TestAuthConfig(TestConfig):
     OIDC_CLIENT_ID = 'estuary'
     OIDC_CLIENT_SECRET = 'some_secret'
     ENABLE_AUTH = True
+    EMPLOYEE_TYPES = ['Employee', 'International Local Hire']

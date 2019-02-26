@@ -53,6 +53,8 @@ def load_config(app):
         app.config['OIDC_CLIENT_SECRET'] = os.environ['OIDC_CLIENT_SECRET']
     if os.environ.get('CORS_ORIGINS'):
         app.config['CORS_ORIGINS'] = os.environ['CORS_ORIGINS'].split(',')
+    if os.environ.get('EMPLOYEE_TYPES'):
+        app.config['EMPLOYEE_TYPES'] = os.environ['EMPLOYEE_TYPES'].split(',')
 
 
 def insert_headers(response):
