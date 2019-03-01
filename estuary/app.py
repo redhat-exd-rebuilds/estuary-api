@@ -14,6 +14,7 @@ from estuary import log
 from estuary.logger import init_logging
 from estuary.error import json_error, ValidationError
 from estuary.api.v1 import api_v1
+from estuary.api.health_check import health_check
 
 
 def load_config(app):
@@ -115,6 +116,7 @@ def create_app(config_obj=None):
     app.register_error_handler(ServiceUnavailable, json_error)
     app.register_error_handler(AuthError, json_error)
     app.register_blueprint(api_v1, url_prefix='/api/v1')
+    app.add_url_rule('/healthcheck', view_func=health_check)
     try:
         from estuary.api.monitoring import monitoring_api, configure_monitoring
         app.register_blueprint(monitoring_api, url_prefix='/monitoring')
