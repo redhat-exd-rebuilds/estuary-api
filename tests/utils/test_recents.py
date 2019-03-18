@@ -37,6 +37,10 @@ def test_get_recent_nodes():
         'id_': '66666',
         'update_date': datetime(2017, 5, 30, 11, 44, 38)
     })
+    Advisory.get_or_create({
+        'id_': '66666',
+        'update_date': None
+    })
     FreshmakerEvent.get_or_create({
         'id_': '77777'
     })
