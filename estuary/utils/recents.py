@@ -31,7 +31,9 @@ def get_recent_nodes():
     final_result = {}
     for label, time_property in label_dict.items():
         query = (
-            'MATCH (node:{label}) RETURN node '
+            'MATCH (node:{label}) '
+            'WHERE node.{time_property} IS NOT NULL '
+            'RETURN node '
             'ORDER BY node.{time_property} DESC LIMIT 5'
         ).format(label=label, time_property=time_property)
         results, _ = db.cypher_query(query)
