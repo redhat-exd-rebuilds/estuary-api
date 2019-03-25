@@ -16,7 +16,7 @@ from estuary import log
 class FreshmakerScraper(BaseScraper):
     """Scrapes the Freshmaker API."""
 
-    freshmaker_url = "https://freshmaker.engineering.redhat.com/api/1/events/?per_page=100"
+    freshmaker_url = "https://freshmaker.engineering.redhat.com/api/1/events/?per_page=50"
 
     def run(self, since=None, until=None):
         """
