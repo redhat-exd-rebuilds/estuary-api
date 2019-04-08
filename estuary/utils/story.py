@@ -356,7 +356,7 @@ class ContainerStoryManager(BaseStoryManager):
             return {
                 'uid_name': FreshmakerEvent.id_.db_property or FreshmakerEvent.id.name,
                 'forward_relationship': '{0}>'.format(
-                    FreshmakerEvent.triggered_container_builds.definition['relation_type']),
+                    FreshmakerEvent.successful_koji_builds.definition['relation_type']),
                 'forward_relationship_display': 'triggered by',
                 'forward_label': ContainerKojiBuild.__label__,
                 'forward_label_display': 'container build',
