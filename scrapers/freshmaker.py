@@ -6,11 +6,12 @@ import xml.etree.ElementTree as ET
 import neomodel
 
 from scrapers.base import BaseScraper
-from estuary.models.freshmaker import FreshmakerEvent
+from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
 from estuary.models.errata import Advisory
 from estuary.models.koji import ContainerKojiBuild, KojiBuild
 from scrapers.utils import retry_session
 from estuary import log
+from estuary.utils.general import timestamp_to_datetime
 
 
 class FreshmakerScraper(BaseScraper):
@@ -72,6 +73,29 @@ class FreshmakerScraper(BaseScraper):
                     # To handle a faulty container build in Freshmaker
                     if not build_dict['build_id'] or int(build_dict['build_id']) < 0:
                         continue
+                    log.debug('Creating FreshmakerBuild {0}'.format(build_dict['build_id']))
+                    fb_params = dict(
+                        id_=build_dict['id'],
+                        build_dict_id=build_dict['build_dict_id'],
+                        dep_on=build_dict['dep_on'],
+                        event_id=build_dict['event_id'],
+                        name=build_dict['name'],
+                        original_nvr=build_dict['original_nvr'],
+                        rebuilt_nvr=build_dict['rebuilt_nvr'],
+                        state=build_dict['state'],
+                        state_name=build_dict['state_name'],
+                        state_reason=build_dict['state_reason'],
+                        time_submitted=timestamp_to_datetime(build_dict['time_submitted']),
+                        type_=build_dict['type'],
+                        type_name=build_dict['type_name'],
+                        url=build_dict['url']
+                    )
+                    if build_dict['time_completed']:
+                        fb_params['time_completed'] = timestamp_to_datetime(
+                            build_dict['time_completed'])
+                    fb = FreshmakerBuild.create_or_update(fb_params)[0]
+                    fb.event.connect(event)
+                    event.requested_builds.connect(fb)
 
                     # The build ID obtained from Freshmaker API is actually a Koji task ID
                     task_result = self.get_koji_task_result(build_dict['build_id'])
@@ -107,7 +131,7 @@ class FreshmakerScraper(BaseScraper):
                         build.add_label(ContainerKojiBuild.__label__)
                         build = ContainerKojiBuild.create_or_update(build_params)[0]
 
-                    event.triggered_container_builds.connect(build)
+                    event.successful_koji_builds.connect(build)
 
             if rv_json['meta'].get('next'):
                 fm_url = rv_json['meta']['next']

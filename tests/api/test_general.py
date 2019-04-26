@@ -116,6 +116,6 @@ def test_get_on_model_wo_uid(client, resource):
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
                    'advisory, bugzillabug, containeradvisory, containerkojibuild, distgitcommit, '
-                   'freshmakerevent, kojibuild, kojitag, modulekojibuild, and user.'
-                   .format(resource))
+                   'freshmakerevent, freshmakerbuild, kojibuild, kojitag, modulekojibuild, and '
+                   'user.'.format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}

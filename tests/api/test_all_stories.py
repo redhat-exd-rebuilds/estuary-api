@@ -887,8 +887,8 @@ def test_all_stories(client, resource, uid, expected):
     commit.koji_builds.connect(build)
     build.advisories.connect(advisory)
     fm_event.triggered_by_advisory.connect(advisory)
-    fm_event.triggered_container_builds.connect(cb)
-    fm_event.triggered_container_builds.connect(cb_two)
+    fm_event.successful_koji_builds.connect(cb)
+    fm_event.successful_koji_builds.connect(cb_two)
 
     # Unique partial stories
     commit_two.resolved_bugs.connect(bug_two)

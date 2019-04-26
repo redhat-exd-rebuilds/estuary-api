@@ -10,7 +10,7 @@ from estuary.models.koji import KojiBuild, ContainerKojiBuild, ModuleKojiBuild
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit, DistGitRepo, DistGitBranch
 from estuary.models.errata import Advisory, ContainerAdvisory
-from estuary.models.freshmaker import FreshmakerEvent
+from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
 from estuary.models.user import User
 
 
@@ -684,6 +684,22 @@ from estuary.models.user import User
                 'event_type_id': 8,
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
+                'requested_builds': [{
+                    'build_id': 15639305,
+                    'dep_on': 'jboss-eap-7-eap70-openshift-docker',
+                    'id': '398',
+                    'name': 'metrics-hawkular-metrics-docker',
+                    'original_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10',
+                    'rebuilt_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10.1522094767',
+                    'state': 1,
+                    'state_name': 'DONE',
+                    'state_reason': 'Built successfully.',
+                    'time_completed': '2017-04-02T19:39:06+00:00',
+                    'time_submitted': '2017-04-02T19:39:06+00:00',
+                    'type': 1,
+                    'type_name': 'IMAGE',
+                    'url': '/api/1/builds/398'
+                }],
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
@@ -708,7 +724,7 @@ from estuary.models.user import User
                     'synopsis': 'cifs-utils bug fix update',
                     'update_date': '2017-08-01T07:16:00+00:00'
                 },
-                'triggered_container_builds': [
+                'successful_koji_builds': [
                     {
                         'completion_time': '2017-04-02T19:39:06+00:00',
                         'creation_time': '2017-04-02T19:39:06+00:00',
@@ -1138,6 +1154,22 @@ def test_get_stories(client, resource, uids, expected):
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.'
     })[0]
+    fm_build = FreshmakerBuild.get_or_create({
+        'id_': 398,
+        'build_id': 15639305,
+        'dep_on': "jboss-eap-7-eap70-openshift-docker",
+        'name': "metrics-hawkular-metrics-docker",
+        'original_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10",
+        'rebuilt_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10.1522094767",
+        'state': 1,
+        'state_name': "DONE",
+        'state_reason': "Built successfully.",
+        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
+        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
+        'type_': 1,
+        'type_name': "IMAGE",
+        'url': "/api/1/builds/398"
+    })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -1174,7 +1206,8 @@ def test_get_stories(client, resource, uids, expected):
     build.advisories.connect(advisory)
     advisory.attached_builds.connect(build)
     fm_event.triggered_by_advisory.connect(advisory)
-    fm_event.triggered_container_builds.connect(cb)
+    fm_event.successful_koji_builds.connect(cb)
+    fm_event.requested_builds.connect(fm_build)
     containeradvisory.attached_builds.connect(cb)
 
     for uid in uids:
@@ -1271,6 +1304,22 @@ def test_get_stories(client, resource, uids, expected):
                 'event_type_id': 8,
                 'id': '1180',
                 'message_id': 'ID:messaging-devops-broker01.test',
+                'requested_builds': [{
+                    'build_id': 15639305,
+                    'dep_on': 'jboss-eap-7-eap70-openshift-docker',
+                    'id': '398',
+                    'name': 'metrics-hawkular-metrics-docker',
+                    'original_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10',
+                    'rebuilt_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10.1522094767',
+                    'state': 1,
+                    'state_name': 'DONE',
+                    'state_reason': 'Built successfully.',
+                    'time_completed': '2017-04-02T19:39:06+00:00',
+                    'time_submitted': '2017-04-02T19:39:06+00:00',
+                    'type': 1,
+                    'type_name': 'IMAGE',
+                    'url': '/api/1/builds/398'
+                }],
                 'resource_type': 'FreshmakerEvent',
                 'state': 2,
                 'state_name': 'COMPLETE',
@@ -1294,7 +1343,7 @@ def test_get_stories(client, resource, uids, expected):
                     'synopsis':'cifs-utils bug fix update',
                     'update_date':'2017-08-01T07:16:00+00:00'
                 },
-                'triggered_container_builds':[
+                'successful_koji_builds':[
                     {
                         'completion_time': '2017-04-02T19:39:06+00:00',
                         'creation_time': '2017-04-02T19:39:06+00:00',
@@ -1426,6 +1475,22 @@ def test_module_story_flow(client, resource, uid, expected):
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.'
     })[0]
+    fm_build = FreshmakerBuild.get_or_create({
+        'id_': 398,
+        'build_id': 15639305,
+        'dep_on': "jboss-eap-7-eap70-openshift-docker",
+        'name': "metrics-hawkular-metrics-docker",
+        'original_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10",
+        'rebuilt_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10.1522094767",
+        'state': 1,
+        'state_name': "DONE",
+        'state_reason': "Built successfully.",
+        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
+        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
+        'type_': 1,
+        'type_name': "IMAGE",
+        'url': "/api/1/builds/398"
+    })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -1458,7 +1523,8 @@ def test_module_story_flow(client, resource, uid, expected):
     build.advisories.connect(advisory)
     advisory.attached_builds.connect(build)
     fm_event.triggered_by_advisory.connect(advisory)
-    fm_event.triggered_container_builds.connect(cb)
+    fm_event.successful_koji_builds.connect(cb)
+    fm_event.requested_builds.connect(fm_build)
     containeradvisory.attached_builds.connect(cb)
     module_build.components.connect(build)
     module_build.advisories.connect(advisory)
@@ -1651,8 +1717,8 @@ def test_get_story_partial_story(client):
     })[0]
 
     fm_event.triggered_by_advisory.connect(advisory)
-    fm_event.triggered_container_builds.connect(cb)
-    fm_event.triggered_container_builds.connect(cb2)
+    fm_event.successful_koji_builds.connect(cb)
+    fm_event.successful_koji_builds.connect(cb2)
     expected = {
         'data': [
             {

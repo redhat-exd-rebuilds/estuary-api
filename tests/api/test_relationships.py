@@ -11,7 +11,7 @@ from estuary.models.koji import ContainerKojiBuild
 
 
 @pytest.mark.parametrize('resource,uid,relationship,expected', [
-    ('freshmakerevent', '1180', 'triggered_container_builds', {
+    ('freshmakerevent', '1180', 'successful_koji_builds', {
         'data': [
             {
                 'advisories': [
@@ -111,7 +111,7 @@ from estuary.models.koji import ContainerKojiBuild
             }
         ],
         'meta': {
-            'description': 'triggered container builds of Freshmaker event 1180'
+            'description': 'successful koji builds of Freshmaker event 1180'
         }
     })
 ])
@@ -159,9 +159,9 @@ def test_one_to_many_node_relationships(client, resource, uid, relationship, exp
         'version': '1.7.6'
     })[0]
 
-    fm_event.triggered_container_builds.connect(cb)
-    fm_event.triggered_container_builds.connect(cb_two)
-    fm_event.triggered_container_builds.connect(cb_three)
+    fm_event.successful_koji_builds.connect(cb)
+    fm_event.successful_koji_builds.connect(cb_two)
+    fm_event.successful_koji_builds.connect(cb_three)
 
     rv = client.get('/api/v1/relationships/{0}/{1}/{2}'.format(resource, uid, relationship))
     assert rv.status_code == 200
@@ -190,7 +190,7 @@ def test_one_to_many_node_relationships_failed(client):
         'version': '1.7.4'
     })[0]
 
-    fm_event.triggered_container_builds.connect(cb)
+    fm_event.successful_koji_builds.connect(cb)
 
     expected = {
         'message': 'Please provide a valid relationship name for freshmakerevent with uid 1180',

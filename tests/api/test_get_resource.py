@@ -11,7 +11,7 @@ from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit, DistGitBranch, DistGitRepo
 from estuary.models.errata import Advisory
 from estuary.models.koji import KojiBuild, KojiTag, ContainerKojiBuild
-from estuary.models.freshmaker import FreshmakerEvent
+from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
 
 
 @pytest.mark.parametrize('resource,uid,expected', [
@@ -313,6 +313,22 @@ from estuary.models.freshmaker import FreshmakerEvent
         'event_type_id': 8,
         'id': '1180',
         'message_id': 'ID:messaging-devops-broker01.test',
+        'requested_builds': [{
+            'build_id': 15639305,
+            'dep_on': 'jboss-eap-7-eap70-openshift-docker',
+            'id': '398',
+            'name': 'metrics-hawkular-metrics-docker',
+            'original_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10',
+            'rebuilt_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10.1522094767',
+            'state': 1,
+            'state_name': 'DONE',
+            'state_reason': 'Built successfully.',
+            'time_completed': '2017-04-02T19:39:06+00:00',
+            'time_submitted': '2017-04-02T19:39:06+00:00',
+            'type': 1,
+            'type_name': 'IMAGE',
+            'url': '/api/1/builds/398'
+        }],
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt',
@@ -335,7 +351,7 @@ from estuary.models.freshmaker import FreshmakerEvent
             'synopsis':'cifs-utils bug fix update',
             'update_date':'2017-08-01T07:16:00+00:00'
         },
-        'triggered_container_builds': [{
+        'successful_koji_builds': [{
             'completion_time': '2017-04-02T19:39:06+00:00',
             'creation_time': '2017-04-02T19:39:06+00:00',
             'epoch': '0',
@@ -494,6 +510,22 @@ def test_get_resources(client, resource, uid, expected):
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt'
     })[0]
+    fm_build = FreshmakerBuild.get_or_create({
+        'id_': 398,
+        'build_id': 15639305,
+        'dep_on': "jboss-eap-7-eap70-openshift-docker",
+        'name': "metrics-hawkular-metrics-docker",
+        'original_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10",
+        'rebuilt_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10.1522094767",
+        'state': 1,
+        'state_name': "DONE",
+        'state_reason': "Built successfully.",
+        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
+        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
+        'type_': 1,
+        'type_name': "IMAGE",
+        'url': "/api/1/builds/398"
+    })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -540,10 +572,11 @@ def test_get_resources(client, resource, uid, expected):
 
     if resource == 'freshmakerevent':
         fm_event.triggered_by_advisory.connect(advisory)
-        fm_event.triggered_container_builds.connect(cb)
+        fm_event.successful_koji_builds.connect(cb)
+        fm_event.requested_builds.connect(fm_build)
 
     if resource == 'containerbuild':
-        fm_event.triggered_container_builds.connect(cb)
+        fm_event.successful_koji_builds.connect(cb)
 
     rv = client.get('/api/v1/{0}/{1}'.format(resource, uid))
     assert rv.status_code == 200
