@@ -76,7 +76,7 @@ class FreshmakerScraper(BaseScraper):
                     log.debug('Creating FreshmakerBuild {0}'.format(build_dict['build_id']))
                     fb_params = dict(
                         id_=build_dict['id'],
-                        build_dict_id=build_dict['build_dict_id'],
+                        build_id=build_dict['build_id'],
                         dep_on=build_dict['dep_on'],
                         event_id=build_dict['event_id'],
                         name=build_dict['name'],
