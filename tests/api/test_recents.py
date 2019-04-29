@@ -13,6 +13,20 @@ from estuary.models.freshmaker import FreshmakerEvent
 
 def test_get_recent_nodes(client):
     """Test the get_recent_nodes function."""
+    id_dict = {
+        FreshmakerEvent.__label__: 'id_',
+        BugzillaBug.__label__: 'id_',
+        DistGitCommit.__label__: 'hash_',
+        KojiBuild.__label__: 'id_',
+        Advisory.__label__: 'id_'
+    }
+    timestamp_dict = {
+        FreshmakerEvent.__label__: 'id',
+        BugzillaBug.__label__: 'modified_time',
+        DistGitCommit.__label__: 'commit_date',
+        KojiBuild.__label__: 'completion_time',
+        Advisory.__label__: 'update_date'
+    }
     expected = {
         'data': {
             'Advisory': [
@@ -114,7 +128,10 @@ def test_get_recent_nodes(client):
                 }
             ]
         },
-        'metadata': {}
+        'metadata': {
+            'id_keys': id_dict,
+            'timestamp_keys': timestamp_dict
+        }
     }
 
     BugzillaBug.get_or_create({

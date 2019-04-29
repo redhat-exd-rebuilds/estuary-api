@@ -16,20 +16,25 @@ def get_recent_nodes():
     """
     Get the most recent nodes of each node type.
 
-    :return: a dictionary with the keys as names of each node type, and
-        values of arrays of the most recents of each node
-    :rtype: dict
+    :return: a tuple with the first value as a dictionary with the keys as
+        names of each node type, and values of arrays of the most recents of
+        each node, and the second as metadata
+    :rtype: tuple
     """
-    label_dict = {
+    timestamp_dict = {
         FreshmakerEvent.__label__: 'id',
         BugzillaBug.__label__: 'modified_time',
         DistGitCommit.__label__: 'commit_date',
         KojiBuild.__label__: 'completion_time',
         Advisory.__label__: 'update_date'
     }
-
-    final_result = {}
-    for label, time_property in label_dict.items():
+    id_dict = {}
+    final_result_data = {}
+    final_result_metadata = {
+        'id_keys': id_dict,
+        'timestamp_keys': timestamp_dict
+    }
+    for label, time_property in timestamp_dict.items():
         query = (
             'MATCH (node:{label}) '
             'WHERE node.{time_property} IS NOT NULL '
@@ -38,9 +43,11 @@ def get_recent_nodes():
         ).format(label=label, time_property=time_property)
         results, _ = db.cypher_query(query)
         for result in results:
-            node_results = final_result.setdefault(label, [])
+            node_results = final_result_data.setdefault(label, [])
             # result is always a list of a single node
             node = inflate_node(result[0])
             node_results.append(node.serialized)
+            if node.__label__ not in id_dict:
+                id_dict[node.__label__] = node.unique_id_property
 
-    return final_result
+    return (final_result_data, final_result_metadata)
