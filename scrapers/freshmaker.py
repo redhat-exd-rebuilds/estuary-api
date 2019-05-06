@@ -78,7 +78,6 @@ class FreshmakerScraper(BaseScraper):
                         id_=build_dict['id'],
                         build_id=build_dict['build_id'],
                         dep_on=build_dict['dep_on'],
-                        event_id=build_dict['event_id'],
                         name=build_dict['name'],
                         original_nvr=build_dict['original_nvr'],
                         rebuilt_nvr=build_dict['rebuilt_nvr'],
