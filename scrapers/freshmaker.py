@@ -93,7 +93,7 @@ class FreshmakerScraper(BaseScraper):
                         fb_params['time_completed'] = timestamp_to_datetime(
                             build_dict['time_completed'])
                     fb = FreshmakerBuild.create_or_update(fb_params)[0]
-                    fb.event.connect(event)
+                    fb.event.conditional_connect(event)
                     event.requested_builds.connect(fb)
 
                     # The build ID obtained from Freshmaker API is actually a Koji task ID
