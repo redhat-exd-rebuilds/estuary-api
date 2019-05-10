@@ -47,7 +47,7 @@ class FreshmakerBuild(EstuaryStructuredNode):
     type_name = StringProperty()
     url = StringProperty()
     koji_builds = RelationshipTo('.koji.ContainerKojiBuild', 'TRIGGERED_BY', cardinality=ZeroOrOne)
-    event = RelationshipFrom('.FreshmakerEvent', 'TRIGGERED')
+    event = RelationshipFrom('.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 
     @property
     def display_name(self):
