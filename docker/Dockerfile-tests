@@ -1,4 +1,4 @@
-FROM fedora:28
+FROM fedora:30
 
 # TODO: Replace the Koji URL once the following is stable https://bodhi.fedoraproject.org/updates/FEDORA-2018-c929a49b1b
 RUN dnf -y install \
@@ -6,27 +6,19 @@ RUN dnf -y install \
   --setopt=install_weak_deps=false \
   --setopt=tsflags=nodocs \
   nmap-ncat \
-  python2-devel \
   python3-devel \
   python3-flake8 \
-  python2-flask \
   python3-flask \
-  python2-flask-oidc \
   python3-flask-oidc \
-  python2-mock \
   python3-mock \
-  python2-neomodel \
   python3-neomodel \
   python3-prometheus_client \
-  python2-pytest \
   python3-pytest \
-  python2-pytest-cov \
   python3-pytest-cov \
+  python3-flake8-docstrings \
   && dnf clean all
-# We must install prometheus_client for Python 2 since it is no longer packaged for Fedora
-RUN pip install flake8-docstrings prometheus_client
 
 VOLUME /src
 WORKDIR /src
 # Inspired from https://github.com/neo4j-contrib/neomodel/blob/master/tests-with-docker-compose.sh
-CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; pytest-2 -vvv --cov-report term-missing --cov=estuary tests/ && pytest-3 -vvv --cov-report term-missing --cov=estuary tests/ && flake8"]
+CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; pytest-3 -vvv --cov-report term-missing --cov=estuary tests/ && flake8"]
