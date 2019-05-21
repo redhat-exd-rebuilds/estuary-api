@@ -60,7 +60,7 @@ $ sudo scripts/run-tests.sh
 To run just a single test, you can run:
 
 ```bash
-sudo scripts/run-tests.sh pytest -vvv tests/test_file::test_name
+sudo scripts/run-tests.sh pytest-3 -vvv tests/test_file::test_name
 ```
 
 ## Code Styling

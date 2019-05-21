@@ -5,6 +5,7 @@ import json
 from datetime import datetime
 
 import pytest
+from six.moves import urllib
 
 from estuary.models.koji import KojiBuild, ContainerKojiBuild, ModuleKojiBuild
 from estuary.models.bugzilla import BugzillaBug
@@ -1211,7 +1212,7 @@ def test_get_stories(client, resource, uids, expected):
     containeradvisory.attached_builds.connect(cb)
 
     for uid in uids:
-        url = '/api/v1/story/{0}/{1}'.format(resource, uid)
+        url = '/api/v1/story/{0}/{1}'.format(resource, urllib.parse.quote(uid))
         rv = client.get(url)
         assert rv.status_code == 200
         assert json.loads(rv.data.decode('utf-8')) == expected
