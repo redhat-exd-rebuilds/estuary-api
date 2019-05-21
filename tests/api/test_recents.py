@@ -14,11 +14,11 @@ from estuary.models.freshmaker import FreshmakerEvent
 def test_get_recent_nodes(client):
     """Test the get_recent_nodes function."""
     id_dict = {
-        FreshmakerEvent.__label__: 'id_',
-        BugzillaBug.__label__: 'id_',
-        DistGitCommit.__label__: 'hash_',
-        KojiBuild.__label__: 'id_',
-        Advisory.__label__: 'id_'
+        FreshmakerEvent.__label__: 'id',
+        BugzillaBug.__label__: 'id',
+        DistGitCommit.__label__: 'hash',
+        KojiBuild.__label__: 'id',
+        Advisory.__label__: 'id'
     }
     timestamp_dict = {
         FreshmakerEvent.__label__: 'id',

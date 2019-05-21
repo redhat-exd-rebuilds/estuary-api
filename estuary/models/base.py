@@ -180,7 +180,7 @@ class EstuaryStructuredNode(StructuredNode):
         """
         for _, prop_def in self.__all_properties__:
             if isinstance(prop_def, UniqueIdProperty):
-                return prop_def.name
+                return prop_def.db_property or prop_def.name
 
     @staticmethod
     def inflate_results(results):

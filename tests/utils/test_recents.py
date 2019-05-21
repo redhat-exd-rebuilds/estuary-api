@@ -56,11 +56,11 @@ def test_get_recent_nodes():
     assert nodes['BugzillaBug'][2]['id'] == '11111'
 
     id_dict = {
-        FreshmakerEvent.__label__: 'id_',
-        BugzillaBug.__label__: 'id_',
-        DistGitCommit.__label__: 'hash_',
-        KojiBuild.__label__: 'id_',
-        Advisory.__label__: 'id_'
+        FreshmakerEvent.__label__: 'id',
+        BugzillaBug.__label__: 'id',
+        DistGitCommit.__label__: 'hash',
+        KojiBuild.__label__: 'id',
+        Advisory.__label__: 'id'
     }
     timestamp_dict = {
         FreshmakerEvent.__label__: 'id',
