@@ -45,12 +45,30 @@ def test_get_recent_nodes():
         'id_': '77777'
     })
 
-    ret = estuary.utils.recents.get_recent_nodes()
+    nodes, meta = estuary.utils.recents.get_recent_nodes()
 
-    assert ret['Advisory'][0]['id'] == '66666'
-    assert ret['DistGitCommit'][0]['hash'] == '55555'
-    assert ret['FreshmakerEvent'][0]['id'] == '77777'
-    assert ret['KojiBuild'][0]['id'] == '44444'
-    assert ret['BugzillaBug'][0]['id'] == '22222'
-    assert ret['BugzillaBug'][1]['id'] == '33333'
-    assert ret['BugzillaBug'][2]['id'] == '11111'
+    assert nodes['Advisory'][0]['id'] == '66666'
+    assert nodes['DistGitCommit'][0]['hash'] == '55555'
+    assert nodes['FreshmakerEvent'][0]['id'] == '77777'
+    assert nodes['KojiBuild'][0]['id'] == '44444'
+    assert nodes['BugzillaBug'][0]['id'] == '22222'
+    assert nodes['BugzillaBug'][1]['id'] == '33333'
+    assert nodes['BugzillaBug'][2]['id'] == '11111'
+
+    id_dict = {
+        FreshmakerEvent.__label__: 'id_',
+        BugzillaBug.__label__: 'id_',
+        DistGitCommit.__label__: 'hash_',
+        KojiBuild.__label__: 'id_',
+        Advisory.__label__: 'id_'
+    }
+    timestamp_dict = {
+        FreshmakerEvent.__label__: 'id',
+        BugzillaBug.__label__: 'modified_time',
+        DistGitCommit.__label__: 'commit_date',
+        KojiBuild.__label__: 'completion_time',
+        Advisory.__label__: 'update_date'
+    }
+
+    assert meta['id_keys'] == id_dict
+    assert meta['timestamp_keys'] == timestamp_dict

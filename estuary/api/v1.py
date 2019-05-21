@@ -346,10 +346,9 @@ def get_artifact_relationships(resource, uid, relationship):
 @login_required
 def get_recent_stories():
     """Get stories that were most recently updated, by their artifact type."""
-    nodes = get_recent_nodes()
+    nodes, meta = get_recent_nodes()
     result = {
         'data': nodes,
-        'metadata': {}
+        'metadata': meta
     }
-
     return jsonify(result)
