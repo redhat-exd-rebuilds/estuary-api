@@ -91,7 +91,7 @@ class EstuaryStructuredNode(StructuredNode):
         for relationship, node in results:
             # If the starting node in the relationship is the same as the node being serialized,
             # we know that the relationship is outgoing
-            if relationship.start == self.id:
+            if relationship.start_node.id == self.id:
                 direction = OUTGOING
             else:
                 direction = INCOMING
