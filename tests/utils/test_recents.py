@@ -46,7 +46,6 @@ def test_get_recent_nodes():
     })
 
     nodes, meta = estuary.utils.recents.get_recent_nodes()
-
     assert nodes['Advisory'][0]['id'] == '66666'
     assert nodes['DistGitCommit'][0]['hash'] == '55555'
     assert nodes['FreshmakerEvent'][0]['id'] == '77777'
