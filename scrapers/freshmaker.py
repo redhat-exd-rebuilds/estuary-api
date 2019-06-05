@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import xml.etree.ElementTree as ET
 
 import neomodel
+from requests.exceptions import ConnectionError
 
 from scrapers.base import BaseScraper
 from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
@@ -44,7 +45,16 @@ class FreshmakerScraper(BaseScraper):
         fm_url = self.freshmaker_url
         while True:
             log.debug('Querying {0}'.format(fm_url))
-            rv_json = session.get(fm_url, timeout=60).json()
+            try:
+                rv_json = session.get(fm_url, timeout=60).json()
+            except ConnectionError:
+                # TODO: Remove this once FACTORY-3955 is resolved
+                log.error(
+                    'The connection to Freshmaker at %s failed. Skipping the rest of the scraper.',
+                    fm_url,
+                )
+                break
+
             for fm_event in rv_json['items']:
                 try:
                     int(fm_event['search_key'])
