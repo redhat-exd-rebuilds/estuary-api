@@ -46,7 +46,7 @@ def get_recent_nodes():
             node_results = final_result_data.setdefault(label, [])
             # result is always a list of a single node
             node = inflate_node(result[0])
-            serialized_node = node.serialized
+            serialized_node = node.serialized_all
             serialized_node['resource_type'] = node.__label__
             serialized_node['display_name'] = node.display_name
             node_results.append(serialized_node)
