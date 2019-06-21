@@ -30,6 +30,11 @@ class FreshmakerEvent(EstuaryStructuredNode):
         """Get intuitive (human readable) display name for the node."""
         return 'Freshmaker event {0}'.format(self.id_)
 
+    @property
+    def timeline_timestamp(self):
+        """Get the DateTime property used for the Estuary timeline."""
+        return self.time_created.strftime("%Y-%m-%dT%H:%M:%SZ")
+
 
 class FreshmakerBuild(EstuaryStructuredNode):
     """Definition of a Freshmaker build in Neo4j."""

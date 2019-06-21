@@ -52,6 +52,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'short_description':'Some description',
                     'status':'VERIFIED',
                     'target_milestone':'rc',
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'votes':0
                 },
                 {
@@ -60,7 +61,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
-                    'resource_type': 'DistGitCommit'
+                    'resource_type': 'DistGitCommit',
+                    'timeline_timestamp': '2017-04-26T11:44:38Z'
                 },
                 {
                     'completion_time': '2017-04-02T19:39:06Z',
@@ -74,6 +76,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'KojiBuild',
                     'start_time': '2017-04-02T19:39:06Z',
                     'state': 1,
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'version': '1.7.4'
                 },
                 {
@@ -95,7 +98,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'DROPPED_NO_SHIP',
                     'status_time': '2018-03-14T07:53:25Z',
                     'synopsis':'This is a synopsis of a test advisory.',
-                    'update_date': '2018-03-14T07:53:25Z'
+                    'update_date': '2018-03-14T07:53:25Z',
+                    'timeline_timestamp': '2018-03-14T05:53:25Z'
                 }
             ],
             'meta':{
@@ -142,6 +146,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'short_description':'Some description',
                     'status':'VERIFIED',
                     'target_milestone':'rc',
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'votes':0
                 },
                 {
@@ -150,7 +155,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
-                    'resource_type': 'DistGitCommit'
+                    'resource_type': 'DistGitCommit',
+                    'timeline_timestamp': '2017-04-26T11:44:38Z'
                 },
                 {
                     'completion_time': '2017-04-02T19:39:06Z',
@@ -164,6 +170,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'KojiBuild',
                     'start_time': '2017-04-02T19:39:06Z',
                     'state': 1,
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'version': '1.7.4'
                 },
                 {
@@ -185,7 +192,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51Z',
                     'synopsis':'cifs-utils bug fix update',
-                    'update_date': '2017-08-01T07:16:00Z'
+                    'update_date': '2017-08-01T07:16:00Z',
+                    'timeline_timestamp': '2017-04-03T14:47:23Z'
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
@@ -197,7 +205,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
-                    'time_done': '2099-08-21T13:42:20Z'
+                    'time_done': '2099-08-21T13:42:20Z',
+                    'timeline_timestamp': '2019-08-21T13:42:20Z'
                 },
                 {
                     'completion_time': '2018-04-02T19:39:06Z',
@@ -212,6 +221,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'ContainerKojiBuild',
                     'start_time': '2018-04-02T19:39:06Z',
                     'state': 2,
+                    'timeline_timestamp': '2018-04-02T19:39:06Z',
                     'version': '1.7.5'
                 }
             ],
@@ -241,6 +251,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'short_description': 'Some description',
                     'status': 'VERIFIED',
                     'target_milestone': 'rc',
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'votes': 0
                 },
                 {
@@ -249,7 +260,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
-                    'resource_type': 'DistGitCommit'
+                    'resource_type': 'DistGitCommit',
+                    'timeline_timestamp': '2017-04-26T11:44:38Z',
                 },
                 {
                     'advisories': [
@@ -316,6 +328,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'tags':[
 
                     ],
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'version':'1.7.4'
                 },
                 {
@@ -337,7 +350,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'DROPPED_NO_SHIP',
                     'status_time': '2018-03-14T07:53:25Z',
                     'synopsis':'This is a synopsis of a test advisory.',
-                    'update_date': '2018-03-14T07:53:25Z'
+                    'update_date': '2018-03-14T07:53:25Z',
+                    'timeline_timestamp': '2018-03-14T05:53:25Z'
                 }
             ],
             'meta':{
@@ -364,6 +378,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'short_description': 'some description',
                     'status': 'CLOSED',
                     'target_milestone': 'rc',
+                    'timeline_timestamp': '2017-04-01T17:41:04Z',
                     'votes': 0
                 },
                 {
@@ -372,7 +387,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'display_name': 'commit #f4dfc64',
                     'hash': 'f4dfc64c10a90492303e4f14ad3549a1a2b13575',
                     'log_message': 'Repo creation',
-                    'resource_type': 'DistGitCommit'
+                    'resource_type': 'DistGitCommit',
+                    'timeline_timestamp': '2018-03-14T05:52:19Z'
                 },
                 {
                     'advisories': [
@@ -439,6 +455,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'tags':[
 
                     ],
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'version':'1.7.4'
                 },
                 {
@@ -460,7 +477,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'DROPPED_NO_SHIP',
                     'status_time': '2018-03-14T07:53:25Z',
                     'synopsis':'This is a synopsis of a test advisory.',
-                    'update_date': '2018-03-14T07:53:25Z'
+                    'update_date': '2018-03-14T07:53:25Z',
+                    'timeline_timestamp': '2018-03-14T05:53:25Z'
                 }
             ],
             'meta':{
@@ -487,6 +505,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'short_description': 'Some description',
                     'status': 'VERIFIED',
                     'target_milestone': 'rc',
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'votes': 0
                 },
                 {
@@ -495,7 +514,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz',
-                    'resource_type': 'DistGitCommit'
+                    'resource_type': 'DistGitCommit',
+                    'timeline_timestamp': '2017-04-26T11:44:38Z'
                 },
                 {
                     'advisories': [
@@ -562,6 +582,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'tags':[
 
                     ],
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'version':'1.7.4'
                 },
                 {
@@ -583,7 +604,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51Z',
                     'synopsis':'cifs-utils bug fix update',
-                    'update_date': '2017-08-01T07:16:00Z'
+                    'update_date': '2017-08-01T07:16:00Z',
+                    'timeline_timestamp': '2017-04-03T14:47:23Z'
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
@@ -595,7 +617,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
-                    'time_done': '2099-08-21T13:42:20Z'
+                    'time_done': '2099-08-21T13:42:20Z',
+                    'timeline_timestamp': '2019-08-21T13:42:20Z'
                 },
                 {
                     'completion_time': '2018-04-02T19:39:06Z',
@@ -610,6 +633,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'ContainerKojiBuild',
                     'start_time': '2018-04-02T19:39:06Z',
                     'state': 2,
+                    'timeline_timestamp': '2018-04-02T19:39:06Z',
                     'version': '1.7.5'
                 }
             ],
@@ -637,6 +661,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'short_description': 'some description',
                     'status': 'CLOSED',
                     'target_milestone': 'rc',
+                    'timeline_timestamp': '2017-04-01T17:41:04Z',
                     'votes': 0
                 },
                 {
@@ -645,7 +670,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'display_name': 'commit #f4dfc64',
                     'hash': 'f4dfc64c10a90492303e4f14ad3549a1a2b13575',
                     'log_message': 'Repo creation',
-                    'resource_type': 'DistGitCommit'
+                    'resource_type': 'DistGitCommit',
+                    'timeline_timestamp': '2018-03-14T05:52:19Z'
                 },
                 {
                     'advisories': [
@@ -712,6 +738,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'tags':[
 
                     ],
+                    'timeline_timestamp': '2017-04-02T19:39:06Z',
                     'version':'1.7.4'
                 },
                 {
@@ -733,7 +760,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state':'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51Z',
                     'synopsis':'cifs-utils bug fix update',
-                    'update_date': '2017-08-01T07:16:00Z'
+                    'update_date': '2017-08-01T07:16:00Z',
+                    'timeline_timestamp': '2017-04-03T14:47:23Z'
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
@@ -745,7 +773,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
-                    'time_done': '2099-08-21T13:42:20Z'
+                    'time_done': '2099-08-21T13:42:20Z',
+                    'timeline_timestamp': '2019-08-21T13:42:20Z'
                 },
                 {
                     'completion_time': '2018-04-02T19:39:06Z',
@@ -760,6 +789,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'ContainerKojiBuild',
                     'start_time': '2018-04-02T19:39:06Z',
                     'state': 2,
+                    'timeline_timestamp': '2018-04-02T19:39:06Z',
                     'version': '1.7.5'
                 }
             ],
@@ -973,6 +1003,7 @@ def test_get_stories_fallback(client):
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'tags': [],
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -992,7 +1023,8 @@ def test_get_stories_fallback(client):
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             }
         ],
         'meta': {

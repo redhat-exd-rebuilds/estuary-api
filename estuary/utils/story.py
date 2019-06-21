@@ -203,6 +203,7 @@ class BaseStoryManager(object):
                 serialized_node = node.serialized
             serialized_node['resource_type'] = node.__label__
             serialized_node['display_name'] = node.display_name
+            serialized_node['timeline_timestamp'] = node.timeline_timestamp
             data.append(serialized_node)
         return {
             'data': data,

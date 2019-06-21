@@ -42,6 +42,11 @@ class BugzillaBug(EstuaryStructuredNode):
         """Get intuitive (human readable) display name for the node."""
         return 'RHBZ#{0}'.format(self.id_)
 
+    @property
+    def timeline_timestamp(self):
+        """Get the DateTime property used for the Estuary timeline."""
+        return self.creation_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+
     @classmethod
     def find_or_none(cls, identifier):
         """

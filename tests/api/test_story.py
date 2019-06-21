@@ -53,6 +53,7 @@ from estuary.models.user import User
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes':0
             },
             {
@@ -62,6 +63,7 @@ from estuary.models.user import User
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
                 'display_name': 'commit #8a63adb',
+                'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -75,6 +77,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -96,7 +99,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
             },
             {
                 'event_type_id': 8,
@@ -108,7 +112,8 @@ from estuary.models.user import User
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z'
+                'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -123,6 +128,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -142,7 +148,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
             }
         ],
         'meta': {
@@ -169,6 +176,7 @@ from estuary.models.user import User
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes': 0
             },
             {
@@ -240,6 +248,7 @@ from estuary.models.user import User
                     }
                 ],
                 'resource_type': 'DistGitCommit',
+                'timeline_timestamp': '2017-04-26T11:44:38Z',
                 'display_name': 'commit #8a63adb',
                 'reverted_bugs': [
 
@@ -257,6 +266,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -278,7 +288,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             },
             {
                 'event_type_id': 8,
@@ -290,7 +301,8 @@ from estuary.models.user import User
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z'
+                'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -305,6 +317,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -324,7 +337,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
             }
         ],
         'meta': {
@@ -351,6 +365,7 @@ from estuary.models.user import User
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes': 0
             },
             {
@@ -358,6 +373,7 @@ from estuary.models.user import User
                 'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
+                'timeline_timestamp': '2017-04-26T11:44:38Z',
                 'resource_type': 'DistGitCommit',
                 'display_name': 'commit #8a63adb',
             },
@@ -402,6 +418,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'tags': [
 
                 ],
@@ -426,7 +443,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
             },
             {
                 'event_type_id': 8,
@@ -438,7 +456,8 @@ from estuary.models.user import User
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z'
+                'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -453,6 +472,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -472,7 +492,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
             }
         ],
         'meta': {
@@ -499,6 +520,7 @@ from estuary.models.user import User
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes': 0
             },
             {
@@ -508,6 +530,7 @@ from estuary.models.user import User
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
                 'display_name': 'commit #8a63adb',
+                'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -521,6 +544,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -561,6 +585,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
                 'triggered_freshmaker_event': [
                     {
                         'event_type_id': 8,
@@ -585,7 +610,8 @@ from estuary.models.user import User
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z'
+                'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -600,6 +626,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -619,7 +646,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
             }
         ],
         'meta': {
@@ -646,6 +674,7 @@ from estuary.models.user import User
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes': 0
             },
             {
@@ -655,6 +684,7 @@ from estuary.models.user import User
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
                 'display_name': 'commit #8a63adb',
+                'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -668,6 +698,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -689,7 +720,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             },
             {
                 'event_type_id': 8,
@@ -718,6 +750,7 @@ from estuary.models.user import User
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
                 'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z',
                 'triggered_by_advisory': {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
@@ -766,6 +799,7 @@ from estuary.models.user import User
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -785,7 +819,8 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             }
         ],
         'meta': {
@@ -812,6 +847,7 @@ from estuary.models.user import User
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes': 0
             },
             {
@@ -820,7 +856,8 @@ from estuary.models.user import User
                 'display_name': 'commit #8a63adb',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
-                'resource_type': 'DistGitCommit'
+                'resource_type': 'DistGitCommit',
+                'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -834,6 +871,7 @@ from estuary.models.user import User
                 'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -855,7 +893,8 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -867,7 +906,8 @@ from estuary.models.user import User
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z'
+                'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z'
             },
             {
                 'advisories': [
@@ -906,6 +946,7 @@ from estuary.models.user import User
                 'resource_type':'ContainerKojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state':1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'tags':[
 
                 ],
@@ -940,7 +981,8 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             }
         ],
         'meta':{
@@ -967,6 +1009,7 @@ from estuary.models.user import User
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes': 0
             },
             {
@@ -976,6 +1019,7 @@ from estuary.models.user import User
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
+                'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -989,6 +1033,7 @@ from estuary.models.user import User
                 'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -1010,7 +1055,8 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -1022,7 +1068,8 @@ from estuary.models.user import User
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z'
+                'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -1037,6 +1084,7 @@ from estuary.models.user import User
                 'resource_type': 'ContainerKojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -1078,6 +1126,7 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
                 'triggered_freshmaker_event':[
 
                 ],
@@ -1256,6 +1305,7 @@ def test_get_stories(client, resource, uids, expected):
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'votes': 0
             },
             {
@@ -1264,7 +1314,8 @@ def test_get_stories(client, resource, uids, expected):
                 'display_name': 'commit #8a63adb',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
-                'resource_type': 'DistGitCommit'
+                'resource_type': 'DistGitCommit',
+                'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -1278,6 +1329,7 @@ def test_get_stories(client, resource, uids, expected):
                 'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -1297,6 +1349,7 @@ def test_get_stories(client, resource, uids, expected):
                 'resource_type': 'ModuleKojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': None,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': None
             },
             {
@@ -1318,7 +1371,8 @@ def test_get_stories(client, resource, uids, expected):
                 'state':'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -1347,6 +1401,7 @@ def test_get_stories(client, resource, uids, expected):
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
                 'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z',
                 'triggered_by_advisory': {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
@@ -1395,6 +1450,7 @@ def test_get_stories(client, resource, uids, expected):
                 'resource_type': 'ContainerKojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -1416,7 +1472,8 @@ def test_get_stories(client, resource, uids, expected):
                 'state':'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             }
         ],
         'meta': {
@@ -1610,6 +1667,7 @@ def test_get_artifact_story_not_available(client):
                 'short_description': 'Fail to delete OSP tenant by CFME',
                 'status': 'CLOSED',
                 'target_milestone': 'GA',
+                'timeline_timestamp': '2017-04-02T06:43:58Z',
                 'votes': 0
             }
         ],
@@ -1677,6 +1735,7 @@ def test_get_stories_just_artifact(client):
             'state': 'SHIPPED_LIVE',
             'status_time': '2017-08-01T15:43:51Z',
             'synopsis': 'cifs-utils bug fix update',
+            'timeline_timestamp': '2017-04-03T14:47:23Z',
             'triggered_freshmaker_event': [],
             'update_date': '2017-08-01T07:16:00Z'
         }],
@@ -1769,6 +1828,7 @@ def test_get_story_partial_story(client):
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
+                'timeline_timestamp': '2017-04-03T14:47:23Z',
                 'triggered_freshmaker_event': [{
                     'event_type_id': 8,
                     'id': '1180',
@@ -1791,7 +1851,8 @@ def test_get_story_partial_story(client):
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
                 'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z'
+                'time_done': '2099-08-21T13:42:20Z',
+                'timeline_timestamp': '2019-08-21T13:42:20Z'
             },
             {
                 'completion_time': '2017-04-02T19:39:06Z',
@@ -1806,6 +1867,7 @@ def test_get_story_partial_story(client):
                 'display_name': 'slf4j_2-1.8.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.8.4'
             }
         ],
@@ -1887,6 +1949,7 @@ def test_get_story_fallback(client):
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'tags': [],
+                'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
@@ -1906,7 +1969,8 @@ def test_get_story_fallback(client):
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00Z'
+                'update_date': '2017-08-01T07:16:00Z',
+                'timeline_timestamp': '2017-04-03T14:47:23Z'
             }
         ],
         'meta': {

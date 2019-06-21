@@ -122,6 +122,7 @@ def get_resource_story(resource, uid):
         rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
+        rv['data'][0]['timeline_timestamp'] = item.timeline_timestamp
         return jsonify(rv)
 
     return jsonify(story_manager.format_story_results(results, item))
@@ -232,6 +233,7 @@ def get_resource_all_stories(resource, uid):
         rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
+        rv['data'][0]['timeline_timestamp'] = item.timeline_timestamp
         all_results.append(rv)
 
     return jsonify(all_results)
