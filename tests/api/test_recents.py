@@ -45,31 +45,50 @@ def test_get_recent_nodes(client):
                     'status_time': None,
                     'actual_ship_date': None,
                     'release_date': None,
+                    'reporter': None,
                     'id': '66666',
                     'display_name': 'RHBA-2017:27760-01',
-                    'resource_type': 'Advisory'
+                    'resource_type': 'Advisory',
+                    'assigned_to': None,
+                    'attached_bugs': [],
+                    'attached_builds': [],
+                    'triggered_freshmaker_event': []
                 }
             ],
             'DistGitCommit': [
                 {
                     'log_message': None,
+                    'author': None,
                     'author_date': None,
                     'hash': '55555',
                     'commit_date': '2017-05-02T11:44:38+00:00',
                     'display_name': 'commit #55555',
-                    'resource_type': 'DistGitCommit'
+                    'resource_type': 'DistGitCommit',
+                    'branches': [],
+                    'children': [],
+                    'koji_builds': [],
+                    'parent': None,
+                    'related_bugs': [],
+                    'repos': [],
+                    'resolved_bugs': [],
+                    'reverted_bugs': []
                 }
             ],
             'FreshmakerEvent': [
                 {
                     'state_reason': None,
                     'state_name': None,
+                    'time_created': None,
+                    'time_done': None,
                     'id': '77777',
                     'state': None,
                     'event_type_id': None,
                     'message_id': None,
                     'display_name': 'Freshmaker event 77777',
-                    'resource_type': 'FreshmakerEvent'
+                    'resource_type': 'FreshmakerEvent',
+                    'requested_builds': [],
+                    'successful_koji_builds': [],
+                    'triggered_by_advisory': None
                 }
             ],
             'KojiBuild': [
@@ -85,7 +104,12 @@ def test_get_recent_nodes(client):
                     'release': '4.el7_4',
                     'id': '44444',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
-                    'resource_type': 'KojiBuild'
+                    'resource_type': 'KojiBuild',
+                    'module_builds': [],
+                    'owner': None,
+                    'tags': [],
+                    'commit': None,
+                    'advisories': []
                 }
             ],
             'BugzillaBug': [
@@ -104,7 +128,14 @@ def test_get_recent_nodes(client):
                     'target_milestone': None,
                     'id': '22222',
                     'display_name': 'RHBZ#22222',
-                    'resource_type': 'BugzillaBug'
+                    'resource_type': 'BugzillaBug',
+                    'assignee': None,
+                    'attached_advisories': [],
+                    'qa_contact': None,
+                    'related_by_commits': [],
+                    'resolved_by_commits': [],
+                    'reverted_by_commits': [],
+                    'reporter': None
                 },
                 {
                     'status': None,
@@ -121,7 +152,14 @@ def test_get_recent_nodes(client):
                     'target_milestone': None,
                     'id': '33333',
                     'display_name': 'RHBZ#33333',
-                    'resource_type': 'BugzillaBug'
+                    'resource_type': 'BugzillaBug',
+                    'assignee': None,
+                    'attached_advisories': [],
+                    'qa_contact': None,
+                    'related_by_commits': [],
+                    'resolved_by_commits': [],
+                    'reverted_by_commits': [],
+                    'reporter': None
                 },
                 {
                     'status': None,
@@ -138,7 +176,14 @@ def test_get_recent_nodes(client):
                     'target_milestone': None,
                     'id': '11111',
                     'display_name': 'RHBZ#11111',
-                    'resource_type': 'BugzillaBug'
+                    'resource_type': 'BugzillaBug',
+                    'assignee': None,
+                    'attached_advisories': [],
+                    'qa_contact': None,
+                    'related_by_commits': [],
+                    'resolved_by_commits': [],
+                    'reverted_by_commits': [],
+                    'reporter': None
                 }
             ]
         },
