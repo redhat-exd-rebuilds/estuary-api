@@ -18,6 +18,8 @@ class FreshmakerEvent(EstuaryStructuredNode):
     state = IntegerProperty()
     state_name = StringProperty()
     state_reason = StringProperty()
+    time_created = DateTimeProperty()
+    time_done = DateTimeProperty()
     triggered_by_advisory = RelationshipTo(
         '.errata.Advisory', 'TRIGGERED_BY', cardinality=ZeroOrOne)
     successful_koji_builds = RelationshipTo('.koji.ContainerKojiBuild', 'TRIGGERED')
