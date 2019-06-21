@@ -20,6 +20,11 @@ class EstuaryStructuredNode(StructuredNode):
         raise NotImplementedError('The display_name method is not defined')
 
     @property
+    def timeline_timestamp(self):
+        """Get the DateTime property used for the Estuary timeline."""
+        raise NotImplementedError('The timeline_timestamp method is not defined')
+
+    @property
     def serialized(self):
         """
         Convert a model to serialized form.
