@@ -62,7 +62,7 @@ class FreshmakerScraper(BaseScraper):
                     # Skip Freshmaker Events that don't have the search_key as the Advisory ID
                     continue
                 log.debug('Creating FreshmakerEvent {0}'.format(fm_event['id']))
-                event = FreshmakerEvent.create_or_update(dict(
+                event_params = dict(
                     id_=fm_event['id'],
                     event_type_id=fm_event['event_type_id'],
                     message_id=fm_event['message_id'],
@@ -70,7 +70,12 @@ class FreshmakerScraper(BaseScraper):
                     state_name=fm_event['state_name'],
                     state_reason=fm_event['state_reason'],
                     url=fm_event['url']
-                ))[0]
+                )
+                if 'time_created' in fm_event:
+                    event_params['time_created'] = fm_event['time_created']
+                if 'time_done' in fm_event:
+                    event_params['time_done'] = fm_event['time_created']
+                event = FreshmakerEvent.create_or_update(event_params)[0]
 
                 log.debug('Creating Advisory {0}'.format(fm_event['search_key']))
                 advisory = Advisory.get_or_create(dict(
