@@ -332,6 +332,8 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt',
+        'time_created': '2019-08-21T13:42:20+00:00',
+        'time_done': '2099-08-21T13:42:20+00:00',
         'triggered_by_advisory': {
             'actual_ship_date': '2017-08-01T15:43:51+00:00',
             'advisory_name': 'RHBA-2017:2251-02',
@@ -508,7 +510,9 @@ def test_get_resources(client, resource, uid, expected):
         'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
-        'state_reason': 'All container images have been rebuilt'
+        'state_reason': 'All container images have been rebuilt',
+        'time_created': datetime(2019, 8, 21, 13, 42, 20),
+        'time_done': datetime(2099, 8, 21, 13, 42, 20)
     })[0]
     fm_build = FreshmakerBuild.get_or_create({
         'id_': 398,

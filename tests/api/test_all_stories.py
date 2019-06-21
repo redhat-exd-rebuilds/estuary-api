@@ -195,7 +195,9 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'FreshmakerEvent',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.'
+                    'state_reason': 'All container images have been rebuilt.',
+                    'time_created': '2019-08-21T13:42:20+00:00',
+                    'time_done': '2099-08-21T13:42:20+00:00'
                 },
                 {
                     'completion_time': '2018-04-02T19:39:06+00:00',
@@ -591,7 +593,9 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'FreshmakerEvent',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.'
+                    'state_reason': 'All container images have been rebuilt.',
+                    'time_created': '2019-08-21T13:42:20+00:00',
+                    'time_done': '2099-08-21T13:42:20+00:00'
                 },
                 {
                     'completion_time': '2018-04-02T19:39:06+00:00',
@@ -739,7 +743,9 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type': 'FreshmakerEvent',
                     'state': 2,
                     'state_name': 'COMPLETE',
-                    'state_reason': 'All container images have been rebuilt.'
+                    'state_reason': 'All container images have been rebuilt.',
+                    'time_created': '2019-08-21T13:42:20+00:00',
+                    'time_done': '2099-08-21T13:42:20+00:00'
                 },
                 {
                     'completion_time': '2018-04-02T19:39:06+00:00',
@@ -857,7 +863,9 @@ def test_all_stories(client, resource, uid, expected):
         'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
-        'state_reason': 'All container images have been rebuilt.'
+        'state_reason': 'All container images have been rebuilt.',
+        'time_created': datetime(2019, 8, 21, 13, 42, 20),
+        'time_done': datetime(2099, 8, 21, 13, 42, 20)
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
