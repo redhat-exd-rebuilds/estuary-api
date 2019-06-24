@@ -99,8 +99,8 @@ def test_get_story_auth(mock_oidc, employee_type):
             {
                 'advisories': [],
                 'commit': None,
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -110,7 +110,7 @@ def test_get_story_auth(mock_oidc, employee_type):
                 'resource_type': 'KojiBuild',
                 'module_builds': [],
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'tags': [],
                 'version': '1.7.4'

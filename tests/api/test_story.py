@@ -24,9 +24,9 @@ from estuary.models.user import User
 
                 ],
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -38,8 +38,8 @@ from estuary.models.user import User
                 'resolution': '',
                 'resolved_by_commits': [
                     {
-                        'author_date': '2017-04-26T11:44:38+00:00',
-                        'commit_date': '2017-04-26T11:44:38+00:00',
+                        'author_date': '2017-04-26T11:44:38Z',
+                        'commit_date': '2017-04-26T11:44:38Z',
                         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                         'log_message': 'Related: #12345 - fix xyz'
                     }
@@ -56,16 +56,16 @@ from estuary.models.user import User
                 'votes':0
             },
             {
-                'author_date': '2017-04-26T11:44:38+00:00',
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
                 'display_name': 'commit #8a63adb',
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -73,19 +73,19 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -94,9 +94,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'event_type_id': 8,
@@ -107,12 +107,12 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00'
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -121,18 +121,18 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -140,9 +140,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta': {
@@ -156,9 +156,9 @@ from estuary.models.user import User
         'data': [
             {
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -173,7 +173,7 @@ from estuary.models.user import User
             },
             {
                 'author': None,
-                'author_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
                 'branches': [{
                     'name': 'some-branch',
                     'repo_name': 'slf4j',
@@ -182,18 +182,18 @@ from estuary.models.user import User
                 'children': [
 
                 ],
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'koji_builds': [
                     {
-                        'completion_time': '2017-04-02T19:39:06+00:00',
-                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'completion_time': '2017-04-02T19:39:06Z',
+                        'creation_time': '2017-04-02T19:39:06Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
-                        'start_time': '2017-04-02T19:39:06+00:00',
+                        'start_time': '2017-04-02T19:39:06Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -210,9 +210,9 @@ from estuary.models.user import User
                 'resolved_bugs': [
                     {
                         'classification': 'Red Hat',
-                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'creation_time': '2017-04-02T19:39:06Z',
                         'id': '12345',
-                        'modified_time': '2018-02-07T19:30:47+00:00',
+                        'modified_time': '2018-02-07T19:30:47Z',
                         'priority': 'high',
                         'product_name': 'Red Hat Enterprise Linux',
                         'product_version': '7.5',
@@ -225,9 +225,9 @@ from estuary.models.user import User
                     },
                     {
                         'classification': 'Red Hat',
-                        'creation_time': '2017-04-02T06:43:58+00:00',
+                        'creation_time': '2017-04-02T06:43:58Z',
                         'id': '5555',
-                        'modified_time': '2017-12-05T10:12:47+00:00',
+                        'modified_time': '2017-12-05T10:12:47Z',
                         'priority': 'unspecified',
                         'product_name': 'Red Hat CloudForms Management Engine',
                         'product_version': '5.7.0',
@@ -246,8 +246,8 @@ from estuary.models.user import User
                 ]
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -255,19 +255,19 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -276,9 +276,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'event_type_id': 8,
@@ -289,12 +289,12 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00'
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -303,18 +303,18 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -322,9 +322,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta': {
@@ -338,9 +338,9 @@ from estuary.models.user import User
         'data': [
             {
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -354,8 +354,8 @@ from estuary.models.user import User
                 'votes': 0
             },
             {
-                'author_date': '2017-04-26T11:44:38+00:00',
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
@@ -364,33 +364,33 @@ from estuary.models.user import User
             {
                 'advisories': [
                     {
-                        'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                        'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
                         'content_types': [
                             'docker'
                         ],
-                        'created_at': '2017-04-03T14:47:23+00:00',
+                        'created_at': '2017-04-03T14:47:23Z',
                         'id': '27825',
-                        'issue_date': '2017-08-01T05:59:34+00:00',
+                        'issue_date': '2017-08-01T05:59:34Z',
                         'product_name': 'Red Hat Enterprise Linux',
                         'product_short_name': 'RHEL',
                         'release_date': None,
                         'security_impact': 'None',
                         'security_sla': None,
                         'state': 'SHIPPED_LIVE',
-                        'status_time': '2017-08-01T15:43:51+00:00',
+                        'status_time': '2017-08-01T15:43:51Z',
                         'synopsis': 'cifs-utils bug fix update',
-                        'update_date': '2017-08-01T07:16:00+00:00'
+                        'update_date': '2017-08-01T07:16:00Z'
                     }
                 ],
                 'commit':{
-                    'author_date': '2017-04-26T11:44:38+00:00',
-                    'commit_date': '2017-04-26T11:44:38+00:00',
+                    'author_date': '2017-04-26T11:44:38Z',
+                    'commit_date': '2017-04-26T11:44:38Z',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz'
                 },
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -400,7 +400,7 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'tags': [
 
@@ -408,14 +408,14 @@ from estuary.models.user import User
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -424,9 +424,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'event_type_id': 8,
@@ -437,12 +437,12 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00'
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -451,18 +451,18 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -470,9 +470,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta': {
@@ -486,9 +486,9 @@ from estuary.models.user import User
         'data': [
             {
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -502,16 +502,16 @@ from estuary.models.user import User
                 'votes': 0
             },
             {
-                'author_date': '2017-04-26T11:44:38+00:00',
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
                 'display_name': 'commit #8a63adb',
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -519,12 +519,12 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'assigned_to': None,
                 'attached_bugs': [
@@ -532,14 +532,14 @@ from estuary.models.user import User
                 ],
                 'attached_builds': [
                     {
-                        'completion_time': '2017-04-02T19:39:06+00:00',
-                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'completion_time': '2017-04-02T19:39:06Z',
+                        'creation_time': '2017-04-02T19:39:06Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
-                        'start_time': '2017-04-02T19:39:06+00:00',
+                        'start_time': '2017-04-02T19:39:06Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -547,10 +547,10 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -559,7 +559,7 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'triggered_freshmaker_event': [
                     {
@@ -569,11 +569,11 @@ from estuary.models.user import User
                         'state': 2,
                         'state_name': 'COMPLETE',
                         'state_reason': 'All container images have been rebuilt.',
-                        'time_created': '2019-08-21T13:42:20+00:00',
-                        'time_done': '2099-08-21T13:42:20+00:00'
+                        'time_created': '2019-08-21T13:42:20Z',
+                        'time_done': '2099-08-21T13:42:20Z'
                     }
                 ],
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'event_type_id': 8,
@@ -584,12 +584,12 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00'
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -598,18 +598,18 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -617,9 +617,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta': {
@@ -633,9 +633,9 @@ from estuary.models.user import User
         'data': [
             {
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -649,16 +649,16 @@ from estuary.models.user import User
                 'votes': 0
             },
             {
-                'author_date': '2017-04-26T11:44:38+00:00',
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
                 'display_name': 'commit #8a63adb',
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -666,20 +666,20 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -687,9 +687,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'event_type_id': 8,
@@ -705,8 +705,8 @@ from estuary.models.user import User
                     'state': 1,
                     'state_name': 'DONE',
                     'state_reason': 'Built successfully.',
-                    'time_completed': '2017-04-02T19:39:06+00:00',
-                    'time_submitted': '2017-04-02T19:39:06+00:00',
+                    'time_completed': '2017-04-02T19:39:06Z',
+                    'time_submitted': '2017-04-02T19:39:06Z',
                     'type': 1,
                     'type_name': 'IMAGE',
                     'url': '/api/1/builds/398'
@@ -716,46 +716,46 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00',
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z',
                 'triggered_by_advisory': {
-                    'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                    'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
                     'content_types': [
                         'docker'
                     ],
-                    'created_at': '2017-04-03T14:47:23+00:00',
+                    'created_at': '2017-04-03T14:47:23Z',
                     'id': '27825',
-                    'issue_date': '2017-08-01T05:59:34+00:00',
+                    'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
                     'product_short_name': 'RHEL',
                     'release_date': None,
                     'security_impact': 'None',
                     'security_sla': None,
                     'state': 'SHIPPED_LIVE',
-                    'status_time': '2017-08-01T15:43:51+00:00',
+                    'status_time': '2017-08-01T15:43:51Z',
                     'synopsis': 'cifs-utils bug fix update',
-                    'update_date': '2017-08-01T07:16:00+00:00'
+                    'update_date': '2017-08-01T07:16:00Z'
                 },
                 'successful_koji_builds': [
                     {
-                        'completion_time': '2017-04-02T19:39:06+00:00',
-                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'completion_time': '2017-04-02T19:39:06Z',
+                        'creation_time': '2017-04-02T19:39:06Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
                         'name': 'slf4j_2',
                         'original_nvr': None,
                         'release': '4.el7_4_as',
-                        'start_time': '2017-04-02T19:39:06+00:00',
+                        'start_time': '2017-04-02T19:39:06Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
                 ]
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -764,18 +764,18 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'display_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'id': '12327',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -783,9 +783,9 @@ from estuary.models.user import User
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta': {
@@ -799,10 +799,10 @@ from estuary.models.user import User
         'data': [
             {
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -815,16 +815,16 @@ from estuary.models.user import User
                 'votes': 0
             },
             {
-                'author_date': '2017-04-26T11:44:38+00:00',
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'display_name': 'commit #8a63adb',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
@@ -832,20 +832,20 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': [
                     'docker'
                 ],
-                'created_at':'2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
-                'issue_date':'2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name':'Red Hat Enterprise Linux',
                 'product_short_name':'RHEL',
                 'release_date':None,
@@ -853,9 +853,9 @@ from estuary.models.user import User
                 'security_impact':'None',
                 'security_sla':None,
                 'state':'SHIPPED_LIVE',
-                'status_time':'2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -866,34 +866,34 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00'
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z'
             },
             {
                 'advisories': [
                     {
-                        'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                        'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-03',
                         'content_types': [
                             'docker'
                         ],
-                        'created_at':'2017-04-03T14:47:23+00:00',
+                        'created_at': '2017-04-03T14:47:23Z',
                         'id':'12327',
-                        'issue_date':'2017-08-01T05:59:34+00:00',
+                        'issue_date': '2017-08-01T05:59:34Z',
                         'product_name':'Red Hat Enterprise Linux',
                         'product_short_name':'RHEL',
                         'release_date':None,
                         'security_impact':'None',
                         'security_sla':None,
                         'state':'SHIPPED_LIVE',
-                        'status_time':'2017-08-01T15:43:51+00:00',
+                        'status_time': '2017-08-01T15:43:51Z',
                         'synopsis':'cifs-utils bug fix update',
-                        'update_date':'2017-08-01T07:16:00+00:00'
+                        'update_date': '2017-08-01T07:16:00Z'
                     }
                 ],
                 'commit':None,
-                'completion_time':'2017-04-02T19:39:06+00:00',
-                'creation_time':'2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name':'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch':'0',
                 'extra':None,
@@ -904,7 +904,7 @@ from estuary.models.user import User
                 'owner':None,
                 'release':'4.el7_4_as',
                 'resource_type':'ContainerKojiBuild',
-                'start_time':'2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state':1,
                 'tags':[
 
@@ -916,21 +916,21 @@ from estuary.models.user import User
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
-                    'time_created': '2019-08-21T13:42:20+00:00',
-                    'time_done': '2099-08-21T13:42:20+00:00'
+                    'time_created': '2019-08-21T13:42:20Z',
+                    'time_done': '2099-08-21T13:42:20Z'
                 },
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': [
                     'docker'
                 ],
-                'created_at':'2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
-                'issue_date':'2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name':'Red Hat Enterprise Linux',
                 'product_short_name':'RHEL',
                 'release_date':None,
@@ -938,9 +938,9 @@ from estuary.models.user import User
                 'security_impact':'None',
                 'security_sla':None,
                 'state':'SHIPPED_LIVE',
-                'status_time':'2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta':{
@@ -954,10 +954,10 @@ from estuary.models.user import User
         'data': [
             {
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -970,16 +970,16 @@ from estuary.models.user import User
                 'votes': 0
             },
             {
-                'author_date': '2017-04-26T11:44:38+00:00',
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'display_name': 'commit #8a63adb',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit',
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
@@ -987,20 +987,20 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': [
                     'docker'
                 ],
-                'created_at':'2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
-                'issue_date':'2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name':'Red Hat Enterprise Linux',
                 'product_short_name':'RHEL',
                 'release_date':None,
@@ -1008,9 +1008,9 @@ from estuary.models.user import User
                 'security_impact':'None',
                 'security_sla':None,
                 'state':'SHIPPED_LIVE',
-                'status_time':'2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -1021,12 +1021,12 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00'
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch': '0',
                 'extra': None,
@@ -1035,12 +1035,12 @@ from estuary.models.user import User
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'assigned_to': None,
                 'attached_bugs': [
@@ -1048,15 +1048,15 @@ from estuary.models.user import User
                 ],
                 'attached_builds':[
                     {
-                        'completion_time': '2017-04-02T19:39:06+00:00',
-                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'completion_time': '2017-04-02T19:39:06Z',
+                        'creation_time': '2017-04-02T19:39:06Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
                         'name': 'slf4j_2',
                         'original_nvr': None,
                         'release': '4.el7_4_as',
-                        'start_time': '2017-04-02T19:39:06+00:00',
+                        'start_time': '2017-04-02T19:39:06Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -1064,10 +1064,10 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at':'2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
-                'issue_date':'2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name':'Red Hat Enterprise Linux',
                 'product_short_name':'RHEL',
                 'release_date':None,
@@ -1076,12 +1076,12 @@ from estuary.models.user import User
                 'security_impact':'None',
                 'security_sla':None,
                 'state':'SHIPPED_LIVE',
-                'status_time':'2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
                 'triggered_freshmaker_event':[
 
                 ],
-                'update_date':'2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta':{
@@ -1243,10 +1243,10 @@ def test_get_stories(client, resource, uids, expected):
         'data': [
             {
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
-                'modified_time': '2018-02-07T19:30:47+00:00',
+                'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
@@ -1259,16 +1259,16 @@ def test_get_stories(client, resource, uids, expected):
                 'votes': 0
             },
             {
-                'author_date': '2017-04-26T11:44:38+00:00',
-                'commit_date': '2017-04-26T11:44:38+00:00',
+                'author_date': '2017-04-26T11:44:38Z',
+                'commit_date': '2017-04-26T11:44:38Z',
                 'display_name': 'commit #8a63adb',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'log_message': 'Related: #12345 - fix xyz',
                 'resource_type': 'DistGitCommit'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
@@ -1276,14 +1276,14 @@ def test_get_stories(client, resource, uids, expected):
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
                 'context': 'a2037af3',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': '389-ds-None-20180805121332.a2037af3',
                 'epoch': '0',
                 'extra': None,
@@ -1295,20 +1295,20 @@ def test_get_stories(client, resource, uids, expected):
                 'name': '389-ds',
                 'release': '20180805121332.a2037af3',
                 'resource_type': 'ModuleKojiBuild',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': None,
                 'version': None
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': [
                     'docker'
                 ],
-                'created_at':'2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
-                'issue_date':'2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name':'Red Hat Enterprise Linux',
                 'product_short_name':'RHEL',
                 'release_date': None,
@@ -1316,9 +1316,9 @@ def test_get_stories(client, resource, uids, expected):
                 'security_impact':'None',
                 'security_sla': None,
                 'state':'SHIPPED_LIVE',
-                'status_time':'2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -1335,8 +1335,8 @@ def test_get_stories(client, resource, uids, expected):
                     'state': 1,
                     'state_name': 'DONE',
                     'state_reason': 'Built successfully.',
-                    'time_completed': '2017-04-02T19:39:06+00:00',
-                    'time_submitted': '2017-04-02T19:39:06+00:00',
+                    'time_completed': '2017-04-02T19:39:06Z',
+                    'time_submitted': '2017-04-02T19:39:06Z',
                     'type': 1,
                     'type_name': 'IMAGE',
                     'url': '/api/1/builds/398'
@@ -1345,46 +1345,46 @@ def test_get_stories(client, resource, uids, expected):
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00',
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z',
                 'triggered_by_advisory': {
-                    'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                    'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
                     'content_types': [
                         'docker'
                     ],
-                    'created_at':'2017-04-03T14:47:23+00:00',
+                    'created_at': '2017-04-03T14:47:23Z',
                     'id':'27825',
-                    'issue_date':'2017-08-01T05:59:34+00:00',
+                    'issue_date': '2017-08-01T05:59:34Z',
                     'product_name':'Red Hat Enterprise Linux',
                     'product_short_name':'RHEL',
                     'release_date': None,
                     'security_impact':'None',
                     'security_sla': None,
                     'state':'SHIPPED_LIVE',
-                    'status_time':'2017-08-01T15:43:51+00:00',
+                    'status_time': '2017-08-01T15:43:51Z',
                     'synopsis':'cifs-utils bug fix update',
-                    'update_date':'2017-08-01T07:16:00+00:00'
+                    'update_date': '2017-08-01T07:16:00Z'
                 },
                 'successful_koji_builds':[
                     {
-                        'completion_time': '2017-04-02T19:39:06+00:00',
-                        'creation_time': '2017-04-02T19:39:06+00:00',
+                        'completion_time': '2017-04-02T19:39:06Z',
+                        'creation_time': '2017-04-02T19:39:06Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
                         'name': 'slf4j_2',
                         'original_nvr': None,
                         'release': '4.el7_4_as',
-                        'start_time': '2017-04-02T19:39:06+00:00',
+                        'start_time': '2017-04-02T19:39:06Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
                 ]
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch': '0',
                 'extra': None,
@@ -1393,20 +1393,20 @@ def test_get_stories(client, resource, uids, expected):
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': [
                     'docker'
                 ],
-                'created_at':'2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
-                'issue_date':'2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name':'Red Hat Enterprise Linux',
                 'product_short_name':'RHEL',
                 'release_date': None,
@@ -1414,9 +1414,9 @@ def test_get_stories(client, resource, uids, expected):
                 'security_impact':'None',
                 'security_sla': None,
                 'state':'SHIPPED_LIVE',
-                'status_time':'2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'update_date':'2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta': {
@@ -1586,9 +1586,9 @@ def test_get_artifact_story_not_available(client):
 
                 ],
                 'classification': 'Red Hat',
-                'creation_time': '2017-04-02T06:43:58+00:00',
+                'creation_time': '2017-04-02T06:43:58Z',
                 'id': '5555',
-                'modified_time': '2017-12-05T10:12:47+00:00',
+                'modified_time': '2017-12-05T10:12:47Z',
                 'priority': 'unspecified',
                 'product_name': 'Red Hat CloudForms Management Engine',
                 'product_version': '5.7.0',
@@ -1657,15 +1657,15 @@ def test_get_stories_just_artifact(client):
     })[0]
     expected = {
         'data': [{
-            'actual_ship_date': '2017-08-01T15:43:51+00:00',
+            'actual_ship_date': '2017-08-01T15:43:51Z',
             'advisory_name': 'RHBA-2017:2251-02',
             'assigned_to': None,
             'attached_bugs': [],
             'attached_builds': [],
             'content_types': ['docker'],
-            'created_at': '2017-04-03T14:47:23+00:00',
+            'created_at': '2017-04-03T14:47:23Z',
             'id': '27825',
-            'issue_date': '2017-08-01T05:59:34+00:00',
+            'issue_date': '2017-08-01T05:59:34Z',
             'product_name': 'Red Hat Enterprise Linux',
             'product_short_name': 'RHEL',
             'release_date': None,
@@ -1675,10 +1675,10 @@ def test_get_stories_just_artifact(client):
             'security_impact': 'None',
             'security_sla': None,
             'state': 'SHIPPED_LIVE',
-            'status_time': '2017-08-01T15:43:51+00:00',
+            'status_time': '2017-08-01T15:43:51Z',
             'synopsis': 'cifs-utils bug fix update',
             'triggered_freshmaker_event': [],
-            'update_date': '2017-08-01T07:16:00+00:00'
+            'update_date': '2017-08-01T07:16:00Z'
         }],
         'meta': {
             'story_related_nodes_forward': [0],
@@ -1749,15 +1749,15 @@ def test_get_story_partial_story(client):
     expected = {
         'data': [
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'assigned_to': None,
                 'attached_bugs': [],
                 'attached_builds': [],
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -1767,7 +1767,7 @@ def test_get_story_partial_story(client):
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'triggered_freshmaker_event': [{
                     'event_type_id': 8,
@@ -1776,10 +1776,10 @@ def test_get_story_partial_story(client):
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
-                    'time_created': '2019-08-21T13:42:20+00:00',
-                    'time_done': '2099-08-21T13:42:20+00:00'
+                    'time_created': '2019-08-21T13:42:20Z',
+                    'time_done': '2099-08-21T13:42:20Z'
                 }],
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             },
             {
                 'event_type_id': 8,
@@ -1790,12 +1790,12 @@ def test_get_story_partial_story(client):
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20+00:00',
-                'time_done': '2099-08-21T13:42:20+00:00'
+                'time_created': '2019-08-21T13:42:20Z',
+                'time_done': '2099-08-21T13:42:20Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '711',
@@ -1804,7 +1804,7 @@ def test_get_story_partial_story(client):
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.8.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'version': '1.8.4'
             }
@@ -1856,25 +1856,25 @@ def test_get_story_fallback(client):
         'data': [
             {
                 'advisories': [{
-                    'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                    'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
                     'content_types': ['docker'],
-                    'created_at': '2017-04-03T14:47:23+00:00',
+                    'created_at': '2017-04-03T14:47:23Z',
                     'id': '27825',
-                    'issue_date': '2017-08-01T05:59:34+00:00',
+                    'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
                     'product_short_name': 'RHEL',
                     'release_date': None,
                     'security_impact': 'None',
                     'security_sla': None,
                     'state': 'SHIPPED_LIVE',
-                    'status_time': '2017-08-01T15:43:51+00:00',
+                    'status_time': '2017-08-01T15:43:51Z',
                     'synopsis': 'cifs-utils bug fix update',
-                    'update_date': '2017-08-01T07:16:00+00:00'
+                    'update_date': '2017-08-01T07:16:00Z'
                 }],
                 'commit': None,
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -1884,18 +1884,18 @@ def test_get_story_fallback(client):
                 'resource_type': 'KojiBuild',
                 'module_builds': [],
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
                 'tags': [],
                 'version': '1.7.4'
             },
             {
-                'actual_ship_date': '2017-08-01T15:43:51+00:00',
+                'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23+00:00',
+                'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
-                'issue_date': '2017-08-01T05:59:34+00:00',
+                'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_short_name': 'RHEL',
                 'release_date': None,
@@ -1904,9 +1904,9 @@ def test_get_story_fallback(client):
                 'security_impact': 'None',
                 'security_sla': None,
                 'state': 'SHIPPED_LIVE',
-                'status_time': '2017-08-01T15:43:51+00:00',
+                'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'update_date': '2017-08-01T07:16:00+00:00'
+                'update_date': '2017-08-01T07:16:00Z'
             }
         ],
         'meta': {
