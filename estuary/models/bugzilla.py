@@ -45,7 +45,9 @@ class BugzillaBug(EstuaryStructuredNode):
     @property
     def timeline_timestamp(self):
         """Get the DateTime property used for the Estuary timeline."""
-        return self.creation_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        if self.creation_time:
+            return self.creation_time.strftime('%Y-%m-%dT%H:%M:%SZ')
+        return None
 
     @classmethod
     def find_or_none(cls, identifier):

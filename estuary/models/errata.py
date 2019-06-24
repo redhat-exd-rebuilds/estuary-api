@@ -44,7 +44,9 @@ class Advisory(EstuaryStructuredNode):
     @property
     def timeline_timestamp(self):
         """Get the DateTime property used for the Estuary timeline."""
-        return self.created_at.strftime("%Y-%m-%dT%H:%M:%SZ")
+        if self.created_at:
+            return self.created_at.strftime('%Y-%m-%dT%H:%M:%SZ')
+        return None
 
     @classmethod
     def find_or_none(cls, identifier):
