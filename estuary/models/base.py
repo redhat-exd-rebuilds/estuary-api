@@ -35,7 +35,7 @@ class EstuaryStructuredNode(StructuredNode):
             actual_key = getattr(self.__class__, key).db_property or key
 
             if isinstance(value, datetime):
-                rv[actual_key] = value.isoformat()
+                rv[actual_key] = value.strftime('%Y-%m-%dT%H:%M:%SZ')
             else:
                 rv[actual_key] = value
 

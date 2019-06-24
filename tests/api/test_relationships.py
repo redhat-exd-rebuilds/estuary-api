@@ -18,8 +18,8 @@ from estuary.models.koji import ContainerKojiBuild
 
                 ],
                 'commit': None,
-                'completion_time': '2018-04-02T19:39:06+00:00',
-                'creation_time': '2018-04-02T19:39:06+00:00',
+                'completion_time': '2018-04-02T19:39:06Z',
+                'creation_time': '2018-04-02T19:39:06Z',
                 'epoch': '1',
                 'extra': None,
                 'id': '2011',
@@ -30,7 +30,7 @@ from estuary.models.koji import ContainerKojiBuild
                 'release': '4.el7_6_a',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'some_other_build-1.7.6-4.el7_6_a',
-                'start_time': '2018-04-02T19:39:06+00:00',
+                'start_time': '2018-04-02T19:39:06Z',
                 'state':1,
                 'tags':[
 
@@ -42,8 +42,8 @@ from estuary.models.koji import ContainerKojiBuild
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
-                    'time_created': '2019-08-21T13:42:20+00:00',
-                    'time_done': '2099-08-21T13:42:20+00:00'
+                    'time_created': '2019-08-21T13:42:20Z',
+                    'time_done': '2099-08-21T13:42:20Z'
                 },
                 'version': '1.7.6'
             },
@@ -52,8 +52,8 @@ from estuary.models.koji import ContainerKojiBuild
 
                 ],
                 'commit': None,
-                'completion_time': '2018-04-02T19:39:06+00:00',
-                'creation_time': '2018-04-02T19:39:06+00:00',
+                'completion_time': '2018-04-02T19:39:06Z',
+                'creation_time': '2018-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '811',
@@ -64,7 +64,7 @@ from estuary.models.koji import ContainerKojiBuild
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'some_build-1.7.5-4.el7_4_as',
-                'start_time': '2018-04-02T19:39:06+00:00',
+                'start_time': '2018-04-02T19:39:06Z',
                 'state':2,
                 'tags':[
 
@@ -76,8 +76,8 @@ from estuary.models.koji import ContainerKojiBuild
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
-                    'time_created': '2019-08-21T13:42:20+00:00',
-                    'time_done': '2099-08-21T13:42:20+00:00'
+                    'time_created': '2019-08-21T13:42:20Z',
+                    'time_done': '2099-08-21T13:42:20Z'
                 },
                 'version': '1.7.5'
             },
@@ -86,8 +86,8 @@ from estuary.models.koji import ContainerKojiBuild
 
                 ],
                 'commit': None,
-                'completion_time': '2017-04-02T19:39:06+00:00',
-                'creation_time': '2017-04-02T19:39:06+00:00',
+                'completion_time': '2017-04-02T19:39:06Z',
+                'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -98,7 +98,7 @@ from estuary.models.koji import ContainerKojiBuild
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06+00:00',
+                'start_time': '2017-04-02T19:39:06Z',
                 'state':1,
                 'tags':[
 
@@ -110,8 +110,8 @@ from estuary.models.koji import ContainerKojiBuild
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
-                    'time_created': '2019-08-21T13:42:20+00:00',
-                    'time_done': '2099-08-21T13:42:20+00:00'
+                    'time_created': '2019-08-21T13:42:20Z',
+                    'time_done': '2099-08-21T13:42:20Z'
                 },
                 'version': '1.7.4'
             }
