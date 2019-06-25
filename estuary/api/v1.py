@@ -120,6 +120,7 @@ def get_resource_story(resource, uid):
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
+        rv['meta']['wait_times'] = [0]
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
         rv['data'][0]['timeline_timestamp'] = item.timeline_timestamp
@@ -231,6 +232,7 @@ def get_resource_all_stories(resource, uid):
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
+        rv['meta']['wait_times'] = [0]
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
         rv['data'][0]['timeline_timestamp'] = item.timeline_timestamp

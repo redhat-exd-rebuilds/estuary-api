@@ -66,8 +66,8 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -75,9 +75,9 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
@@ -86,7 +86,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -100,7 +100,7 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-08-01T15:43:51Z',
             },
             {
                 'event_type_id': 8,
@@ -111,13 +111,13 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z'
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -126,16 +126,16 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.7.4'
             },
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -149,14 +149,15 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-09-12T07:04:51Z',
             }
         ],
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
             'requested_node_index': 0,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [57932, 34048, 61485, 0, 50400, 4860]
         }
     }),
     ('distgitcommit', ['8a63adb248ba633e200067e1ad6dc61931727bad'], {
@@ -194,14 +195,14 @@ from estuary.models.user import User
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'koji_builds': [
                     {
-                        'completion_time': '2017-04-02T19:39:06Z',
-                        'creation_time': '2017-04-02T19:39:06Z',
+                        'completion_time': '2017-04-26T22:39:06Z',
+                        'creation_time': '2017-04-26T21:12:06Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
-                        'start_time': '2017-04-02T19:39:06Z',
+                        'start_time': '2017-04-26T21:12:06Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -255,8 +256,8 @@ from estuary.models.user import User
                 ]
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -264,9 +265,9 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
@@ -275,7 +276,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -289,7 +290,7 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-08-01T15:43:51Z'
             },
             {
                 'event_type_id': 8,
@@ -300,13 +301,13 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z'
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -315,16 +316,16 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.7.4'
             },
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -338,14 +339,15 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-09-12T07:04:51Z',
             }
         ],
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
             'requested_node_index': 1,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [57932, 34048, 61485, 0, 50400, 4860]
         }
     }),
     ('kojibuild', ['2345', 'slf4j-1.7.4-4.el7_4', 'slf4j-1.7.4-4.el7_4.src.rpm'], {
@@ -385,7 +387,7 @@ from estuary.models.user import User
                         'content_types': [
                             'docker'
                         ],
-                        'created_at': '2017-04-03T14:47:23Z',
+                        'created_at': '2017-08-01T15:43:51Z',
                         'id': '27825',
                         'issue_date': '2017-08-01T05:59:34Z',
                         'product_name': 'Red Hat Enterprise Linux',
@@ -405,8 +407,8 @@ from estuary.models.user import User
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                     'log_message': 'Related: #12345 - fix xyz'
                 },
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -416,9 +418,9 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'tags': [
 
                 ],
@@ -430,7 +432,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -444,7 +446,7 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-08-01T15:43:51Z',
             },
             {
                 'event_type_id': 8,
@@ -455,13 +457,13 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z'
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -470,16 +472,16 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.7.4'
             },
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -493,14 +495,15 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-09-12T07:04:51Z',
             }
         ],
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
             'requested_node_index': 2,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [57932, 34048, 61485, 0, 50400, 4860]
         }
     }),
     ('advisory', ['27825', 'RHBA-2017:2251-02', 'RHBA-2017:2251'], {
@@ -533,8 +536,8 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -542,9 +545,9 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
@@ -556,14 +559,14 @@ from estuary.models.user import User
                 ],
                 'attached_builds': [
                     {
-                        'completion_time': '2017-04-02T19:39:06Z',
-                        'creation_time': '2017-04-02T19:39:06Z',
+                        'completion_time': '2017-04-26T22:39:06Z',
+                        'creation_time': '2017-04-26T21:12:06Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
-                        'start_time': '2017-04-02T19:39:06Z',
+                        'start_time': '2017-04-26T21:12:06Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -571,7 +574,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -585,7 +588,7 @@ from estuary.models.user import User
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-08-01T15:43:51Z',
                 'triggered_freshmaker_event': [
                     {
                         'event_type_id': 8,
@@ -594,8 +597,8 @@ from estuary.models.user import User
                         'state': 2,
                         'state_name': 'COMPLETE',
                         'state_reason': 'All container images have been rebuilt.',
-                        'time_created': '2019-08-21T13:42:20Z',
-                        'time_done': '2099-08-21T13:42:20Z'
+                        'time_created': '2017-08-13T15:43:51Z',
+                        'time_done': '2017-08-14T05:43:51Z'
                     }
                 ],
                 'update_date': '2017-08-01T07:16:00Z'
@@ -609,13 +612,13 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z'
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -624,16 +627,16 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.7.4'
             },
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -647,14 +650,15 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-09-12T07:04:51Z',
             }
         ],
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
             'requested_node_index': 3,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [57932, 34048, 61485, 0, 50400, 4860]
         }
     }),
     ('freshmakerevent', ['1180'], {
@@ -687,8 +691,8 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -696,9 +700,9 @@ from estuary.models.user import User
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
@@ -707,7 +711,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -721,7 +725,7 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-08-01T15:43:51Z'
             },
             {
                 'event_type_id': 8,
@@ -737,8 +741,8 @@ from estuary.models.user import User
                     'state': 1,
                     'state_name': 'DONE',
                     'state_reason': 'Built successfully.',
-                    'time_completed': '2017-04-02T19:39:06Z',
-                    'time_submitted': '2017-04-02T19:39:06Z',
+                    'time_completed': '2017-08-14T05:43:51Z',
+                    'time_submitted': '2017-08-14T05:43:51Z',
                     'type': 1,
                     'type_name': 'IMAGE',
                     'url': '/api/1/builds/398'
@@ -748,16 +752,16 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z',
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z',
                 'triggered_by_advisory': {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
                     'content_types': [
                         'docker'
                     ],
-                    'created_at': '2017-04-03T14:47:23Z',
+                    'created_at': '2017-08-01T15:43:51Z',
                     'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
@@ -772,23 +776,23 @@ from estuary.models.user import User
                 },
                 'successful_koji_builds': [
                     {
-                        'completion_time': '2017-04-02T19:39:06Z',
-                        'creation_time': '2017-04-02T19:39:06Z',
+                        'completion_time': '2017-09-01T05:43:51Z',
+                        'creation_time': '2017-08-14T05:43:51Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
                         'name': 'slf4j_2',
                         'original_nvr': None,
                         'release': '4.el7_4_as',
-                        'start_time': '2017-04-02T19:39:06Z',
+                        'start_time': '2017-08-14T05:43:51Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
                 ]
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '710',
@@ -797,9 +801,9 @@ from estuary.models.user import User
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.7.4'
             },
             {
@@ -807,7 +811,7 @@ from estuary.models.user import User
                 'advisory_name': 'RHBA-2017:2251-03',
                 'display_name': 'RHBA-2017:2251-03',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -820,14 +824,15 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-09-12T07:04:51Z'
             }
         ],
         'meta': {
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
             'requested_node_index': 4,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [57932, 34048, 61485, 0, 50400, 4860]
         }
     }),
     ('containerkojibuild', ['710'], {
@@ -860,8 +865,8 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
@@ -869,9 +874,9 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
@@ -880,7 +885,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -894,7 +899,7 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-08-01T15:43:51Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -905,9 +910,9 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z'
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z'
             },
             {
                 'advisories': [
@@ -917,7 +922,7 @@ from estuary.models.user import User
                         'content_types': [
                             'docker'
                         ],
-                        'created_at': '2017-04-03T14:47:23Z',
+                        'created_at': '2017-09-12T07:04:51Z',
                         'id':'12327',
                         'issue_date': '2017-08-01T05:59:34Z',
                         'product_name':'Red Hat Enterprise Linux',
@@ -932,8 +937,8 @@ from estuary.models.user import User
                     }
                 ],
                 'commit':None,
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'display_name':'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch':'0',
                 'extra':None,
@@ -944,9 +949,9 @@ from estuary.models.user import User
                 'owner':None,
                 'release':'4.el7_4_as',
                 'resource_type':'ContainerKojiBuild',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state':1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'tags':[
 
                 ],
@@ -957,8 +962,8 @@ from estuary.models.user import User
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
-                    'time_created': '2019-08-21T13:42:20Z',
-                    'time_done': '2099-08-21T13:42:20Z'
+                    'time_created': '2017-08-13T15:43:51Z',
+                    'time_done': '2017-08-14T05:43:51Z'
                 },
                 'version': '1.7.4'
             },
@@ -968,7 +973,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -982,14 +987,15 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-09-12T07:04:51Z'
             }
         ],
         'meta':{
             'requested_node_index': 5,
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [57932, 34048, 61485, 0, 50400, 4860]
         }
     }),
     ('containeradvisory', ['12327'], {
@@ -1022,8 +1028,8 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
@@ -1031,9 +1037,9 @@ from estuary.models.user import User
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
@@ -1042,7 +1048,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -1056,7 +1062,7 @@ from estuary.models.user import User
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-08-01T15:43:51Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -1067,13 +1073,13 @@ from estuary.models.user import User
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z'
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch': '0',
                 'extra': None,
@@ -1082,9 +1088,9 @@ from estuary.models.user import User
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.7.4'
             },
             {
@@ -1096,15 +1102,15 @@ from estuary.models.user import User
                 ],
                 'attached_builds':[
                     {
-                        'completion_time': '2017-04-02T19:39:06Z',
-                        'creation_time': '2017-04-02T19:39:06Z',
+                        'completion_time': '2017-09-01T05:43:51Z',
+                        'creation_time': '2017-08-14T05:43:51Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
                         'name': 'slf4j_2',
                         'original_nvr': None,
                         'release': '4.el7_4_as',
-                        'start_time': '2017-04-02T19:39:06Z',
+                        'start_time': '2017-08-14T05:43:51Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -1112,7 +1118,7 @@ from estuary.models.user import User
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -1126,7 +1132,7 @@ from estuary.models.user import User
                 'state':'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-09-12T07:04:51Z',
                 'triggered_freshmaker_event':[
 
                 ],
@@ -1137,7 +1143,8 @@ from estuary.models.user import User
             'requested_node_index': 6,
             'story_related_nodes_forward': [1, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0],
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [57932, 34048, 61485, 0, 50400, 4860]
         }
     })
 ])
@@ -1162,7 +1169,7 @@ def test_get_stories(client, resource, uids, expected):
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
         'content_types': ['docker'],
-        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
@@ -1204,13 +1211,13 @@ def test_get_stories(client, resource, uids, expected):
         'votes': 0
     })[0]
     build = KojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'completion_time': datetime(2017, 4, 26, 22, 39, 6),
+        'creation_time': datetime(2017, 4, 26, 21, 12, 6),
         'epoch': '0',
         'id_': '2345',
         'name': 'slf4j',
         'release': '4.el7_4',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'start_time': datetime(2017, 4, 26, 21, 12, 6),
         'state': 1,
         'version': '1.7.4'
     })[0]
@@ -1221,8 +1228,8 @@ def test_get_stories(client, resource, uids, expected):
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
-        'time_created': datetime(2019, 8, 21, 13, 42, 20),
-        'time_done': datetime(2099, 8, 21, 13, 42, 20)
+        'time_created': datetime(2017, 8, 13, 15, 43, 51),
+        'time_done': datetime(2017, 8, 14, 5, 43, 51)
     })[0]
     fm_build = FreshmakerBuild.get_or_create({
         'id_': 398,
@@ -1234,20 +1241,20 @@ def test_get_stories(client, resource, uids, expected):
         'state': 1,
         'state_name': "DONE",
         'state_reason': "Built successfully.",
-        'time_completed': datetime(2017, 4, 2, 19, 39, 6),
-        'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
+        'time_completed': datetime(2017, 8, 14, 5, 43, 51),
+        'time_submitted': datetime(2017, 8, 14, 5, 43, 51),
         'type_': 1,
         'type_name': "IMAGE",
         'url': "/api/1/builds/398"
     })[0]
     cb = ContainerKojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'completion_time': datetime(2017, 9, 1, 5, 43, 51),
+        'creation_time': datetime(2017, 8, 14, 5, 43, 51),
         'epoch': '0',
         'id_': '710',
         'name': 'slf4j_2',
         'release': '4.el7_4_as',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'start_time': datetime(2017, 8, 14, 5, 43, 51),
         'state': 1,
         'version': '1.7.4'
     })[0]
@@ -1255,7 +1262,7 @@ def test_get_stories(client, resource, uids, expected):
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
         'content_types': ['docker'],
-        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'created_at': datetime(2017, 9, 12, 7, 4, 51),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
@@ -1318,8 +1325,8 @@ def test_get_stories(client, resource, uids, expected):
                 'timeline_timestamp': '2017-04-26T11:44:38Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
@@ -1327,9 +1334,9 @@ def test_get_stories(client, resource, uids, expected):
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'resource_type': 'KojiBuild',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
@@ -1358,7 +1365,7 @@ def test_get_stories(client, resource, uids, expected):
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -1372,7 +1379,7 @@ def test_get_stories(client, resource, uids, expected):
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-08-01T15:43:51Z'
             },
             {
                 'display_name': 'Freshmaker event 1180',
@@ -1399,16 +1406,16 @@ def test_get_stories(client, resource, uids, expected):
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z',
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z',
                 'triggered_by_advisory': {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
                     'content_types': [
                         'docker'
                     ],
-                    'created_at': '2017-04-03T14:47:23Z',
+                    'created_at': '2017-08-01T15:43:51Z',
                     'id':'27825',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name':'Red Hat Enterprise Linux',
@@ -1423,23 +1430,23 @@ def test_get_stories(client, resource, uids, expected):
                 },
                 'successful_koji_builds':[
                     {
-                        'completion_time': '2017-04-02T19:39:06Z',
-                        'creation_time': '2017-04-02T19:39:06Z',
+                        'completion_time': '2017-09-01T05:43:51Z',
+                        'creation_time': '2017-08-14T05:43:51Z',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
                         'name': 'slf4j_2',
                         'original_nvr': None,
                         'release': '4.el7_4_as',
-                        'start_time': '2017-04-02T19:39:06Z',
+                        'start_time': '2017-08-14T05:43:51Z',
                         'state': 1,
                         'version': '1.7.4'
                     }
                 ]
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'epoch': '0',
                 'extra': None,
@@ -1448,9 +1455,9 @@ def test_get_stories(client, resource, uids, expected):
                 'original_nvr': None,
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.7.4'
             },
             {
@@ -1459,7 +1466,7 @@ def test_get_stories(client, resource, uids, expected):
                 'content_types': [
                     'docker'
                 ],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -1473,14 +1480,15 @@ def test_get_stories(client, resource, uids, expected):
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis':'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-09-12T07:04:51Z'
             }
         ],
         'meta': {
             'requested_node_index': 5,
             'story_related_nodes_backward': [0, 0, 0, 0, 0, 0, 0, 0],
             'story_related_nodes_forward': [0, 0, 0, 0, 0, 0, 0, 0],
-            'story_type': 'module'
+            'story_type': 'module',
+            'wait_times': [57932, 34048, None, 72285, 0, 50400, 4860]
         }
     })
 ])
@@ -1496,7 +1504,7 @@ def test_module_story_flow(client, resource, uid, expected):
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
         'content_types': ['docker'],
-        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
@@ -1523,13 +1531,13 @@ def test_module_story_flow(client, resource, uid, expected):
         'votes': 0
     })[0]
     build = KojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'completion_time': datetime(2017, 4, 26, 22, 39, 6),
+        'creation_time': datetime(2017, 4, 26, 21, 12, 6),
         'epoch': '0',
         'id_': '2345',
         'name': 'slf4j',
         'release': '4.el7_4',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'start_time': datetime(2017, 4, 26, 21, 12, 6),
         'state': 1,
         'version': '1.7.4'
     })[0]
@@ -1554,8 +1562,8 @@ def test_module_story_flow(client, resource, uid, expected):
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
-        'time_created': datetime(2019, 8, 21, 13, 42, 20),
-        'time_done': datetime(2099, 8, 21, 13, 42, 20)
+        'time_created': datetime(2017, 8, 13, 15, 43, 51),
+        'time_done': datetime(2017, 8, 14, 5, 43, 51)
     })[0]
     fm_build = FreshmakerBuild.get_or_create({
         'id_': 398,
@@ -1574,13 +1582,13 @@ def test_module_story_flow(client, resource, uid, expected):
         'url': "/api/1/builds/398"
     })[0]
     cb = ContainerKojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'completion_time': datetime(2017, 9, 1, 5, 43, 51),
+        'creation_time': datetime(2017, 8, 14, 5, 43, 51),
         'epoch': '0',
         'id_': '710',
         'name': 'slf4j_2',
         'release': '4.el7_4_as',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'start_time': datetime(2017, 8, 14, 5, 43, 51),
         'state': 1,
         'version': '1.7.4'
     })[0]
@@ -1588,7 +1596,7 @@ def test_module_story_flow(client, resource, uid, expected):
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
         'content_types': ['docker'],
-        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'created_at': datetime(2017, 9, 12, 7, 4, 51),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
@@ -1675,7 +1683,8 @@ def test_get_artifact_story_not_available(client):
             'story_related_nodes_forward': [0],
             'story_related_nodes_backward': [0],
             'requested_node_index': 0,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [0]
         }
     }
 
@@ -1702,7 +1711,7 @@ def test_get_stories_just_artifact(client):
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
         'content_types': ['docker'],
-        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
@@ -1721,7 +1730,7 @@ def test_get_stories_just_artifact(client):
             'attached_bugs': [],
             'attached_builds': [],
             'content_types': ['docker'],
-            'created_at': '2017-04-03T14:47:23Z',
+            'created_at': '2017-08-01T15:43:51Z',
             'id': '27825',
             'issue_date': '2017-08-01T05:59:34Z',
             'product_name': 'Red Hat Enterprise Linux',
@@ -1735,7 +1744,7 @@ def test_get_stories_just_artifact(client):
             'state': 'SHIPPED_LIVE',
             'status_time': '2017-08-01T15:43:51Z',
             'synopsis': 'cifs-utils bug fix update',
-            'timeline_timestamp': '2017-04-03T14:47:23Z',
+            'timeline_timestamp': '2017-08-01T15:43:51Z',
             'triggered_freshmaker_event': [],
             'update_date': '2017-08-01T07:16:00Z'
         }],
@@ -1743,7 +1752,8 @@ def test_get_stories_just_artifact(client):
             'story_related_nodes_forward': [0],
             'story_related_nodes_backward': [0],
             'requested_node_index': 0,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [0]
         }
     }
 
@@ -1758,7 +1768,7 @@ def test_get_story_partial_story(client):
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
         'content_types': ['docker'],
-        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
@@ -1776,28 +1786,28 @@ def test_get_story_partial_story(client):
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
-        'time_created': datetime(2019, 8, 21, 13, 42, 20),
-        'time_done': datetime(2099, 8, 21, 13, 42, 20)
+        'time_created': datetime(2017, 8, 13, 15, 43, 51),
+        'time_done': datetime(2017, 8, 14, 5, 43, 51)
     })[0]
     cb = ContainerKojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'completion_time': datetime(2017, 9, 1, 5, 43, 51),
+        'creation_time': datetime(2017, 8, 14, 5, 43, 51),
         'epoch': '0',
         'id_': '710',
         'name': 'slf4j_2',
         'release': '4.el7_4_as',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'start_time': datetime(2017, 8, 14, 5, 43, 51),
         'state': 1,
         'version': '1.7.4'
     })[0]
     cb2 = ContainerKojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'completion_time': datetime(2017, 9, 1, 5, 43, 51),
+        'creation_time': datetime(2017, 8, 14, 5, 43, 51),
         'epoch': '0',
         'id_': '711',
         'name': 'slf4j_2',
         'release': '4.el7_4_as',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'start_time': datetime(2017, 8, 14, 5, 43, 51),
         'state': 1,
         'version': '1.8.4'
     })[0]
@@ -1814,7 +1824,7 @@ def test_get_story_partial_story(client):
                 'attached_bugs': [],
                 'attached_builds': [],
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -1828,7 +1838,7 @@ def test_get_story_partial_story(client):
                 'state': 'SHIPPED_LIVE',
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
-                'timeline_timestamp': '2017-04-03T14:47:23Z',
+                'timeline_timestamp': '2017-08-01T15:43:51Z',
                 'triggered_freshmaker_event': [{
                     'event_type_id': 8,
                     'id': '1180',
@@ -1836,8 +1846,8 @@ def test_get_story_partial_story(client):
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
-                    'time_created': '2019-08-21T13:42:20Z',
-                    'time_done': '2099-08-21T13:42:20Z'
+                    'time_created': '2017-08-13T15:43:51Z',
+                    'time_done': '2017-08-14T05:43:51Z'
                 }],
                 'update_date': '2017-08-01T07:16:00Z'
             },
@@ -1850,13 +1860,13 @@ def test_get_story_partial_story(client):
                 'state': 2,
                 'state_name': 'COMPLETE',
                 'state_reason': 'All container images have been rebuilt.',
-                'time_created': '2019-08-21T13:42:20Z',
-                'time_done': '2099-08-21T13:42:20Z',
-                'timeline_timestamp': '2019-08-21T13:42:20Z'
+                'time_created': '2017-08-13T15:43:51Z',
+                'time_done': '2017-08-14T05:43:51Z',
+                'timeline_timestamp': '2017-08-13T15:43:51Z'
             },
             {
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-09-01T05:43:51Z',
+                'creation_time': '2017-08-14T05:43:51Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '711',
@@ -1865,9 +1875,9 @@ def test_get_story_partial_story(client):
                 'release': '4.el7_4_as',
                 'resource_type': 'ContainerKojiBuild',
                 'display_name': 'slf4j_2-1.8.4-4.el7_4_as',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-08-14T05:43:51Z',
                 'state': 1,
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'version': '1.8.4'
             }
         ],
@@ -1875,7 +1885,8 @@ def test_get_story_partial_story(client):
             'story_related_nodes_forward': [0, 0, 0],
             'story_related_nodes_backward': [0, 0, 1],
             'requested_node_index': 0,
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [0, 50400]
         }
     }
 
@@ -1887,13 +1898,13 @@ def test_get_story_partial_story(client):
 def test_get_story_fallback(client):
     """Test getting the story for a resource and falling back to a different label."""
     build = KojiBuild.get_or_create({
-        'completion_time': datetime(2017, 4, 2, 19, 39, 6),
-        'creation_time': datetime(2017, 4, 2, 19, 39, 6),
+        'completion_time': datetime(2017, 4, 26, 22, 39, 6),
+        'creation_time': datetime(2017, 4, 26, 21, 12, 6),
         'epoch': '0',
         'id_': '2345',
         'name': 'slf4j',
         'release': '4.el7_4',
-        'start_time': datetime(2017, 4, 2, 19, 39, 6),
+        'start_time': datetime(2017, 4, 26, 21, 12, 6),
         'state': 1,
         'version': '1.7.4'
     })[0]
@@ -1901,7 +1912,7 @@ def test_get_story_fallback(client):
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
         'content_types': ['docker'],
-        'created_at': datetime(2017, 4, 3, 14, 47, 23),
+        'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
@@ -1921,7 +1932,7 @@ def test_get_story_fallback(client):
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
                     'content_types': ['docker'],
-                    'created_at': '2017-04-03T14:47:23Z',
+                    'created_at': '2017-08-01T15:43:51Z',
                     'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
@@ -1935,8 +1946,8 @@ def test_get_story_fallback(client):
                     'update_date': '2017-08-01T07:16:00Z'
                 }],
                 'commit': None,
-                'completion_time': '2017-04-02T19:39:06Z',
-                'creation_time': '2017-04-02T19:39:06Z',
+                'completion_time': '2017-04-26T22:39:06Z',
+                'creation_time': '2017-04-26T21:12:06Z',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
@@ -1946,17 +1957,17 @@ def test_get_story_fallback(client):
                 'resource_type': 'KojiBuild',
                 'module_builds': [],
                 'display_name': 'slf4j-1.7.4-4.el7_4',
-                'start_time': '2017-04-02T19:39:06Z',
+                'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
                 'tags': [],
-                'timeline_timestamp': '2017-04-02T19:39:06Z',
+                'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
                 'content_types': ['docker'],
-                'created_at': '2017-04-03T14:47:23Z',
+                'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
@@ -1970,14 +1981,15 @@ def test_get_story_fallback(client):
                 'status_time': '2017-08-01T15:43:51Z',
                 'synopsis': 'cifs-utils bug fix update',
                 'update_date': '2017-08-01T07:16:00Z',
-                'timeline_timestamp': '2017-04-03T14:47:23Z'
+                'timeline_timestamp': '2017-08-01T15:43:51Z'
             }
         ],
         'meta': {
             'requested_node_index': 0,
             'story_related_nodes_backward': [0, 0],
             'story_related_nodes_forward': [0, 0],
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [61485]
         }
     }
 

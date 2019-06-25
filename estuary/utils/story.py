@@ -6,6 +6,7 @@ import abc
 import sys
 
 from neomodel import db
+from datetime import datetime
 
 from estuary.error import ValidationError
 from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
@@ -144,6 +145,60 @@ class BaseStoryManager(object):
             return correlated_nodes[::-1]
         return correlated_nodes
 
+    def get_wait_times(self, results):
+        """
+        Get the wait time between two different artifacts.
+
+        :param list results: contains inflated results from Neo4j
+        :return: list of wait time ints in order of the pipeline (oldest to newest)
+        :rtype: list
+        :raises RuntimeError: if results has less than 2 elements
+        """
+        len_story = len(results)
+        if len_story < 2:
+            raise RuntimeError('This function can\'t be called with one or zero elements')
+
+        # Some services do not have a real completion time because they perform a single action
+        # that takes a negligible amount of time
+        completion_times = {
+            'BugzillaBug': 'creation_time',
+            'DistGitCommit': 'commit_date',
+            'Advisory': 'created_at',
+            'ContainerAdvisory': 'created_at',
+            # Although Freshmaker has a duration, we need to see how long it takes to trigger a
+            # ContainerKojiBuild from when it started
+            'FreshmakerEvent': 'time_created',
+            'KojiBuild': 'completion_time',
+            'ModuleKojiBuild': 'completion_time',
+            'ContainerKojiBuild': 'completion_time'
+        }
+
+        wait_times = [None for i in range(len_story - 1)]
+
+        for index in range(len_story - 1):
+            artifact = results[index]
+            next_artifact = results[index + 1]
+            property_name = completion_times[artifact.__label__]
+            completion_time = getattr(artifact, property_name)
+            if not completion_time or not next_artifact.timeline_timestamp:
+                continue
+
+            next_artifact_start_time = datetime.strptime(next_artifact.timeline_timestamp,
+                                                         '%Y-%m-%dT%H:%M:%SZ')
+            # Remove timezone info so that both are offset naive and thus able to be subtracted
+            next_artifact_start_time = next_artifact_start_time.replace(tzinfo=None)
+            completion_time = completion_time.replace(tzinfo=None)
+
+            # Ensure that the artifacts are sequential
+            if completion_time > next_artifact_start_time:
+                continue
+
+            # Find the time between when the current artifact completes and the next one starts
+            wait_time = next_artifact_start_time - completion_time
+            wait_times[index] = wait_time.seconds
+
+        return wait_times
+
     def get_sibling_nodes(self, siblings_node_label, story_node, count=False):
         """
         Return sibling nodes with the label siblings_node_label that are related to story_node.
@@ -212,7 +267,8 @@ class BaseStoryManager(object):
                 'story_related_nodes_backward': list(
                     self.get_sibling_nodes_count(results, reverse=True)),
                 'requested_node_index': requested_node_index,
-                'story_type': self.__class__.__name__[:-12].lower()
+                'story_type': self.__class__.__name__[:-12].lower(),
+                'wait_times': self.get_wait_times(results)
             }
         }
 

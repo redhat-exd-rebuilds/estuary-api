@@ -121,7 +121,8 @@ def test_get_story_auth(mock_oidc, employee_type):
             'requested_node_index': 0,
             'story_related_nodes_backward': [0],
             'story_related_nodes_forward': [0],
-            'story_type': 'container'
+            'story_type': 'container',
+            'wait_times': [0]
         }
     }
 
