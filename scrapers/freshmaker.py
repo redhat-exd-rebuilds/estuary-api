@@ -86,12 +86,11 @@ class FreshmakerScraper(BaseScraper):
 
                 for build_dict in fm_event['builds']:
                     # To handle a faulty container build in Freshmaker
-                    if not build_dict['build_id'] or int(build_dict['build_id']) < 0:
+                    if build_dict['build_id'] and int(build_dict['build_id']) < 0:
                         continue
                     log.debug('Creating FreshmakerBuild {0}'.format(build_dict['build_id']))
                     fb_params = dict(
                         id_=build_dict['id'],
-                        build_id=build_dict['build_id'],
                         dep_on=build_dict['dep_on'],
                         name=build_dict['name'],
                         original_nvr=build_dict['original_nvr'],
@@ -107,6 +106,8 @@ class FreshmakerScraper(BaseScraper):
                     if build_dict['time_completed']:
                         fb_params['time_completed'] = timestamp_to_datetime(
                             build_dict['time_completed'])
+                    if build_dict['build_id']:
+                        fb_params['build_id'] = build_dict['build_id']
                     fb = FreshmakerBuild.create_or_update(fb_params)[0]
                     event.requested_builds.connect(fb)
 
