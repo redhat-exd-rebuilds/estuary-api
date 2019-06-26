@@ -31,11 +31,9 @@ class FreshmakerEvent(EstuaryStructuredNode):
         return 'Freshmaker event {0}'.format(self.id_)
 
     @property
-    def timeline_timestamp(self):
+    def timeline_datetime(self):
         """Get the DateTime property used for the Estuary timeline."""
-        if self.time_created:
-            return self.time_created.strftime('%Y-%m-%dT%H:%M:%SZ')
-        return None
+        return self.time_created
 
 
 class FreshmakerBuild(EstuaryStructuredNode):

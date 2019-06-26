@@ -5,9 +5,8 @@ from __future__ import unicode_literals
 from flask import Blueprint, jsonify, request, current_app
 from werkzeug.exceptions import NotFound
 
-from estuary import version
+from estuary import version, log
 from estuary.models.base import EstuaryStructuredNode
-
 from estuary.utils.general import str_to_bool, get_neo4j_node, inflate_node, login_required
 from estuary.utils.recents import get_recent_nodes
 from estuary.error import ValidationError
@@ -115,12 +114,21 @@ def get_resource_story(resource, uid):
 
     # Adding the artifact itself if it's story is not available
     if not results:
+        base_instance = estuary.utils.story.BaseStoryManager()
+        wait_times, total_wait_time = base_instance.get_wait_times([item])
         rv = {'data': [item.serialized_all], 'meta': {}}
         rv['meta']['story_related_nodes_forward'] = [0]
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
-        rv['meta']['wait_times'] = [0]
+        rv['meta']['wait_times'] = wait_times
+        rv['meta']['total_wait_time'] = total_wait_time
+        rv['meta']['total_processing_time'] = None
+        rv['meta']['total_lead_time'] = 0
+        try:
+            rv['meta']['total_processing_time'] = base_instance.get_total_processing_time([item])
+        except:  # noqa E722
+            log.exception('Failed to compute total processing time.')
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
         rv['data'][0]['timeline_timestamp'] = item.timeline_timestamp
@@ -227,12 +235,21 @@ def get_resource_all_stories(resource, uid):
 
     # Adding the artifact itself if its story is not available
     if not all_results:
+        base_instance = estuary.utils.story.BaseStoryManager()
+        wait_times, total_wait_time = base_instance.get_wait_times([item])
         rv = {'data': [item.serialized_all], 'meta': {}}
         rv['meta']['story_related_nodes_forward'] = [0]
         rv['meta']['story_related_nodes_backward'] = [0]
         rv['meta']['requested_node_index'] = 0
         rv['meta']['story_type'] = story_manager.__class__.__name__[:-12].lower()
-        rv['meta']['wait_times'] = [0]
+        rv['meta']['wait_times'] = wait_times
+        rv['meta']['total_wait_time'] = total_wait_time
+        rv['meta']['total_processing_time'] = None
+        rv['meta']['total_lead_time'] = 0
+        try:
+            rv['meta']['total_processing_time'] = base_instance.get_total_processing_time([item])
+        except:  # noqa E722
+            log.exception('Failed to compute total processing time.')
         rv['data'][0]['resource_type'] = item.__label__
         rv['data'][0]['display_name'] = item.display_name
         rv['data'][0]['timeline_timestamp'] = item.timeline_timestamp
