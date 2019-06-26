@@ -47,11 +47,24 @@ class Advisory(EstuaryStructuredNode):
         return self.advisory_name
 
     @property
-    def timeline_timestamp(self):
+    def timeline_datetime(self):
         """Get the DateTime property used for the Estuary timeline."""
-        if self.created_at:
-            return self.created_at.strftime('%Y-%m-%dT%H:%M:%SZ')
-        return None
+        return self.created_at
+
+    @classmethod
+    def attached_build_time(self, advisory, build):
+        """
+        Get the time that a build related to the advisory was attached.
+
+        :param node build: a Neo4j node representing an attached build
+        :return: the time the build was attached
+        :rtype: datetime object
+        """
+        rel = advisory.attached_builds.relationship(build)
+        if rel:
+            return rel.time_attached
+        else:
+            return None
 
     @classmethod
     def find_or_none(cls, identifier):

@@ -14,6 +14,7 @@ from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
+from estuary import log
 
 
 class BaseStoryManager(object):
@@ -147,24 +148,25 @@ class BaseStoryManager(object):
 
     def get_wait_times(self, results):
         """
-        Get the wait time between two different artifacts.
+        Get the wait time between two artifacts for each pair of them, and the sum of these times.
 
         :param list results: contains inflated results from Neo4j
-        :return: list of wait time ints in order of the pipeline (oldest to newest)
-        :rtype: list
+        :return: tuple with list of wait time ints in order of the story (oldest to newest), and
+            a total wait time
+        :rtype: tuple
         :raises RuntimeError: if results has less than 2 elements
         """
         len_story = len(results)
         if len_story < 2:
-            raise RuntimeError('This function can\'t be called with one or zero elements')
+            return [0], 0
 
         # Some services do not have a real completion time because they perform a single action
         # that takes a negligible amount of time
         completion_times = {
             'BugzillaBug': 'creation_time',
             'DistGitCommit': 'commit_date',
-            'Advisory': 'created_at',
-            'ContainerAdvisory': 'created_at',
+            'Advisory': 'status_time',
+            'ContainerAdvisory': 'status_time',
             # Although Freshmaker has a duration, we need to see how long it takes to trigger a
             # ContainerKojiBuild from when it started
             'FreshmakerEvent': 'time_created',
@@ -173,6 +175,7 @@ class BaseStoryManager(object):
             'ContainerKojiBuild': 'completion_time'
         }
 
+        total_wait_time = 0
         wait_times = [None for i in range(len_story - 1)]
 
         for index in range(len_story - 1):
@@ -180,11 +183,24 @@ class BaseStoryManager(object):
             next_artifact = results[index + 1]
             property_name = completion_times[artifact.__label__]
             completion_time = getattr(artifact, property_name)
-            if not completion_time or not next_artifact.timeline_timestamp:
+            if not completion_time or not next_artifact.timeline_datetime:
                 continue
 
-            next_artifact_start_time = datetime.strptime(next_artifact.timeline_timestamp,
-                                                         '%Y-%m-%dT%H:%M:%SZ')
+            if next_artifact.__label__.endswith('Advisory'):
+                if next_artifact.attached_build_time(next_artifact, artifact):
+                    next_artifact_start_time = next_artifact.attached_build_time(next_artifact,
+                                                                                 artifact)
+                else:
+                    id_num = getattr(next_artifact, artifact.unique_id_property + '_')
+                    log.warning(
+                        'While calculating the wait time, a %s with ID %s was '
+                        'encountered without an attached build time.',
+                        next_artifact.__label__, id_num
+                    )
+                    continue
+            else:
+                next_artifact_start_time = next_artifact.timeline_datetime
+
             # Remove timezone info so that both are offset naive and thus able to be subtracted
             next_artifact_start_time = next_artifact_start_time.replace(tzinfo=None)
             completion_time = completion_time.replace(tzinfo=None)
@@ -195,9 +211,160 @@ class BaseStoryManager(object):
 
             # Find the time between when the current artifact completes and the next one starts
             wait_time = next_artifact_start_time - completion_time
-            wait_times[index] = wait_time.seconds
+            wait_times[index] = wait_time.total_seconds()
 
-        return wait_times
+            # The 'wait time' between a FreshmakerEvent and a ContainerKojiBuild is still a part of
+            # the processing in a FreshmakerEvent, so we do not count it towards the total wait time
+            if artifact.__label__ != 'FreshmakerEvent':
+                total_wait_time += wait_time.total_seconds()
+
+        return wait_times, total_wait_time
+
+    def get_total_processing_time(self, results):
+        """
+        Get the total time spent processing the story.
+
+        :param list results: contains inflated results from Neo4j
+        :return: the seconds of total time spent processing
+        :rtype: int
+        """
+        total = 0
+        # If there is a build in the story, it will be assigned here so that it can later be
+        # checked to see if it was attached to an advisory in the story
+        build = None
+        timed_processes = {
+            'FreshmakerEvent': ['time_created', 'time_done'],
+            'KojiBuild': ['creation_time', 'completion_time'],
+            'ModuleKojiBuild': ['creation_time', 'completion_time'],
+            'ContainerKojiBuild': ['creation_time', 'completion_time'],
+            'Advisory': ['created_at', 'status_time'],
+            'ContainerAdvisory': ['created_at', 'status_time']
+        }
+        for index, artifact in enumerate(results):
+            if artifact.__label__ not in timed_processes:
+                continue
+
+            creation_time = getattr(artifact, timed_processes[artifact.__label__][0])
+            if not creation_time:
+                id_num = getattr(artifact, artifact.unique_id_property + '_')
+                log.warning(
+                    'While calculating the total processing time, a %s with ID %s was encountered '
+                    'without a creation time.',
+                    artifact.__label__, id_num
+                )
+                continue
+
+            if artifact.__label__.endswith('KojiBuild'):
+                build = artifact
+
+            if artifact.__label__.endswith('Advisory'):
+                if artifact.state in ['SHIPPED_LIVE', 'DROPPED_NO_SHIP']:
+                    completion_time = getattr(artifact, timed_processes[artifact.__label__][1])
+                else:
+                    completion_time = datetime.utcnow()
+                if build:
+                    creation_time = artifact.attached_build_time(artifact, build)
+
+            # We do not want the processing time of the entire FreshmakerEvent, just the
+            # processing time until the displayed ContainerKojiBuild is created
+            elif artifact.__label__ == 'FreshmakerEvent':
+                if index != len(results) - 1:
+                    next_artifact = results[index + 1]
+                    completion_time = getattr(next_artifact,
+                                              timed_processes[next_artifact.__label__][0])
+                elif artifact.state_name in ['COMPLETE', 'SKIPPED', 'FAILED', 'CANCELED']:
+                    completion_time = getattr(artifact, timed_processes['FreshmakerEvent'][1])
+                    if completion_time is None:
+                        id_num = getattr(artifact, artifact.unique_id_property + '_')
+                        log.warning(
+                            'While calculating the total processing time, a %s with ID %s was '
+                            'encountered without a completion time or subsequent build.',
+                            artifact.__label__, id_num
+                        )
+                        continue
+                else:
+                    completion_time = datetime.utcnow()
+
+            else:
+                completion_time = getattr(artifact, timed_processes[artifact.__label__][1])
+                if not completion_time:
+                    completion_time = datetime.utcnow()
+
+            # Remove timezone info so that both are offset naive and thus able to be subtracted
+            creation_time = creation_time.replace(tzinfo=None)
+            completion_time = completion_time.replace(tzinfo=None)
+            processing_time = completion_time - creation_time
+
+            if processing_time.total_seconds() < 0:
+                id_num = getattr(artifact, artifact.unique_id_property + '_')
+                log.warning(
+                    'A negative processing time was calculated, with a %s with ID %s.',
+                    artifact.__label__, id_num
+                )
+            else:
+                total += processing_time.total_seconds()
+
+        return total
+
+    def get_total_lead_time(self, results):
+        """
+        Get the total lead time - the time from the start of a story until its current state.
+
+        :param list results: contains inflated results from Neo4j
+        :return: the seconds of total time in the story, or None if sufficient data is not available
+        :rtype: int or None
+        """
+        first_artifact = results[0]
+        last_artifact = results[-1]
+        times = {
+            'BugzillaBug': ['creation_time', None],
+            'DistGitCommit': ['commit_date', None],
+            'Advisory': ['created_at', None],
+            'ContainerAdvisory': ['created_at', None],
+            'FreshmakerEvent': ['time_created', 'time_done'],
+            'KojiBuild': ['creation_time', 'completion_time'],
+            'ModuleKojiBuild': ['creation_time', 'completion_time'],
+            'ContainerKojiBuild': ['creation_time', 'completion_time']
+        }
+
+        start_time_key = times[first_artifact.__label__][0]
+        start_time = getattr(first_artifact, start_time_key)
+        if not start_time:
+            id_num = getattr(first_artifact, first_artifact.unique_id_property + '_')
+            log.warning(
+                'While calculating the total lead time, a %s with ID %s was encountered '
+                'without a creation time.',
+                first_artifact.__label__, id_num
+            )
+            return
+        end_time_key = times[last_artifact.__label__][1]
+
+        if end_time_key:
+            end_time = getattr(last_artifact, end_time_key)
+            if not end_time:
+                end_time = datetime.utcnow()
+        elif last_artifact.__label__.endswith('Advisory'):
+            if last_artifact.state in ['SHIPPED_LIVE', 'DROPPED_NO_SHIP']:
+                end_time = getattr(last_artifact, 'status_time')
+            else:
+                end_time = datetime.utcnow()
+        else:
+            end_time = getattr(last_artifact, start_time_key)
+
+        # Remove timezone info so that both are offset naive and thus able to be subtracted
+        start_time = start_time.replace(tzinfo=None)
+        end_time = end_time.replace(tzinfo=None)
+        total = end_time - start_time
+        if total.total_seconds() < 0:
+            first_id_num = getattr(first_artifact, first_artifact.unique_id_property + '_')
+            last_id_num = getattr(last_artifact, last_artifact.unique_id_property + '_')
+            log.warning(
+                'A negative total lead time was calculated, in a story starting with a %s with ID '
+                '%s and ending with a %s with ID %s.',
+                first_artifact.__label__, first_id_num, last_artifact.__label__, last_id_num
+            )
+            return 0
+        return total.total_seconds()
 
     def get_sibling_nodes(self, siblings_node_label, story_node, count=False):
         """
@@ -260,7 +427,20 @@ class BaseStoryManager(object):
             serialized_node['display_name'] = node.display_name
             serialized_node['timeline_timestamp'] = node.timeline_timestamp
             data.append(serialized_node)
-        return {
+
+        base_instance = BaseStoryManager()
+        wait_times, total_wait_time = base_instance.get_wait_times(results)
+        total_processing_time = 0
+        total_lead_time = 0
+        try:
+            total_processing_time = base_instance.get_total_processing_time(results)
+        except:  # noqa E722
+            log.exception('Failed to compute total processing time statistic.')
+        try:
+            total_lead_time = base_instance.get_total_lead_time(results)
+        except:  # noqa E722
+            log.exception('Failed to compute total lead time statistic.')
+        formatted_results = {
             'data': data,
             'meta': {
                 'story_related_nodes_forward': list(self.get_sibling_nodes_count(results)),
@@ -268,9 +448,13 @@ class BaseStoryManager(object):
                     self.get_sibling_nodes_count(results, reverse=True)),
                 'requested_node_index': requested_node_index,
                 'story_type': self.__class__.__name__[:-12].lower(),
-                'wait_times': self.get_wait_times(results)
+                'wait_times': wait_times,
+                'total_wait_time': total_wait_time,
+                'total_processing_time': total_processing_time,
+                'total_lead_time': total_lead_time
             }
         }
+        return formatted_results
 
     def set_story_labels(self, requested_node_label, results, reverse=False):
         """

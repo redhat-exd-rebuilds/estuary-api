@@ -65,8 +65,6 @@ class DistGitCommit(EstuaryStructuredNode):
         return 'commit #{0}'.format(self.hash_[:7])
 
     @property
-    def timeline_timestamp(self):
+    def timeline_datetime(self):
         """Get the DateTime property used for the Estuary timeline."""
-        if self.commit_date:
-            return self.commit_date.strftime('%Y-%m-%dT%H:%M:%SZ')
-        return None
+        return self.commit_date

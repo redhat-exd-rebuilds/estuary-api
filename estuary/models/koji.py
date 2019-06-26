@@ -38,11 +38,9 @@ class KojiBuild(EstuaryStructuredNode):
         return '{0}-{1}-{2}'.format(self.name, self.version, self.release)
 
     @property
-    def timeline_timestamp(self):
+    def timeline_datetime(self):
         """Get the DateTime property used for the Estuary timeline."""
-        if self.creation_time:
-            return self.creation_time.strftime('%Y-%m-%dT%H:%M:%SZ')
-        return None
+        return self.creation_time
 
     @classmethod
     def find_or_none(cls, identifier):

@@ -21,8 +21,15 @@ class EstuaryStructuredNode(StructuredNode):
 
     @property
     def timeline_timestamp(self):
+        """Get the DateTime property used for the Estuary timeline as a string."""
+        if self.timeline_datetime:
+            return self.timeline_datetime.strftime('%Y-%m-%dT%H:%M:%SZ')
+        return None
+
+    @property
+    def timeline_datetime(self):
         """Get the DateTime property used for the Estuary timeline."""
-        raise NotImplementedError('The timeline_timestamp method is not defined')
+        raise NotImplementedError('The timeline_datetime method is not defined')
 
     @property
     def serialized(self):

@@ -105,7 +105,10 @@ from estuary.models.freshmaker import FreshmakerEvent
             'meta':{
                 'story_related_nodes_backward': [0, 0, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0],
-                'wait_times': [53861, 0, None],
+                'total_lead_time': 29852059.0,
+                'total_processing_time': 1140.0,
+                'total_wait_time': 36773861.0,
+                'wait_times': [34095461.0, 2678400.0, None],
                 'requested_node_index': 0,
                 'story_type': 'container'
             }
@@ -229,7 +232,10 @@ from estuary.models.freshmaker import FreshmakerEvent
             'meta': {
                 'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
-                'wait_times': [53861, 0, 85260, 0, 78960],
+                'total_lead_time': 43352201.0,
+                'total_processing_time': 358680.0,
+                'total_wait_time': 70277497.0,
+                'wait_times': [34095461.0, 2678400.0, 949260.0, 32554376.0, 338160.0],
                 'requested_node_index': 0,
                 'story_type': 'container'
             }
@@ -360,7 +366,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0],
-                'wait_times': [53861, 0, None],
+                'total_lead_time': 29852059.0,
+                'total_processing_time': 1140.0,
+                'total_wait_time': 36773861.0,
+                'wait_times': [34095461.0, 2678400.0, None],
                 'story_type': 'container'
             }
         },
@@ -488,7 +497,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0],
-                'wait_times': [43875, 17068, None],
+                'total_lead_time': 29945541.0,
+                'total_processing_time': 1140.0,
+                'total_wait_time': 36867343.0,
+                'wait_times': [29938275.0, 6929068.0, None],
                 'story_type': 'container'
             }
         },
@@ -645,7 +657,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
-                'wait_times': [53861, 0, 85260, 0, 78960],
+                'total_lead_time': 43352201.0,
+                'total_processing_time': 358680.0,
+                'total_wait_time': 70277497.0,
+                'wait_times': [34095461.0, 2678400.0, 949260.0, 32554376.0, 338160.0],
                 'story_type': 'container'
             }
         },
@@ -802,7 +817,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1, 0, 1],
                 'story_related_nodes_forward':[0, 1, 0, 0, 0, 0],
-                'wait_times': [43875, 17068, 85260, 0, 78960],
+                'total_lead_time': 43445683.0,
+                'total_processing_time': 358680.0,
+                'total_wait_time': 70370979.0,
+                'wait_times': [29938275.0, 6929068.0, 949260.0, 32554376.0, 338160.0],
                 'story_type': 'container'
             }
         }
@@ -929,7 +947,7 @@ def test_all_stories(client, resource, uid, expected):
     # Longest story
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
-    build.advisories.connect(advisory)
+    build.advisories.connect(advisory, {'time_attached': datetime(2018, 6, 13, 10, 36, 47)})
     fm_event.triggered_by_advisory.connect(advisory)
     fm_event.successful_koji_builds.connect(cb)
     fm_event.successful_koji_builds.connect(cb_two)
@@ -937,7 +955,7 @@ def test_all_stories(client, resource, uid, expected):
     # Unique partial stories
     commit_two.resolved_bugs.connect(bug_two)
     commit_two.koji_builds.connect(build)
-    build.advisories.connect(advisory_two)
+    build.advisories.connect(advisory_two, {'time_attached': datetime(2018, 4, 21, 19, 36, 47)})
 
     rv = client.get('/api/v1/allstories/{0}/{1}'.format(resource, uid))
     assert rv.status_code == 200
@@ -973,7 +991,7 @@ def test_get_stories_fallback(client):
         'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
 
-    build.advisories.connect(advisory)
+    build.advisories.connect(advisory, {'time_attached': datetime(2017, 4, 3, 14, 47, 23)})
     expected = [{
         'data': [
             {
@@ -1037,7 +1055,10 @@ def test_get_stories_fallback(client):
             'requested_node_index': 0,
             'story_related_nodes_forward': [0, 0],
             'story_related_nodes_backward': [0, 0],
-            'wait_times': [68897],
+            'wait_times': [68897.0],
+            'total_lead_time': 10440285.0,
+            'total_processing_time': 10371388.0,
+            'total_wait_time': 68897.0,
             'story_type': 'container'
         }
     }]
