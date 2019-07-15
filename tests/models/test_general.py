@@ -1,14 +1,17 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+from datetime import datetime
 
 import pytest
 from neomodel import UniqueIdProperty, One, RelationshipTo
+import pytz
 
 from estuary.models.base import EstuaryStructuredNode
 from estuary.models.errata import Advisory
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
+from estuary.models.koji import KojiBuild
 
 
 def test_conditional_connect_zero_or_one():
@@ -58,3 +61,14 @@ def test_conditional_connect_one():
     with pytest.raises(NotImplementedError)as exc_info:
         EstuaryStructuredNode.conditional_connect(test.owner, thanks)
     assert 'conditional_connect doesn\'t support cardinality of one' == str(exc_info.value)
+
+
+def test_build_added_rel():
+    """Test BuildsAddedRel on KojiBuilds."""
+    advisory = Advisory(id_='12345', advisory_name='RHBA-2018:12345-01').save()
+    build = KojiBuild(id_='12345').save()
+    time_attached = datetime(2017, 4, 2, 19, 39, 6, tzinfo=pytz.utc)
+    rel = advisory.attached_builds.connect(build, {'time_attached': time_attached})
+    rel.save()
+    assert advisory.attached_builds.relationship(build).time_attached == time_attached
+    assert rel.time_attached == time_attached

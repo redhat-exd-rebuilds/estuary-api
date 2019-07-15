@@ -10,12 +10,13 @@ from neomodel import (
 
 from estuary.models.base import EstuaryStructuredNode
 from estuary.error import ValidationError
+from estuary.models.errata import Advisory
 
 
 class KojiBuild(EstuaryStructuredNode):
     """Definition of a Koji build in Neo4j."""
 
-    advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
+    advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED', model=Advisory.BuildAttachedRel)
     commit = RelationshipTo('.distgit.DistGitCommit', 'BUILT_FROM', cardinality=ZeroOrOne)
     completion_time = DateTimeProperty(index=True)
     creation_time = DateTimeProperty()
