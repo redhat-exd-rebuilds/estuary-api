@@ -71,10 +71,10 @@ class FreshmakerScraper(BaseScraper):
                     state_reason=fm_event['state_reason'],
                     url=fm_event['url']
                 )
-                if 'time_created' in fm_event:
-                    event_params['time_created'] = fm_event['time_created']
-                if 'time_done' in fm_event:
-                    event_params['time_done'] = fm_event['time_created']
+                if fm_event.get('time_created'):
+                    event_params['time_created'] = timestamp_to_datetime(fm_event['time_created'])
+                if fm_event.get('time_done'):
+                    event_params['time_done'] = timestamp_to_datetime(fm_event['time_created'])
                 event = FreshmakerEvent.create_or_update(event_params)[0]
 
                 log.debug('Creating Advisory {0}'.format(fm_event['search_key']))
