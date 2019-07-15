@@ -6,7 +6,7 @@ import re
 
 from neomodel import (
     UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty, ArrayProperty,
-    DateTimeProperty, ZeroOrOne)
+    DateTimeProperty, ZeroOrOne, StructuredRel)
 
 from estuary.models.base import EstuaryStructuredNode
 from estuary.error import ValidationError
@@ -14,6 +14,11 @@ from estuary.error import ValidationError
 
 class Advisory(EstuaryStructuredNode):
     """Definition of an Errata advisory in Neo4j."""
+
+    class BuildAttachedRel(StructuredRel):
+        """Definition of a relationship between an Advisory and a KojiBuild attached to it."""
+
+        time_attached = DateTimeProperty()
 
     actual_ship_date = DateTimeProperty()
     advisory_name = StringProperty(unique=True, index=True)
@@ -32,7 +37,7 @@ class Advisory(EstuaryStructuredNode):
     update_date = DateTimeProperty(index=True)
     assigned_to = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
     attached_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'ATTACHED')
-    attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED')
+    attached_builds = RelationshipTo('.koji.KojiBuild', 'ATTACHED', model=BuildAttachedRel)
     reporter = RelationshipTo('.user.User', 'REPORTED_BY', cardinality=ZeroOrOne)
     triggered_freshmaker_event = RelationshipFrom('.freshmaker.FreshmakerEvent', 'TRIGGERED_BY')
 

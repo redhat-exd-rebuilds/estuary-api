@@ -1280,12 +1280,13 @@ def test_get_stories(client, resource, uids, expected):
     commit.resolved_bugs.connect(bug_two)
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
-    build.advisories.connect(advisory)
-    advisory.attached_builds.connect(build)
+    build.advisories.connect(advisory, {'time_attached': datetime(2017, 4, 26, 21, 12, 6)})
+    advisory.attached_builds.connect(build, {'time_attached': datetime(2017, 4, 26, 21, 12, 6)})
     fm_event.triggered_by_advisory.connect(advisory)
     fm_event.successful_koji_builds.connect(cb)
     fm_event.requested_builds.connect(fm_build)
-    containeradvisory.attached_builds.connect(cb)
+    containeradvisory.attached_builds.connect(cb,
+                                              {'time_attached': datetime(2017, 4, 26, 21, 12, 6)})
 
     for uid in uids:
         url = '/api/v1/story/{0}/{1}'.format(resource, urllib.parse.quote(uid))
@@ -1610,14 +1611,14 @@ def test_module_story_flow(client, resource, uid, expected):
 
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)
-    build.advisories.connect(advisory)
-    advisory.attached_builds.connect(build)
+    build.advisories.connect(advisory, {'time_attached': datetime(2017, 4, 26, 21, 12, 6)})
+    advisory.attached_builds.connect(build, {'time_attached': datetime(2017, 4, 26, 21, 12, 6)})
     fm_event.triggered_by_advisory.connect(advisory)
     fm_event.successful_koji_builds.connect(cb)
     fm_event.requested_builds.connect(fm_build)
     containeradvisory.attached_builds.connect(cb)
     module_build.components.connect(build)
-    module_build.advisories.connect(advisory)
+    module_build.advisories.connect(advisory, {'time_attached': datetime(2017, 4, 26, 21, 12, 6)})
 
     url = '/api/v1/story/{0}/{1}'.format(resource, uid)
     rv = client.get(url)
@@ -1924,7 +1925,7 @@ def test_get_story_fallback(client):
         'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
 
-    build.advisories.connect(advisory)
+    build.advisories.connect(advisory, {'time_attached': datetime(2017, 4, 26, 21, 12, 6)})
     expected = {
         'data': [
             {
