@@ -110,7 +110,22 @@ class ErrataScraper(BaseScraper):
                             and build.__label__ == ContainerKojiBuild.__label__:
                         adv.add_label(ContainerAdvisory.__label__)
 
-                    adv.attached_builds.connect(build)
+                    nvr = '-'.join((associated_build['name'], associated_build['version'],
+                                    associated_build['release']))
+
+                    sql = r"""\
+                        SELECT created_at
+                        FROM Errata_public.errata_brew_mappings
+                        INNER JOIN Errata_public.brew_builds
+                        ON Errata_public.errata_brew_mappings.brew_build_id
+                            = Errata_public.brew_builds.id
+                        WHERE errata_id = {0} AND current = 1 AND nvr = {1};
+                    """.format(advisory['id'], nvr)
+                    log.info('Getting the time build {0} was added to advisory {1}'.format(
+                        nvr, advisory['id']))
+                    time_attached = self.teiid.query(sql)
+
+                    adv.attached_builds.connect(build, {'time_attached': time_attached})
 
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
             adv.conditional_connect(adv.assigned_to, assigned_to)
