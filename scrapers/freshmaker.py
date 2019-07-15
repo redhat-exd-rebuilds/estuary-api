@@ -112,7 +112,10 @@ class FreshmakerScraper(BaseScraper):
                     event.requested_builds.connect(fb)
 
                     # The build ID obtained from Freshmaker API is actually a Koji task ID
-                    task_result = self.get_koji_task_result(build_dict['build_id'])
+                    task_result = None
+                    if build_dict['build_id']:
+                        task_result = self.get_koji_task_result(build_dict['build_id'])
+
                     if not task_result:
                         continue
 
