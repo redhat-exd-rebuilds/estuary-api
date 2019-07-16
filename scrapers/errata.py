@@ -123,9 +123,18 @@ class ErrataScraper(BaseScraper):
                     """.format(advisory['id'], nvr)
                     log.info('Getting the time build {0} was added to advisory {1}'.format(
                         nvr, advisory['id']))
-                    time_attached = self.teiid.query(sql)
+                    time_attached_result = self.teiid.query(sql)
+                    if time_attached_result:
+                        time_attached = time_attached_result[0].get('created_at')
+                    else:
+                        time_attached = None
 
-                    adv.attached_builds.connect(build, {'time_attached': time_attached})
+                    attached_rel = adv.attached_builds.relationship(build)
+                    if attached_rel:
+                        if attached_rel.time_attached != time_attached:
+                            adv.attached_builds.replace(build, {'time_attached': time_attached})
+                    else:
+                        adv.attached_builds.connect(build, {'time_attached': time_attached})
 
             assigned_to = User.get_or_create({'username': advisory['assigned_to'].split('@')[0]})[0]
             adv.conditional_connect(adv.assigned_to, assigned_to)
