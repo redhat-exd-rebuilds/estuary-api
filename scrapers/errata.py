@@ -113,13 +113,13 @@ class ErrataScraper(BaseScraper):
                     nvr = '-'.join((associated_build['name'], associated_build['version'],
                                     associated_build['release']))
 
-                    sql = r"""\
+                    sql = """\
                         SELECT created_at
                         FROM Errata_public.errata_brew_mappings
                         INNER JOIN Errata_public.brew_builds
                         ON Errata_public.errata_brew_mappings.brew_build_id
                             = Errata_public.brew_builds.id
-                        WHERE errata_id = {0} AND current = 1 AND nvr = {1};
+                        WHERE errata_id = {0} AND current = 1 AND nvr = '{1}';
                     """.format(advisory['id'], nvr)
                     log.info('Getting the time build {0} was added to advisory {1}'.format(
                         nvr, advisory['id']))
