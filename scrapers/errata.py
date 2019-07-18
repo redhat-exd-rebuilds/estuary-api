@@ -110,26 +110,8 @@ class ErrataScraper(BaseScraper):
                             and build.__label__ == ContainerKojiBuild.__label__:
                         adv.add_label(ContainerAdvisory.__label__)
 
-                    nvr = '-'.join((associated_build['name'], associated_build['version'],
-                                    associated_build['release']))
-
-                    sql = """\
-                        SELECT created_at
-                        FROM Errata_public.errata_brew_mappings
-                        INNER JOIN Errata_public.brew_builds
-                        ON Errata_public.errata_brew_mappings.brew_build_id
-                            = Errata_public.brew_builds.id
-                        WHERE errata_id = {0} AND current = 1 AND nvr = '{1}';
-                    """.format(advisory['id'], nvr)
-                    log.info('Getting the time build {0} was added to advisory {1}'.format(
-                        nvr, advisory['id']))
-                    time_attached_result = self.teiid.query(sql)
-                    if time_attached_result:
-                        time_attached = time_attached_result[0].get('created_at')
-                    else:
-                        time_attached = None
-
                     attached_rel = adv.attached_builds.relationship(build)
+                    time_attached = associated_build['time_attached']
                     if attached_rel:
                         if attached_rel.time_attached != time_attached:
                             adv.attached_builds.replace(build, {'time_attached': time_attached})
@@ -199,7 +181,7 @@ class ErrataScraper(BaseScraper):
         """
         sql = """\
             SELECT brew_builds.id as id_, packages.name, brew_builds.release, removed_index_id,
-                brew_builds.version
+                brew_builds.version, brew_mappings.created_at as time_attached
             FROM Errata_public.errata_brew_mappings as brew_mappings
             LEFT JOIN Errata_public.brew_builds AS brew_builds
                 ON brew_builds.id = brew_mappings.brew_build_id
