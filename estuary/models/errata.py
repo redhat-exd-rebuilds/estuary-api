@@ -51,7 +51,7 @@ class Advisory(EstuaryStructuredNode):
         """Get the DateTime property used for the Estuary timeline."""
         if self.created_at:
             return self.created_at.strftime('%Y-%m-%dT%H:%M:%SZ')
-        return None
+        return 'No timestamp information is currently available for this artifact'
 
     @classmethod
     def find_or_none(cls, identifier):

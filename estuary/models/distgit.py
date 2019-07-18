@@ -69,4 +69,4 @@ class DistGitCommit(EstuaryStructuredNode):
         """Get the DateTime property used for the Estuary timeline."""
         if self.commit_date:
             return self.commit_date.strftime('%Y-%m-%dT%H:%M:%SZ')
-        return None
+        return 'No timestamp information is currently available for this artifact'

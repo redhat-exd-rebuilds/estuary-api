@@ -180,7 +180,7 @@ class BaseStoryManager(object):
             next_artifact = results[index + 1]
             property_name = completion_times[artifact.__label__]
             completion_time = getattr(artifact, property_name)
-            if not completion_time or not next_artifact.timeline_timestamp:
+            if not completion_time or 'No timestamp' in next_artifact.timeline_timestamp:
                 continue
 
             next_artifact_start_time = datetime.strptime(next_artifact.timeline_timestamp,
