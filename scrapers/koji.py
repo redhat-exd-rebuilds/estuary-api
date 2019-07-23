@@ -232,10 +232,7 @@ class KojiScraper(BaseScraper):
             else:
                 build = KojiBuild.create_or_update(build_params)[0]
 
-            if build_dict['owner_username']:
-                username = build_dict['owner_username'].split('@')[0]
-            else:
-                username = build_dict['owner_name']
+            username = build_dict['owner_name']
             user = User.get_or_create(dict(username=username))[0]
             build.conditional_connect(build.owner, user)
 
