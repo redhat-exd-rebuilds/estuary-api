@@ -15,8 +15,8 @@ def test_cors_header(client, origin, header_set):
     if header_set:
         assert 'Access-Control-Allow-Origin: {}'.format(origin) in str(rv.headers)
         assert 'Access-Control-Allow-Headers: Content-Type' in str(rv.headers)
-        assert 'Access-Control-Allow-Method: GET, OPTIONS' in str(rv.headers)
+        assert 'Access-Control-Allow-Methods: GET, OPTIONS' in str(rv.headers)
     else:
         assert 'Access-Control-Allow-Origin' not in str(rv.headers)
         assert 'Access-Control-Allow-Headers' not in str(rv.headers)
-        assert 'Access-Control-Allow-Method' not in str(rv.headers)
+        assert 'Access-Control-Allow-Methods' not in str(rv.headers)
