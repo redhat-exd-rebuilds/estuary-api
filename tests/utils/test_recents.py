@@ -42,7 +42,8 @@ def test_get_recent_nodes():
         'update_date': None
     })
     FreshmakerEvent.get_or_create({
-        'id_': '77777'
+        'id_': '77777',
+        'time_created': datetime(2017, 5, 30, 11, 44, 38),
     })
 
     nodes, meta = estuary.utils.recents.get_recent_nodes()
@@ -62,7 +63,7 @@ def test_get_recent_nodes():
         Advisory.__label__: 'id'
     }
     timestamp_dict = {
-        FreshmakerEvent.__label__: 'id',
+        FreshmakerEvent.__label__: 'time_created',
         BugzillaBug.__label__: 'modified_time',
         DistGitCommit.__label__: 'commit_date',
         KojiBuild.__label__: 'completion_time',

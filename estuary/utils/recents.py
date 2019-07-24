@@ -22,7 +22,7 @@ def get_recent_nodes():
     :rtype: tuple
     """
     timestamp_dict = {
-        FreshmakerEvent.__label__: 'id',
+        FreshmakerEvent.__label__: 'time_created',
         BugzillaBug.__label__: 'modified_time',
         DistGitCommit.__label__: 'commit_date',
         KojiBuild.__label__: 'completion_time',

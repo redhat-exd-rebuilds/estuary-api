@@ -21,7 +21,7 @@ def test_get_recent_nodes(client):
         Advisory.__label__: 'id'
     }
     timestamp_dict = {
-        FreshmakerEvent.__label__: 'id',
+        FreshmakerEvent.__label__: 'time_created',
         BugzillaBug.__label__: 'modified_time',
         DistGitCommit.__label__: 'commit_date',
         KojiBuild.__label__: 'completion_time',
@@ -78,7 +78,7 @@ def test_get_recent_nodes(client):
                 {
                     'state_reason': None,
                     'state_name': None,
-                    'time_created': None,
+                    'time_created': '2017-05-30T11:44:38Z',
                     'time_done': None,
                     'id': '77777',
                     'state': None,
@@ -86,11 +86,9 @@ def test_get_recent_nodes(client):
                     'message_id': None,
                     'display_name': 'Freshmaker event 77777',
                     'resource_type': 'FreshmakerEvent',
-                    'time_created': None,
-                    'time_done': None,
                     'requested_builds': [],
                     'successful_koji_builds': [],
-                    'triggered_by_advisory': None
+                    'triggered_by_advisory': None,
                 }
             ],
             'KojiBuild': [
@@ -224,7 +222,8 @@ def test_get_recent_nodes(client):
         'advisory_name': 'RHBA-2017:27760-01'
     })
     FreshmakerEvent.get_or_create({
-        'id_': '77777'
+        'id_': '77777',
+        'time_created': datetime(2017, 5, 30, 11, 44, 38),
     })
 
     rv = client.get('/api/v1/recents')
