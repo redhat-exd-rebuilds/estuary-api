@@ -124,9 +124,12 @@ def get_resource_story(resource, uid):
         rv['meta']['wait_times'] = wait_times
         rv['meta']['total_wait_time'] = total_wait_time
         rv['meta']['total_processing_time'] = None
+        rv['meta']['processing_time_flag'] = False
         rv['meta']['total_lead_time'] = 0
         try:
-            rv['meta']['total_processing_time'] = base_instance.get_total_processing_time([item])
+            total_processing_time, flag = base_instance.get_total_processing_time([item])
+            rv['meta']['total_processing_time'] = total_processing_time
+            rv['meta']['processing_time_flag'] = flag
         except:  # noqa E722
             log.exception('Failed to compute total processing time.')
         rv['data'][0]['resource_type'] = item.__label__
@@ -245,9 +248,12 @@ def get_resource_all_stories(resource, uid):
         rv['meta']['wait_times'] = wait_times
         rv['meta']['total_wait_time'] = total_wait_time
         rv['meta']['total_processing_time'] = None
+        rv['meta']['processing_time_flag'] = False
         rv['meta']['total_lead_time'] = 0
         try:
-            rv['meta']['total_processing_time'] = base_instance.get_total_processing_time([item])
+            total_processing_time, flag = base_instance.get_total_processing_time([item])
+            rv['meta']['total_processing_time'] = total_processing_time
+            rv['meta']['processing_time_flag'] = flag
         except:  # noqa E722
             log.exception('Failed to compute total processing time.')
         rv['data'][0]['resource_type'] = item.__label__

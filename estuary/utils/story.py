@@ -225,9 +225,10 @@ class BaseStoryManager(object):
         Get the total time spent processing the story.
 
         :param list results: contains inflated results from Neo4j
-        :return: the seconds of total time spent processing
-        :rtype: int
+        :return: the seconds of total time spent processing with a flag for inaccurate calculations
+        :rtype: tuple
         """
+        flag = False
         total = 0
         # If there is a build in the story, it will be assigned here so that it can later be
         # checked to see if it was attached to an advisory in the story
@@ -252,6 +253,7 @@ class BaseStoryManager(object):
                     'without a creation time.',
                     artifact.__label__, id_num
                 )
+                flag = True
                 continue
 
             if artifact.__label__.endswith('KojiBuild'):
@@ -281,6 +283,7 @@ class BaseStoryManager(object):
                             'encountered without a completion time or subsequent build.',
                             artifact.__label__, id_num
                         )
+                        flag = True
                         continue
                 else:
                     completion_time = datetime.utcnow()
@@ -304,7 +307,7 @@ class BaseStoryManager(object):
             else:
                 total += processing_time.total_seconds()
 
-        return total
+        return total, flag
 
     def get_total_lead_time(self, results):
         """
@@ -431,9 +434,12 @@ class BaseStoryManager(object):
         base_instance = BaseStoryManager()
         wait_times, total_wait_time = base_instance.get_wait_times(results)
         total_processing_time = 0
+        processing_time_flag = False
         total_lead_time = 0
         try:
-            total_processing_time = base_instance.get_total_processing_time(results)
+            processing_time, flag = base_instance.get_total_processing_time(results)
+            total_processing_time = processing_time
+            processing_time_flag = flag
         except:  # noqa E722
             log.exception('Failed to compute total processing time statistic.')
         try:
@@ -451,6 +457,7 @@ class BaseStoryManager(object):
                 'wait_times': wait_times,
                 'total_wait_time': total_wait_time,
                 'total_processing_time': total_processing_time,
+                'processing_time_flag': processing_time_flag,
                 'total_lead_time': total_lead_time
             }
         }
