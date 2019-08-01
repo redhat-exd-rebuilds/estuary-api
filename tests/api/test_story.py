@@ -159,6 +159,7 @@ from estuary.models.user import User
             'story_type': 'container',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 12427125.0,
             'wait_times': [2045132.0, 34048.0, 8355885.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -352,6 +353,7 @@ from estuary.models.user import User
             'story_type': 'container',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 12427125.0,
             'wait_times': [2045132.0, 34048.0, 8355885.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -511,6 +513,7 @@ from estuary.models.user import User
             'story_type': 'container',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 12427125.0,
             'wait_times': [2045132.0, 34048.0, 8355885.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -669,6 +672,7 @@ from estuary.models.user import User
             'story_type': 'container',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 12427125.0,
             'wait_times': [2045132.0, 34048.0, 8355885.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -846,6 +850,7 @@ from estuary.models.user import User
             'story_type': 'container',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 12427125.0,
             'wait_times': [2045132.0, 34048.0, 8355885.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -1012,6 +1017,7 @@ from estuary.models.user import User
             'story_type': 'container',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 12427125.0,
             'wait_times': [2045132.0, 34048.0, 8355885.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -1164,6 +1170,7 @@ from estuary.models.user import User
             'story_type': 'container',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 12427125.0,
             'wait_times': [2045132.0, 34048.0, 8355885.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -1512,6 +1519,7 @@ def test_get_stories(client, resource, uids, expected):
             'story_type': 'module',
             'total_lead_time': 10440285.0,
             'total_processing_time': 1610820.0,
+            'processing_time_flag': False,
             'total_wait_time': 14511525.0,
             'wait_times': [2045132.0, 34048.0, None, 10440285.0, 1036800.0, 50400.0, 955260.0]
         }
@@ -1712,6 +1720,7 @@ def test_get_artifact_story_not_available(client):
             'story_type': 'container',
             'total_lead_time': 0,
             'total_processing_time': 0,
+            'processing_time_flag': False,
             'total_wait_time': 0,
             'wait_times': [0]
         }
@@ -1784,6 +1793,7 @@ def test_get_stories_just_artifact(client):
             'story_type': 'container',
             'total_lead_time': 0,
             'total_processing_time': 0,
+            'processing_time_flag': False,
             'total_wait_time': 0,
             'wait_times': [0]
         }
@@ -1920,6 +1930,7 @@ def test_get_story_partial_story(client):
             'story_type': 'container',
             'total_lead_time': 2642400.0,
             'total_processing_time': 1605600.0,
+            'processing_time_flag': False,
             'total_wait_time': 1036800.0,
             'wait_times': [1036800.0, 50400.0]
         }
@@ -2026,6 +2037,7 @@ def test_get_story_fallback(client):
             'story_type': 'container',
             'total_lead_time': 8361105.0,
             'total_processing_time': 5220.0,
+            'processing_time_flag': False,
             'total_wait_time': 8355885.0,
             'wait_times': [8355885.0]
         }

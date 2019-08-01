@@ -124,6 +124,7 @@ def test_get_story_auth(mock_oidc, employee_type):
             'story_type': 'container',
             'total_lead_time': 0.0,
             'total_processing_time': 0.0,
+            'processing_time_flag': False,
             'total_wait_time': 0.0,
             'wait_times': [0]
         }

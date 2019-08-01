@@ -107,6 +107,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'story_related_nodes_forward': [0, 1, 0, 0],
                 'total_lead_time': 29852059.0,
                 'total_processing_time': 1140.0,
+                'processing_time_flag': False,
                 'total_wait_time': 36773861.0,
                 'wait_times': [34095461.0, 2678400.0, None],
                 'requested_node_index': 0,
@@ -234,6 +235,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
                 'total_lead_time': 43352201.0,
                 'total_processing_time': 358680.0,
+                'processing_time_flag': False,
                 'total_wait_time': 70277497.0,
                 'wait_times': [34095461.0, 2678400.0, 949260.0, 32554376.0, 338160.0],
                 'requested_node_index': 0,
@@ -368,6 +370,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'story_related_nodes_forward': [0, 1, 0, 0],
                 'total_lead_time': 29852059.0,
                 'total_processing_time': 1140.0,
+                'processing_time_flag': False,
                 'total_wait_time': 36773861.0,
                 'wait_times': [34095461.0, 2678400.0, None],
                 'story_type': 'container'
@@ -499,6 +502,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'story_related_nodes_forward': [0, 1, 0, 0],
                 'total_lead_time': 29945541.0,
                 'total_processing_time': 1140.0,
+                'processing_time_flag': False,
                 'total_wait_time': 36867343.0,
                 'wait_times': [29938275.0, 6929068.0, None],
                 'story_type': 'container'
@@ -659,6 +663,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'story_related_nodes_forward': [0, 1, 0, 0, 0, 0],
                 'total_lead_time': 43352201.0,
                 'total_processing_time': 358680.0,
+                'processing_time_flag': False,
                 'total_wait_time': 70277497.0,
                 'wait_times': [34095461.0, 2678400.0, 949260.0, 32554376.0, 338160.0],
                 'story_type': 'container'
@@ -819,6 +824,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'story_related_nodes_forward':[0, 1, 0, 0, 0, 0],
                 'total_lead_time': 43445683.0,
                 'total_processing_time': 358680.0,
+                'processing_time_flag': False,
                 'total_wait_time': 70370979.0,
                 'wait_times': [29938275.0, 6929068.0, 949260.0, 32554376.0, 338160.0],
                 'story_type': 'container'
@@ -1058,6 +1064,7 @@ def test_get_stories_fallback(client):
             'wait_times': [68897.0],
             'total_lead_time': 10440285.0,
             'total_processing_time': 10371388.0,
+            'processing_time_flag': False,
             'total_wait_time': 68897.0,
             'story_type': 'container'
         }
