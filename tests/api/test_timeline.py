@@ -128,7 +128,7 @@ def test_full_module_timeline():
         'state': 'SHIPPED_LIVE',
         'created_at': datetime(2019, 1, 1, 0, 0, 40),
         'status_time': datetime(2019, 1, 1, 0, 0, 50)
-    }, [10.0, 10.0, [0], 0]),
+    }, [0, 10.0, [0], 0]),
     ('FreshmakerEvent', {
         'id_': '5555',
         'time_created': datetime(2019, 1, 1, 0, 1, 0),
@@ -145,7 +145,7 @@ def test_full_module_timeline():
         'state': 'SHIPPED_LIVE',
         'created_at': datetime(2019, 1, 1, 0, 1, 40),
         'status_time': datetime(2019, 1, 1, 0, 1, 50)
-    }, [10.0, 10.0, [0], 0]),
+    }, [0, 10.0, [0], 0]),
 ])
 def test_individual_nodes(label, data, expected):
     """Test the data relating to the timeline with only one node."""
@@ -381,7 +381,7 @@ def test_event_no_time(caplog):
     assert flag is True
 
 
-def test_no_attached_build(caplog):
+def test_unattached_build(caplog):
     """Test when there is an advisory without an attached build."""
     build = helpers.make_artifact('KojiBuild', **{
         'id_': '3333',
@@ -409,4 +409,30 @@ def test_no_attached_build(caplog):
     assert caplog.record_tuples == [
         ('estuary', logging.WARNING, 'While calculating the wait time, a Advisory with ID 4444 was'
          ' encountered without an attached build time.')
+    ]
+
+
+def test_no_attached_build(caplog):
+    """Test when there is an advisory without an attached build."""
+    advisory = helpers.make_artifact('Advisory', **{
+        'id_': '4444',
+        'state': 'QE',
+        'created_at': datetime(2019, 1, 1, 0, 0, 40),
+        'status_time': datetime(2019, 1, 1, 0, 0, 50),
+        'attached_builds': None
+    })
+    event = helpers.make_artifact('FreshmakerEvent', **{
+        'id_': '5555',
+        'time_created': datetime(2019, 1, 1, 0, 1, 0),
+        'time_done': datetime(2019, 1, 1, 0, 1, 10),
+        'state_name': 'COMPLETE'
+    })
+
+    results = [advisory, event]
+    base_instance = estuary.utils.story.BaseStoryManager()
+    base_instance.get_total_processing_time(results)
+
+    assert caplog.record_tuples == [
+        ('estuary', logging.WARNING, 'While calculating the processing time, a Advisory with'
+         ' ID 4444 was encountered without a build or creation time.')
     ]
