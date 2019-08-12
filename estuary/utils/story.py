@@ -266,6 +266,15 @@ class BaseStoryManager(object):
                     completion_time = datetime.utcnow()
                 if build:
                     creation_time = artifact.attached_build_time(artifact, build)
+                    if not creation_time:
+                        creation_time = getattr(build, timed_processes[build.__label__][1])
+                if not build or not creation_time:
+                    log.warning(
+                        'While calculating the processing time, a %s with ID %s was '
+                        'encountered without a build or creation time.',
+                        artifact.__label__, getattr(artifact,
+                                                    artifact.unique_id_property + '_'))
+                    continue
 
             # We do not want the processing time of the entire FreshmakerEvent, just the
             # processing time until the displayed ContainerKojiBuild is created
