@@ -113,39 +113,39 @@ def test_full_module_timeline():
     ('BugzillaBug', {
         'id_': '1111',
         'creation_time': datetime(2019, 1, 1, 0, 0, 0)
-    }, [0, 0, [0], 0]),
+    }, [0, 0, [0], 0, False]),
     ('DistGitCommit', {
         'hash_': '2222',
         'commit_date': datetime(2019, 1, 1, 0, 0, 10)
-    }, [0, 0, [0], 0]),
+    }, [0, 0, [0], 0, False]),
     ('KojiBuild', {
         'id_': '3333',
         'creation_time': datetime(2019, 1, 1, 0, 0, 20),
         'completion_time': datetime(2019, 1, 1, 0, 0, 30)
-    }, [10.0, 10.0, [0], 0]),
+    }, [10.0, 10.0, [0], 0, False]),
     ('Advisory', {
         'id_': '4444',
         'state': 'SHIPPED_LIVE',
         'created_at': datetime(2019, 1, 1, 0, 0, 40),
         'status_time': datetime(2019, 1, 1, 0, 0, 50)
-    }, [0, 10.0, [0], 0]),
+    }, [0, 10.0, [0], 0, True]),
     ('FreshmakerEvent', {
         'id_': '5555',
         'time_created': datetime(2019, 1, 1, 0, 1, 0),
         'time_done': datetime(2019, 1, 1, 0, 1, 10),
         'state_name': 'COMPLETE'
-    }, [10.0, 10.0, [0], 0]),
+    }, [10.0, 10.0, [0], 0, False]),
     ('ContainerKojiBuild', {
         'id_': '6666',
         'creation_time': datetime(2019, 1, 1, 0, 1, 20),
         'completion_time': datetime(2019, 1, 1, 0, 1, 30)
-    }, [10.0, 10.0, [0], 0]),
+    }, [10.0, 10.0, [0], 0, False]),
     ('ContainerAdvisory', {
         'id_': '7777',
         'state': 'SHIPPED_LIVE',
         'created_at': datetime(2019, 1, 1, 0, 1, 40),
         'status_time': datetime(2019, 1, 1, 0, 1, 50)
-    }, [0, 10.0, [0], 0]),
+    }, [0, 10.0, [0], 0, True]),
 ])
 def test_individual_nodes(label, data, expected):
     """Test the data relating to the timeline with only one node."""
@@ -156,10 +156,10 @@ def test_individual_nodes(label, data, expected):
     wait_times, total_wait_time = base_instance.get_wait_times([artifact])
 
     assert processing_time == expected[0]
-    assert flag is False
     assert lead_time == expected[1]
     assert wait_times == expected[2]
     assert total_wait_time == expected[3]
+    assert flag is expected[4]
 
 
 def test_event_building():

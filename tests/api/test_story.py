@@ -1793,7 +1793,7 @@ def test_get_stories_just_artifact(client):
             'story_type': 'container',
             'total_lead_time': 0,
             'total_processing_time': 0,
-            'processing_time_flag': False,
+            'processing_time_flag': True,
             'total_wait_time': 0,
             'wait_times': [0]
         }
@@ -1930,7 +1930,7 @@ def test_get_story_partial_story(client):
             'story_type': 'container',
             'total_lead_time': 2642400.0,
             'total_processing_time': 1605600.0,
-            'processing_time_flag': False,
+            'processing_time_flag': True,
             'total_wait_time': 1036800.0,
             'wait_times': [1036800.0, 50400.0]
         }
