@@ -274,6 +274,7 @@ class BaseStoryManager(object):
                         'encountered without a build or creation time.',
                         artifact.__label__, getattr(artifact,
                                                     artifact.unique_id_property + '_'))
+                    flag = True
                     continue
 
             # We do not want the processing time of the entire FreshmakerEvent, just the
