@@ -61,6 +61,9 @@ class FreshmakerScraper(BaseScraper):
                 except ValueError:
                     # Skip Freshmaker Events that don't have the search_key as the Advisory ID
                     continue
+                if fm_event.get('dry_run'):
+                    # Skip events triggered by manual rebuilds in dry run mode
+                    continue
                 log.debug('Creating FreshmakerEvent {0}'.format(fm_event['id']))
                 event_params = dict(
                     id_=fm_event['id'],
