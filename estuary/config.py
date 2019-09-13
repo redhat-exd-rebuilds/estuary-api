@@ -26,6 +26,8 @@ class Config(object):
     OIDC_CLIENT_ID = None
     OIDC_CLIENT_SECRET = None
     EMPLOYEE_TYPES = []
+    LDAP_CA_CERTIFICATE = '/etc/pki/tls/certs/ca-bundle.crt'
+    LDAP_GROUP_MEMBERSHIP_ATTRIBUTE = 'uniqueMember'
 
 
 class ProdConfig(Config):

@@ -88,3 +88,32 @@ Get a resource from Neo4j.
 
 ## Code Documentation
 To document new files, please check [here](https://github.com/release-engineering/estuary-api/tree/master/docs).
+
+
+## Authorization
+
+If authentication is enabled, Estuary can authorize users based on their employee type and a user
+whitelist configured through the membership of an LDAP group.
+
+### Employee Type
+
+You may set the list of valid employee types with the configuration item `EMPLOYEE_TYPES`. These
+employee types map to the `employeeType` LDAP attribute of the user that is added to the OpenID
+Connect token received by Estuary.
+
+### Configuring the Whitelist
+
+To configure a whitelist of users, they must be part of an LDAP group configured with Estuary. The
+following configuration items are required:
+
+* `LDAP_URI` - the URI to the LDAP server to connect to in the format of
+    `ldaps://server.domain.local`.
+* `LDAP_EXCEPTIONS_GROUP_DN` - the distinguished name to the LDAP group acting as the whitelist.
+
+The following configuration items are optional:
+
+* `LDAP_CA_CERTIFICATE` - the path to the CA certificate that signed the certificate used by the
+    LDAP server. This only applies if you are using LDAPS. This defaults to
+    `/etc/pki/tls/certs/ca-bundle.crt`.
+* `LDAP_GROUP_MEMBERSHIP_ATTRIBUTE` - the LDAP attribute that represents a user in the group. This
+    defaults to `uniqueMember`.

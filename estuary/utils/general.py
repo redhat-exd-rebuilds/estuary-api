@@ -160,8 +160,9 @@ def login_required(f):
                 raise Unauthorized(validity)
 
             token_info = current_app.oidc._get_token_info(token)
+            username = token_info.get('username')
             employee_type = token_info.get('employeeType')
-            if not is_user_authorized(employee_type):
+            if not is_user_authorized(username, employee_type):
                 raise Unauthorized('You must be an employee to access this service')
         return f(*args, **kwargs)
     return wrapper
