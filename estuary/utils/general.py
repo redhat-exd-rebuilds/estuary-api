@@ -11,6 +11,7 @@ from werkzeug.exceptions import Unauthorized
 
 from estuary import log
 from estuary.error import ValidationError
+from estuary.authorization import is_user_authorized
 
 
 def timestamp_to_datetime(timestamp):
@@ -159,8 +160,8 @@ def login_required(f):
                 raise Unauthorized(validity)
 
             token_info = current_app.oidc._get_token_info(token)
-            employee_types = current_app.config.get('EMPLOYEE_TYPES', [])
-            if employee_types and token_info.get('employeeType') not in employee_types:
+            employee_type = token_info.get('employeeType')
+            if not is_user_authorized(employee_type):
                 raise Unauthorized('You must be an employee to access this service')
         return f(*args, **kwargs)
     return wrapper
