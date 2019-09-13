@@ -10,6 +10,7 @@ RUN dnf -y install \
     python3-flask \
     python3-flask-oidc \
     python3-gunicorn \
+    python3-ldap3 \
     python3-neomodel \
     python3-prometheus_client \
     python3-six \
