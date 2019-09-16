@@ -35,10 +35,6 @@ def load_config(app):
     if config_file and os.path.isfile(config_file):
         app.config.from_pyfile(config_file)
 
-    if os.environ.get('SECRET_KEY'):
-        app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-    if os.environ.get('NEO4J_URI'):
-        app.config['NEO4J_URI'] = os.environ['NEO4J_URI']
     if os.environ.get('ENABLE_AUTH', '').lower() == 'true':
         app.config['ENABLE_AUTH'] = True
     elif os.environ.get('ENABLE_AUTH', '').lower() == 'false':
@@ -46,16 +42,17 @@ def load_config(app):
     elif os.environ.get('ENABLE_AUTH'):
         warnings.warn(
             'The value of the environment variable "ENABLE_AUTH" is invalid and will be ignored')
-    if os.environ.get('OIDC_INTROSPECT_URL'):
-        app.config['OIDC_INTROSPECT_URL'] = os.environ['OIDC_INTROSPECT_URL']
-    if os.environ.get('OIDC_CLIENT_ID'):
-        app.config['OIDC_CLIENT_ID'] = os.environ['OIDC_CLIENT_ID']
-    if os.environ.get('OIDC_CLIENT_SECRET'):
-        app.config['OIDC_CLIENT_SECRET'] = os.environ['OIDC_CLIENT_SECRET']
+
     if os.environ.get('CORS_ORIGINS'):
         app.config['CORS_ORIGINS'] = os.environ['CORS_ORIGINS'].split(',')
     if os.environ.get('EMPLOYEE_TYPES'):
         app.config['EMPLOYEE_TYPES'] = os.environ['EMPLOYEE_TYPES'].split(',')
+
+    for env_name in (
+        'NEO4J_URI', 'OIDC_CLIENT_ID', 'OIDC_CLIENT_SECRET', 'OIDC_INTROSPECT_URL', 'SECRET_KEY',
+    ):
+        if os.environ.get(env_name):
+            app.config[env_name] = os.environ[env_name]
 
 
 def insert_headers(response):
