@@ -49,7 +49,9 @@ def load_config(app):
         app.config['EMPLOYEE_TYPES'] = os.environ['EMPLOYEE_TYPES'].split(',')
 
     for env_name in (
-        'NEO4J_URI', 'OIDC_CLIENT_ID', 'OIDC_CLIENT_SECRET', 'OIDC_INTROSPECT_URL', 'SECRET_KEY',
+        'LDAP_CA_CERTIFICATE', 'LDAP_GROUP_MEMBERSHIP_ATTRIBUTE', 'LDAP_URI',
+        'LDAP_EXCEPTIONS_GROUP_DN', 'NEO4J_URI', 'OIDC_CLIENT_ID', 'OIDC_CLIENT_SECRET',
+        'OIDC_INTROSPECT_URL', 'SECRET_KEY',
     ):
         if os.environ.get(env_name):
             app.config[env_name] = os.environ[env_name]
