@@ -27,8 +27,7 @@ def init_logging(app):
 
     :param flask.Flask app: a Flask application object
     """
-    log_level = logging.DEBUG if app.debug else logging.INFO
-    log_to_stdout(level=log_level)
+    log_to_stdout(level=app.config['LOG_LEVEL'])
     # In general we want to see everything from our own code,
     # but not detailed debug messages from third-party libraries.
     # Note that the log level on the handler above controls what
