@@ -28,6 +28,7 @@ class Config(object):
     EMPLOYEE_TYPES = []
     LDAP_CA_CERTIFICATE = '/etc/pki/tls/certs/ca-bundle.crt'
     LDAP_GROUP_MEMBERSHIP_ATTRIBUTE = 'uniqueMember'
+    LOG_LEVEL = 'INFO'
 
 
 class ProdConfig(Config):

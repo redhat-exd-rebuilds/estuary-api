@@ -50,8 +50,8 @@ def load_config(app):
 
     for env_name in (
         'LDAP_CA_CERTIFICATE', 'LDAP_GROUP_MEMBERSHIP_ATTRIBUTE', 'LDAP_URI',
-        'LDAP_EXCEPTIONS_GROUP_DN', 'NEO4J_URI', 'OIDC_CLIENT_ID', 'OIDC_CLIENT_SECRET',
-        'OIDC_INTROSPECT_URL', 'SECRET_KEY',
+        'LDAP_EXCEPTIONS_GROUP_DN', 'LOG_LEVEL', 'NEO4J_URI', 'OIDC_CLIENT_ID',
+        'OIDC_CLIENT_SECRET', 'OIDC_INTROSPECT_URL', 'SECRET_KEY',
     ):
         if os.environ.get(env_name):
             app.config[env_name] = os.environ[env_name]
