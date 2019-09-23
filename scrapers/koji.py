@@ -198,6 +198,9 @@ class KojiScraper(BaseScraper):
                 extra_json = {}
 
             if self.is_container_build(build_dict):
+                build_params['operator'] = bool(
+                    extra_json.get('typeinfo', {}).get('operator_manifests', {}).get('archive')
+                )
                 try:
                     build = ContainerKojiBuild.create_or_update(build_params)[0]
                 except neomodel.exceptions.ConstraintValidationFailed:
