@@ -6,7 +6,7 @@ import re
 
 from neomodel import (
     StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty,
-    RelationshipTo, RelationshipFrom, ZeroOrOne)
+    BooleanProperty, RelationshipTo, RelationshipFrom, ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode
 from estuary.error import ValidationError
@@ -68,6 +68,7 @@ class ContainerKojiBuild(KojiBuild):
     original_nvr = StringProperty()
     triggered_by_freshmaker_event = RelationshipFrom(
         '.freshmaker.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
+    operator = BooleanProperty(default=False)
 
 
 class ModuleKojiBuild(KojiBuild):
