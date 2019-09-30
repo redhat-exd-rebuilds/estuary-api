@@ -41,7 +41,9 @@ from estuary.models.user import User
                         'author_date': '2017-04-26T11:44:38Z',
                         'commit_date': '2017-04-26T11:44:38Z',
                         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
-                        'log_message': 'Related: #12345 - fix xyz'
+                        'log_message': 'Related: #12345 - fix xyz',
+                        'display_name': 'commit #8a63adb',
+                        'resource_type': 'DistGitCommit',
                     }
                 ],
                 'resource_type': 'BugzillaBug',
@@ -188,9 +190,11 @@ from estuary.models.user import User
                 'author': None,
                 'author_date': '2017-04-26T11:44:38Z',
                 'branches': [{
+                    'display_name': 'some-branch branch in rpms/slf4j',
                     'name': 'some-branch',
                     'repo_name': 'slf4j',
-                    'repo_namespace': 'rpms'
+                    'repo_namespace': 'rpms',
+                    'resource_type': 'DistGitBranch',
                 }],
                 'children': [
 
@@ -201,12 +205,14 @@ from estuary.models.user import User
                     {
                         'completion_time': '2017-04-26T22:39:06Z',
                         'creation_time': '2017-04-26T21:12:06Z',
+                        'display_name': 'slf4j-1.7.4-4.el7_4',
                         'epoch': '0',
                         'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
                         'start_time': '2017-04-26T21:12:06Z',
+                        'resource_type': 'KojiBuild',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -217,19 +223,23 @@ from estuary.models.user import User
 
                 ],
                 'repos': [{
+                    'display_name': 'rpms/slf4j',
                     'name': 'slf4j',
-                    'namespace': 'rpms'
+                    'namespace': 'rpms',
+                    'resource_type': 'DistGitRepo',
                 }],
                 'resolved_bugs': [
                     {
                         'classification': 'Red Hat',
                         'creation_time': '2017-04-02T19:39:06Z',
+                        'display_name': 'RHBZ#12345',
                         'id': '12345',
                         'modified_time': '2018-02-07T19:30:47Z',
                         'priority': 'high',
                         'product_name': 'Red Hat Enterprise Linux',
                         'product_version': '7.5',
                         'resolution': '',
+                        'resource_type': 'BugzillaBug',
                         'severity': 'low',
                         'short_description': 'Some description',
                         'status': 'VERIFIED',
@@ -239,12 +249,14 @@ from estuary.models.user import User
                     {
                         'classification': 'Red Hat',
                         'creation_time': '2017-04-02T06:43:58Z',
+                        'display_name': 'RHBZ#5555',
                         'id': '5555',
                         'modified_time': '2017-12-05T10:12:47Z',
                         'priority': 'unspecified',
                         'product_name': 'Red Hat CloudForms Management Engine',
                         'product_version': '5.7.0',
                         'resolution': 'WORKSFORME',
+                        'resource_type': 'BugzillaBug',
                         'severity': 'unspecified',
                         'short_description': 'Fail to delete OSP tenant by CFME',
                         'status': 'CLOSED',
@@ -396,11 +408,13 @@ from estuary.models.user import User
                             'docker'
                         ],
                         'created_at': '2017-08-01T15:43:51Z',
+                        'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
                         'issue_date': '2017-08-01T05:59:34Z',
                         'product_name': 'Red Hat Enterprise Linux',
                         'product_short_name': 'RHEL',
                         'release_date': None,
+                        'resource_type': 'Advisory',
                         'security_impact': 'None',
                         'security_sla': None,
                         'state': 'SHIPPED_LIVE',
@@ -412,8 +426,10 @@ from estuary.models.user import User
                 'commit':{
                     'author_date': '2017-04-26T11:44:38Z',
                     'commit_date': '2017-04-26T11:44:38Z',
+                    'display_name': 'commit #8a63adb',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
-                    'log_message': 'Related: #12345 - fix xyz'
+                    'log_message': 'Related: #12345 - fix xyz',
+                    'resource_type': 'DistGitCommit',
                 },
                 'completion_time': '2017-04-26T22:39:06Z',
                 'creation_time': '2017-04-26T21:12:06Z',
@@ -573,12 +589,14 @@ from estuary.models.user import User
                     {
                         'completion_time': '2017-04-26T22:39:06Z',
                         'creation_time': '2017-04-26T21:12:06Z',
+                        'display_name': 'slf4j-1.7.4-4.el7_4',
                         'epoch': '0',
                         'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
                         'start_time': '2017-04-26T21:12:06Z',
+                        'resource_type': 'KojiBuild',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -603,9 +621,11 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-08-01T15:43:51Z',
                 'triggered_freshmaker_event': [
                     {
+                        'display_name': 'Freshmaker event 1180',
                         'event_type_id': 8,
                         'id': '1180',
                         'message_id': 'ID:messaging-devops-broker01.test',
+                        'resource_type': 'FreshmakerEvent',
                         'state': 2,
                         'state_name': 'COMPLETE',
                         'state_reason': 'All container images have been rebuilt.',
@@ -750,10 +770,12 @@ from estuary.models.user import User
                 'requested_builds': [{
                     'build_id': 15639305,
                     'dep_on': 'jboss-eap-7-eap70-openshift-docker',
+                    'display_name': 'Freshmaker build 398',
                     'id': '398',
                     'name': 'metrics-hawkular-metrics-docker',
                     'original_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10',
                     'rebuilt_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10.1522094767',
+                    'resource_type': 'FreshmakerBuild',
                     'state': 1,
                     'state_name': 'DONE',
                     'state_reason': 'Built successfully.',
@@ -778,11 +800,13 @@ from estuary.models.user import User
                         'docker'
                     ],
                     'created_at': '2017-08-01T15:43:51Z',
+                    'display_name': 'RHBA-2017:2251-02',
                     'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
                     'product_short_name': 'RHEL',
                     'release_date': None,
+                    'resource_type': 'Advisory',
                     'security_impact': 'None',
                     'security_sla': None,
                     'state': 'SHIPPED_LIVE',
@@ -794,6 +818,7 @@ from estuary.models.user import User
                     {
                         'completion_time': '2017-09-01T05:43:51Z',
                         'creation_time': '2017-08-14T05:43:51Z',
+                        'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
@@ -801,6 +826,7 @@ from estuary.models.user import User
                         'original_nvr': None,
                         'release': '4.el7_4_as',
                         'start_time': '2017-08-14T05:43:51Z',
+                        'resource_type': 'ContainerKojiBuild',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -943,11 +969,13 @@ from estuary.models.user import User
                             'docker'
                         ],
                         'created_at': '2017-09-12T07:04:51Z',
+                        'display_name': 'RHBA-2017:2251-03',
                         'id':'12327',
                         'issue_date': '2017-08-01T05:59:34Z',
                         'product_name':'Red Hat Enterprise Linux',
                         'product_short_name':'RHEL',
                         'release_date':None,
+                        'resource_type': 'ContainerAdvisory',
                         'security_impact':'None',
                         'security_sla':None,
                         'state':'SHIPPED_LIVE',
@@ -976,9 +1004,11 @@ from estuary.models.user import User
 
                 ],
                 'triggered_by_freshmaker_event':{
+                    'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
                     'id': '1180',
                     'message_id': 'ID:messaging-devops-broker01.test',
+                    'resource_type': 'FreshmakerEvent',
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
@@ -1128,6 +1158,7 @@ from estuary.models.user import User
                     {
                         'completion_time': '2017-09-01T05:43:51Z',
                         'creation_time': '2017-08-14T05:43:51Z',
+                        'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
@@ -1135,6 +1166,7 @@ from estuary.models.user import User
                         'original_nvr': None,
                         'release': '4.el7_4_as',
                         'start_time': '2017-08-14T05:43:51Z',
+                        'resource_type': 'ContainerKojiBuild',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -1418,10 +1450,12 @@ def test_get_stories(client, resource, uids, expected):
                 'requested_builds': [{
                     'build_id': 15639305,
                     'dep_on': 'jboss-eap-7-eap70-openshift-docker',
+                    'display_name': 'Freshmaker build 398',
                     'id': '398',
                     'name': 'metrics-hawkular-metrics-docker',
                     'original_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10',
                     'rebuilt_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10.1522094767',
+                    'resource_type': 'FreshmakerBuild',
                     'state': 1,
                     'state_name': 'DONE',
                     'state_reason': 'Built successfully.',
@@ -1445,11 +1479,13 @@ def test_get_stories(client, resource, uids, expected):
                         'docker'
                     ],
                     'created_at': '2017-08-01T15:43:51Z',
+                    'display_name': 'RHBA-2017:2251-02',
                     'id':'27825',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name':'Red Hat Enterprise Linux',
                     'product_short_name':'RHEL',
                     'release_date': None,
+                    'resource_type': 'Advisory',
                     'security_impact':'None',
                     'security_sla': None,
                     'state':'SHIPPED_LIVE',
@@ -1461,6 +1497,7 @@ def test_get_stories(client, resource, uids, expected):
                     {
                         'completion_time': '2017-09-01T05:43:51Z',
                         'creation_time': '2017-08-14T05:43:51Z',
+                        'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                         'epoch': '0',
                         'extra': None,
                         'id': '710',
@@ -1468,6 +1505,7 @@ def test_get_stories(client, resource, uids, expected):
                         'original_nvr': None,
                         'release': '4.el7_4_as',
                         'start_time': '2017-08-14T05:43:51Z',
+                        'resource_type': 'ContainerKojiBuild',
                         'state': 1,
                         'version': '1.7.4'
                     }
@@ -1882,9 +1920,11 @@ def test_get_story_partial_story(client):
                 'synopsis': 'cifs-utils bug fix update',
                 'timeline_timestamp': '2017-08-01T15:43:51Z',
                 'triggered_freshmaker_event': [{
+                    'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
                     'id': '1180',
                     'message_id': 'ID:messaging-devops-broker01.test',
+                    'resource_type': 'FreshmakerEvent',
                     'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
@@ -1979,11 +2019,13 @@ def test_get_story_fallback(client):
                     'advisory_name': 'RHBA-2017:2251-02',
                     'content_types': ['docker'],
                     'created_at': '2017-08-01T15:43:51Z',
+                    'display_name': 'RHBA-2017:2251-02',
                     'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
                     'product_short_name': 'RHEL',
                     'release_date': None,
+                    'resource_type': 'Advisory',
                     'security_impact': 'None',
                     'security_sla': None,
                     'state': 'SHIPPED_LIVE',
