@@ -19,7 +19,9 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'assignee': {
             'email': 'matt.prahl@domain.local',
             'name': None,
-            'username': 'mprahl'
+            'username': 'mprahl',
+            'resource_type': 'User',
+            'display_name': 'mprahl',
         },
         'attached_advisories': [
             {
@@ -29,11 +31,13 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                     'docker'
                 ],
                 'created_at': '2017-04-03T14:47:23Z',
+                'display_name': 'RHBA-2017:2251-02',
                 'id':'27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name':'Red Hat Enterprise Linux',
                 'product_short_name':'RHEL',
                 'release_date':None,
+                'resource_type': 'Advisory',
                 'security_impact':'None',
                 'security_sla':None,
                 'state':'SHIPPED_LIVE',
@@ -44,7 +48,8 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         ],
         'classification':'Red Hat',
         'creation_time': '2017-04-02T19:39:06Z',
-        'id':'12345',
+        'display_name': 'RHBZ#12345',
+        'id': '12345',
         'modified_time': '2018-02-07T19:30:47Z',
         'priority':'high',
         'product_name':'Red Hat Enterprise Linux',
@@ -52,7 +57,9 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'qa_contact':{
             'email': 'jsmith@domain.local',
             'name': None,
-            'username': 'jsmith'
+            'username': 'jsmith',
+            'resource_type': 'User',
+            'display_name': 'jsmith',
         },
         'related_by_commits': [
 
@@ -60,7 +67,9 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'reporter':{
             'email': 'tom.brady@domain.local',
             'name': None,
-            'username': 'tbrady'
+            'username': 'tbrady',
+            'resource_type': 'User',
+            'display_name': 'tbrady',
         },
         'resolution': '',
         'resolved_by_commits': [
@@ -68,21 +77,28 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'author_date': '2017-04-27T11:44:38Z',
                 'commit_date': '2017-04-27T11:44:38Z',
                 'hash': '1263adb248ba633e205067e1ad6dc61931727c2d',
-                'log_message': 'Related: #12345 - fix xz'
+                'log_message': 'Related: #12345 - fix xz',
+                'display_name': 'commit #1263adb',
+                'resource_type': 'DistGitCommit',
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
                 'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
-                'log_message': 'Related: #12345 - fix xyz'
+                'log_message': 'Related: #12345 - fix xyz',
+                'display_name': 'commit #8a63adb',
+                'resource_type': 'DistGitCommit',
             }
         ],
+        'resource_type': 'BugzillaBug',
         'reverted_by_commits': [
             {
                 'author_date': '2017-04-27T11:44:38Z',
                 'commit_date': '2017-04-27T11:44:38Z',
                 'hash': '5663adb248ba633e205067e1ad6dc61931727123',
-                'log_message': 'Revert: #12345'
+                'log_message': 'Revert: #12345',
+                'display_name': 'commit #5663adb',
+                'resource_type': 'DistGitCommit',
             }
         ],
         'severity': 'low',
@@ -95,14 +111,18 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'author': {
             'email': 'tom.brady@domain.local',
             'name': None,
-            'username': 'tbrady'
+            'username': 'tbrady',
+            'resource_type': 'User',
+            'display_name': 'tbrady',
         },
         'author_date': '2017-04-26T11:44:38Z',
         'branches': [
             {
                 'name': 'some_branch_name',
                 'repo_name': 'some_repo_name',
-                'repo_namespace': 'some_repo_namespace'
+                'repo_namespace': 'some_repo_namespace',
+                'resource_type': 'DistGitBranch',
+                'display_name': 'some_branch_name branch in some_repo_namespace/some_repo_name',
             }
         ],
         'children': [
@@ -110,10 +130,13 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'author_date': '2017-04-27T11:44:38Z',
                 'commit_date': '2017-04-27T11:44:38Z',
                 'hash': '5663adb248ba633e205067e1ad6dc61931727123',
-                'log_message': 'Revert: #12345'
+                'log_message': 'Revert: #12345',
+                'resource_type': 'DistGitCommit',
+                'display_name': 'commit #5663adb',
             }
         ],
         'commit_date': '2017-04-26T11:44:38Z',
+        'display_name': 'commit #8a63adb',
         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
         'koji_builds': [
 
@@ -123,18 +146,22 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'author_date': '2017-04-27T11:44:38Z',
             'commit_date': '2017-04-27T11:44:38Z',
             'hash': '1263adb248ba633e205067e1ad6dc61931727c2d',
-            'log_message': 'Related: #12345 - fix xz'
+            'log_message': 'Related: #12345 - fix xz',
+            'resource_type': 'DistGitCommit',
+            'display_name': 'commit #1263adb',
         },
         'related_bugs': [
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
+                'display_name': 'RHBZ#272895',
                 'id': '272895',
                 'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'low',
                 'product_name': 'Satellite',
                 'product_version': '3',
                 'resolution': '',
+                'resource_type': 'BugzillaBug',
                 'severity': 'medium',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -144,12 +171,14 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
+                'display_name': 'RHBZ#12345',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
                 'resolution': '',
+                'resource_type': 'BugzillaBug',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -160,19 +189,23 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'repos': [
             {
                 'name': 'some_repo',
-                'namespace': 'some_namespace'
+                'namespace': 'some_namespace',
+                'resource_type': 'DistGitRepo',
+                'display_name': 'some_namespace/some_repo',
             }
         ],
         'resolved_bugs': [
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
+                'display_name': 'RHBZ#67890',
                 'id': '67890',
                 'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'medium',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.3',
                 'resolution': '',
+                'resource_type': 'BugzillaBug',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -182,12 +215,14 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
+                'display_name': 'RHBZ#12345',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
                 'resolution': '',
+                'resource_type': 'BugzillaBug',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -195,16 +230,19 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'votes': 0
             }
         ],
+        'resource_type': 'DistGitCommit',
         'reverted_bugs': [
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
+                'display_name': 'RHBZ#67890',
                 'id': '67890',
                 'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'medium',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.3',
                 'resolution': '',
+                'resource_type': 'BugzillaBug',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -221,10 +259,13 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'author_date': '2017-04-27T11:44:38Z',
             'commit_date': '2017-04-27T11:44:38Z',
             'hash': '1263adb248ba633e205067e1ad6dc61931727c2d',
-            'log_message': 'Related: #12345 - fix xz'
+            'log_message': 'Related: #12345 - fix xz',
+            'display_name': 'commit #1263adb',
+            'resource_type': 'DistGitCommit',
         },
         'completion_time': '2017-04-02T19:39:06Z',
         'creation_time': '2017-04-02T19:39:06Z',
+        'display_name': 'slf4j-1.7.4-4.el7_4',
         'epoch': '0',
         'extra': None,
         'id': '2345',
@@ -233,15 +274,20 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'owner': {
             'email': 'matt.prahl@domain.local',
             'name': None,
-            'username': 'mprahl'
+            'username': 'mprahl',
+            'resource_type': 'User',
+            'display_name': 'mprahl',
         },
         'release': '4.el7_4',
         'start_time': '2017-04-02T19:39:06Z',
+        'resource_type': 'KojiBuild',
         'state': 1,
         'tags': [
             {
+                'display_name': 'some_active_tag',
                 'id': '2702',
-                'name': 'some_active_tag'
+                'name': 'some_active_tag',
+                'resource_type': 'KojiTag',
             }
         ],
         'version': '1.7.4'
@@ -252,18 +298,22 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'assigned_to': {
             'email': 'matt.prahl@domain.local',
             'name': None,
-            'username': 'mprahl'
+            'username': 'mprahl',
+            'resource_type': 'User',
+            'display_name': 'mprahl',
         },
         'attached_bugs': [
             {
                 'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
+                'display_name': 'RHBZ#12345',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
                 'priority': 'high',
                 'product_name': 'Red Hat Enterprise Linux',
                 'product_version': '7.5',
                 'resolution': '',
+                'resource_type': 'BugzillaBug',
                 'severity': 'low',
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
@@ -275,12 +325,14 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             {
                 'completion_time': '2017-04-02T19:39:06Z',
                 'creation_time': '2017-04-02T19:39:06Z',
+                'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
                 'extra': None,
                 'id': '2345',
                 'name': 'slf4j',
                 'release': '4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
+                'resource_type': 'KojiBuild',
                 'state': 1,
                 'version': '1.7.4'
             }
@@ -289,6 +341,7 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'docker'
         ],
         'created_at': '2017-04-03T14:47:23Z',
+        'display_name': 'RHBA-2017:2251-02',
         'id':'27825',
         'issue_date': '2017-08-01T05:59:34Z',
         'product_name': 'Red Hat Enterprise Linux',
@@ -297,8 +350,11 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'reporter': {
             'email': 'jsmith@domain.local',
             'name': None,
-            'username': 'jsmith'
+            'username': 'jsmith',
+            'resource_type': 'User',
+            'display_name': 'jsmith',
         },
+        'resource_type': 'Advisory',
         'security_impact': 'None',
         'security_sla': None,
         'state': 'SHIPPED_LIVE',
@@ -310,16 +366,20 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'update_date': '2017-08-01T07:16:00Z'
     }),
     ('freshmakerevent', '1180', {
+        'display_name': 'Freshmaker event 1180',
         'event_type_id': 8,
         'id': '1180',
         'message_id': 'ID:messaging-devops-broker01.test',
+        'resource_type': 'FreshmakerEvent',
         'requested_builds': [{
             'build_id': 15639305,
             'dep_on': 'jboss-eap-7-eap70-openshift-docker',
+            'display_name': 'Freshmaker build 398',
             'id': '398',
             'name': 'metrics-hawkular-metrics-docker',
             'original_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10',
             'rebuilt_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10.1522094767',
+            'resource_type': 'FreshmakerBuild',
             'state': 1,
             'state_name': 'DONE',
             'state_reason': 'Built successfully.',
@@ -341,11 +401,13 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'docker'
             ],
             'created_at': '2017-04-03T14:47:23Z',
+            'display_name': 'RHBA-2017:2251-02',
             'id':'27825',
             'issue_date': '2017-08-01T05:59:34Z',
             'product_name':'Red Hat Enterprise Linux',
             'product_short_name':'RHEL',
             'release_date':None,
+            'resource_type': 'Advisory',
             'security_impact':'None',
             'security_sla':None,
             'state':'SHIPPED_LIVE',
@@ -356,6 +418,7 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'successful_koji_builds': [{
             'completion_time': '2017-04-02T19:39:06Z',
             'creation_time': '2017-04-02T19:39:06Z',
+            'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
             'epoch': '0',
             'extra': None,
             'id': '710',
@@ -363,6 +426,7 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'original_nvr': None,
             'release': '4.el7_4_as',
             'start_time': '2017-04-02T19:39:06Z',
+            'resource_type': 'ContainerKojiBuild',
             'state': 1,
             'version': '1.7.4'}]
     }),
@@ -373,6 +437,7 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'commit':None,
         'completion_time': '2017-04-02T19:39:06Z',
         'creation_time': '2017-04-02T19:39:06Z',
+        'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
         'epoch':'0',
         'extra':None,
         'id':'710',
@@ -382,6 +447,7 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'owner':None,
         'release':'4.el7_4_as',
         'start_time': '2017-04-02T19:39:06Z',
+        'resource_type': 'ContainerKojiBuild',
         'state':1,
         'tags':[],
         'triggered_by_freshmaker_event':None,

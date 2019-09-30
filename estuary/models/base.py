@@ -50,7 +50,8 @@ class EstuaryStructuredNode(StructuredNode):
                 rv[actual_key] = value.strftime('%Y-%m-%dT%H:%M:%SZ')
             else:
                 rv[actual_key] = value
-
+        rv['resource_type'] = self.__label__
+        rv['display_name'] = self.display_name
         return rv
 
     @property
