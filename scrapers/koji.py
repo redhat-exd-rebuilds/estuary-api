@@ -199,7 +199,7 @@ class KojiScraper(BaseScraper):
 
             if self.is_container_build(build_dict):
                 build_params['operator'] = bool(
-                    extra_json.get('typeinfo', {}).get('operator_manifests', {}).get('archive')
+                    extra_json.get('typeinfo', {}).get('operator-manifests', {}).get('archive')
                 )
                 try:
                     build = ContainerKojiBuild.create_or_update(build_params)[0]
