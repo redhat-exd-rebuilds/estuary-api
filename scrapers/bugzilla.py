@@ -48,19 +48,19 @@ class BugzillaScraper(BaseScraper):
             SELECT bugs.*, products.name AS product_name, classifications.name AS classification,
                 assigned.login_name AS assigned_to_email, reported.login_name AS reported_by_email,
                 qa.login_name AS qa_contact_email
-            FROM bugzilla.bugs AS bugs
-            LEFT JOIN bugzilla.products AS products ON bugs.product_id = products.id
-            LEFT JOIN bugzilla.classifications AS classifications
+            FROM BugzillaC.bugs AS bugs
+            LEFT JOIN BugzillaC.products AS products ON bugs.product_id = products.id
+            LEFT JOIN BugzillaC.classifications AS classifications
                 ON products.classification_id = classifications.id
-            LEFT JOIN bugzilla.profiles AS assigned ON bugs.assigned_to = assigned.userid
-            LEFT JOIN bugzilla.profiles AS reported ON bugs.reporter = reported.userid
-            LEFT JOIN bugzilla.profiles AS qa ON bugs.qa_contact = qa.userid
+            LEFT JOIN BugzillaC.profiles AS assigned ON bugs.assigned_to = assigned.userid
+            LEFT JOIN BugzillaC.profiles AS reported ON bugs.reporter = reported.userid
+            LEFT JOIN BugzillaC.profiles AS qa ON bugs.qa_contact = qa.userid
             WHERE classifications.name = 'Red Hat' AND bugs.delta_ts >= '{0}'
                 AND bugs.delta_ts <= '{1}'
             ORDER BY bugs.creation_ts DESC;
             """.format(start_date, end_date)
 
-        return self.teiid.query(sql=sql_query)
+        return self.teiid.query(sql=sql_query, db='republic')
 
     def create_user_node(self, email):
         """
