@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 import xml.etree.ElementTree as ET
 
 import neomodel
-from requests.exceptions import ConnectionError
 
 from scrapers.base import BaseScraper
 from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
@@ -18,7 +17,7 @@ from estuary.utils.general import timestamp_to_datetime
 class FreshmakerScraper(BaseScraper):
     """Scrapes the Freshmaker API."""
 
-    freshmaker_url = "https://freshmaker.engineering.redhat.com/api/1/events/?per_page=50"
+    freshmaker_url = 'https://freshmaker.engineering.redhat.com/api/2/events/?per_page=50'
 
     def run(self, since=None, until=None):
         """
@@ -45,15 +44,7 @@ class FreshmakerScraper(BaseScraper):
         fm_url = self.freshmaker_url
         while True:
             log.debug('Querying {0}'.format(fm_url))
-            try:
-                rv_json = session.get(fm_url, timeout=60).json()
-            except ConnectionError:
-                # TODO: Remove this once FACTORY-3955 is resolved
-                log.error(
-                    'The connection to Freshmaker at %s failed. Skipping the rest of the scraper.',
-                    fm_url,
-                )
-                break
+            rv_json = session.get(fm_url, timeout=60).json()
 
             for fm_event in rv_json['items']:
                 try:
@@ -87,7 +78,17 @@ class FreshmakerScraper(BaseScraper):
 
                 event.conditional_connect(event.triggered_by_advisory, advisory)
 
-                for build_dict in fm_event['builds']:
+                event_builds_url = ('https://freshmaker.engineering.redhat.com/api/2/builds/'
+                                    '?event_id={0}&per_page=50'.format(fm_event['id']))
+                event_builds = []
+                while True:
+                    rv = session.get(event_builds_url, timeout=60).json()
+                    event_builds.extend(rv['items'])
+                    if rv['meta']['next']:
+                        event_builds_url = rv['meta']['next']
+                    else:
+                        break
+                for build_dict in event_builds:
                     # To handle a faulty container build in Freshmaker
                     if build_dict['build_id'] and int(build_dict['build_id']) < 0:
                         continue
