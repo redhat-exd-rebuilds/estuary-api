@@ -10,7 +10,7 @@ from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit, DistGitBranch, DistGitRepo
 from estuary.models.errata import Advisory
-from estuary.models.koji import KojiBuild, KojiTag, ContainerKojiBuild
+from estuary.models.koji import KojiBuild, ContainerKojiBuild
 from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
 
 
@@ -281,14 +281,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'start_time': '2017-04-02T19:39:06Z',
         'resource_type': 'KojiBuild',
         'state': 1,
-        'tags': [
-            {
-                'display_name': 'some_active_tag',
-                'id': '2702',
-                'name': 'some_active_tag',
-                'resource_type': 'KojiTag',
-            }
-        ],
         'version': '1.7.4'
     }),
     ('advisory', '27825', {
@@ -447,7 +439,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'start_time': '2017-04-02T19:39:06Z',
         'resource_type': 'ContainerKojiBuild',
         'state':1,
-        'tags':[],
         'triggered_by_freshmaker_event':None,
         'version':'1.7.4'
     })
@@ -549,10 +540,6 @@ def test_get_resources(client, resource, uid, expected):
         'state': 1,
         'version': '1.7.4'
     })[0]
-    tag = KojiTag.get_or_create({
-        'id_': '2702',
-        'name': 'some_active_tag'
-    })[0]
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
@@ -631,7 +618,6 @@ def test_get_resources(client, resource, uid, expected):
     if resource == 'kojibuild':
         build.owner.connect(mprahl)
         build.commit.connect(commit_two)
-        tag.builds.connect(build)
 
     if resource == 'advisory':
         advisory.assigned_to.connect(mprahl)

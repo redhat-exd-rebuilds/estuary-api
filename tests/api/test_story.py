@@ -441,9 +441,6 @@ from estuary.models.user import User
                 'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
                 'timeline_timestamp': '2017-04-26T21:12:06Z',
-                'tags': [
-
-                ],
                 'version': '1.7.4'
             },
             {
@@ -992,9 +989,6 @@ from estuary.models.user import User
                 'start_time': '2017-08-14T05:43:51Z',
                 'state':1,
                 'timeline_timestamp': '2017-08-14T05:43:51Z',
-                'tags':[
-
-                ],
                 'triggered_by_freshmaker_event':{
                     'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
@@ -2035,7 +2029,6 @@ def test_get_story_fallback(client):
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-26T21:12:06Z',
                 'state': 1,
-                'tags': [],
                 'timeline_timestamp': '2017-04-26T21:12:06Z',
                 'version': '1.7.4'
             },

@@ -342,9 +342,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
@@ -479,9 +476,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
@@ -616,9 +610,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
@@ -782,9 +773,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
@@ -1055,7 +1043,6 @@ def test_get_stories_fallback(client):
                 'display_name': u'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [],
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },

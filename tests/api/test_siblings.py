@@ -55,9 +55,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 2,
-                'tags':[
-
-                ],
                 'version': '1.7.1'
             },
             {
@@ -106,9 +103,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [
-
-                ],
                 'version': '1.7.4'
             }
         ],
@@ -222,7 +216,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'resource_type': 'ContainerKojiBuild',
                 'start_time': '2018-04-02T19:39:06Z',
                 'state': 2,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
@@ -272,7 +265,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
@@ -538,7 +530,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                         'version': '1.7.4'
                     }
                 ],
-                'content_koji_tag': None,
                 'context': 'a2037af3',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': '389-ds-None-20180805121332.a2037af3',
@@ -557,9 +548,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'resource_type': 'ModuleKojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': None,
-                'tags':[
-
-                ],
                 'version': None
             }
         ],
@@ -604,7 +592,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'resource_type': 'ContainerKojiBuild',
                 'start_time': '2018-04-02T19:39:06Z',
                 'state': 2,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
@@ -654,7 +641,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,

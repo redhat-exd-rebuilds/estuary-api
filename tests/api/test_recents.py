@@ -106,7 +106,6 @@ def test_get_recent_nodes(client):
                     'resource_type': 'KojiBuild',
                     'module_builds': [],
                     'owner': None,
-                    'tags': [],
                     'commit': None,
                     'advisories': []
                 }

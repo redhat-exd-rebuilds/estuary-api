@@ -111,7 +111,6 @@ def test_get_story_auth(mock_oidc, employee_type):
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [],
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             }

@@ -28,7 +28,6 @@ class KojiBuild(EstuaryStructuredNode):
     release = StringProperty(index=True)
     start_time = DateTimeProperty()
     state = IntegerProperty()
-    tags = RelationshipFrom('KojiTag', 'CONTAINS')
     version = StringProperty(index=True)
 
     @property
@@ -80,23 +79,8 @@ class ModuleKojiBuild(KojiBuild):
     """A Neo4j definition of a build that represents a module build in Koji."""
 
     components = RelationshipTo('KojiBuild', 'ATTACHED')
-    content_koji_tag = RelationshipFrom('KojiTag', 'CONTAINS', cardinality=ZeroOrOne)
     context = StringProperty()
     mbs_id = IntegerProperty()
     module_name = StringProperty()
     module_stream = StringProperty()
     module_version = StringProperty()
-
-
-class KojiTag(EstuaryStructuredNode):
-    """Definition of a Koji tag in Neo4j."""
-
-    builds = RelationshipTo('KojiBuild', 'CONTAINS')
-    id_ = UniqueIdProperty(db_property='id')
-    module_builds = RelationshipTo('ModuleKojiBuild', 'CONTAINS')
-    name = StringProperty()
-
-    @property
-    def display_name(self):
-        """Get intuitive (human readable) display name for the node."""
-        return '{0}'.format(self.name)

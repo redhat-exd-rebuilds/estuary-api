@@ -13,7 +13,7 @@ from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory
 from estuary.models.freshmaker import FreshmakerEvent
-from estuary.models.koji import KojiBuild, KojiTag, ContainerKojiBuild
+from estuary.models.koji import KojiBuild, ContainerKojiBuild
 
 
 def test_about(client):
@@ -92,10 +92,6 @@ def test_about(client):
         'id_': '12345',
         'version': '1.13'
     }),
-    (KojiTag, 'kojitag', '12345', {
-        'name': 'some-tag',
-        'id_': '12345'
-    }),
     (User, 'user', 'tbrady', {
         'username': 'tbrady',
         'email': 'tom.brady@domain.local'
@@ -116,6 +112,6 @@ def test_get_on_model_wo_uid(client, resource):
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
                    'advisory, bugzillabug, containeradvisory, containerkojibuild, distgitcommit, '
-                   'freshmakerevent, freshmakerbuild, kojibuild, kojitag, modulekojibuild, and '
+                   'freshmakerevent, freshmakerbuild, kojibuild, modulekojibuild, and '
                    'user.'.format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}
