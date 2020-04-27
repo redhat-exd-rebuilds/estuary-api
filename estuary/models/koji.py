@@ -21,7 +21,6 @@ class KojiBuild(EstuaryStructuredNode):
     completion_time = DateTimeProperty(index=True)
     creation_time = DateTimeProperty()
     epoch = StringProperty()
-    extra = StringProperty()
     id_ = UniqueIdProperty(db_property='id')
     module_builds = RelationshipFrom('ModuleKojiBuild', 'ATTACHED')
     name = StringProperty(index=True)

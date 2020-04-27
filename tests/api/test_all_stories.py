@@ -71,7 +71,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'name': 'slf4j',
                     'release': '4.el7_4',
@@ -172,7 +171,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'name': 'slf4j',
                     'release': '4.el7_4',
@@ -222,7 +220,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-08-17T08:32:47Z',
                     'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
-                    'extra': None,
                     'id': '811',
                     'name': 'some_build',
                     'operator': False,
@@ -335,7 +332,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -473,7 +469,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -611,7 +606,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -668,7 +662,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-08-17T08:32:47Z',
                     'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
-                    'extra': None,
                     'id': '811',
                     'name': 'some_build',
                     'operator': False,
@@ -779,7 +772,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -836,7 +828,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-08-17T08:32:47Z',
                     'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
-                    'extra': None,
                     'id': '811',
                     'name': 'some_build',
                     'operator': False,
@@ -1055,7 +1046,6 @@ def test_get_stories_fallback(client):
                 'completion_time': '2017-04-02T19:39:06Z',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'id': '2345',
                 'module_builds': [],
                 'name': 'slf4j',

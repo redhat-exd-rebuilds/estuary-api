@@ -94,7 +94,6 @@ def test_get_recent_nodes(client):
             'KojiBuild': [
                 {
                     'name': 'slf4j',
-                    'extra': None,
                     'start_time': None,
                     'creation_time': None,
                     'state': None,

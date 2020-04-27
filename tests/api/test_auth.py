@@ -102,7 +102,6 @@ def test_get_story_auth(mock_oidc, employee_type):
                 'completion_time': '2017-04-02T19:39:06Z',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'id': '2345',
                 'name': 'slf4j',
                 'owner': None,

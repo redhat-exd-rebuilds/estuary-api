@@ -186,7 +186,6 @@ class KojiScraper(BaseScraper):
                 creation_time=build_dict['creation_time'],
                 start_time=build_dict['start_time'],
                 completion_time=build_dict['completion_time'],
-                extra=build_dict['extra'],
                 name=build_dict['package_name'],
                 version=build_dict['version'],
                 release=build_dict['release']
