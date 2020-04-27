@@ -350,7 +350,6 @@ from estuary.models.freshmaker import FreshmakerEvent
 def test_node_siblings(client, resource, uid, backward_rel, expected):
     """Tests getting the siblings of an artifact's adjacent node in the story path."""
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -663,7 +662,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
 def test_module_story_node_siblings(client, resource, uid, backward_rel, expected):
     """Tests getting the siblings of an artifact's adjacent node in the module story path."""
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -805,7 +803,6 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
 def test_first_node_of_story(client):
     """Tests getting the siblings for the first node of the story with backward_rel=true."""
     BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 6, 43, 58),
         'id_': '5555',
         'modified_time': datetime(2017, 12, 5, 10, 12, 47),

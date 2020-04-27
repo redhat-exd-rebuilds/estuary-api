@@ -23,7 +23,6 @@ from estuary.models.user import User
                 'attached_advisories': [
 
                 ],
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
@@ -167,7 +166,6 @@ from estuary.models.user import User
     ('distgitcommit', ['8a63adb248ba633e200067e1ad6dc61931727bad'], {
         'data': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
@@ -226,7 +224,6 @@ from estuary.models.user import User
                 }],
                 'resolved_bugs': [
                     {
-                        'classification': 'Red Hat',
                         'creation_time': '2017-04-02T19:39:06Z',
                         'display_name': 'RHBZ#12345',
                         'id': '12345',
@@ -242,7 +239,6 @@ from estuary.models.user import User
                         'target_milestone': 'rc',
                     },
                     {
-                        'classification': 'Red Hat',
                         'creation_time': '2017-04-02T06:43:58Z',
                         'display_name': 'RHBZ#5555',
                         'id': '5555',
@@ -366,7 +362,6 @@ from estuary.models.user import User
     ('kojibuild', ['2345', 'slf4j-1.7.4-4.el7_4', 'slf4j-1.7.4-4.el7_4.src.rpm'], {
         'data': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
@@ -525,7 +520,6 @@ from estuary.models.user import User
     ('advisory', ['27825', 'RHBA-2017:2251-02', 'RHBA-2017:2251'], {
         'data': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
@@ -685,7 +679,6 @@ from estuary.models.user import User
     ('freshmakerevent', ['1180'], {
         'data': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'id': '12345',
                 'modified_time': '2018-02-07T19:30:47Z',
@@ -867,7 +860,6 @@ from estuary.models.user import User
     ('containerkojibuild', ['710'], {
         'data': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
@@ -1033,7 +1025,6 @@ from estuary.models.user import User
     ('containeradvisory', ['12327'], {
         'data': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
@@ -1217,7 +1208,6 @@ def test_get_stories(client, resource, uids, expected):
         'update_date': datetime(2017, 8, 1, 15, 43, 56)
     })[0]
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -1231,7 +1221,6 @@ def test_get_stories(client, resource, uids, expected):
         'target_milestone': 'rc',
     })[0]
     bug_two = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 6, 43, 58),
         'id_': '5555',
         'modified_time': datetime(2017, 12, 5, 10, 12, 47),
@@ -1333,7 +1322,6 @@ def test_get_stories(client, resource, uids, expected):
     ('freshmakerevent', 1180, {
         'data': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
@@ -1558,7 +1546,6 @@ def test_module_story_flow(client, resource, uid, expected):
         'update_date': datetime(2017, 8, 1, 15, 43, 56)
     })[0]
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -1670,7 +1657,6 @@ def test_module_story_flow(client, resource, uid, expected):
 def test_get_artifact_story_not_available(client):
     """Test getting a resource story on a resource that doesn't have any relationships."""
     BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 6, 43, 58),
         'id_': '5555',
         'modified_time': datetime(2017, 12, 5, 10, 12, 47),
@@ -1691,7 +1677,6 @@ def test_get_artifact_story_not_available(client):
                 'attached_advisories': [
 
                 ],
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T06:43:58Z',
                 'id': '5555',
                 'modified_time': '2017-12-05T10:12:47Z',

@@ -14,7 +14,6 @@ def make_artifact(label, **kwargs):
     args = {}
     if label == 'BugzillaBug':
         args = {
-            'classification': 'Red Hat',
             'creation_time': datetime(2019, 1, 1, 0, 0, 0),
             'id_': '12345',
             'modified_time': datetime(2019, 1, 1, 0, 0, 0),
@@ -29,7 +28,6 @@ def make_artifact(label, **kwargs):
         }
     elif label == 'DistGitCommit':
         args = {
-            'classification': 'Red Hat',
             'creation_time': datetime(2019, 1, 1, 0, 0, 10),
             'id': '12345',
             'modified_time': datetime(2019, 1, 1, 0, 0, 10),

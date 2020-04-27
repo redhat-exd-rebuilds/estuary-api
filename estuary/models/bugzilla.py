@@ -17,7 +17,6 @@ class BugzillaBug(EstuaryStructuredNode):
 
     assignee = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
     attached_advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
-    classification = StringProperty()
     creation_time = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
     modified_time = DateTimeProperty(index=True)

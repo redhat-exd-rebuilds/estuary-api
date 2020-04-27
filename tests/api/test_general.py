@@ -31,7 +31,6 @@ def test_about(client):
         'severity': 'medium',
         'short_description': 'some description',
         'product_version': '7.2',
-        'classification': 'Red Hat',
         'priority': 'unspecified',
         'product_name': 'Red Hat Enterprise Linux 7',
         'resolution': 'DUPLICATE',

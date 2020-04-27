@@ -22,7 +22,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'attached_advisories': [
 
                     ],
-                    'classification':'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name':'RHBZ#12345',
                     'id':'12345',
@@ -121,7 +120,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'attached_advisories': [
 
                     ],
-                    'classification':'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name':'RHBZ#12345',
                     'id':'12345',
@@ -247,7 +245,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name': 'RHBZ#12345',
                     'id': '12345',
@@ -380,7 +377,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-01T17:41:04Z',
                     'display_name': 'RHBZ#1245',
                     'id': '1245',
@@ -513,7 +509,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name': 'RHBZ#12345',
                     'id': '12345',
@@ -675,7 +670,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-01T17:41:04Z',
                     'display_name': 'RHBZ#1245',
                     'id': '1245',
@@ -840,7 +834,6 @@ from estuary.models.freshmaker import FreshmakerEvent
 def test_all_stories(client, resource, uid, expected):
     """Test getting all unique stories for an artifact."""
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -858,7 +851,6 @@ def test_all_stories(client, resource, uid, expected):
         'severity': 'medium',
         'short_description': 'some description',
         'product_version': '7.2',
-        'classification': 'Red Hat',
         'priority': 'unspecified',
         'product_name': 'Red Hat Enterprise Linux 7',
         'resolution': 'DUPLICATE',

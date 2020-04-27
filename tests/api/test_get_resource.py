@@ -46,7 +46,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'update_date': '2017-08-01T07:16:00Z'
             }
         ],
-        'classification':'Red Hat',
         'creation_time': '2017-04-02T19:39:06Z',
         'display_name': 'RHBZ#12345',
         'id': '12345',
@@ -151,7 +150,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         },
         'related_bugs': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#272895',
                 'id': '272895',
@@ -167,7 +165,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'target_milestone': 'rc',
             },
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
@@ -193,7 +190,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         ],
         'resolved_bugs': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#67890',
                 'id': '67890',
@@ -209,7 +205,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'target_milestone': 'rc',
             },
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
@@ -228,7 +223,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'resource_type': 'DistGitCommit',
         'reverted_bugs': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#67890',
                 'id': '67890',
@@ -289,7 +283,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         },
         'attached_bugs': [
             {
-                'classification': 'Red Hat',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'RHBZ#12345',
                 'id': '12345',
@@ -469,7 +462,6 @@ def test_get_resources(client, resource, uid, expected):
         'log_message': 'Revert: #12345'
     })[0]
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -483,7 +475,6 @@ def test_get_resources(client, resource, uid, expected):
         'target_milestone': 'rc',
     })[0]
     bug_two = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '67890',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -497,7 +488,6 @@ def test_get_resources(client, resource, uid, expected):
         'target_milestone': 'rc',
     })[0]
     bug_three = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '272895',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
