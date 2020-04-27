@@ -56,7 +56,6 @@ from estuary.models.user import User
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes':0
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
@@ -183,7 +182,6 @@ from estuary.models.user import User
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes': 0
             },
             {
                 'author': None,
@@ -242,7 +240,6 @@ from estuary.models.user import User
                         'short_description': 'Some description',
                         'status': 'VERIFIED',
                         'target_milestone': 'rc',
-                        'votes': 0
                     },
                     {
                         'classification': 'Red Hat',
@@ -259,7 +256,6 @@ from estuary.models.user import User
                         'short_description': 'Fail to delete OSP tenant by CFME',
                         'status': 'CLOSED',
                         'target_milestone': 'GA',
-                        'votes': 0
                     }
                 ],
                 'resource_type': 'DistGitCommit',
@@ -385,7 +381,6 @@ from estuary.models.user import User
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes': 0
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
@@ -545,7 +540,6 @@ from estuary.models.user import User
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes': 0
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
@@ -706,7 +700,6 @@ from estuary.models.user import User
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes': 0
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
@@ -889,7 +882,6 @@ from estuary.models.user import User
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes': 0
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
@@ -1056,7 +1048,6 @@ from estuary.models.user import User
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes': 0
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
@@ -1238,7 +1229,6 @@ def test_get_stories(client, resource, uids, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     bug_two = BugzillaBug.get_or_create({
         'classification': 'Red Hat',
@@ -1253,7 +1243,6 @@ def test_get_stories(client, resource, uids, expected):
         'short_description': 'Fail to delete OSP tenant by CFME',
         'status': 'CLOSED',
         'target_milestone': 'GA',
-        'votes': 0
     })[0]
     build = KojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 26, 22, 39, 6),
@@ -1359,7 +1348,6 @@ def test_get_stories(client, resource, uids, expected):
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
-                'votes': 0
             },
             {
                 'author_date': '2017-04-26T11:44:38Z',
@@ -1582,7 +1570,6 @@ def test_module_story_flow(client, resource, uid, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     build = KojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 26, 22, 39, 6),
@@ -1695,7 +1682,6 @@ def test_get_artifact_story_not_available(client):
         'short_description': 'Fail to delete OSP tenant by CFME',
         'status': 'CLOSED',
         'target_milestone': 'GA',
-        'votes': 0
     })[0]
 
     expected = {
@@ -1731,7 +1717,6 @@ def test_get_artifact_story_not_available(client):
                 'status': 'CLOSED',
                 'target_milestone': 'GA',
                 'timeline_timestamp': '2017-04-02T06:43:58Z',
-                'votes': 0
             }
         ],
         'meta': {

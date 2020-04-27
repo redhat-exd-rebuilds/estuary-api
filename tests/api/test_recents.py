@@ -113,7 +113,6 @@ def test_get_recent_nodes(client):
             'BugzillaBug': [
                 {
                     'status': None,
-                    'votes': None,
                     'severity': None,
                     'resolution': None,
                     'product_version': None,
@@ -137,7 +136,6 @@ def test_get_recent_nodes(client):
                 },
                 {
                     'status': None,
-                    'votes': None,
                     'severity': None,
                     'resolution': None,
                     'product_version': None,
@@ -161,7 +159,6 @@ def test_get_recent_nodes(client):
                 },
                 {
                     'status': None,
-                    'votes': None,
                     'severity': None,
                     'resolution': None,
                     'product_version': None,

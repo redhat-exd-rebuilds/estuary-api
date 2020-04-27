@@ -105,7 +105,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     }),
     ('distgitcommit', '8a63adb248ba633e200067e1ad6dc61931727bad', {
         'author': {
@@ -166,7 +165,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
-                'votes': 0
             },
             {
                 'classification': 'Red Hat',
@@ -183,7 +181,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
-                'votes': 0
             }
         ],
         'repos': [
@@ -210,7 +207,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
-                'votes': 0
             },
             {
                 'classification': 'Red Hat',
@@ -227,7 +223,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
-                'votes': 0
             }
         ],
         'resource_type': 'DistGitCommit',
@@ -247,7 +242,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
-                'votes': 0
             }
         ]
     }),
@@ -309,7 +303,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'short_description': 'Some description',
                 'status': 'VERIFIED',
                 'target_milestone': 'rc',
-                'votes': 0
             }
         ],
         'attached_builds': [
@@ -488,7 +481,6 @@ def test_get_resources(client, resource, uid, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     bug_two = BugzillaBug.get_or_create({
         'classification': 'Red Hat',
@@ -503,7 +495,6 @@ def test_get_resources(client, resource, uid, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     bug_three = BugzillaBug.get_or_create({
         'classification': 'Red Hat',
@@ -518,7 +509,6 @@ def test_get_resources(client, resource, uid, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     repo = DistGitRepo.get_or_create({
         'name': 'some_repo',

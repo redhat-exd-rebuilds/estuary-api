@@ -55,7 +55,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status':'VERIFIED',
                     'target_milestone':'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes':0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -155,7 +154,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status':'VERIFIED',
                     'target_milestone':'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes':0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -264,7 +262,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'VERIFIED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -398,7 +395,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'CLOSED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-01T17:41:04Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2018-03-14T05:53:25Z',
@@ -532,7 +528,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'VERIFIED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -695,7 +690,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'CLOSED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-01T17:41:04Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2018-03-14T05:53:25Z',
@@ -858,7 +852,6 @@ def test_all_stories(client, resource, uid, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     bug_two = BugzillaBug.get_or_create({
         'creation_time': datetime(2017, 4, 1, 17, 41, 4),
@@ -871,7 +864,6 @@ def test_all_stories(client, resource, uid, expected):
         'resolution': 'DUPLICATE',
         'target_milestone': 'rc',
         'modified_time': datetime(2018, 3, 14, 5, 53, 19),
-        'votes': 0,
         'id_': '1245',
         'status': 'CLOSED'
     })[0]

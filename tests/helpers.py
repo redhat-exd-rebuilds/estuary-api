@@ -26,7 +26,6 @@ def make_artifact(label, **kwargs):
             'short_description': 'Some description',
             'status': 'VERIFIED',
             'target_milestone': 'rc',
-            'votes': 0
         }
     elif label == 'DistGitCommit':
         args = {
@@ -42,7 +41,6 @@ def make_artifact(label, **kwargs):
             'short_description': 'Some description',
             'status': 'VERIFIED',
             'target_milestone': 'rc',
-            'votes': 0
         }
     elif label == 'KojiBuild':
         args = {

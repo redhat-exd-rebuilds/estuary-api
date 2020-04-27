@@ -35,7 +35,6 @@ class BugzillaBug(EstuaryStructuredNode):
     short_description = StringProperty()
     status = StringProperty()
     target_milestone = StringProperty()
-    votes = IntegerProperty()
 
     @property
     def display_name(self):

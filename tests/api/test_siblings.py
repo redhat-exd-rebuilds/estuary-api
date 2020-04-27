@@ -362,7 +362,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     commit = DistGitCommit.get_or_create({
         'author_date': datetime(2017, 4, 26, 11, 44, 38),
@@ -676,7 +675,6 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     commit = DistGitCommit.get_or_create({
         'author_date': datetime(2017, 4, 26, 11, 44, 38),
@@ -819,7 +817,6 @@ def test_first_node_of_story(client):
         'short_description': 'Fail to delete OSP tenant by CFME',
         'status': 'CLOSED',
         'target_milestone': 'GA',
-        'votes': 0
     })[0]
 
     expected = {

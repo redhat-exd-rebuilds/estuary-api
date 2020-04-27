@@ -37,7 +37,6 @@ def test_about(client):
         'resolution': 'DUPLICATE',
         'target_milestone': 'rc',
         'modified_time': datetime(2018, 3, 14, 5, 53, 19),
-        'votes': 0,
         'id_': '12345',
         'status': 'CLOSED'
     }),
