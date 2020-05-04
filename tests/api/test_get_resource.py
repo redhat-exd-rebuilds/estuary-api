@@ -27,9 +27,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-04-03T14:47:23Z',
                 'display_name': 'RHBA-2017:2251-02',
                 'id':'27825',
@@ -286,9 +283,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'version': '1.7.4'
             }
         ],
-        'content_types': [
-            'docker'
-        ],
         'created_at': '2017-04-03T14:47:23Z',
         'display_name': 'RHBA-2017:2251-02',
         'id':'27825',
@@ -346,9 +340,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'triggered_by_advisory': {
             'actual_ship_date': '2017-08-01T15:43:51Z',
             'advisory_name': 'RHBA-2017:2251-02',
-            'content_types': [
-                'docker'
-            ],
             'created_at': '2017-04-03T14:47:23Z',
             'display_name': 'RHBA-2017:2251-02',
             'id':'27825',
@@ -491,7 +482,6 @@ def test_get_resources(client, resource, uid, expected):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),

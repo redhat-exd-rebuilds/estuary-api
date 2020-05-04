@@ -82,9 +82,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -133,7 +130,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
-                'content_types': ['docker'],
                 'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
@@ -267,9 +263,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -318,7 +311,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
-                'content_types': ['docker'],
                 'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
@@ -380,9 +372,6 @@ from estuary.models.user import User
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-08-01T15:43:51Z',
                         'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
@@ -425,9 +414,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -476,7 +462,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
-                'content_types': ['docker'],
                 'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
@@ -569,9 +554,6 @@ from estuary.models.user import User
                         'version': '1.7.4'
                     }
                 ],
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
@@ -635,7 +617,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
-                'content_types': ['docker'],
                 'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id': '12327',
@@ -709,9 +690,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id': '27825',
@@ -761,9 +739,6 @@ from estuary.models.user import User
                 'triggered_by_advisory': {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2017-08-01T15:43:51Z',
                     'display_name': 'RHBA-2017:2251-02',
                     'id': '27825',
@@ -817,7 +792,6 @@ from estuary.models.user import User
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
                 'display_name': 'RHBA-2017:2251-03',
-                'content_types': ['docker'],
                 'created_at': '2017-09-12T07:04:51Z',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -890,9 +864,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
@@ -927,9 +898,6 @@ from estuary.models.user import User
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-03',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-09-12T07:04:51Z',
                         'display_name': 'RHBA-2017:2251-03',
                         'id':'12327',
@@ -979,9 +947,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
@@ -1055,9 +1020,6 @@ from estuary.models.user import User
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
@@ -1127,9 +1089,6 @@ from estuary.models.user import User
                         'version': '1.7.4'
                     }
                 ],
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
@@ -1179,7 +1138,6 @@ def test_get_stories(client, resource, uids, expected):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -1268,7 +1226,6 @@ def test_get_stories(client, resource, uids, expected):
     containeradvisory = ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 9, 12, 7, 4, 51),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -1364,9 +1321,6 @@ def test_get_stories(client, resource, uids, expected):
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-08-01T15:43:51Z',
                 'display_name':'RHBA-2017:2251-02',
                 'id':'27825',
@@ -1415,10 +1369,6 @@ def test_get_stories(client, resource, uids, expected):
                 'timeline_timestamp': '2017-08-13T15:43:51Z',
                 'triggered_by_advisory': {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
-                    'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2017-08-01T15:43:51Z',
                     'display_name': 'RHBA-2017:2251-02',
                     'id':'27825',
@@ -1471,9 +1421,6 @@ def test_get_stories(client, resource, uids, expected):
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-03',
-                'content_types': [
-                    'docker'
-                ],
                 'created_at': '2017-09-12T07:04:51Z',
                 'display_name':'RHBA-2017:2251-03',
                 'id':'12327',
@@ -1515,7 +1462,6 @@ def test_module_story_flow(client, resource, uid, expected):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -1605,7 +1551,6 @@ def test_module_story_flow(client, resource, uid, expected):
     containeradvisory = ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 9, 12, 7, 4, 51),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -1721,7 +1666,6 @@ def test_get_stories_just_artifact(client):
     Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -1740,7 +1684,6 @@ def test_get_stories_just_artifact(client):
             'assigned_to': None,
             'attached_bugs': [],
             'attached_builds': [],
-            'content_types': ['docker'],
             'created_at': '2017-08-01T15:43:51Z',
             'id': '27825',
             'issue_date': '2017-08-01T05:59:34Z',
@@ -1782,7 +1725,6 @@ def test_get_story_partial_story(client):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -1838,7 +1780,6 @@ def test_get_story_partial_story(client):
                 'assigned_to': None,
                 'attached_bugs': [],
                 'attached_builds': [],
-                'content_types': ['docker'],
                 'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -1932,7 +1873,6 @@ def test_get_story_fallback(client):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 8, 1, 15, 43, 51),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -1952,7 +1892,6 @@ def test_get_story_fallback(client):
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': ['docker'],
                     'created_at': '2017-08-01T15:43:51Z',
                     'display_name': 'RHBA-2017:2251-02',
                     'id': '27825',
@@ -1987,7 +1926,6 @@ def test_get_story_fallback(client):
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': ['docker'],
                 'created_at': '2017-08-01T15:43:51Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',

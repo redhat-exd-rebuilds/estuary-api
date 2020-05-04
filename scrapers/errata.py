@@ -48,12 +48,9 @@ class ErrataScraper(BaseScraper):
         for advisory in advisories:
             count += 1
             log.info('Processing advisory {0}/{1}'.format(count, len(advisories)))
-            # The content_types column is a string with YAML in it, so convert it to a list
-            content_types = yaml.safe_load(advisory['content_types'])
             adv = Advisory.create_or_update({
                 'actual_ship_date': advisory['actual_ship_date'],
                 'advisory_name': advisory['advisory_name'],
-                'content_types': content_types,
                 'created_at': advisory['created_at'],
                 'id_': advisory['id'],
                 'issue_date': advisory['issue_date'],
@@ -141,7 +138,6 @@ class ErrataScraper(BaseScraper):
                 main.actual_ship_date,
                 main.fulladvisory as advisory_name,
                 assigned_users.login_name AS assigned_to,
-                main.content_types,
                 states.current as state,
                 main.created_at,
                 main.id AS id,

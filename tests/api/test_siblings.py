@@ -21,9 +21,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-04-03T14:47:23Z',
                         'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
@@ -62,9 +59,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-04-03T14:47:23Z',
                         'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
@@ -145,7 +139,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'version': '1.7.4'
                     }
                 ],
-                'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -185,7 +178,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
@@ -234,7 +226,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
@@ -323,7 +314,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'version': '1.7.4'
                     }
                 ],
-                'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23Z',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
@@ -393,7 +383,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -440,7 +429,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
     ca = ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -479,9 +467,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-04-03T14:47:23Z',
                         'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
@@ -559,7 +544,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
@@ -608,7 +592,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
@@ -719,7 +702,6 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -766,7 +748,6 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
     ca = ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -831,7 +812,6 @@ def test_reverse_flag(client):
     ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -859,7 +839,6 @@ def test_story_path_flag_invalid(client):
     Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['rpms'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),

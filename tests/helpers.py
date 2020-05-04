@@ -56,9 +56,6 @@ def make_artifact(label, **kwargs):
         args = {
             'actual_ship_date': datetime(2019, 1, 1, 0, 0, 40),
             'advisory_name': 'RHBA-2017:2251-02',
-            'content_types': [
-                'docker'
-            ],
             'created_at': datetime(2019, 1, 1, 0, 0, 40),
             'id': '27825',
             'issue_date': datetime(2019, 1, 1, 0, 0, 40),
@@ -100,7 +97,6 @@ def make_artifact(label, **kwargs):
         args = {
             'actual_ship_date': datetime(2019, 1, 1, 0, 1, 40),
             'advisory_name': 'RHBA-2017:2251-03',
-            'content_types': ['docker'],
             'created_at': datetime(2019, 1, 1, 0, 1, 40),
             'id': '12327',
             'issue_date': datetime(2019, 1, 1, 0, 1, 40),

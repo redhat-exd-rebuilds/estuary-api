@@ -38,7 +38,6 @@ def test_get_recent_nodes(client):
                     'state': None,
                     'product_short_name': None,
                     'product_name': None,
-                    'content_types': None,
                     'security_sla': None,
                     'synopsis': None,
                     'security_impact': None,

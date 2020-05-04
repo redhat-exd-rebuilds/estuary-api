@@ -81,9 +81,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': None,
                     'advisory_name': 'RHBA-2017:27760-01',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-04-21T19:36:47Z',
                     'display_name':'RHBA-2017:27760-01',
                     'id':'123456',
@@ -179,9 +176,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-06-13T10:36:47Z',
                     'display_name':'RHBA-2017:2251-02',
                     'id':'27825',
@@ -274,9 +268,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
                             'id':'123456',
@@ -295,9 +286,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
                             'id':'27825',
@@ -342,9 +330,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': None,
                     'advisory_name': 'RHBA-2017:27760-01',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-04-21T19:36:47Z',
                     'display_name':'RHBA-2017:27760-01',
                     'id':'123456',
@@ -406,9 +391,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
                             'id':'123456',
@@ -427,9 +409,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
                             'id': '27825',
@@ -474,9 +453,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': None,
                     'advisory_name': 'RHBA-2017:27760-01',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-04-21T19:36:47Z',
                     'display_name':'RHBA-2017:27760-01',
                     'id':'123456',
@@ -538,9 +514,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
                             'id':'123456',
@@ -559,9 +532,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
                             'id':'27825',
@@ -606,9 +576,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-06-13T10:36:47Z',
                     'display_name':'RHBA-2017:2251-02',
                     'id':'27825',
@@ -699,9 +666,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
                             'id':'123456',
@@ -720,9 +684,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
                             'id':'27825',
@@ -767,9 +728,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-06-13T10:36:47Z',
                     'display_name':'RHBA-2017:2251-02',
                     'id':'27825',
@@ -885,7 +843,6 @@ def test_all_stories(client, resource, uid, expected):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2018, 6, 13, 10, 36, 47),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -906,7 +863,6 @@ def test_all_stories(client, resource, uid, expected):
         'advisory_name': 'RHBA-2017:27760-01',
         'issue_date': datetime(2018, 3, 14, 5, 53, 25),
         'product_short_name': 'release-e2e-test',
-        'content_types': ['docker'],
         'status_time': datetime(2018, 3, 14, 7, 53, 25),
         'state': 'DROPPED_NO_SHIP',
         'id_': '123456'
@@ -978,7 +934,6 @@ def test_get_stories_fallback(client):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
@@ -998,7 +953,6 @@ def test_get_stories_fallback(client):
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-02',
                     'id': '27825',
@@ -1033,7 +987,6 @@ def test_get_stories_fallback(client):
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
