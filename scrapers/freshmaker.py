@@ -67,7 +67,6 @@ class FreshmakerScraper(BaseScraper):
                 log.debug('Creating FreshmakerEvent {0}'.format(fm_event['id']))
                 event_params = dict(
                     id_=fm_event['id'],
-                    event_type_id=fm_event['event_type_id'],
                     state_name=fm_event['state_name'],
                     state_reason=fm_event['state_reason'],
                     url=fm_event['url']

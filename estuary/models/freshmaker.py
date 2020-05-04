@@ -12,7 +12,6 @@ from estuary.models.base import EstuaryStructuredNode
 class FreshmakerEvent(EstuaryStructuredNode):
     """Definition of a Freshmaker event in Neo4j."""
 
-    event_type_id = IntegerProperty()
     id_ = UniqueIdProperty(db_property='id')
     state_name = StringProperty()
     state_reason = StringProperty()

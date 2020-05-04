@@ -192,7 +192,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -581,7 +580,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -728,7 +726,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -846,7 +843,6 @@ def test_all_stories(client, resource, uid, expected):
         'id_': '123456'
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',

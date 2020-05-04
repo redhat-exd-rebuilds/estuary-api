@@ -152,7 +152,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'synopsis': 'cifs-utils bug fix update',
                 'triggered_freshmaker_event': [{
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -204,7 +203,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state': 2,
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -249,7 +247,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'state': 1,
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -382,7 +379,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
         'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -558,7 +554,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'state': 2,
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -603,7 +598,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'state': 1,
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -690,7 +684,6 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
         'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',

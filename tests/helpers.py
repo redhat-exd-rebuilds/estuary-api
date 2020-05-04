@@ -70,7 +70,6 @@ def make_artifact(label, **kwargs):
         }
     elif label == 'FreshmakerEvent':
         args = {
-            'event_type_id': 8,
             'id': '1180',
             'state_name': 'COMPLETE',
             'state_reason': 'All container images have been rebuilt.',

@@ -98,7 +98,6 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-08-01T15:43:51Z',
             },
             {
-                'event_type_id': 8,
                 'id': '1180',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
@@ -275,7 +274,6 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-08-01T15:43:51Z'
             },
             {
-                'event_type_id': 8,
                 'id': '1180',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
@@ -421,7 +419,6 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-08-01T15:43:51Z',
             },
             {
-                'event_type_id': 8,
                 'id': '1180',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
@@ -558,7 +555,6 @@ from estuary.models.user import User
                 'triggered_freshmaker_event': [
                     {
                         'display_name': 'Freshmaker event 1180',
-                        'event_type_id': 8,
                         'id': '1180',
                         'resource_type': 'FreshmakerEvent',
                         'state_name': 'COMPLETE',
@@ -570,7 +566,6 @@ from estuary.models.user import User
                 'update_date': '2017-08-01T15:43:56Z'
             },
             {
-                'event_type_id': 8,
                 'id': '1180',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
@@ -687,7 +682,6 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-08-01T15:43:51Z'
             },
             {
-                'event_type_id': 8,
                 'id': '1180',
                 'requested_builds': [{
                     'build_id': 15639305,
@@ -856,7 +850,6 @@ from estuary.models.user import User
             },
             {
                 'display_name': 'Freshmaker event 1180',
-                'event_type_id': 8,
                 'id': '1180',
                 'resource_type': 'FreshmakerEvent',
                 'state_name': 'COMPLETE',
@@ -903,7 +896,6 @@ from estuary.models.user import User
                 'timeline_timestamp': '2017-08-14T05:43:51Z',
                 'triggered_by_freshmaker_event':{
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -1005,7 +997,6 @@ from estuary.models.user import User
             },
             {
                 'display_name': 'Freshmaker event 1180',
-                'event_type_id': 8,
                 'id': '1180',
                 'resource_type': 'FreshmakerEvent',
                 'state_name': 'COMPLETE',
@@ -1150,7 +1141,6 @@ def test_get_stories(client, resource, uids, expected):
         'version': '1.7.4'
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -1297,7 +1287,6 @@ def test_get_stories(client, resource, uids, expected):
             },
             {
                 'display_name': 'Freshmaker event 1180',
-                'event_type_id': 8,
                 'id': '1180',
                 'requested_builds': [{
                     'build_id': 15639305,
@@ -1464,7 +1453,6 @@ def test_module_story_flow(client, resource, uid, expected):
         'module_stream': '1.4'
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -1682,7 +1670,6 @@ def test_get_story_partial_story(client):
         'update_date': datetime(2017, 8, 1, 15, 43, 56)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -1739,7 +1726,6 @@ def test_get_story_partial_story(client):
                 'timeline_timestamp': '2017-08-01T15:43:51Z',
                 'triggered_freshmaker_event': [{
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -1750,7 +1736,6 @@ def test_get_story_partial_story(client):
                 'update_date': '2017-08-01T15:43:56Z'
             },
             {
-                'event_type_id': 8,
                 'id': '1180',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',

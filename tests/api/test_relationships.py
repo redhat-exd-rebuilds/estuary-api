@@ -34,7 +34,6 @@ from estuary.models.koji import ContainerKojiBuild
                 'state':1,
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -65,7 +64,6 @@ from estuary.models.koji import ContainerKojiBuild
                 'state':2,
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -96,7 +94,6 @@ from estuary.models.koji import ContainerKojiBuild
                 'state':1,
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
                     'resource_type': 'FreshmakerEvent',
                     'state_name': 'COMPLETE',
@@ -115,7 +112,6 @@ from estuary.models.koji import ContainerKojiBuild
 def test_one_to_many_node_relationships(client, resource, uid, relationship, expected):
     """Tests getting one-to-many relationships of an artifact."""
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -171,7 +167,6 @@ def test_one_to_many_node_relationships(client, resource, uid, relationship, exp
 def test_one_to_many_node_relationships_failed(client):
     """Tests getting one-to-many relationships of an artifact with wrong relationship name."""
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',

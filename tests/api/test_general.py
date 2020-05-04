@@ -61,7 +61,6 @@ def test_about(client):
         'id_': '12345',
         'state_reason': 'No container images to rebuild for advisory \'RHSA-2018:1234\'',
         'state_name': 'SKIPPED',
-        'event_type_id': 8
     }),
     (ContainerKojiBuild, 'containerkojibuild', '710', {
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
