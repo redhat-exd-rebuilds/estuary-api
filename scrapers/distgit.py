@@ -157,7 +157,6 @@ class DistGitScraper(BaseScraper):
 
                 log.debug('Creating the relationships associated with commit ID {0}'
                           .format(result['commit_id']))
-                repo.contributors.connect(author)
                 repo.commits.connect(commit)
 
                 commit.conditional_connect(commit.author, author)

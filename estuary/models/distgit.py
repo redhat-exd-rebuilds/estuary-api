@@ -15,7 +15,6 @@ class DistGitRepo(EstuaryStructuredNode):
     name = StringProperty(required=True)
     namespace = StringProperty(required=True)
     commits = RelationshipTo('DistGitCommit', 'CONTAINS')
-    contributors = RelationshipTo('.user.User', 'CONTRIBUTED_BY')
 
     @property
     def display_name(self):
