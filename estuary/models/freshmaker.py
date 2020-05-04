@@ -47,7 +47,6 @@ class FreshmakerBuild(EstuaryStructuredNode):
     time_completed = DateTimeProperty()
     time_submitted = DateTimeProperty()
     type_name = StringProperty()
-    url = StringProperty()
     koji_builds = RelationshipTo('.koji.ContainerKojiBuild', 'TRIGGERED_BY', cardinality=ZeroOrOne)
     event = RelationshipFrom('.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 

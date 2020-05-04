@@ -324,7 +324,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'time_completed': '2017-04-02T19:39:06Z',
             'time_submitted': '2017-04-02T19:39:06Z',
             'type_name': 'IMAGE',
-            'url': '/api/1/builds/398'
         }],
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt',
@@ -503,7 +502,6 @@ def test_get_resources(client, resource, uid, expected):
         'time_completed': datetime(2017, 4, 2, 19, 39, 6),
         'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
         'type_name': "IMAGE",
-        'url': "/api/1/builds/398"
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),

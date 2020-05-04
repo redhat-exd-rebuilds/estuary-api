@@ -698,7 +698,6 @@ from estuary.models.user import User
                     'time_submitted': '2017-08-14T05:43:51Z',
                     'type': 1,
                     'type_name': 'IMAGE',
-                    'url': '/api/1/builds/398'
                 }],
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
@@ -1159,7 +1158,6 @@ def test_get_stories(client, resource, uids, expected):
         'time_completed': datetime(2017, 8, 14, 5, 43, 51),
         'time_submitted': datetime(2017, 8, 14, 5, 43, 51),
         'type_name': "IMAGE",
-        'url': "/api/1/builds/398"
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 9, 1, 5, 43, 51),
@@ -1302,7 +1300,6 @@ def test_get_stories(client, resource, uids, expected):
                     'time_submitted': '2017-04-02T19:39:06Z',
                     'type': 1,
                     'type_name': 'IMAGE',
-                    'url': '/api/1/builds/398'
                 }],
                 'resource_type': 'FreshmakerEvent',
                 'state_name': 'COMPLETE',
@@ -1470,7 +1467,6 @@ def test_module_story_flow(client, resource, uid, expected):
         'time_completed': datetime(2017, 4, 2, 19, 39, 6),
         'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
         'type_name': "IMAGE",
-        'url': "/api/1/builds/398"
     })[0]
     cb = ContainerKojiBuild.get_or_create({
         'completion_time': datetime(2017, 9, 1, 5, 43, 51),
