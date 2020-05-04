@@ -49,11 +49,7 @@ class DistGitCommit(EstuaryStructuredNode):
     log_message = StringProperty()
     author = RelationshipTo('.user.User', 'AUTHORED_BY', cardinality=ZeroOrOne)
     branches = RelationshipFrom('DistGitBranch', 'CONTAINS')
-    # Cardinality is enforced on the `parent` property, so the `children` property should be
-    # treated as read-only
-    children = RelationshipFrom('.distgit.DistGitCommit', 'PARENT')
     koji_builds = RelationshipFrom('.koji.KojiBuild', 'BUILT_FROM')
-    parent = RelationshipTo('.distgit.DistGitCommit', 'PARENT', cardinality=ZeroOrOne)
     related_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RELATED')
     repos = RelationshipFrom('DistGitRepo', 'CONTAINS')
     resolved_bugs = RelationshipTo('.bugzilla.BugzillaBug', 'RESOLVED')

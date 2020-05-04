@@ -123,16 +123,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
                 'display_name': 'some_branch_name branch in some_repo_namespace/some_repo_name',
             }
         ],
-        'children': [
-            {
-                'author_date': '2017-04-27T11:44:38Z',
-                'commit_date': '2017-04-27T11:44:38Z',
-                'hash': '5663adb248ba633e205067e1ad6dc61931727123',
-                'log_message': 'Revert: #12345',
-                'resource_type': 'DistGitCommit',
-                'display_name': 'commit #5663adb',
-            }
-        ],
         'commit_date': '2017-04-26T11:44:38Z',
         'display_name': 'commit #8a63adb',
         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -140,14 +130,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
 
         ],
         'log_message':'Related: #12345 - fix xyz',
-        'parent':{
-            'author_date': '2017-04-27T11:44:38Z',
-            'commit_date': '2017-04-27T11:44:38Z',
-            'hash': '1263adb248ba633e205067e1ad6dc61931727c2d',
-            'log_message': 'Related: #12345 - fix xz',
-            'resource_type': 'DistGitCommit',
-            'display_name': 'commit #1263adb',
-        },
         'related_bugs': [
             {
                 'creation_time': '2017-04-02T19:39:06Z',
@@ -585,8 +567,6 @@ def test_get_resources(client, resource, uid, expected):
 
     if resource == 'distgitcommit':
         commit.author.connect(tbrady)
-        commit.parent.connect(commit_two)
-        commit_three.parent.connect(commit)
         commit.related_bugs.connect(bug)
         commit.related_bugs.connect(bug_three)
         commit.reverted_bugs.connect(bug_two)

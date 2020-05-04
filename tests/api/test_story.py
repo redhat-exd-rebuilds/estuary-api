@@ -191,9 +191,6 @@ from estuary.models.user import User
                     'repo_namespace': 'rpms',
                     'resource_type': 'DistGitBranch',
                 }],
-                'children': [
-
-                ],
                 'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'koji_builds': [
@@ -212,7 +209,6 @@ from estuary.models.user import User
                     }
                 ],
                 'log_message': 'Related: #12345 - fix xyz',
-                'parent': None,
                 'related_bugs': [
 
                 ],
