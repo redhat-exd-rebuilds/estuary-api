@@ -1158,7 +1158,6 @@ def test_get_stories(client, resource, uids, expected):
         'state_reason': "Built successfully.",
         'time_completed': datetime(2017, 8, 14, 5, 43, 51),
         'time_submitted': datetime(2017, 8, 14, 5, 43, 51),
-        'type_': 1,
         'type_name': "IMAGE",
         'url': "/api/1/builds/398"
     })[0]
@@ -1470,7 +1469,6 @@ def test_module_story_flow(client, resource, uid, expected):
         'state_reason': "Built successfully.",
         'time_completed': datetime(2017, 4, 2, 19, 39, 6),
         'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
-        'type_': 1,
         'type_name': "IMAGE",
         'url': "/api/1/builds/398"
     })[0]

@@ -98,7 +98,6 @@ class FreshmakerScraper(BaseScraper):
                         state_name=build_dict['state_name'],
                         state_reason=build_dict['state_reason'],
                         time_submitted=timestamp_to_datetime(build_dict['time_submitted']),
-                        type_=build_dict['type'],
                         type_name=build_dict['type_name'],
                         url=build_dict['url']
                     )

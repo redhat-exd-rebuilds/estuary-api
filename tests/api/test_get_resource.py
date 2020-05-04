@@ -323,7 +323,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'state_reason': 'Built successfully.',
             'time_completed': '2017-04-02T19:39:06Z',
             'time_submitted': '2017-04-02T19:39:06Z',
-            'type': 1,
             'type_name': 'IMAGE',
             'url': '/api/1/builds/398'
         }],
@@ -503,7 +502,6 @@ def test_get_resources(client, resource, uid, expected):
         'state_reason': "Built successfully.",
         'time_completed': datetime(2017, 4, 2, 19, 39, 6),
         'time_submitted': datetime(2017, 4, 2, 19, 39, 6),
-        'type_': 1,
         'type_name': "IMAGE",
         'url': "/api/1/builds/398"
     })[0]
