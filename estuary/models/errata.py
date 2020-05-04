@@ -26,7 +26,6 @@ class Advisory(EstuaryStructuredNode):
     id_ = UniqueIdProperty(db_property='id')
     issue_date = DateTimeProperty()
     product_name = StringProperty()
-    product_short_name = StringProperty()
     release_date = DateTimeProperty()
     security_impact = StringProperty()
     security_sla = DateTimeProperty()

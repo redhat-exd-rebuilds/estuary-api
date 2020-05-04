@@ -53,7 +53,6 @@ def test_about(client):
         'update_date': datetime(2018, 3, 14, 7, 53, 25),
         'advisory_name': 'RHBA-2017:27760-01',
         'issue_date': datetime(2018, 3, 14, 5, 53, 25),
-        'product_short_name': 'release-e2e-test',
         'status_time': datetime(2018, 3, 14, 7, 53, 25),
         'state': 'DROPPED_NO_SHIP',
         'id_': '12345'
