@@ -72,7 +72,6 @@ def make_artifact(label, **kwargs):
         args = {
             'event_type_id': 8,
             'id': '1180',
-            'state': 2,
             'state_name': 'COMPLETE',
             'state_reason': 'All container images have been rebuilt.',
             'time_created': datetime(2019, 1, 1, 0, 1, 0),

@@ -14,7 +14,6 @@ class FreshmakerEvent(EstuaryStructuredNode):
 
     event_type_id = IntegerProperty()
     id_ = UniqueIdProperty(db_property='id')
-    state = IntegerProperty()
     state_name = StringProperty()
     state_reason = StringProperty()
     time_created = DateTimeProperty()
@@ -44,7 +43,6 @@ class FreshmakerBuild(EstuaryStructuredNode):
     name = StringProperty()
     original_nvr = StringProperty()
     rebuilt_nvr = StringProperty()
-    state = IntegerProperty()
     state_name = StringProperty()
     state_reason = StringProperty()
     time_completed = DateTimeProperty()

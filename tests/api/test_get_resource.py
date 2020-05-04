@@ -320,7 +320,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'original_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10',
             'rebuilt_nvr': 'metrics-hawkular-metrics-docker-v3.7.23-10.1522094767',
             'resource_type': 'FreshmakerBuild',
-            'state': 1,
             'state_name': 'DONE',
             'state_reason': 'Built successfully.',
             'time_completed': '2017-04-02T19:39:06Z',
@@ -329,7 +328,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'type_name': 'IMAGE',
             'url': '/api/1/builds/398'
         }],
-        'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt',
         'time_created': '2019-08-21T13:42:20Z',
@@ -491,7 +489,6 @@ def test_get_resources(client, resource, uid, expected):
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
         'id_': '1180',
-        'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt',
         'time_created': datetime(2019, 8, 21, 13, 42, 20),
@@ -504,7 +501,6 @@ def test_get_resources(client, resource, uid, expected):
         'name': "metrics-hawkular-metrics-docker",
         'original_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10",
         'rebuilt_nvr': "metrics-hawkular-metrics-docker-v3.7.23-10.1522094767",
-        'state': 1,
         'state_name': "DONE",
         'state_reason': "Built successfully.",
         'time_completed': datetime(2017, 4, 2, 19, 39, 6),
