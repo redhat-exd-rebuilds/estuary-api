@@ -15,7 +15,7 @@ from neomodel import config as neomodel_config, db
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
 from estuary.utils.general import timestamp_to_date
-from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitCommit
+from estuary.models.distgit import DistGitRepo, DistGitCommit
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.user import User
 from estuary import log
@@ -139,12 +139,6 @@ class DistGitScraper(BaseScraper):
                     'namespace': repo_info['namespace'],
                     'name': result['module']
                 })[0]
-                branch_name = result['ref'].rsplit('/', 1)[1]
-                branch = DistGitBranch.get_or_create({
-                    'name': branch_name,
-                    'repo_namespace': repo_info['namespace'],
-                    'repo_name': result['module']
-                })[0]
                 commit = DistGitCommit.create_or_update({
                     'author_date': result['author_date'],
                     'commit_date': result['commit_date'],
@@ -165,10 +159,6 @@ class DistGitScraper(BaseScraper):
                           .format(result['commit_id']))
                 repo.contributors.connect(author)
                 repo.commits.connect(commit)
-                repo.branches.connect(branch)
-
-                branch.contributors.connect(author)
-                branch.commits.connect(commit)
 
                 commit.conditional_connect(commit.author, author)
 

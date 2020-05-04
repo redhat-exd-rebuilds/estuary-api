@@ -103,7 +103,7 @@ def test_get_resource_relationship_false(client, model, resource, uid, test_inpu
     assert json.loads(rv.data.decode('utf-8')) == item.serialized
 
 
-@pytest.mark.parametrize('resource', ['distgitrepo', 'distgitbranch'])
+@pytest.mark.parametrize('resource', ['distgitrepo'])
 def test_get_on_model_wo_uid(client, resource):
     """Test that an error is returned when a resource with a UniqueIdProperty is requested."""
     rv = client.get('/api/v1/{0}/some_repo'.format(resource))

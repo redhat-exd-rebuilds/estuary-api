@@ -18,7 +18,6 @@ class User(EstuaryStructuredNode):
     bugs_qa_contact_for = RelationshipFrom('.bugzilla.BugzillaBug', 'QA_BY')
     bugs_reported = RelationshipFrom('.bugzilla.BugzillaBug', 'REPORTED_BY')
     distgit_authored_commits = RelationshipFrom('.distgit.DistGitCommit', 'AUTHORED_BY')
-    distgit_branches = RelationshipFrom('.distgit.DistGitBranch', 'CONTRIBUTED_BY')
     distgit_repos = RelationshipFrom('.distgit.DistGitRepo', 'CONTRIBUTED_BY')
     email = StringProperty()
     koji_builds = RelationshipFrom('.koji.KojiBuild', 'OWNED_BY')

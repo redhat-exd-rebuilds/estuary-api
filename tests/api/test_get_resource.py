@@ -8,7 +8,7 @@ import pytest
 
 from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.distgit import DistGitCommit, DistGitBranch, DistGitRepo
+from estuary.models.distgit import DistGitCommit, DistGitRepo
 from estuary.models.errata import Advisory
 from estuary.models.koji import KojiBuild, ContainerKojiBuild
 from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
@@ -114,15 +114,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
             'display_name': 'tbrady',
         },
         'author_date': '2017-04-26T11:44:38Z',
-        'branches': [
-            {
-                'name': 'some_branch_name',
-                'repo_name': 'some_repo_name',
-                'repo_namespace': 'some_repo_namespace',
-                'resource_type': 'DistGitBranch',
-                'display_name': 'some_branch_name branch in some_repo_namespace/some_repo_name',
-            }
-        ],
         'commit_date': '2017-04-26T11:44:38Z',
         'display_name': 'commit #8a63adb',
         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -486,11 +477,6 @@ def test_get_resources(client, resource, uid, expected):
         'name': 'some_repo',
         'namespace': 'some_namespace',
     })[0]
-    branch = DistGitBranch.get_or_create({
-        'name': 'some_branch_name',
-        'repo_name': 'some_repo_name',
-        'repo_namespace': 'some_repo_namespace'
-    })[0]
     build = KojiBuild.get_or_create({
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -571,7 +557,6 @@ def test_get_resources(client, resource, uid, expected):
         commit.related_bugs.connect(bug_three)
         commit.reverted_bugs.connect(bug_two)
         repo.commits.connect(commit)
-        branch.commits.connect(commit)
         commit.resolved_bugs.connect(bug)
         commit.resolved_bugs.connect(bug_two)
 

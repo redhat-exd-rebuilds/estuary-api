@@ -9,7 +9,7 @@ from six.moves import urllib
 
 from estuary.models.koji import KojiBuild, ContainerKojiBuild, ModuleKojiBuild
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.distgit import DistGitCommit, DistGitRepo, DistGitBranch
+from estuary.models.distgit import DistGitCommit, DistGitRepo
 from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
 from estuary.models.user import User
@@ -184,13 +184,6 @@ from estuary.models.user import User
             {
                 'author': None,
                 'author_date': '2017-04-26T11:44:38Z',
-                'branches': [{
-                    'display_name': 'some-branch branch in rpms/slf4j',
-                    'name': 'some-branch',
-                    'repo_name': 'slf4j',
-                    'repo_namespace': 'rpms',
-                    'resource_type': 'DistGitBranch',
-                }],
                 'commit_date': '2017-04-26T11:44:38Z',
                 'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
                 'koji_builds': [
@@ -1179,11 +1172,6 @@ def test_get_stories(client, resource, uids, expected):
         'hash_': '8a63adb248ba633e200067e1ad6dc61931727bad',
         'log_message': 'Related: #12345 - fix xyz'
     })[0]
-    branch = DistGitBranch.get_or_create({
-        'name': 'some-branch',
-        'repo_name': 'slf4j',
-        'repo_namespace': 'rpms'
-    })[0]
     repo = DistGitRepo.get_or_create({
         'name': 'slf4j',
         'namespace': 'rpms'
@@ -1293,9 +1281,7 @@ def test_get_stories(client, resource, uids, expected):
         'update_date': datetime(2017, 9, 12, 7, 4, 56)
     })[0]
 
-    repo.branches.connect(branch)
     repo.commits.connect(commit)
-    branch.commits.connect(commit)
     commit.resolved_bugs.connect(bug_two)
     commit.resolved_bugs.connect(bug)
     commit.koji_builds.connect(build)

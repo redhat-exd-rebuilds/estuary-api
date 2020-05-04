@@ -60,7 +60,6 @@ def test_get_recent_nodes(client):
                     'log_message': None,
                     'author': None,
                     'author_date': None,
-                    'branches': [],
                     'koji_builds': [],
                     'hash': '55555',
                     'commit_date': '2017-05-02T11:44:38Z',
