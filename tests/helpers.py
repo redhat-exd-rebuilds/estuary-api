@@ -72,7 +72,6 @@ def make_artifact(label, **kwargs):
         args = {
             'event_type_id': 8,
             'id': '1180',
-            'message_id': 'ID:messaging-devops-broker01.test',
             'state': 2,
             'state_name': 'COMPLETE',
             'state_reason': 'All container images have been rebuilt.',

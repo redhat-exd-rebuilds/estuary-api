@@ -100,7 +100,6 @@ from estuary.models.user import User
             {
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
@@ -279,7 +278,6 @@ from estuary.models.user import User
             {
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
@@ -427,7 +425,6 @@ from estuary.models.user import User
             {
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
@@ -566,7 +563,6 @@ from estuary.models.user import User
                         'display_name': 'Freshmaker event 1180',
                         'event_type_id': 8,
                         'id': '1180',
-                        'message_id': 'ID:messaging-devops-broker01.test',
                         'resource_type': 'FreshmakerEvent',
                         'state': 2,
                         'state_name': 'COMPLETE',
@@ -580,7 +576,6 @@ from estuary.models.user import User
             {
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,
@@ -699,7 +694,6 @@ from estuary.models.user import User
             {
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'requested_builds': [{
                     'build_id': 15639305,
                     'dep_on': 'jboss-eap-7-eap70-openshift-docker',
@@ -871,7 +865,6 @@ from estuary.models.user import User
                 'display_name': 'Freshmaker event 1180',
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
                 'state': 2,
                 'state_name': 'COMPLETE',
@@ -920,7 +913,6 @@ from estuary.models.user import User
                     'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
                     'state': 2,
                     'state_name': 'COMPLETE',
@@ -1024,7 +1016,6 @@ from estuary.models.user import User
                 'display_name': 'Freshmaker event 1180',
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
                 'state': 2,
                 'state_name': 'COMPLETE',
@@ -1171,7 +1162,6 @@ def test_get_stories(client, resource, uids, expected):
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -1321,7 +1311,6 @@ def test_get_stories(client, resource, uids, expected):
                 'display_name': 'Freshmaker event 1180',
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'requested_builds': [{
                     'build_id': 15639305,
                     'dep_on': 'jboss-eap-7-eap70-openshift-docker',
@@ -1491,7 +1480,6 @@ def test_module_story_flow(client, resource, uid, expected):
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -1712,7 +1700,6 @@ def test_get_story_partial_story(client):
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
@@ -1771,7 +1758,6 @@ def test_get_story_partial_story(client):
                     'display_name': 'Freshmaker event 1180',
                     'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
                     'state': 2,
                     'state_name': 'COMPLETE',
@@ -1784,7 +1770,6 @@ def test_get_story_partial_story(client):
             {
                 'event_type_id': 8,
                 'id': '1180',
-                'message_id': 'ID:messaging-devops-broker01.test',
                 'resource_type': 'FreshmakerEvent',
                 'display_name': 'Freshmaker event 1180',
                 'state': 2,

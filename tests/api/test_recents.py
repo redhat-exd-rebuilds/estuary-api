@@ -78,7 +78,6 @@ def test_get_recent_nodes(client):
                     'id': '77777',
                     'state': None,
                     'event_type_id': None,
-                    'message_id': None,
                     'display_name': 'Freshmaker event 77777',
                     'resource_type': 'FreshmakerEvent',
                     'requested_builds': [],

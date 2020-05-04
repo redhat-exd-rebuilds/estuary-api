@@ -68,7 +68,6 @@ class FreshmakerScraper(BaseScraper):
                 event_params = dict(
                     id_=fm_event['id'],
                     event_type_id=fm_event['event_type_id'],
-                    message_id=fm_event['message_id'],
                     state=fm_event['state'],
                     state_name=fm_event['state_name'],
                     state_reason=fm_event['state_reason'],

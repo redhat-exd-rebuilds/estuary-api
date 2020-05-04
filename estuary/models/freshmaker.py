@@ -14,7 +14,6 @@ class FreshmakerEvent(EstuaryStructuredNode):
 
     event_type_id = IntegerProperty()
     id_ = UniqueIdProperty(db_property='id')
-    message_id = StringProperty()
     state = IntegerProperty()
     state_name = StringProperty()
     state_reason = StringProperty()

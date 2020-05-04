@@ -310,7 +310,6 @@ from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
         'display_name': 'Freshmaker event 1180',
         'event_type_id': 8,
         'id': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
         'resource_type': 'FreshmakerEvent',
         'requested_builds': [{
             'build_id': 15639305,
@@ -492,7 +491,6 @@ def test_get_resources(client, resource, uid, expected):
     fm_event = FreshmakerEvent.get_or_create({
         'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
         'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt',

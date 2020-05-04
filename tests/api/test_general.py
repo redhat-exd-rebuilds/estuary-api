@@ -61,7 +61,6 @@ def test_about(client):
         'id_': '12345',
         'state_reason': 'No container images to rebuild for advisory \'RHSA-2018:1234\'',
         'state_name': 'SKIPPED',
-        'message_id': 'Some ID',
         'state': 4,
         'event_type_id': 8
     }),
