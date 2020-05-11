@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import re
 
 from neomodel import (
-    UniqueIdProperty, RelationshipTo, RelationshipFrom, IntegerProperty, StringProperty,
+    UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty,
     DateTimeProperty, ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode

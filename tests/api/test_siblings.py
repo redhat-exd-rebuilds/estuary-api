@@ -73,7 +73,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'update_date': '2017-08-01T07:16:00Z'
                     }
                 ],
-                'commit':{
+                'commit': {
                     'author_date': '2017-04-26T11:44:38Z',
                     'commit_date': '2017-04-26T11:44:38Z',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -464,7 +464,7 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 ],
                 'commit': None,
                 'completion_time': '2017-04-02T19:39:06Z',
-                'components':[
+                'components': [
                     {
                         'completion_time': '2017-04-02T19:39:06Z',
                         'creation_time': '2017-04-02T19:39:06Z',
