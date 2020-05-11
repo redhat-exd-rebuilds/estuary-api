@@ -2,8 +2,6 @@
 
 from __future__ import unicode_literals
 
-import yaml
-
 from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
 from estuary import log
