@@ -1307,6 +1307,7 @@ def test_get_stories(client, resource, uids, expected):
                 'timeline_timestamp': '2017-08-13T15:43:51Z',
                 'triggered_by_advisory': {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
+                    'advisory_name': 'RHBA-2017:2251-02',
                     'created_at': '2017-08-01T15:43:51Z',
                     'display_name': 'RHBA-2017:2251-02',
                     'id': '27825',
