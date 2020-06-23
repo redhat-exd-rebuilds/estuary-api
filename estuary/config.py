@@ -2,6 +2,8 @@
 
 from __future__ import unicode_literals
 
+from typing import List, Optional
+
 
 class Config(object):
     """The base Estuary application configuration."""
@@ -22,10 +24,10 @@ class Config(object):
     CORS_ORIGINS = ['http://localhost:4200']
     STORY_MANAGER_SEQUENCE = ['ModuleStoryManager', 'ContainerStoryManager']
     ENABLE_AUTH = False
-    OIDC_INTROSPECT_URL = None
-    OIDC_CLIENT_ID = None
-    OIDC_CLIENT_SECRET = None
-    EMPLOYEE_TYPES = []
+    OIDC_INTROSPECT_URL: Optional[str] = None
+    OIDC_CLIENT_ID: Optional[str] = None
+    OIDC_CLIENT_SECRET: Optional[str] = None
+    EMPLOYEE_TYPES: Optional[List[str]] = []
     LDAP_CA_CERTIFICATE = '/etc/pki/tls/certs/ca-bundle.crt'
     LDAP_GROUP_MEMBERSHIP_ATTRIBUTE = 'uniqueMember'
     LOG_LEVEL = 'INFO'
