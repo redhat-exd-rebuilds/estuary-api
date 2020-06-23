@@ -86,6 +86,8 @@ Get a resource from Neo4j.
 :raises ValidationError: if an invalid resource was requested
 ```
 
+The codebase type checking is implemented with `Mypy`.
+
 ## Code Documentation
 To document new files, please check [here](https://github.com/release-engineering/estuary-api/tree/master/docs).
 

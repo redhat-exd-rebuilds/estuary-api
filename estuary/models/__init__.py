@@ -10,7 +10,7 @@ from estuary.models.user import User
 all_models = (Advisory, BugzillaBug, ContainerAdvisory, ContainerKojiBuild,
               DistGitBranch, DistGitCommit, DistGitRepo, FreshmakerEvent, FreshmakerBuild,
               KojiBuild, KojiTag, ModuleKojiBuild, User)
-names_to_model = {model.__label__: model for model in all_models}
+names_to_model = {model.__label__: model for model in all_models}  # type: ignore
 
 
 def _get_models_inheritance():
