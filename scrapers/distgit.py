@@ -15,7 +15,7 @@ from neomodel import config as neomodel_config, db
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
 from estuary.utils.general import timestamp_to_date
-from estuary.models.distgit import DistGitRepo, DistGitBranch, DistGitCommit
+from estuary.models.distgit import DistGitRepo, DistGitCommit
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.user import User
 from estuary import log
@@ -139,12 +139,6 @@ class DistGitScraper(BaseScraper):
                     'namespace': repo_info['namespace'],
                     'name': result['module']
                 })[0]
-                branch_name = result['ref'].rsplit('/', 1)[1]
-                branch = DistGitBranch.get_or_create({
-                    'name': branch_name,
-                    'repo_namespace': repo_info['namespace'],
-                    'repo_name': result['module']
-                })[0]
                 commit = DistGitCommit.create_or_update({
                     'author_date': result['author_date'],
                     'commit_date': result['commit_date'],
@@ -163,18 +157,9 @@ class DistGitScraper(BaseScraper):
 
                 log.debug('Creating the relationships associated with commit ID {0}'
                           .format(result['commit_id']))
-                repo.contributors.connect(author)
                 repo.commits.connect(commit)
-                repo.branches.connect(branch)
-
-                branch.contributors.connect(author)
-                branch.commits.connect(commit)
 
                 commit.conditional_connect(commit.author, author)
-
-                if repo_info['parent']:
-                    parent_commit = DistGitCommit.get_or_create({'hash_': repo_info['parent']})[0]
-                    commit.conditional_connect(commit.parent, parent_commit)
 
                 if result['bugzilla_type'] == 'related':
                     commit.related_bugs.connect(bug)
@@ -213,7 +198,7 @@ class DistGitScraper(BaseScraper):
     @staticmethod
     def _get_repo_info(repo_and_commit):
         """
-        Query cgit for the namespace, parent commit, username and email of the author.
+        Query cgit for the namespace, username and email of the author.
 
         :param tuple repo_and_commit: contains the repo and commit to query for
         :return: a JSON string of a dictionary with the keys namespace, author_username,
@@ -224,7 +209,7 @@ class DistGitScraper(BaseScraper):
         log.debug('Attempting to find the cgit URL for the commit "{0}" in repo "{1}"'
                   .format(commit, repo))
         session = retry_session()
-        rv = {'commit': commit, 'parent': None}
+        rv = {'commit': commit}
         cgit_result = None
         # The tuple of namespaces to try when determining which namespace this git module belongs
         # to since this information isn't stored in GitBZ yet
@@ -263,7 +248,7 @@ class DistGitScraper(BaseScraper):
         # Workaround for BS4 in EL7 since `soup.find('th', string=person)` doesn't work in
         # that environment
         th_tags = soup.find_all('th')
-        data_found = {'author': False, 'parent': False}
+        data_found = {'author': False}
         for th_tag in th_tags:
             if th_tag.string in ('author'):
                 data_found[th_tag.string] = True
@@ -271,9 +256,6 @@ class DistGitScraper(BaseScraper):
                 email_key = '{0}_email'.format(th_tag.string)
                 rv[username_key], rv[email_key] = DistGitScraper._parse_username_email_from_cgit(
                     th_tag, commit, namespace, repo)
-            elif th_tag.string == 'parent':
-                data_found['parent'] = True
-                rv['parent'] = th_tag.next_sibling.find('a').string
 
             # If all the "th" elements we're interested in were parsed, then break from the loop
             # early

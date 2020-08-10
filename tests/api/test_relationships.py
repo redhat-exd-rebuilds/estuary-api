@@ -21,7 +21,6 @@ from estuary.models.koji import ContainerKojiBuild
                 'completion_time': '2018-04-02T19:39:06Z',
                 'creation_time': '2018-04-02T19:39:06Z',
                 'epoch': '1',
-                'extra': None,
                 'id': '2011',
                 'module_builds': [],
                 'name': 'some_other_build',
@@ -33,16 +32,10 @@ from estuary.models.koji import ContainerKojiBuild
                 'display_name': 'some_other_build-1.7.6-4.el7_6_a',
                 'start_time': '2018-04-02T19:39:06Z',
                 'state':1,
-                'tags':[
-
-                ],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -58,7 +51,6 @@ from estuary.models.koji import ContainerKojiBuild
                 'completion_time': '2018-04-02T19:39:06Z',
                 'creation_time': '2018-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'id': '811',
                 'module_builds': [],
                 'name': 'some_build',
@@ -70,16 +62,10 @@ from estuary.models.koji import ContainerKojiBuild
                 'display_name': 'some_build-1.7.5-4.el7_4_as',
                 'start_time': '2018-04-02T19:39:06Z',
                 'state':2,
-                'tags':[
-
-                ],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -95,7 +81,6 @@ from estuary.models.koji import ContainerKojiBuild
                 'completion_time': '2017-04-02T19:39:06Z',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'id': '710',
                 'module_builds': [],
                 'name': 'slf4j_2',
@@ -107,16 +92,10 @@ from estuary.models.koji import ContainerKojiBuild
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state':1,
-                'tags':[
-
-                ],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -133,10 +112,7 @@ from estuary.models.koji import ContainerKojiBuild
 def test_one_to_many_node_relationships(client, resource, uid, relationship, expected):
     """Tests getting one-to-many relationships of an artifact."""
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
-        'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
         'time_created': datetime(2019, 8, 21, 13, 42, 20),
@@ -191,10 +167,7 @@ def test_one_to_many_node_relationships(client, resource, uid, relationship, exp
 def test_one_to_many_node_relationships_failed(client):
     """Tests getting one-to-many relationships of an artifact with wrong relationship name."""
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
-        'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
         'time_created': datetime(2019, 8, 21, 13, 42, 20),

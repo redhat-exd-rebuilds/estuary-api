@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import re
 
 from neomodel import (
-    UniqueIdProperty, RelationshipTo, RelationshipFrom, IntegerProperty, StringProperty,
+    UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty,
     DateTimeProperty, ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode
@@ -17,7 +17,6 @@ class BugzillaBug(EstuaryStructuredNode):
 
     assignee = RelationshipTo('.user.User', 'ASSIGNED_TO', cardinality=ZeroOrOne)
     attached_advisories = RelationshipFrom('.errata.Advisory', 'ATTACHED')
-    classification = StringProperty()
     creation_time = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
     modified_time = DateTimeProperty(index=True)
@@ -35,7 +34,6 @@ class BugzillaBug(EstuaryStructuredNode):
     short_description = StringProperty()
     status = StringProperty()
     target_milestone = StringProperty()
-    votes = IntegerProperty()
 
     @property
     def display_name(self):

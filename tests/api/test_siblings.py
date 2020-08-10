@@ -21,15 +21,11 @@ from estuary.models.freshmaker import FreshmakerEvent
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-04-03T14:47:23Z',
                         'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
                         'issue_date': '2017-08-01T05:59:34Z',
                         'product_name': 'Red Hat Enterprise Linux',
-                        'product_short_name': 'RHEL',
                         'release_date': None,
                         'resource_type': 'Advisory',
                         'security_impact': 'None',
@@ -45,7 +41,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'slf3j-1.7.1-4.el6_3',
                 'epoch': '0',
-                'extra': None,
                 'id': '3456',
                 'module_builds': [
 
@@ -56,9 +51,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 2,
-                'tags':[
-
-                ],
                 'version': '1.7.1'
             },
             {
@@ -66,15 +58,11 @@ from estuary.models.freshmaker import FreshmakerEvent
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-04-03T14:47:23Z',
                         'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
                         'issue_date': '2017-08-01T05:59:34Z',
                         'product_name': 'Red Hat Enterprise Linux',
-                        'product_short_name': 'RHEL',
                         'release_date': None,
                         'resource_type': 'Advisory',
                         'security_impact': 'None',
@@ -85,7 +73,7 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'update_date': '2017-08-01T07:16:00Z'
                     }
                 ],
-                'commit':{
+                'commit': {
                     'author_date': '2017-04-26T11:44:38Z',
                     'commit_date': '2017-04-26T11:44:38Z',
                     'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -97,7 +85,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': 'slf4j-1.7.4-4.el7_4',
                 'epoch': '0',
-                'extra': None,
                 'id': '2345',
                 'module_builds': [
 
@@ -108,9 +95,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'resource_type': 'KojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [
-
-                ],
                 'version': '1.7.4'
             }
         ],
@@ -131,7 +115,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'creation_time': '2017-04-02T19:39:06Z',
                         'display_name': 'slf3j-1.7.1-4.el6_3',
                         'epoch': '0',
-                        'extra': None,
                         'id': '3456',
                         'name': 'slf3j',
                         'release': '4.el6_3',
@@ -145,7 +128,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'resource_type': 'KojiBuild',
                         'display_name': 'slf4j-1.7.4-4.el7_4',
                         'epoch': '0',
-                        'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
@@ -155,12 +137,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'version': '1.7.4'
                     }
                 ],
-                'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
-                'product_short_name': 'RHEL',
                 'release_date': None,
                 'reporter': None,
                 'resource_type': 'Advisory',
@@ -172,11 +152,8 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'synopsis': 'cifs-utils bug fix update',
                 'triggered_freshmaker_event': [{
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -195,13 +172,11 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
-                    'product_short_name': 'RHEL',
                     'release_date': None,
                     'resource_type': 'ContainerAdvisory',
                     'security_impact': 'None',
@@ -215,7 +190,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'completion_time': '2018-04-02T19:39:06Z',
                 'creation_time': '2018-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'display_name': 'some_build-1.7.5-4.el7_4_as',
                 'id': '811',
                 'module_builds': [],
@@ -227,14 +201,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'resource_type': 'ContainerKojiBuild',
                 'start_time': '2018-04-02T19:39:06Z',
                 'state': 2,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -246,13 +216,11 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
-                    'product_short_name': 'RHEL',
                     'release_date': None,
                     'resource_type': 'ContainerAdvisory',
                     'security_impact': 'None',
@@ -266,7 +234,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'completion_time': '2017-04-02T19:39:06Z',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'id': '710',
                 'module_builds': [],
                 'name': 'slf4j_2',
@@ -278,14 +245,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -311,7 +274,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'creation_time': '2018-04-02T19:39:06Z',
                         'display_name': 'some_build-1.7.5-4.el7_4_as',
                         'epoch': '0',
-                        'extra': None,
                         'id': '811',
                         'name': 'some_build',
                         'operator': False,
@@ -327,7 +289,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'resource_type': 'ContainerKojiBuild',
                         'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                         'epoch': '0',
-                        'extra': None,
                         'id': '710',
                         'name': 'slf4j_2',
                         'operator': False,
@@ -339,12 +300,10 @@ from estuary.models.freshmaker import FreshmakerEvent
                         'version': '1.7.4'
                     }
                 ],
-                'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23Z',
                 'id': '12327',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
-                'product_short_name': 'RHEL',
                 'release_date': None,
                 'reporter': None,
                 'resource_type': 'ContainerAdvisory',
@@ -366,7 +325,6 @@ from estuary.models.freshmaker import FreshmakerEvent
 def test_node_siblings(client, resource, uid, backward_rel, expected):
     """Tests getting the siblings of an artifact's adjacent node in the story path."""
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -378,7 +336,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     commit = DistGitCommit.get_or_create({
         'author_date': datetime(2017, 4, 26, 11, 44, 38),
@@ -411,12 +368,10 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
@@ -424,10 +379,7 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
         'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
-        'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
         'time_created': datetime(2019, 8, 21, 13, 42, 20),
@@ -458,12 +410,10 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
     ca = ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
@@ -497,15 +447,11 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                     {
                         'actual_ship_date': '2017-08-01T15:43:51Z',
                         'advisory_name': 'RHBA-2017:2251-02',
-                        'content_types': [
-                            'docker'
-                        ],
                         'created_at': '2017-04-03T14:47:23Z',
                         'display_name': 'RHBA-2017:2251-02',
                         'id': '27825',
                         'issue_date': '2017-08-01T05:59:34Z',
                         'product_name': 'Red Hat Enterprise Linux',
-                        'product_short_name': 'RHEL',
                         'release_date': None,
                         'resource_type': 'Advisory',
                         'security_impact': 'None',
@@ -518,13 +464,12 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 ],
                 'commit': None,
                 'completion_time': '2017-04-02T19:39:06Z',
-                'components':[
+                'components': [
                     {
                         'completion_time': '2017-04-02T19:39:06Z',
                         'creation_time': '2017-04-02T19:39:06Z',
                         'display_name': 'slf3j-1.7.1-4.el6_3',
                         'epoch': '0',
-                        'extra': None,
                         'id': '3456',
                         'name': 'slf3j',
                         'release': '4.el6_3',
@@ -538,7 +483,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                         'creation_time': '2017-04-02T19:39:06Z',
                         'display_name': 'slf4j-1.7.4-4.el7_4',
                         'epoch': '0',
-                        'extra': None,
                         'id': '2345',
                         'name': 'slf4j',
                         'release': '4.el7_4',
@@ -548,12 +492,10 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                         'version': '1.7.4'
                     }
                 ],
-                'content_koji_tag': None,
                 'context': 'a2037af3',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'display_name': '389-ds-None-20180805121332.a2037af3',
                 'epoch': '0',
-                'extra': None,
                 'id': '2345',
                 'mbs_id': 1338,
                 'module_builds': [
@@ -568,9 +510,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'resource_type': 'ModuleKojiBuild',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': None,
-                'tags':[
-
-                ],
                 'version': None
             }
         ],
@@ -584,13 +523,11 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
-                    'product_short_name': 'RHEL',
                     'release_date': None,
                     'resource_type': 'ContainerAdvisory',
                     'security_impact': 'None',
@@ -604,7 +541,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'completion_time': '2018-04-02T19:39:06Z',
                 'creation_time': '2018-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'display_name': 'some_build-1.7.5-4.el7_4_as',
                 'id': '811',
                 'module_builds': [],
@@ -616,14 +552,10 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'resource_type': 'ContainerKojiBuild',
                 'start_time': '2018-04-02T19:39:06Z',
                 'state': 2,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -635,13 +567,11 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-03',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-03',
                     'id': '12327',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
-                    'product_short_name': 'RHEL',
                     'release_date': None,
                     'resource_type': 'ContainerAdvisory',
                     'security_impact': 'None',
@@ -655,7 +585,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'completion_time': '2017-04-02T19:39:06Z',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'id': '710',
                 'module_builds': [],
                 'name': 'slf4j_2',
@@ -667,14 +596,10 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
                 'display_name': 'slf4j_2-1.7.4-4.el7_4_as',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [],
                 'triggered_by_freshmaker_event': {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2019-08-21T13:42:20Z',
@@ -691,7 +616,6 @@ def test_node_siblings(client, resource, uid, backward_rel, expected):
 def test_module_story_node_siblings(client, resource, uid, backward_rel, expected):
     """Tests getting the siblings of an artifact's adjacent node in the module story path."""
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -703,7 +627,6 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     commit = DistGitCommit.get_or_create({
         'author_date': datetime(2017, 4, 26, 11, 44, 38),
@@ -750,12 +673,10 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
@@ -763,10 +684,7 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
         'update_date': datetime(2017, 8, 1, 7, 16)
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
-        'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
         'time_created': datetime(2019, 8, 21, 13, 42, 20),
@@ -797,12 +715,10 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
     ca = ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
@@ -834,7 +750,6 @@ def test_module_story_node_siblings(client, resource, uid, backward_rel, expecte
 def test_first_node_of_story(client):
     """Tests getting the siblings for the first node of the story with backward_rel=true."""
     BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 6, 43, 58),
         'id_': '5555',
         'modified_time': datetime(2017, 12, 5, 10, 12, 47),
@@ -846,7 +761,6 @@ def test_first_node_of_story(client):
         'short_description': 'Fail to delete OSP tenant by CFME',
         'status': 'CLOSED',
         'target_milestone': 'GA',
-        'votes': 0
     })[0]
 
     expected = {
@@ -864,12 +778,10 @@ def test_reverse_flag(client):
     ContainerAdvisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
@@ -892,12 +804,10 @@ def test_story_path_flag_invalid(client):
     Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-03',
-        'content_types': ['rpms'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '12327',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),

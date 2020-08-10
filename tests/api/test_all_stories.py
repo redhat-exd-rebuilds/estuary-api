@@ -22,7 +22,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'attached_advisories': [
 
                     ],
-                    'classification':'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name':'RHBZ#12345',
                     'id':'12345',
@@ -55,7 +54,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status':'VERIFIED',
                     'target_milestone':'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes':0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -71,7 +69,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'name': 'slf4j',
                     'release': '4.el7_4',
@@ -84,27 +81,23 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': None,
                     'advisory_name': 'RHBA-2017:27760-01',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-04-21T19:36:47Z',
-                    'display_name':'RHBA-2017:27760-01',
-                    'id':'123456',
+                    'display_name': 'RHBA-2017:27760-01',
+                    'id': '123456',
                     'issue_date': '2018-03-14T05:53:25Z',
-                    'product_name':'Release End2End Test',
-                    'product_short_name':'release-e2e-test',
-                    'release_date':None,
-                    'resource_type':'Advisory',
-                    'security_impact':'None',
-                    'security_sla':None,
-                    'state':'DROPPED_NO_SHIP',
+                    'product_name': 'Release End2End Test',
+                    'release_date': None,
+                    'resource_type': 'Advisory',
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'DROPPED_NO_SHIP',
                     'status_time': '2018-03-14T07:53:25Z',
-                    'synopsis':'This is a synopsis of a test advisory.',
+                    'synopsis': 'This is a synopsis of a test advisory.',
                     'update_date': '2018-04-21T19:36:47Z',
                     'timeline_timestamp': '2018-04-21T19:36:47Z'
                 }
             ],
-            'meta':{
+            'meta': {
                 'story_related_nodes_backward': [0, 0, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0],
                 'total_lead_time': 29852059.0,
@@ -123,7 +116,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'attached_advisories': [
 
                     ],
-                    'classification':'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name':'RHBZ#12345',
                     'id':'12345',
@@ -156,7 +148,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status':'VERIFIED',
                     'target_milestone':'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes':0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -172,7 +163,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'name': 'slf4j',
                     'release': '4.el7_4',
@@ -185,32 +175,25 @@ from estuary.models.freshmaker import FreshmakerEvent
                 {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-06-13T10:36:47Z',
-                    'display_name':'RHBA-2017:2251-02',
-                    'id':'27825',
+                    'display_name': 'RHBA-2017:2251-02',
+                    'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
-                    'product_name':'Red Hat Enterprise Linux',
-                    'product_short_name':'RHEL',
-                    'release_date':None,
-                    'resource_type':'Advisory',
-                    'security_impact':'None',
-                    'security_sla':None,
-                    'state':'SHIPPED_LIVE',
+                    'product_name': 'Red Hat Enterprise Linux',
+                    'release_date': None,
+                    'resource_type': 'Advisory',
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51Z',
-                    'synopsis':'cifs-utils bug fix update',
+                    'synopsis': 'cifs-utils bug fix update',
                     'update_date': '2017-08-01T07:16:00Z',
                     'timeline_timestamp': '2018-06-13T10:36:47Z'
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2018-08-13T10:36:47Z',
@@ -222,7 +205,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-08-17T08:32:47Z',
                     'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
-                    'extra': None,
                     'id': '811',
                     'name': 'some_build',
                     'operator': False,
@@ -252,7 +234,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name': 'RHBZ#12345',
                     'id': '12345',
@@ -267,7 +248,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'VERIFIED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -283,47 +263,39 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
-                            'id':'123456',
+                            'id': '123456',
                             'issue_date': '2018-03-14T05:53:25Z',
-                            'product_name':'Release End2End Test',
-                            'product_short_name':'release-e2e-test',
-                            'release_date':None,
+                            'product_name': 'Release End2End Test',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'DROPPED_NO_SHIP',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'DROPPED_NO_SHIP',
                             'status_time': '2018-03-14T07:53:25Z',
-                            'synopsis':'This is a synopsis of a test advisory.',
+                            'synopsis': 'This is a synopsis of a test advisory.',
                             'update_date': '2018-04-21T19:36:47Z'
                         },
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
-                            'id':'27825',
+                            'id': '27825',
                             'issue_date': '2017-08-01T05:59:34Z',
-                            'product_name':'Red Hat Enterprise Linux',
-                            'product_short_name':'RHEL',
-                            'release_date':None,
+                            'product_name': 'Red Hat Enterprise Linux',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'SHIPPED_LIVE',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'SHIPPED_LIVE',
                             'status_time': '2017-08-01T15:43:51Z',
-                            'synopsis':'cifs-utils bug fix update',
+                            'synopsis': 'cifs-utils bug fix update',
                             'update_date': '2017-08-01T07:16:00Z'
                         }
                     ],
-                    'commit':{
+                    'commit': {
                         'author_date': '2017-04-26T11:44:38Z',
                         'commit_date': '2018-05-02T10:36:47Z',
                         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -335,7 +307,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -346,36 +317,29 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
                 {
                     'actual_ship_date': None,
                     'advisory_name': 'RHBA-2017:27760-01',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-04-21T19:36:47Z',
-                    'display_name':'RHBA-2017:27760-01',
-                    'id':'123456',
+                    'display_name': 'RHBA-2017:27760-01',
+                    'id': '123456',
                     'issue_date': '2018-03-14T05:53:25Z',
-                    'product_name':'Release End2End Test',
-                    'product_short_name':'release-e2e-test',
-                    'release_date':None,
-                    'resource_type':'Advisory',
-                    'security_impact':'None',
-                    'security_sla':None,
-                    'state':'DROPPED_NO_SHIP',
+                    'product_name': 'Release End2End Test',
+                    'release_date': None,
+                    'resource_type': 'Advisory',
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'DROPPED_NO_SHIP',
                     'status_time': '2018-03-14T07:53:25Z',
-                    'synopsis':'This is a synopsis of a test advisory.',
+                    'synopsis': 'This is a synopsis of a test advisory.',
                     'update_date': '2018-04-21T19:36:47Z',
                     'timeline_timestamp': '2018-04-21T19:36:47Z'
                 }
             ],
-            'meta':{
+            'meta': {
                 'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0],
@@ -390,7 +354,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-01T17:41:04Z',
                     'display_name': 'RHBZ#1245',
                     'id': '1245',
@@ -405,7 +368,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'CLOSED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-01T17:41:04Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2018-03-14T05:53:25Z',
@@ -421,47 +383,39 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
-                            'id':'123456',
+                            'id': '123456',
                             'issue_date': '2018-03-14T05:53:25Z',
-                            'product_name':'Release End2End Test',
-                            'product_short_name':'release-e2e-test',
-                            'release_date':None,
+                            'product_name': 'Release End2End Test',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'DROPPED_NO_SHIP',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'DROPPED_NO_SHIP',
                             'status_time': '2018-03-14T07:53:25Z',
-                            'synopsis':'This is a synopsis of a test advisory.',
+                            'synopsis': 'This is a synopsis of a test advisory.',
                             'update_date': '2018-04-21T19:36:47Z'
                         },
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
                             'id': '27825',
                             'issue_date': '2017-08-01T05:59:34Z',
-                            'product_name':'Red Hat Enterprise Linux',
-                            'product_short_name':'RHEL',
-                            'release_date':None,
+                            'product_name': 'Red Hat Enterprise Linux',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'SHIPPED_LIVE',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'SHIPPED_LIVE',
                             'status_time': '2017-08-01T15:43:51Z',
-                            'synopsis':'cifs-utils bug fix update',
+                            'synopsis': 'cifs-utils bug fix update',
                             'update_date': '2017-08-01T07:16:00Z'
                         }
                     ],
-                    'commit':{
+                    'commit': {
                         'author_date': '2017-04-26T11:44:38Z',
                         'commit_date': '2018-05-02T10:36:47Z',
                         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -473,7 +427,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -484,36 +437,29 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
                 {
                     'actual_ship_date': None,
                     'advisory_name': 'RHBA-2017:27760-01',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-04-21T19:36:47Z',
-                    'display_name':'RHBA-2017:27760-01',
-                    'id':'123456',
+                    'display_name': 'RHBA-2017:27760-01',
+                    'id': '123456',
                     'issue_date': '2018-03-14T05:53:25Z',
-                    'product_name':'Release End2End Test',
-                    'product_short_name':'release-e2e-test',
-                    'release_date':None,
-                    'resource_type':'Advisory',
-                    'security_impact':'None',
-                    'security_sla':None,
-                    'state':'DROPPED_NO_SHIP',
+                    'product_name': 'Release End2End Test',
+                    'release_date': None,
+                    'resource_type': 'Advisory',
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'DROPPED_NO_SHIP',
                     'status_time': '2018-03-14T07:53:25Z',
-                    'synopsis':'This is a synopsis of a test advisory.',
+                    'synopsis': 'This is a synopsis of a test advisory.',
                     'update_date': '2018-04-21T19:36:47Z',
                     'timeline_timestamp': '2018-04-21T19:36:47Z'
                 }
             ],
-            'meta':{
+            'meta': {
                 'requested_node_index': 2,
                 'story_related_nodes_backward': [0, 0, 0, 1],
                 'story_related_nodes_forward': [0, 1, 0, 0],
@@ -528,7 +474,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-02T19:39:06Z',
                     'display_name': 'RHBZ#12345',
                     'id': '12345',
@@ -543,7 +488,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'VERIFIED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-02T19:39:06Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2017-04-26T11:44:38Z',
@@ -559,47 +503,39 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
-                            'id':'123456',
+                            'id': '123456',
                             'issue_date': '2018-03-14T05:53:25Z',
-                            'product_name':'Release End2End Test',
-                            'product_short_name':'release-e2e-test',
-                            'release_date':None,
+                            'product_name': 'Release End2End Test',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'DROPPED_NO_SHIP',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'DROPPED_NO_SHIP',
                             'status_time': '2018-03-14T07:53:25Z',
-                            'synopsis':'This is a synopsis of a test advisory.',
+                            'synopsis': 'This is a synopsis of a test advisory.',
                             'update_date': '2018-04-21T19:36:47Z'
                         },
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
-                            'id':'27825',
+                            'id': '27825',
                             'issue_date': '2017-08-01T05:59:34Z',
-                            'product_name':'Red Hat Enterprise Linux',
-                            'product_short_name':'RHEL',
-                            'release_date':None,
+                            'product_name': 'Red Hat Enterprise Linux',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'SHIPPED_LIVE',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'SHIPPED_LIVE',
                             'status_time': '2017-08-01T15:43:51Z',
-                            'synopsis':'cifs-utils bug fix update',
+                            'synopsis': 'cifs-utils bug fix update',
                             'update_date': '2017-08-01T07:16:00Z'
                         }
                     ],
-                    'commit':{
+                    'commit': {
                         'author_date': '2017-04-26T11:44:38Z',
                         'commit_date': '2018-05-02T10:36:47Z',
                         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -611,7 +547,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -622,41 +557,31 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
                 {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-06-13T10:36:47Z',
-                    'display_name':'RHBA-2017:2251-02',
-                    'id':'27825',
+                    'display_name': 'RHBA-2017:2251-02',
+                    'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
-                    'product_name':'Red Hat Enterprise Linux',
-                    'product_short_name':'RHEL',
-                    'release_date':None,
-                    'resource_type':'Advisory',
-                    'security_impact':'None',
-                    'security_sla':None,
-                    'state':'SHIPPED_LIVE',
+                    'product_name': 'Red Hat Enterprise Linux',
+                    'release_date': None,
+                    'resource_type': 'Advisory',
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51Z',
-                    'synopsis':'cifs-utils bug fix update',
+                    'synopsis': 'cifs-utils bug fix update',
                     'update_date': '2017-08-01T07:16:00Z',
                     'timeline_timestamp': '2018-06-13T10:36:47Z'
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2018-08-13T10:36:47Z',
@@ -668,7 +593,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-08-17T08:32:47Z',
                     'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
-                    'extra': None,
                     'id': '811',
                     'name': 'some_build',
                     'operator': False,
@@ -696,7 +620,6 @@ from estuary.models.freshmaker import FreshmakerEvent
         {
             'data': [
                 {
-                    'classification': 'Red Hat',
                     'creation_time': '2017-04-01T17:41:04Z',
                     'display_name': 'RHBZ#1245',
                     'id': '1245',
@@ -711,7 +634,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'status': 'CLOSED',
                     'target_milestone': 'rc',
                     'timeline_timestamp': '2017-04-01T17:41:04Z',
-                    'votes': 0
                 },
                 {
                     'author_date': '2018-03-14T05:53:25Z',
@@ -727,47 +649,39 @@ from estuary.models.freshmaker import FreshmakerEvent
                         {
                             'actual_ship_date': None,
                             'advisory_name': 'RHBA-2017:27760-01',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-04-21T19:36:47Z',
                             'display_name': 'RHBA-2017:27760-01',
-                            'id':'123456',
+                            'id': '123456',
                             'issue_date': '2018-03-14T05:53:25Z',
-                            'product_name':'Release End2End Test',
-                            'product_short_name':'release-e2e-test',
-                            'release_date':None,
+                            'product_name': 'Release End2End Test',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'DROPPED_NO_SHIP',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'DROPPED_NO_SHIP',
                             'status_time': '2018-03-14T07:53:25Z',
-                            'synopsis':'This is a synopsis of a test advisory.',
+                            'synopsis': 'This is a synopsis of a test advisory.',
                             'update_date': '2018-04-21T19:36:47Z'
                         },
                         {
                             'actual_ship_date': '2017-08-01T15:43:51Z',
                             'advisory_name': 'RHBA-2017:2251-02',
-                            'content_types': [
-                                'docker'
-                            ],
                             'created_at': '2018-06-13T10:36:47Z',
                             'display_name': 'RHBA-2017:2251-02',
-                            'id':'27825',
+                            'id': '27825',
                             'issue_date': '2017-08-01T05:59:34Z',
-                            'product_name':'Red Hat Enterprise Linux',
-                            'product_short_name':'RHEL',
-                            'release_date':None,
+                            'product_name': 'Red Hat Enterprise Linux',
+                            'release_date': None,
                             'resource_type': 'Advisory',
-                            'security_impact':'None',
-                            'security_sla':None,
-                            'state':'SHIPPED_LIVE',
+                            'security_impact': 'None',
+                            'security_sla': None,
+                            'state': 'SHIPPED_LIVE',
                             'status_time': '2017-08-01T15:43:51Z',
-                            'synopsis':'cifs-utils bug fix update',
+                            'synopsis': 'cifs-utils bug fix update',
                             'update_date': '2017-08-01T07:16:00Z'
                         }
                     ],
-                    'commit':{
+                    'commit': {
                         'author_date': '2017-04-26T11:44:38Z',
                         'commit_date': '2018-05-02T10:36:47Z',
                         'hash': '8a63adb248ba633e200067e1ad6dc61931727bad',
@@ -779,7 +693,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-06-02T10:36:47Z',
                     'display_name': 'slf4j-1.7.4-4.el7_4',
                     'epoch': '0',
-                    'extra': None,
                     'id': '2345',
                     'module_builds': [
 
@@ -790,41 +703,31 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'resource_type':'KojiBuild',
                     'start_time': '2018-06-02T10:36:47Z',
                     'state':1,
-                    'tags':[
-
-                    ],
                     'timeline_timestamp': '2018-06-02T10:36:47Z',
                     'version':'1.7.4'
                 },
                 {
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': [
-                        'docker'
-                    ],
                     'created_at': '2018-06-13T10:36:47Z',
-                    'display_name':'RHBA-2017:2251-02',
-                    'id':'27825',
+                    'display_name': 'RHBA-2017:2251-02',
+                    'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
-                    'product_name':'Red Hat Enterprise Linux',
-                    'product_short_name':'RHEL',
-                    'release_date':None,
-                    'resource_type':'Advisory',
-                    'security_impact':'None',
-                    'security_sla':None,
-                    'state':'SHIPPED_LIVE',
+                    'product_name': 'Red Hat Enterprise Linux',
+                    'release_date': None,
+                    'resource_type': 'Advisory',
+                    'security_impact': 'None',
+                    'security_sla': None,
+                    'state': 'SHIPPED_LIVE',
                     'status_time': '2017-08-01T15:43:51Z',
-                    'synopsis':'cifs-utils bug fix update',
+                    'synopsis': 'cifs-utils bug fix update',
                     'update_date': '2017-08-01T07:16:00Z',
                     'timeline_timestamp': '2018-06-13T10:36:47Z'
                 },
                 {
                     'display_name': 'Freshmaker event 1180',
-                    'event_type_id': 8,
                     'id': '1180',
-                    'message_id': 'ID:messaging-devops-broker01.test',
                     'resource_type': 'FreshmakerEvent',
-                    'state': 2,
                     'state_name': 'COMPLETE',
                     'state_reason': 'All container images have been rebuilt.',
                     'time_created': '2018-08-13T10:36:47Z',
@@ -836,7 +739,6 @@ from estuary.models.freshmaker import FreshmakerEvent
                     'creation_time': '2018-08-17T08:32:47Z',
                     'display_name': 'some_build-1.7.5-4.el7_4_as',
                     'epoch': '0',
-                    'extra': None,
                     'id': '811',
                     'name': 'some_build',
                     'operator': False,
@@ -867,7 +769,6 @@ from estuary.models.freshmaker import FreshmakerEvent
 def test_all_stories(client, resource, uid, expected):
     """Test getting all unique stories for an artifact."""
     bug = BugzillaBug.get_or_create({
-        'classification': 'Red Hat',
         'creation_time': datetime(2017, 4, 2, 19, 39, 6),
         'id_': '12345',
         'modified_time': datetime(2018, 2, 7, 19, 30, 47),
@@ -879,20 +780,17 @@ def test_all_stories(client, resource, uid, expected):
         'short_description': 'Some description',
         'status': 'VERIFIED',
         'target_milestone': 'rc',
-        'votes': 0
     })[0]
     bug_two = BugzillaBug.get_or_create({
         'creation_time': datetime(2017, 4, 1, 17, 41, 4),
         'severity': 'medium',
         'short_description': 'some description',
         'product_version': '7.2',
-        'classification': 'Red Hat',
         'priority': 'unspecified',
         'product_name': 'Red Hat Enterprise Linux 7',
         'resolution': 'DUPLICATE',
         'target_milestone': 'rc',
         'modified_time': datetime(2018, 3, 14, 5, 53, 19),
-        'votes': 0,
         'id_': '1245',
         'status': 'CLOSED'
     })[0]
@@ -922,12 +820,10 @@ def test_all_stories(client, resource, uid, expected):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2018, 6, 13, 10, 36, 47),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
@@ -942,17 +838,12 @@ def test_all_stories(client, resource, uid, expected):
         'update_date': datetime(2018, 4, 21, 19, 36, 47),
         'advisory_name': 'RHBA-2017:27760-01',
         'issue_date': datetime(2018, 3, 14, 5, 53, 25),
-        'product_short_name': 'release-e2e-test',
-        'content_types': ['docker'],
         'status_time': datetime(2018, 3, 14, 7, 53, 25),
         'state': 'DROPPED_NO_SHIP',
         'id_': '123456'
     })[0]
     fm_event = FreshmakerEvent.get_or_create({
-        'event_type_id': 8,
         'id_': '1180',
-        'message_id': 'ID:messaging-devops-broker01.test',
-        'state': 2,
         'state_name': 'COMPLETE',
         'state_reason': 'All container images have been rebuilt.',
         'time_created': datetime(2018, 8, 13, 10, 36, 47),
@@ -1015,12 +906,10 @@ def test_get_stories_fallback(client):
     advisory = Advisory.get_or_create({
         'actual_ship_date': datetime(2017, 8, 1, 15, 43, 51),
         'advisory_name': 'RHBA-2017:2251-02',
-        'content_types': ['docker'],
         'created_at': datetime(2017, 4, 3, 14, 47, 23),
         'id_': '27825',
         'issue_date': datetime(2017, 8, 1, 5, 59, 34),
         'product_name': 'Red Hat Enterprise Linux',
-        'product_short_name': 'RHEL',
         'security_impact': 'None',
         'state': 'SHIPPED_LIVE',
         'status_time': datetime(2017, 8, 1, 15, 43, 51),
@@ -1035,13 +924,11 @@ def test_get_stories_fallback(client):
                 'advisories': [{
                     'actual_ship_date': '2017-08-01T15:43:51Z',
                     'advisory_name': 'RHBA-2017:2251-02',
-                    'content_types': ['docker'],
                     'created_at': '2017-04-03T14:47:23Z',
                     'display_name': 'RHBA-2017:2251-02',
                     'id': '27825',
                     'issue_date': '2017-08-01T05:59:34Z',
                     'product_name': 'Red Hat Enterprise Linux',
-                    'product_short_name': 'RHEL',
                     'release_date': None,
                     'resource_type': 'Advisory',
                     'security_impact': 'None',
@@ -1055,7 +942,6 @@ def test_get_stories_fallback(client):
                 'completion_time': '2017-04-02T19:39:06Z',
                 'creation_time': '2017-04-02T19:39:06Z',
                 'epoch': '0',
-                'extra': None,
                 'id': '2345',
                 'module_builds': [],
                 'name': 'slf4j',
@@ -1065,19 +951,16 @@ def test_get_stories_fallback(client):
                 'display_name': u'slf4j-1.7.4-4.el7_4',
                 'start_time': '2017-04-02T19:39:06Z',
                 'state': 1,
-                'tags': [],
                 'timeline_timestamp': '2017-04-02T19:39:06Z',
                 'version': '1.7.4'
             },
             {
                 'actual_ship_date': '2017-08-01T15:43:51Z',
                 'advisory_name': 'RHBA-2017:2251-02',
-                'content_types': ['docker'],
                 'created_at': '2017-04-03T14:47:23Z',
                 'id': '27825',
                 'issue_date': '2017-08-01T05:59:34Z',
                 'product_name': 'Red Hat Enterprise Linux',
-                'product_short_name': 'RHEL',
                 'release_date': None,
                 'resource_type': 'Advisory',
                 'display_name': 'RHBA-2017:2251-02',

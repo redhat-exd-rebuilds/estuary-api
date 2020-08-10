@@ -123,7 +123,7 @@ def get_neo4j_node(resource_name, uid):
                 return model.find_or_none(uid)
             except RuntimeError:
                 # There is no UniqueIdProperty on this model so raise an exception
-                models_wo_uid = ('DistGitRepo', 'DistGitBranch')
+                models_wo_uid = ('DistGitRepo')
                 model_names = [model.__name__.lower() for model in all_models
                                if model.__name__ not in models_wo_uid]
                 error = ('The requested resource "{0}" is invalid. Choose from the following: '

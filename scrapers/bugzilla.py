@@ -101,10 +101,8 @@ class BugzillaScraper(BaseScraper):
                 priority=bug_dict['priority'],
                 product_name=bytes(bug_dict['product_name'], 'utf-8').decode(),
                 product_version=bug_dict['version'],
-                classification=bug_dict['classification'],
                 resolution=bug_dict['resolution'],
                 target_milestone=bug_dict['target_milestone'],
-                votes=bug_dict['votes'],
                 short_description=bytes(bug_dict['short_desc'], 'utf-8').decode()
             ))[0]
 

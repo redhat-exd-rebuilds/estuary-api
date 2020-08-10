@@ -3,5 +3,4 @@ beautifulsoup4
 future
 psycopg2
 psycopg2-binary
-pyyaml
 requests
