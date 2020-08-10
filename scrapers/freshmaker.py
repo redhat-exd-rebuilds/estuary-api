@@ -58,9 +58,6 @@ class FreshmakerScraper(BaseScraper):
                 log.debug('Creating FreshmakerEvent {0}'.format(fm_event['id']))
                 event_params = dict(
                     id_=fm_event['id'],
-                    event_type_id=fm_event['event_type_id'],
-                    message_id=fm_event['message_id'],
-                    state=fm_event['state'],
                     state_name=fm_event['state_name'],
                     state_reason=fm_event['state_reason'],
                     url=fm_event['url']
@@ -99,13 +96,10 @@ class FreshmakerScraper(BaseScraper):
                         name=build_dict['name'],
                         original_nvr=build_dict['original_nvr'],
                         rebuilt_nvr=build_dict['rebuilt_nvr'],
-                        state=build_dict['state'],
                         state_name=build_dict['state_name'],
                         state_reason=build_dict['state_reason'],
                         time_submitted=timestamp_to_datetime(build_dict['time_submitted']),
-                        type_=build_dict['type'],
                         type_name=build_dict['type_name'],
-                        url=build_dict['url']
                     )
                     if build_dict['time_completed']:
                         fb_params['time_completed'] = timestamp_to_datetime(

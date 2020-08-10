@@ -13,7 +13,7 @@ from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory
 from estuary.models.freshmaker import FreshmakerEvent
-from estuary.models.koji import KojiBuild, KojiTag, ContainerKojiBuild
+from estuary.models.koji import KojiBuild, ContainerKojiBuild
 
 
 def test_about(client):
@@ -31,13 +31,11 @@ def test_about(client):
         'severity': 'medium',
         'short_description': 'some description',
         'product_version': '7.2',
-        'classification': 'Red Hat',
         'priority': 'unspecified',
         'product_name': 'Red Hat Enterprise Linux 7',
         'resolution': 'DUPLICATE',
         'target_milestone': 'rc',
         'modified_time': datetime(2018, 3, 14, 5, 53, 19),
-        'votes': 0,
         'id_': '12345',
         'status': 'CLOSED'
     }),
@@ -55,8 +53,6 @@ def test_about(client):
         'update_date': datetime(2018, 3, 14, 7, 53, 25),
         'advisory_name': 'RHBA-2017:27760-01',
         'issue_date': datetime(2018, 3, 14, 5, 53, 25),
-        'product_short_name': 'release-e2e-test',
-        'content_types': ['docker'],
         'status_time': datetime(2018, 3, 14, 7, 53, 25),
         'state': 'DROPPED_NO_SHIP',
         'id_': '12345'
@@ -65,9 +61,6 @@ def test_about(client):
         'id_': '12345',
         'state_reason': 'No container images to rebuild for advisory \'RHSA-2018:1234\'',
         'state_name': 'SKIPPED',
-        'message_id': 'Some ID',
-        'state': 4,
-        'event_type_id': 8
     }),
     (ContainerKojiBuild, 'containerkojibuild', '710', {
         'completion_time': datetime(2017, 4, 2, 19, 39, 6),
@@ -92,10 +85,6 @@ def test_about(client):
         'id_': '12345',
         'version': '1.13'
     }),
-    (KojiTag, 'kojitag', '12345', {
-        'name': 'some-tag',
-        'id_': '12345'
-    }),
     (User, 'user', 'tbrady', {
         'username': 'tbrady',
         'email': 'tom.brady@domain.local'
@@ -109,13 +98,13 @@ def test_get_resource_relationship_false(client, model, resource, uid, test_inpu
     assert json.loads(rv.data.decode('utf-8')) == item.serialized
 
 
-@pytest.mark.parametrize('resource', ['distgitrepo', 'distgitbranch'])
+@pytest.mark.parametrize('resource', ['distgitrepo'])
 def test_get_on_model_wo_uid(client, resource):
     """Test that an error is returned when a resource with a UniqueIdProperty is requested."""
     rv = client.get('/api/v1/{0}/some_repo'.format(resource))
     assert rv.status_code == 400
     invalid_msg = ('The requested resource "{0}" is invalid. Choose from the following: '
                    'advisory, bugzillabug, containeradvisory, containerkojibuild, distgitcommit, '
-                   'freshmakerevent, freshmakerbuild, kojibuild, kojitag, modulekojibuild, and '
+                   'freshmakerevent, freshmakerbuild, kojibuild, modulekojibuild, and '
                    'user.'.format(resource))
     assert json.loads(rv.data.decode('utf-8')) == {'message': invalid_msg, 'status': 400}

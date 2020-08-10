@@ -14,7 +14,6 @@ def make_artifact(label, **kwargs):
     args = {}
     if label == 'BugzillaBug':
         args = {
-            'classification': 'Red Hat',
             'creation_time': datetime(2019, 1, 1, 0, 0, 0),
             'id_': '12345',
             'modified_time': datetime(2019, 1, 1, 0, 0, 0),
@@ -26,11 +25,9 @@ def make_artifact(label, **kwargs):
             'short_description': 'Some description',
             'status': 'VERIFIED',
             'target_milestone': 'rc',
-            'votes': 0
         }
     elif label == 'DistGitCommit':
         args = {
-            'classification': 'Red Hat',
             'creation_time': datetime(2019, 1, 1, 0, 0, 10),
             'id': '12345',
             'modified_time': datetime(2019, 1, 1, 0, 0, 10),
@@ -42,14 +39,12 @@ def make_artifact(label, **kwargs):
             'short_description': 'Some description',
             'status': 'VERIFIED',
             'target_milestone': 'rc',
-            'votes': 0
         }
     elif label == 'KojiBuild':
         args = {
             'completion_time': datetime(2019, 1, 1, 0, 0, 30),
             'creation_time': datetime(2019, 1, 1, 0, 0, 20),
             'epoch': '0',
-            'extra': None,
             'id': '2345',
             'name': 'slf4j',
             'release': '4.el7_4',
@@ -61,14 +56,10 @@ def make_artifact(label, **kwargs):
         args = {
             'actual_ship_date': datetime(2019, 1, 1, 0, 0, 40),
             'advisory_name': 'RHBA-2017:2251-02',
-            'content_types': [
-                'docker'
-            ],
             'created_at': datetime(2019, 1, 1, 0, 0, 40),
             'id': '27825',
             'issue_date': datetime(2019, 1, 1, 0, 0, 40),
             'product_name': 'Red Hat Enterprise Linux',
-            'product_short_name': 'RHEL',
             'release_date': None,
             'security_impact': 'None',
             'security_sla': None,
@@ -79,10 +70,7 @@ def make_artifact(label, **kwargs):
         }
     elif label == 'FreshmakerEvent':
         args = {
-            'event_type_id': 8,
             'id': '1180',
-            'message_id': 'ID:messaging-devops-broker01.test',
-            'state': 2,
             'state_name': 'COMPLETE',
             'state_reason': 'All container images have been rebuilt.',
             'time_created': datetime(2019, 1, 1, 0, 1, 0),
@@ -93,7 +81,6 @@ def make_artifact(label, **kwargs):
             'completion_time': datetime(2019, 1, 1, 0, 1, 30),
             'creation_time': datetime(2019, 1, 1, 0, 1, 20),
             'epoch': '0',
-            'extra': None,
             'id': '710',
             'name': 'slf4j_2',
             'original_nvr': None,
@@ -106,12 +93,10 @@ def make_artifact(label, **kwargs):
         args = {
             'actual_ship_date': datetime(2019, 1, 1, 0, 1, 40),
             'advisory_name': 'RHBA-2017:2251-03',
-            'content_types': ['docker'],
             'created_at': datetime(2019, 1, 1, 0, 1, 40),
             'id': '12327',
             'issue_date': datetime(2019, 1, 1, 0, 1, 40),
             'product_name': 'Red Hat Enterprise Linux',
-            'product_short_name': 'RHEL',
             'release_date': None,
             'security_impact': 'None',
             'security_sla': None,
@@ -126,7 +111,6 @@ def make_artifact(label, **kwargs):
             'context': 'a2037af3',
             'creation_time': datetime(2019, 1, 1, 0, 0, 40),
             'epoch': '0',
-            'extra': None,
             'id': '2345',
             'mbs_id': 1338,
             'module_name': '389-ds',

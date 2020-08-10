@@ -12,10 +12,7 @@ from estuary.models.base import EstuaryStructuredNode
 class FreshmakerEvent(EstuaryStructuredNode):
     """Definition of a Freshmaker event in Neo4j."""
 
-    event_type_id = IntegerProperty()
     id_ = UniqueIdProperty(db_property='id')
-    message_id = StringProperty()
-    state = IntegerProperty()
     state_name = StringProperty()
     state_reason = StringProperty()
     time_created = DateTimeProperty()
@@ -45,14 +42,11 @@ class FreshmakerBuild(EstuaryStructuredNode):
     name = StringProperty()
     original_nvr = StringProperty()
     rebuilt_nvr = StringProperty()
-    state = IntegerProperty()
     state_name = StringProperty()
     state_reason = StringProperty()
     time_completed = DateTimeProperty()
     time_submitted = DateTimeProperty()
-    type_ = IntegerProperty(db_property='type')
     type_name = StringProperty()
-    url = StringProperty()
     koji_builds = RelationshipTo('.koji.ContainerKojiBuild', 'TRIGGERED_BY', cardinality=ZeroOrOne)
     event = RelationshipFrom('.FreshmakerEvent', 'TRIGGERED', cardinality=ZeroOrOne)
 

@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import re
 
 from neomodel import (
-    UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty, ArrayProperty,
+    UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty,
     DateTimeProperty, ZeroOrOne, StructuredRel)
 
 from estuary.models.base import EstuaryStructuredNode
@@ -22,12 +22,10 @@ class Advisory(EstuaryStructuredNode):
 
     actual_ship_date = DateTimeProperty()
     advisory_name = StringProperty(unique=True, index=True)
-    content_types = ArrayProperty()
     created_at = DateTimeProperty()
     id_ = UniqueIdProperty(db_property='id')
     issue_date = DateTimeProperty()
     product_name = StringProperty()
-    product_short_name = StringProperty()
     release_date = DateTimeProperty()
     security_impact = StringProperty()
     security_sla = DateTimeProperty()

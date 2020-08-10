@@ -36,9 +36,7 @@ def test_get_recent_nodes(client):
                     'issue_date': None,
                     'created_at': None,
                     'state': None,
-                    'product_short_name': None,
                     'product_name': None,
-                    'content_types': None,
                     'security_sla': None,
                     'synopsis': None,
                     'security_impact': None,
@@ -60,14 +58,11 @@ def test_get_recent_nodes(client):
                     'log_message': None,
                     'author': None,
                     'author_date': None,
-                    'branches': [],
-                    'children': [],
                     'koji_builds': [],
                     'hash': '55555',
                     'commit_date': '2017-05-02T11:44:38Z',
                     'display_name': 'commit #55555',
                     'resource_type': 'DistGitCommit',
-                    'parent': None,
                     'related_bugs': [],
                     'repos': [],
                     'resolved_bugs': [],
@@ -81,9 +76,6 @@ def test_get_recent_nodes(client):
                     'time_created': '2017-05-30T11:44:38Z',
                     'time_done': None,
                     'id': '77777',
-                    'state': None,
-                    'event_type_id': None,
-                    'message_id': None,
                     'display_name': 'Freshmaker event 77777',
                     'resource_type': 'FreshmakerEvent',
                     'requested_builds': [],
@@ -94,7 +86,6 @@ def test_get_recent_nodes(client):
             'KojiBuild': [
                 {
                     'name': 'slf4j',
-                    'extra': None,
                     'start_time': None,
                     'creation_time': None,
                     'state': None,
@@ -107,7 +98,6 @@ def test_get_recent_nodes(client):
                     'resource_type': 'KojiBuild',
                     'module_builds': [],
                     'owner': None,
-                    'tags': [],
                     'commit': None,
                     'advisories': []
                 }
@@ -115,7 +105,6 @@ def test_get_recent_nodes(client):
             'BugzillaBug': [
                 {
                     'status': None,
-                    'votes': None,
                     'severity': None,
                     'resolution': None,
                     'product_version': None,
@@ -128,7 +117,6 @@ def test_get_recent_nodes(client):
                     'id': '22222',
                     'display_name': 'RHBZ#22222',
                     'resource_type': 'BugzillaBug',
-                    'classification': None,
                     'assignee': None,
                     'attached_advisories': [],
                     'qa_contact': None,
@@ -139,7 +127,6 @@ def test_get_recent_nodes(client):
                 },
                 {
                     'status': None,
-                    'votes': None,
                     'severity': None,
                     'resolution': None,
                     'product_version': None,
@@ -152,7 +139,6 @@ def test_get_recent_nodes(client):
                     'id': '33333',
                     'display_name': 'RHBZ#33333',
                     'resource_type': 'BugzillaBug',
-                    'classification': None,
                     'assignee': None,
                     'attached_advisories': [],
                     'qa_contact': None,
@@ -163,7 +149,6 @@ def test_get_recent_nodes(client):
                 },
                 {
                     'status': None,
-                    'votes': None,
                     'severity': None,
                     'resolution': None,
                     'product_version': None,
@@ -176,7 +161,6 @@ def test_get_recent_nodes(client):
                     'id': '11111',
                     'display_name': 'RHBZ#11111',
                     'resource_type': 'BugzillaBug',
-                    'classification': None,
                     'assignee': None,
                     'attached_advisories': [],
                     'qa_contact': None,

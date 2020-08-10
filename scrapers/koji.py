@@ -7,7 +7,7 @@ import json
 import neomodel
 
 from scrapers.base import BaseScraper
-from estuary.models.koji import ContainerKojiBuild, KojiBuild, KojiTag, ModuleKojiBuild
+from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
 from estuary.models.user import User
 from estuary.models.distgit import DistGitCommit
 import estuary.utils.general as utils
@@ -184,7 +184,6 @@ class KojiScraper(BaseScraper):
                 creation_time=build_dict['creation_time'],
                 start_time=build_dict['start_time'],
                 completion_time=build_dict['completion_time'],
-                extra=build_dict['extra'],
                 name=build_dict['package_name'],
                 version=build_dict['version'],
                 release=build_dict['release']
@@ -243,12 +242,6 @@ class KojiScraper(BaseScraper):
                     module_components = self.get_tag_info(module_build_tag_name)
                     # Some modules don't have components
                     if module_components:
-                        module_build_tag = KojiTag.create_or_update(dict(
-                            id_=module_components[0]['tag_id'],
-                            name=module_build_tag_name
-                        ))[0]
-                        module_build_tag.conditional_connect(module_build_tag.module_builds, build)
-
                         for item in module_components:
                             module_component = KojiBuild.get_or_create(dict(
                                 id_=item['build_id']
@@ -258,24 +251,6 @@ class KojiScraper(BaseScraper):
                         component_builds = self.get_build_info(
                             [item['build_id'] for item in module_components])
                         self.update_neo4j(component_builds)
-
-            tags = self.get_build_tags(build_dict['id'])
-            current_tag_ids = set()
-            for _tag in tags:
-                current_tag_ids.add(_tag['tag_id'])
-                tag = KojiTag.create_or_update(dict(
-                    id_=_tag['tag_id'],
-                    name=_tag['tag_name']
-                ))[0]
-
-                tag.builds.connect(build)
-
-            # _tag.id_ must be cast as an int because it is stored as a string in Neo4j since
-            # it's a UniqueIdProperty
-            connected_tags = {int(_tag.id_): _tag for _tag in build.tags.all()}
-            extra_connected_tag_ids = set(connected_tags.keys()) - current_tag_ids
-            for tag_id in extra_connected_tag_ids:
-                build.tags.disconnect(connected_tags[tag_id])
 
             count += 1
             log.info('Uploaded {0} builds out of {1}'.format(count, len(builds)))
