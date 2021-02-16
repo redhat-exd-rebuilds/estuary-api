@@ -1,6 +1,5 @@
-FROM fedora:30
+FROM registry.fedoraproject.org/fedora:32
 
-# TODO: Replace the Koji URL once the following is stable https://bodhi.fedoraproject.org/updates/FEDORA-2018-c929a49b1b
 RUN dnf -y install \
   --setopt=deltarpm=0 \
   --setopt=install_weak_deps=false \
