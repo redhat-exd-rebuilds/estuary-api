@@ -11,24 +11,12 @@ the API and scrapers for the [Estuary front end](https://github.com/release-engi
 
 ## Development
 
-To setup a development environment:
-* Create and activate a [Python virtual environment](https://virtualenv.pypa.io/en/stable/)
-    (Python 3 is preferred)
-* Install the API and its dependencies with:
-  ```bash
-  $ python setup.py develop
-  ```
-* (Optional): Install the scrapers' dependencies with:
-  ```bash
-  $ pip install -r scraper-requirements.txt
-  ```
+To setup a local development environment:
 
-To start the development web server, run:
+* Invoke the command: ```make up```
 
-```bash
-$ scripts/run-flask.sh
-```
-
+Or
+* Spin [Gitpod](https://gitpod.io) environment 
 
 ## Run the Unit Tests
 
@@ -62,6 +50,10 @@ To run just a single test, you can run:
 ```bash
 sudo scripts/run-tests.sh pytest-3 -vvv tests/test_file::test_name
 ```
+
+## Run the Functional Tests
+
+* Invoke the command: ```make test```
 
 ## Code Styling
 

@@ -1,0 +1,42 @@
+version: '3.3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-api
+    container_name: api
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    environment:
+      NEO4J_URI: bolt://neo4j:neo4j@db:7687
+      DEV: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: neo4j:3.4-enterprise
+    container_name: db
+    ports:
+      - 7473:7473
+      - 7474:7474
+      - 7687:7687
+    expose:
+      - 7473
+      - 7474
+      - 7687
+    environment:
+      NEO4J_apoc_export_file_enabled: "true"
+      NEO4J_apoc_import_file_enabled: "true"
+      NEO4J_apoc_import_file_use__neo4j__config: "true"
+      NEO4JLABS_PLUGINS: "[\"apoc\"]"
+      NEO4J_AUTH: none
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*
+      NEO4J_ACCEPT_LICENSE_AGREEMENT: "yes"
+      NEO4J_dbms_connector_bolt_enabled: "true"
+      NEO4J_dbms_connector_bolt_listen__address: "0.0.0.0:7687"
+    healthcheck:
+      test: wget http://db:7474/browser -O -
+      interval: 10s
+      retries: 25
