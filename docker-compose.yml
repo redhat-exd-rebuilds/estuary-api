@@ -16,7 +16,7 @@ services:
       db:
         condition: service_healthy
   db:
-    image: neo4j:3.4-enterprise
+    image: neo4j:3.5.26
     container_name: db
     ports:
       - 7473:7473
