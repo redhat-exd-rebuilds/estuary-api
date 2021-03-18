@@ -50,6 +50,9 @@ To run just a single test, you can run:
 ```bash
 sudo scripts/run-tests.sh pytest-3 -vvv tests/test_file::test_name
 ```
+## Run the Infra Tests
+
+* Invoke the command: ```make infra```
 
 ## Run the Functional Tests
 

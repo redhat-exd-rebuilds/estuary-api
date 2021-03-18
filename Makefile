@@ -1,4 +1,4 @@
-.PHONY: up build down dependencies test logs static_analysis functional
+.PHONY: up build down logs dependencies test infra static_analysis functional
 
 down:
 	docker-compose down -v
@@ -20,6 +20,11 @@ dependencies:
 test: functional static_analysis
 
 functional: dependencies up
+
+infra: dependencies up
+	pytest --noconftest tests/infra
+
+functional: dependencies up infra
 	pytest --noconftest tests/functional
 
 static_analysis: dependencies
