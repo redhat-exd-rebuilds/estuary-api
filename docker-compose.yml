@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.9'
 services:
   api:
     build:
@@ -16,7 +16,7 @@ services:
       db:
         condition: service_healthy
   db:
-    image: neo4j:3.5.26
+    image: neo4j:4.2.4
     container_name: db
     ports:
       - 7473:7473
