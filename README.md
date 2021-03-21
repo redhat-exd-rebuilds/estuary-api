@@ -11,6 +11,19 @@ the API and scrapers for the [Estuary front end](https://github.com/release-engi
 
 ## Development
 
+### Prerequests
+
+The versions listed below are the one which were tested and work. Other versions
+can work as well.
+
+* Install tox version 3.23.0
+* Install docker version 20.10.5
+* Install docker-compose version 1.28.5
+
+or
+
+* Invoke the command: ```make dependencies``` in a python3 virtualenv
+
 To setup a local development environment:
 
 * Invoke the command: ```make up```

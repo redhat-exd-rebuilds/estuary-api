@@ -1,4 +1,4 @@
-.PHONY: up build down logs dependencies test infra static_analysis functional
+.PHONY: up build down test logs test infra static_analysis functional dependencies
 
 down:
 	docker-compose down -v
@@ -12,20 +12,18 @@ up: build
 logs: up
 	docker-compose logs -f
 
+infra: up
+	tox -e infra
+
+functional: up
+	tox -e py36, py39
+
+static_analysis:
+	tox -e flake8
+
+test: up
+	tox -r
+
 dependencies:
-	pip install --upgrade pip
-	pip install -r requirements.txt
-	pip install -r tests/requirements.txt
-
-test: functional static_analysis
-
-functional: dependencies up
-
-infra: dependencies up
-	pytest --noconftest tests/infra
-
-functional: dependencies up infra
-	pytest --noconftest tests/functional
-
-static_analysis: dependencies
-	flake8
+	python -m pip install --upgrade pip
+	pip install tox==3.23.0 docker-compose==1.28.5
