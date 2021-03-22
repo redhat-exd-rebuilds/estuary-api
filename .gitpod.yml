@@ -12,3 +12,9 @@ ports:
   - port: 7687
     onOpen: ignore
     visibility: private
+  - port: 7473
+    onOpen: ignore
+    visibility: private
+  - port: 7474
+    onOpen: ignore
+    visibility: private
