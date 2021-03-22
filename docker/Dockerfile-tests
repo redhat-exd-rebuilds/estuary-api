@@ -7,7 +7,6 @@ RUN dnf -y install \
   --setopt=tsflags=nodocs \
   nmap-ncat \
   python3-devel \
-  python3-flake8 \
   python3-flask \
   python3-flask-oidc \
   python3-ldap3 \
@@ -23,4 +22,4 @@ RUN dnf -y install \
 VOLUME /src
 WORKDIR /src
 # Inspired from https://github.com/neo4j-contrib/neomodel/blob/master/tests-with-docker-compose.sh
-CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; pytest-3 -vvv --cov-report term-missing --cov=estuary --ignore=tests/functional tests && flake8 && mypy --ignore-missing-imports ."]
+CMD ["sh", "-c", "while ! nc -z -w 2 neo4j 7687; do sleep 1; done; pytest-3 -vvv --cov-report term-missing --cov=estuary --ignore=tests/functional tests && mypy --ignore-missing-imports ."]

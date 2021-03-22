@@ -53,7 +53,11 @@ sudo scripts/run-tests.sh pytest-3 -vvv tests/test_file::test_name
 
 ## Run the Functional Tests
 
-* Invoke the command: ```make test```
+* Invoke the command: ```make functional```
+
+## Run the Static Analysis Tests
+
+* Invoke the command: ```make static_analysis```
 
 ## Code Styling
 
