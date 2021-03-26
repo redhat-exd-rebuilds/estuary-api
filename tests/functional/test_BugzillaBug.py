@@ -5,12 +5,14 @@ import requests
 from estuary.models.bugzilla import BugzillaBug
 
 
-@pytest.mark.parametrize("id", [("11111")])
+@pytest.mark.parametrize("id", [("11111"), ("22222")])
 def test_load_BugzillaBug(id):
     BugzillaBug.get_or_create({"id_": id})
     payload = {
-        "query": "MATCH (node:BugzillaBug) RETURN node.id",
-        "params": {},
+        "query": "MATCH (node:BugzillaBug) WHERE node.id = {id} RETURN node.id",
+        "params": {
+            "id": id
+        },
     }
     headers = {
         "Accept": "application/json;charset=UTF-8",
