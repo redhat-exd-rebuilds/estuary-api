@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
-from datetime import datetime, date, timedelta
+
 import json
+from datetime import date, datetime, timedelta
 
 from neomodel import config as neomodel_config
 

@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
-from datetime import datetime
-import logging
 
-from mock import patch, Mock
-import pytz
+import logging
+from datetime import datetime
+
 import pytest
+import pytz
+from mock import Mock, patch
 
 import estuary.utils.story
 from tests import helpers

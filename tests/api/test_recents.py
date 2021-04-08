@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import json
 from datetime import datetime
 
-from estuary.models.koji import KojiBuild
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory
 from estuary.models.freshmaker import FreshmakerEvent
+from estuary.models.koji import KojiBuild
 
 
 def test_get_recent_nodes(client):

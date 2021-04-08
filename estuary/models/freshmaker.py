@@ -2,9 +2,9 @@
 
 from __future__ import unicode_literals
 
-from neomodel import (
-    UniqueIdProperty, RelationshipTo, IntegerProperty, StringProperty, DateTimeProperty,
-    ZeroOrOne, RelationshipFrom)
+from neomodel import (DateTimeProperty, IntegerProperty, RelationshipFrom,
+                      RelationshipTo, StringProperty, UniqueIdProperty,
+                      ZeroOrOne)
 
 from estuary.models.base import EstuaryStructuredNode
 

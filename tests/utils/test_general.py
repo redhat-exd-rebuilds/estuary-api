@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
-from datetime import datetime, date
+
+from datetime import date, datetime
 
 import pytest
 
-from estuary.utils.general import (
-    timestamp_to_datetime, timestamp_to_date)
+from estuary.utils.general import timestamp_to_date, timestamp_to_datetime
 
 
 @pytest.mark.parametrize('input_dt,expected_dt', [

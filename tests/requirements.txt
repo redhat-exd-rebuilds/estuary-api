@@ -1,5 +1,6 @@
 docker==4.4.4
 flake8==3.9.0
+isort==5.8.0
 mock==4.0.3
 pytest==6.2.2
 requests==2.25.1

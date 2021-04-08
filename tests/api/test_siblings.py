@@ -1,16 +1,17 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import json
 from datetime import datetime
 
 import pytest
 
-from estuary.models.koji import KojiBuild, ContainerKojiBuild, ModuleKojiBuild
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
+from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
 
 
 @pytest.mark.parametrize('resource,uid,backward_rel,expected', [

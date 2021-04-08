@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 from datetime import datetime
 
-from neomodel import StructuredNode, One, ZeroOrOne, OUTGOING, INCOMING, EITHER, UniqueIdProperty
+from neomodel import (EITHER, INCOMING, OUTGOING, One, StructuredNode,
+                      UniqueIdProperty, ZeroOrOne)
 
 from estuary import log
 from estuary.utils.general import inflate_node
@@ -65,6 +67,7 @@ class EstuaryStructuredNode(StructuredNode):
         """
         # Avoid circular imports
         from estuary.models import models_inheritance
+
         # A set that will keep track of all properties on the node that weren't returned from Neo4j
         null_properties = set()
         # A mapping of Neo4j relationship names in the format of:

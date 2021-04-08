@@ -8,12 +8,12 @@ from datetime import datetime
 import pytest
 
 from estuary import version
-from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory
 from estuary.models.freshmaker import FreshmakerEvent
-from estuary.models.koji import KojiBuild, ContainerKojiBuild
+from estuary.models.koji import ContainerKojiBuild, KojiBuild
+from estuary.models.user import User
 
 
 def test_about(client):

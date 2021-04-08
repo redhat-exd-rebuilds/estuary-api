@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 from datetime import datetime
 
 import pytest
-from neomodel import UniqueIdProperty, One, RelationshipTo
 import pytz
+from neomodel import One, RelationshipTo, UniqueIdProperty
 
 from estuary.models.base import EstuaryStructuredNode
-from estuary.models.errata import Advisory
-from estuary.models.user import User
 from estuary.models.bugzilla import BugzillaBug
+from estuary.models.errata import Advisory
 from estuary.models.koji import KojiBuild
+from estuary.models.user import User
 
 
 def test_conditional_connect_zero_or_one():

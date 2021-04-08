@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import xml.etree.ElementTree as ET
 
 import neomodel
 
-from scrapers.base import BaseScraper
-from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
-from estuary.models.errata import Advisory
-from estuary.models.koji import ContainerKojiBuild, KojiBuild
-from scrapers.utils import retry_session
 from estuary import log
+from estuary.models.errata import Advisory
+from estuary.models.freshmaker import FreshmakerBuild, FreshmakerEvent
+from estuary.models.koji import ContainerKojiBuild, KojiBuild
 from estuary.utils.general import timestamp_to_datetime
+from scrapers.base import BaseScraper
+from scrapers.utils import retry_session
 
 
 class FreshmakerScraper(BaseScraper):

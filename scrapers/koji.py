@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
-import xml.etree.ElementTree as ET
+
 import json
+import xml.etree.ElementTree as ET
 
 import neomodel
 
-from scrapers.base import BaseScraper
-from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
-from estuary.models.user import User
-from estuary.models.distgit import DistGitCommit
 import estuary.utils.general as utils
 from estuary import log
+from estuary.models.distgit import DistGitCommit
+from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
+from estuary.models.user import User
+from scrapers.base import BaseScraper
 
 
 class KojiScraper(BaseScraper):

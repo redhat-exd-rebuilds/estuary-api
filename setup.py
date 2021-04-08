@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0+
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 with open('requirements.txt', 'r') as f:
     requirements = f.readlines()

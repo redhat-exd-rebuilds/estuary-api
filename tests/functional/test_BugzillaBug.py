@@ -2,6 +2,7 @@ import json
 
 import pytest
 import requests
+
 from estuary.models.bugzilla import BugzillaBug
 
 

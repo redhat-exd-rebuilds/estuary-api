@@ -2,16 +2,16 @@
 
 from __future__ import unicode_literals
 
-from flask import Blueprint, jsonify, request, current_app
+from flask import Blueprint, current_app, jsonify, request
 from werkzeug.exceptions import NotFound
 
-from estuary import version, log
-from estuary.models.base import EstuaryStructuredNode
-from estuary.utils.general import str_to_bool, get_neo4j_node, inflate_node, login_required
-from estuary.utils.recents import get_recent_nodes
-from estuary.error import ValidationError
 import estuary.utils.story
-
+from estuary import log, version
+from estuary.error import ValidationError
+from estuary.models.base import EstuaryStructuredNode
+from estuary.utils.general import (get_neo4j_node, inflate_node,
+                                   login_required, str_to_bool)
+from estuary.utils.recents import get_recent_nodes
 
 api_v1 = Blueprint('api_v1', __name__)
 

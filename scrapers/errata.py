@@ -2,13 +2,13 @@
 
 from __future__ import unicode_literals
 
+from estuary import log
+from estuary.models.bugzilla import BugzillaBug
+from estuary.models.errata import Advisory, ContainerAdvisory
+from estuary.models.koji import ContainerKojiBuild, KojiBuild
+from estuary.models.user import User
 from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
-from estuary import log
-from estuary.models.errata import Advisory, ContainerAdvisory
-from estuary.models.user import User
-from estuary.models.bugzilla import BugzillaBug
-from estuary.models.koji import KojiBuild, ContainerKojiBuild
 
 
 class ErrataScraper(BaseScraper):

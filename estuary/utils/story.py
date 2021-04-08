@@ -4,17 +4,17 @@ from __future__ import unicode_literals
 
 import abc
 import sys
-
-from neomodel import db
 from datetime import datetime
 
+from neomodel import db
+
+from estuary import log
 from estuary.error import ValidationError
-from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.distgit import DistGitCommit
 from estuary.models.errata import Advisory, ContainerAdvisory
 from estuary.models.freshmaker import FreshmakerEvent
-from estuary import log
+from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
 
 
 class BaseStoryManager(object):

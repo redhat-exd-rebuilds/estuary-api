@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 
 import time
 
-from flask import Response, Blueprint, request
 import prometheus_client
-
+from flask import Blueprint, Response, request
 
 REQUEST_COUNT = prometheus_client.Counter(
     'request_count', 'App Request Count',

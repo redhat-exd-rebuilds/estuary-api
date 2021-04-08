@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from neomodel import StringProperty, UniqueIdProperty, RelationshipFrom
+from neomodel import RelationshipFrom, StringProperty, UniqueIdProperty
 
 from estuary.models.base import EstuaryStructuredNode
 

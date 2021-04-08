@@ -1,24 +1,26 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import re
+from builtins import bytes
+from itertools import islice
 from multiprocessing import Process
 from multiprocessing.dummy import Pool as ThreadPool
 from os import getenv
-from itertools import islice
 
-from builtins import bytes
 from bs4 import BeautifulSoup
+from neomodel import config as neomodel_config
+from neomodel import db
 from requests import ConnectionError
-from neomodel import config as neomodel_config, db
 
+from estuary import log
+from estuary.models.bugzilla import BugzillaBug
+from estuary.models.distgit import DistGitCommit, DistGitRepo
+from estuary.models.user import User
+from estuary.utils.general import timestamp_to_date
 from scrapers.base import BaseScraper
 from scrapers.utils import retry_session
-from estuary.utils.general import timestamp_to_date
-from estuary.models.distgit import DistGitRepo, DistGitCommit
-from estuary.models.bugzilla import BugzillaBug
-from estuary.models.user import User
-from estuary import log
 
 
 class DistGitScraper(BaseScraper):

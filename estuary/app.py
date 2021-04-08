@@ -6,15 +6,15 @@ import os
 import warnings
 
 from flask import Flask, current_app, request
-from werkzeug.exceptions import default_exceptions
+from neo4j.exceptions import AuthError, ServiceUnavailable
 from neomodel import config as neomodel_config
-from neo4j.exceptions import ServiceUnavailable, AuthError
+from werkzeug.exceptions import default_exceptions
 
 from estuary import log
-from estuary.logger import init_logging
-from estuary.error import json_error, ValidationError
-from estuary.api.v1 import api_v1
 from estuary.api.health_check import health_check
+from estuary.api.v1 import api_v1
+from estuary.error import ValidationError, json_error
+from estuary.logger import init_logging
 
 
 def load_config(app):
@@ -117,7 +117,7 @@ def create_app(config_obj=None):
     app.register_blueprint(api_v1, url_prefix='/api/v1')
     app.add_url_rule('/healthcheck', view_func=health_check)
     try:
-        from estuary.api.monitoring import monitoring_api, configure_monitoring
+        from estuary.api.monitoring import configure_monitoring, monitoring_api
         app.register_blueprint(monitoring_api, url_prefix='/monitoring')
         configure_monitoring(app)
     except ImportError as e:
