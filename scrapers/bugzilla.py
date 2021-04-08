@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0+
 from __future__ import unicode_literals
+
 from builtins import bytes
 
-from scrapers.base import BaseScraper
+from estuary import log
 from estuary.models.bugzilla import BugzillaBug
 from estuary.models.user import User
 from estuary.utils.general import timestamp_to_date
-from estuary import log
+from scrapers.base import BaseScraper
 
 
 class BugzillaScraper(BaseScraper):

@@ -4,12 +4,11 @@ from __future__ import unicode_literals
 
 import re
 
-from neomodel import (
-    UniqueIdProperty, RelationshipTo, RelationshipFrom, StringProperty,
-    DateTimeProperty, ZeroOrOne)
+from neomodel import (DateTimeProperty, RelationshipFrom, RelationshipTo,
+                      StringProperty, UniqueIdProperty, ZeroOrOne)
 
-from estuary.models.base import EstuaryStructuredNode
 from estuary.error import ValidationError
+from estuary.models.base import EstuaryStructuredNode
 
 
 class BugzillaBug(EstuaryStructuredNode):

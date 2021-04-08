@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import json
 from datetime import datetime
 
 import mock
 import pytest
 
-from estuary.models.koji import KojiBuild
 from estuary.app import create_app
 from estuary.auth import EstuaryOIDC
+from estuary.models.koji import KojiBuild
 
 
 @mock.patch('estuary.auth.EstuaryOIDC', autospec=True)

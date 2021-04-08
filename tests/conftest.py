@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import os
 
 import pytest
-from neomodel import config as neomodel_config, db as neo4j_db
+from neomodel import config as neomodel_config
+from neomodel import db as neo4j_db
 
 from estuary.app import create_app
 

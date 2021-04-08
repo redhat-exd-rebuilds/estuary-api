@@ -3,8 +3,8 @@
 from __future__ import unicode_literals
 
 from flask import jsonify
+from neo4j.exceptions import AuthError, ServiceUnavailable
 from werkzeug.exceptions import HTTPException
-from neo4j.exceptions import ServiceUnavailable, AuthError
 
 from estuary import log
 

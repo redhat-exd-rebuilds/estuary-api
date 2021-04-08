@@ -4,12 +4,12 @@ from __future__ import unicode_literals
 
 import re
 
-from neomodel import (
-    StringProperty, IntegerProperty, UniqueIdProperty, DateTimeProperty,
-    BooleanProperty, RelationshipTo, RelationshipFrom, ZeroOrOne)
+from neomodel import (BooleanProperty, DateTimeProperty, IntegerProperty,
+                      RelationshipFrom, RelationshipTo, StringProperty,
+                      UniqueIdProperty, ZeroOrOne)
 
-from estuary.models.base import EstuaryStructuredNode
 from estuary.error import ValidationError
+from estuary.models.base import EstuaryStructuredNode
 from estuary.models.errata import Advisory
 
 

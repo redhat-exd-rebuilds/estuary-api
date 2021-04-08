@@ -10,8 +10,9 @@ from __future__ import unicode_literals
 
 import os
 import sys
-import pkg_resources
 from datetime import datetime
+
+import pkg_resources
 
 # -- Path setup --------------------------------------------------------------
 

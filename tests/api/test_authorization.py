@@ -3,12 +3,12 @@
 from __future__ import unicode_literals
 
 import ldap3
-from mock import Mock, patch
 import pytest
+from mock import Mock, patch
 from werkzeug.exceptions import InternalServerError
 
 from estuary.app import create_app
-from estuary.authorization import is_user_authorized, _get_exception_users
+from estuary.authorization import _get_exception_users, is_user_authorized
 
 
 @pytest.mark.parametrize('employeeType, authorized', (

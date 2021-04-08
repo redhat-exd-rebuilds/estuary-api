@@ -19,7 +19,7 @@ functional: up
 	tox -e py36, py39
 
 static_analysis:
-	tox -e flake8
+	tox -e flake8, isort
 
 test: up
 	tox -r

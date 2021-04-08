@@ -2,11 +2,13 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import argparse
 import logging
-from datetime import datetime, timedelta
-import sys
 import os
+import sys
+from datetime import datetime, timedelta
+
 # So we can import the scrapers module
 sys.path.insert(1, os.path.abspath(os.path.join(sys.path[0], '..')))
 

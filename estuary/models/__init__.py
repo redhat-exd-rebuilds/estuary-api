@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0+
 
-from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
 from estuary.models.bugzilla import BugzillaBug
-from estuary.models.distgit import DistGitRepo, DistGitCommit
+from estuary.models.distgit import DistGitCommit, DistGitRepo
 from estuary.models.errata import Advisory, ContainerAdvisory
-from estuary.models.freshmaker import FreshmakerEvent, FreshmakerBuild
+from estuary.models.freshmaker import FreshmakerBuild, FreshmakerEvent
+from estuary.models.koji import ContainerKojiBuild, KojiBuild, ModuleKojiBuild
 from estuary.models.user import User
 
 all_models = (Advisory, BugzillaBug, ContainerAdvisory, ContainerKojiBuild,

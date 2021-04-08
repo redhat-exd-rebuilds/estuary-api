@@ -1,17 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0+
 
 from __future__ import unicode_literals
+
 import re
 from datetime import datetime
 from functools import wraps
 
-from six import text_type
 from flask import current_app, request
+from six import text_type
 from werkzeug.exceptions import Unauthorized
 
 from estuary import log
-from estuary.error import ValidationError
 from estuary.authorization import is_user_authorized
+from estuary.error import ValidationError
 
 
 def timestamp_to_datetime(timestamp):
