@@ -1,4 +1,4 @@
-.PHONY: up build down test logs test infra static_analysis functional dependencies
+.PHONY: up build down test logs test infra static_analysis safety functional dependencies
 
 down:
 	docker-compose down -v
@@ -20,6 +20,9 @@ functional: up
 
 static_analysis:
 	tox -e flake8, isort
+
+safety:
+	tox -e safety
 
 test: up
 	tox -r

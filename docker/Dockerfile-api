@@ -6,20 +6,13 @@ RUN dnf -y install \
     --setopt=install_weak_deps=false \
     --setopt=tsflags=nodocs \
     bash \
-    python3-flask \
-    python3-flask-oidc \
-    python3-gunicorn \
-    python3-ldap3 \
-    python3-neomodel \
-    python3-prometheus_client \
-    python3-six \
+    python3-pip \
     && dnf clean all
 # This will allow a non-root user to install a custom root CA at run-time
 RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
+WORKDIR /src
 COPY . .
-# Install using develop so we can use the --no-deps options to ensure nothing comes from PyPi.
-# Normally we'd use something like `pip3 install . --no-deps` but certain neomodel scripts must
-# import estuary dynamically, and for whatever reason, that fails when this is installed using pip.
-RUN python3 setup.py develop --no-deps --prefix /usr
+RUN pip3 install -r requirements.txt --no-deps --require-hashes --prefix /usr \
+    && pip3 install . --no-deps --prefix /usr
 USER 1001
-CMD ["/usr/bin/bash", "-c", "docker/install-ca.sh && exec gunicorn-3 --bind 0.0.0.0:8080 --access-logfile=- --enable-stdio-inheritance estuary.wsgi:app"]
+CMD ["/usr/bin/bash", "-c", "docker/install-ca.sh && exec gunicorn --bind 0.0.0.0:8080 --access-logfile=- --enable-stdio-inheritance estuary.wsgi:app"]

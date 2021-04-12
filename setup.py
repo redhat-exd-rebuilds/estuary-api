@@ -1,9 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0+
 from setuptools import find_packages, setup
 
-with open('requirements.txt', 'r') as f:
-    requirements = f.readlines()
-
 setup(
     name='estuary',
     version='0.1',
@@ -13,7 +10,16 @@ setup(
     license='GPLv3+',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=[
+        'prometheus-client',
+        'ldap3',
+        'flask-oidc',
+        'gunicorn',
+        'Flask',
+        'neomodel',
+        'pytz',
+        'six',
+    ],
     extras_require={
         'auth': ['flask_oidc', 'ldap3'],
     }
