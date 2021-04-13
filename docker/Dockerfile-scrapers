@@ -15,16 +15,13 @@ RUN dnf -y install \
     --setopt=deltarpm=0 \
     --setopt=install_weak_deps=false \
     --setopt=tsflags=nodocs \
-    python3-beautifulsoup4 \
-    python3-flask \
-    python3-ldap3 \
-    python3-neomodel \
-    python3-psycopg2 \
-    python3-requests \
-    python3-six \
+    bash \
+    python3-pip \
     && dnf clean all
 # This will allow a non-root user to install a custom root CA at run-time
 RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
+RUN pip3 install -r scraper-requirements.txt --no-deps --require-hashes --prefix /usr \
+    && pip3 install . --no-deps --prefix /usr
 USER 1001
 CMD ["/usr/bin/bash", "-c", "docker/scrape.sh"]

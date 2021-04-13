@@ -1,5 +1,9 @@
 docker
-flake8
-isort
+# For Python 3.6 pytest runs
+importlib-metadata>=0.12
+# For Python 3.6 pytest runs
+typing-extensions>=3.6.4
 mock
+pytest
+pytest-cov
 requests

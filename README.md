@@ -35,9 +35,8 @@ Or
 
 To manage dependencies, this project uses [pip-tools](https://github.com/jazzband/pip-tools) so that the production dependencies are pinned and the hashes of the dependencies are verified during installation.
 
-The unpinned dependencies are recorded in **setup.py**, and to generate the **requirements.txt** file, run `pip-compile --generate-hashes --output-file=requirements.txt --allow-unsafe`. This is only necessary when adding a new package. To upgrade a package, use the `-P` argument of the `pip-compile` command.
-
-To update **docs-requirements.txt** or **scraper-requirements.txt**, run `pip-compile --generate-hashes docs-requirements.in -o docs-requirements.txt --allow-unsafe` or `pip-compile --generate-hashes scraper-requirements.in -o scraper-requirements.txt --allow-unsafe` respectively. Also, there are test dependencies specified in **tests/requirements.txt** to regenerate this file run `pip-compile --generate-hashes tests/requirements.in -o tests/requirements.txt --allow-unsafe`. All those commands are meant to be run from the root directory of the project.
+The unpinned dependencies are recorded in **setup.py**, and to generate the **requirements.txt** file, run `make pin_dependencies`. This is only necessary when adding a new
+package. To upgrade a package, use the `-P` argument of the `pip-compile` command.
 
 When installing the dependencies in a production environment, run `pip install --require-hashes -r requirements.txt`. Alternatively, you may use `pip-sync requirements.txt`, which will make sure your virtualenv only has the packages listed in **requirements.txt**.
 
