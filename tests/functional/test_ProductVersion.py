@@ -8,6 +8,7 @@ from estuary.models.productversion import ProductVersion
 
 @pytest.mark.parametrize("name", [("8.4.0.0"), ("8.5.0.0")])
 def test_load_ProductVersion(name):
+    """Test that a product version can be create and loaded."""
     ProductVersion.get_or_create({"name": name})
     payload = {
         "query": "MATCH (node:ProductVersion) WHERE node.name = {name} RETURN node.name",
