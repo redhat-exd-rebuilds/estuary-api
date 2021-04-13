@@ -1,4 +1,4 @@
-FROM fedora:30
+FROM registry.access.redhat.com/ubi8/ubi
 LABEL maintainer="Factory 2.0"
 
 RUN dnf -y install \

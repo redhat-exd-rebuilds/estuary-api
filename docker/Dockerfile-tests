@@ -1,4 +1,4 @@
-FROM fedora:30
+FROM registry.access.redhat.com/ubi8/ubi
 
 # TODO: Replace the Koji URL once the following is stable https://bodhi.fedoraproject.org/updates/FEDORA-2018-c929a49b1b
 RUN dnf -y install \
