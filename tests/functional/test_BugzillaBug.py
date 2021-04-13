@@ -8,6 +8,7 @@ from estuary.models.bugzilla import BugzillaBug
 
 @pytest.mark.parametrize("id", [("11111"), ("22222")])
 def test_load_BugzillaBug(id):
+    """Test that a Bugzilla Bug can be created and loaded."""
     BugzillaBug.get_or_create({"id_": id})
     payload = {
         "query": "MATCH (node:BugzillaBug) WHERE node.id = {id} RETURN node.id",
