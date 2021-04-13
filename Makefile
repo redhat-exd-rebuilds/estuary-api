@@ -18,6 +18,9 @@ infra: up
 functional: up
 	tox -e py36, py39
 
+pin_dependencies:
+	tox -e pin-dependencies
+
 static_analysis:
 	tox -e flake8, isort
 
