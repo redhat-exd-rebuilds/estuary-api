@@ -1,4 +1,4 @@
-FROM fedora:30
+FROM registry.access.redhat.com/ubi8/ubi-minimal
 LABEL maintainer="Factory 2.0"
 
 ENV SCRAPER=all \
@@ -11,16 +11,13 @@ ENV SCRAPER=all \
     WAIT_FOR=0
 
 WORKDIR /src
-RUN dnf -y install \
-    --setopt=deltarpm=0 \
-    --setopt=install_weak_deps=false \
-    --setopt=tsflags=nodocs \
+RUN microdnf -y install \
     bash \
     gcc \
     libpq-devel \
     python3-devel \
     python3-pip \
-    && dnf clean all
+    && microdnf clean all
 # This will allow a non-root user to install a custom root CA at run-time
 RUN chmod 777 /etc/pki/tls/certs/ca-bundle.crt
 COPY . .
