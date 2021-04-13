@@ -3,8 +3,8 @@ version: '3'
 services:
   estuary_api_tests:
     build:
-      context: .
-      dockerfile: Dockerfile-tests
+      context: ../
+      dockerfile: docker/Dockerfile-tests
     volumes:
       - ../:/src:Z
     links:
