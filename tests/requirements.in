@@ -1,5 +1,4 @@
 docker
-flake8
 isort
 mock
 requests
