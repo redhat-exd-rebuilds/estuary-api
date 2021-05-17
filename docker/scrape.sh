@@ -19,4 +19,5 @@ docker/install-ca.sh && \
         --neo4j-user $NEO4J_USER \
         --neo4j-password $NEO4J_PASSWORD \
         --neo4j-server $NEO4J_SERVER \
+        --neo4j-scheme "${NEO4J_SCHEME:-bolt}" \
         $args

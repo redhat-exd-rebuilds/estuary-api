@@ -32,6 +32,7 @@ parser.add_argument('--neo4j-user', type=str, default='neo4j', help='The Neo4j u
 parser.add_argument('--neo4j-password', type=str, default='neo4j', help='The Neo4j password')
 parser.add_argument('--neo4j-server', type=str, default='localhost',
                     help='The FQDN to the Neo4j server')
+parser.add_argument('--neo4j-scheme', type=str, default='bolt', help='The Neo4j scheme')
 parser.add_argument('--kerberos', action='store_true', help='Use Kerberos for authentication')
 args = parser.parse_args()
 
@@ -64,7 +65,7 @@ if not scraper_classes:
 for scraper_class in scraper_classes:
     scraper = scraper_class(
         args.teiid_user, args.teiid_password, args.kerberos, args.neo4j_user, args.neo4j_password,
-        args.neo4j_server)
+        args.neo4j_server, args.neo4j_scheme)
     since = args.since
     until = args.until
     if args.days_ago:
