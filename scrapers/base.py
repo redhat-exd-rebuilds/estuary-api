@@ -20,7 +20,7 @@ class BaseScraper(object):
     default_until = str(date.today() + timedelta(days=1))
 
     def __init__(self, teiid_user=None, teiid_password=None, kerberos=False, neo4j_user='neo4j',
-                 neo4j_password='neo4j', neo4j_server='localhost'):
+                 neo4j_password='neo4j', neo4j_server='localhost', neo4j_scheme='bolt'):
         """
         Initialize the BaseScraper class.
 
@@ -37,8 +37,12 @@ class BaseScraper(object):
             teiid_password = None
             self.teiid_port = 5433
         self.teiid = Teiid(self.teiid_host, self.teiid_port, teiid_user, teiid_password)
-        neomodel_config.DATABASE_URL = 'bolt://{user}:{password}@{server}:7687'.format(
-            user=neo4j_user, password=neo4j_password, server=neo4j_server)
+        neomodel_config.DATABASE_URL = '{scheme}://{user}:{password}@{server}:7687'.format(
+            scheme=neo4j_scheme,
+            user=neo4j_user,
+            password=neo4j_password,
+            server=neo4j_server,
+        )
 
     def run(self, since=None):
         """

@@ -16,9 +16,7 @@ setup(
         'flask-oidc',
         'gunicorn',
         'Flask',
-        # Pin the version until this is merged:
-        # https://github.com/neo4j-contrib/neomodel/pull/553
-        'neomodel==3.3.2',
+        'neomodel>=4.0.3',
         'pytz',
         'six',
     ],
