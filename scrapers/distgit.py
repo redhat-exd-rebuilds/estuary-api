@@ -70,6 +70,9 @@ class DistGitScraper(BaseScraper):
         for proc in procs:
             # Wait for all the processes to finish
             proc.join()
+
+        log.info('Resetting the connection in the main process after multiprocessing')
+        db.set_connection(neomodel_config.DATABASE_URL)
         log.info('Initial load of dist-git commits complete!')
 
     @staticmethod
