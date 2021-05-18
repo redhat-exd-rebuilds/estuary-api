@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='estuary',
-    version='0.1',
+    version='1.0.0',
     description='The Estuary API used to query the build to release pipeline',
     author='Red Hat, Inc.',
     author_email='mprahl@redhat.com',
