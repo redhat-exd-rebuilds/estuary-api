@@ -8,7 +8,8 @@ ENV SCRAPER=all \
     NEO4J_PASSWORD=neo4j \
     NEO4J_SERVER=neo4j \
     SCRAPE_FROM_DAYS_AGO=365 \
-    WAIT_FOR=0
+    WAIT_FOR=0 \
+    ENV REQUESTS_CA_BUNDLE /etc/pki/tls/certs/ca-bundle.crt
 
 WORKDIR /src
 RUN microdnf -y install \
