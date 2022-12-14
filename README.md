@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/release-engineering/estuary-api.svg?branch=master)](https://travis-ci.org/release-engineering/estuary-api)
 [![Docs Status](https://readthedocs.org/projects/estuary-api/badge/?version=latest)](https://estuary-api.readthedocs.io/en/latest/?badge=latest)
 
 # Getting Started
