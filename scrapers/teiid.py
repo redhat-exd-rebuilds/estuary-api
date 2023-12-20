@@ -31,7 +31,14 @@ class Teiid(object):
         self._connections = {}
         self._last_query_dt = None
 
-    def get_connection(self, db_name, force_new=False, retry=None):
+    def get_connection(
+        self,
+        db_name,
+        force_new=False,
+        retry=None,
+        sslmode='verify-full',
+        sslrootcert='/etc/pki/tls/certs/ca-bundle.crt',
+    ):
         """
         Return an existing psycopg2 connection and establish it if needed.
 
@@ -39,6 +46,12 @@ class Teiid(object):
         :kwarg bool force_new: forces a new database connection even if one already exists
         :kwarg int retry: the number of times to retry a failed connection. If this is not set,
             then the Teiid connection attempt will be repeated until it is successful.
+        :kwarg str sslmode: the Postgres SSL mode to use when connecting to Teiid. This defaults
+            to 'verify-full' which means that SSL is required and the server's CA certificate is
+            verified.
+        :kwarg str sslrootcert: the path to the file containing the CA that signed the SSL
+            certificate used by Teiid. This defaults to the CA bundle path used on Red Hat based
+            distributions.
         :return: a connection to Teiid
         :rtype: psycopg2 connection
         """
@@ -58,6 +71,8 @@ class Teiid(object):
                     port=str(self.port),
                     user=self.username,
                     password=self.password,
+                    sslmode=sslmode,
+                    sslrootcert=sslrootcert,
                     connect_timeout=300
                 )
                 break
